@@ -6,6 +6,7 @@ This is simple CRUD (create, read, update, delete) GraphQL using Go
 ```bash
 # clone this repository
 git clone https://github.com/howstrongiam/backend.git
+cd backend
 
 # run go mod tidy
 go mod tidy
