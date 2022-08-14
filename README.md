@@ -1,1 +1,1 @@
-# backend
+# Simple CRUD GraphQL using Go

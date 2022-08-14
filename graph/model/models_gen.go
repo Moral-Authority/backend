@@ -7,11 +7,3 @@ type NewUser struct {
 	Age     int    `json:"age"`
 	Address string `json:"address"`
 }
-
-type User struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	CreatedAt string `json:"createdAt"`
-	Age       int    `json:"age"`
-	Address   string `json:"address"`
-}
