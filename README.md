@@ -15,3 +15,5 @@ go mod tidy
 # serve your server
 go run .
 ```
+
+Note : you can check to my documentation CRUD but you better use [Insomnia](https://insomnia.rest/), it was in this root directory with json format
