@@ -9,8 +9,6 @@ WORKDIR /app
 
 # Download necessary Go modules
 COPY go.mod go.sum ./
-# COPY go.sum ./
-# COPY * ./
 
 #COPY graph/generated ./
 RUN go mod download
@@ -31,7 +29,6 @@ RUN ssh-keyscan github.com >> ~/.ssh/known_hosts# Print SSH_PRIVATE_KEY
 RUN echo “StrictHostKeyChecking no “ > /root/.ssh/config
 
 # RUN go get github.com/howstrongiam/backend/graph/generated
-# CMD ["app"]
 
 
 EXPOSE 8080
