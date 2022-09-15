@@ -1,0 +1,21 @@
+version: "3.9"
+
+# defines structure of application
+services:
+  backend:
+#   building the image
+    build: ../backend
+    ports:
+#      -left side is host machine & right side is container
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+#   using the image
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: local
+      POSTGRES_DB: local
+
+

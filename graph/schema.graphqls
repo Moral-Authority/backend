@@ -4,7 +4,8 @@
 
 type User {
   id: Int!
-  name: String!
+  fname: String!
+  lname: String!
   createdAt: String!
   age: Int!
   address: String!
