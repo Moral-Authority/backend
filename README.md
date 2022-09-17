@@ -1,6 +1,10 @@
-# Simple CRUD GraphQL using Go
-
-This is simple CRUD (create, read, update, delete) GraphQL using Go
+# Backend
+Built with:
+- golang
+- graphql
+- gql-gen
+## Helpful Links
+- [ Your first Pull Request ]( https://github.com/howstrongiam/frontend/wiki/Find-or-Create-An-Issue )
 
 ### How to run this code
 ```bash
