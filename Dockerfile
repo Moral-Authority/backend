@@ -1,34 +1,31 @@
-# syntax=docker/dockerfile:1
-FROM golang:1.18-buster AS build
+# Start from golang:1.12-alpine base image
+FROM golang:1.18-alpine
 
+# The latest alpine images don't have some tools like (`git` and `bash`).
+# Adding git, bash and openssh to the image
+RUN apk update && apk upgrade && \
+    apk add --no-cache bash git openssh
 
-# using command docker build -f Dockerfile -t proj:backend . to run 
-ENV app ~/src/startups/justcorpz/backend
-RUN mkdir -p "app"
+# Add Maintainer Info
+LABEL maintainer="Abdul Mateen <mateeniem@gmail.com>"
+
+# Set the Current Working Directory inside the container
 WORKDIR /app
 
-# Download necessary Go modules
+# Copy go mod and sum files
 COPY go.mod go.sum ./
 
-#COPY graph/generated ./
+# Download all dependancies. Dependencies will be cached if the go.mod and go.sum files are not changed
 RUN go mod download
 
-RUN GO111MODULE=on 
-ENV GOFLAGS=-mod=mod
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
 
+# Build the Go app
+RUN go build -o main .
 
-COPY *.go ./
-
-ARG SSH_PRIVATE_KEY
-RUN mkdir ~/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_ed25519
-RUN chmod 600 ~/.ssh/id_ed25519
-RUN ssh-keyscan github.com >> ~/.ssh/known_hosts# Print SSH_PRIVATE_KEY 
-
-# Skip Host verification for git
-RUN echo “StrictHostKeyChecking no “ > /root/.ssh/config
-
-# RUN go get github.com/howstrongiam/backend/graph/generated
-
-
+# Expose port 8080 to the outside world
 EXPOSE 8080
+
+# Run the executable
+CMD ["./main"]
