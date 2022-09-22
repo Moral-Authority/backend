@@ -1,21 +1,25 @@
-version: "3.9"
+version: '3'
 
-# defines structure of application
+# Define services
 services:
-  backend:
-#   building the image
-    build: ../backend
-    ports:
-#      -left side is host machine & right side is container
-      - "8000:8000"
-    depends_on:
-      - db
-  db:
-#   using the image
-    image: postgres:13-alpine
-    command: ["app","server","start"]
+  postgres:
+    image: postgres
+    hostname: postgres
+    container_name: postgres
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: local
       POSTGRES_DB: local
+    expose:
+      - 5432
 
+  backend-service:
+    hostname: backend_service
+    container_name: backend_service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    ports:
+      - "7000:8080"
+    restart: unless-stopped
