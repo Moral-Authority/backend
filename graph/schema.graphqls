@@ -2,6 +2,26 @@
 #
 # https://gqlgen.com/getting-started/
 
+schema{
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  users: [User!]!
+  user(input: Int!): User!
+  products: [Product]
+}
+
+
+type Mutation {
+  createUser(input: NewUser!): User!
+  updateUser(id: Int!, input: NewUser!): User!
+  deleteUser(id: Int!): User!
+  addProduct(input:AddProduct): Product
+}
+
+
 type User {
   id: Int!
   fname: String!
@@ -11,9 +31,13 @@ type User {
   address: String!
 }
 
-type Query {
-  users: [User!]!
-  user(input: Int!): User!
+type User {
+  id: Int!
+  fname: String!
+  lname: String!
+  createdAt: String!
+  age: Int!
+  address: String!
 }
 
 input NewUser {
@@ -22,8 +46,57 @@ input NewUser {
   address: String!
 }
 
-type Mutation {
-  createUser(input: NewUser!): User!
-  updateUser(id: Int!, input: NewUser!): User!
-  deleteUser(id: Int!): User!
+
+enum ProductCerts {
+ EWG, FairTrade, LeapingBunny, PlasticFree, Vegan, Organic, MadeInAmerica,
+}
+
+enum CompanyCerts {
+  Bcorp, WomanOwned,BlackOwned, IndigenousOwned, AsianPacificIslanderOwned,LGBTQOwned
+}
+
+input AddProduct {
+  url: String
+  description: String
+  Certifications: [ProductCerts]
+  #  Todo add support for a file upload
+  imgLink: [String]
+  Category: [CategoryInput]
+  PurchaseInfo: [PurchaseInfoInput]
+  CompanyInfo: CompanyInfoInput
+}
+
+input CompanyInfoInput{
+  Name: String
+  companyWebsite: String
+  companyCerts: [CompanyCerts]
+}
+
+input PurchaseInfoInput{
+  price: String
+  link: String
+  company: String
+}
+
+#  TODO make these enums
+input CategoryInput {
+  section: String
+  department: String
+  category: String
+  style: String
+  type: String
+}
+
+
+type Product {
+  Id: Int
+  url: String
+  description: String
+  imgId: String
+}
+
+input NewUser {
+  name: String!
+  age: Int!
+  address: String!
 }
