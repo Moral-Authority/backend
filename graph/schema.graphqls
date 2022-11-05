@@ -1,120 +1,140 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-schema {
-    query: Query
-    mutation: Mutation
+type User {
+    _id: String!
+    firstName: String!
+    lastName: String!
+    favourites: [Favourite]
 }
 
-scalar Timestamp
+type Query {
+    user(_id: String!): User!
+    users: [User]!
+}
 
-type NewUser {
-    firstname: String!
-    lastname: String!
+input NewUser {
+    firstName: String!
+    lastName: String!
     email: String!
     password: String!
 }
 
-type User {
-  id: Int!
-  firstname: String!
-  lastname: String!
-}
-
-type Product {
-  id: Int!
-}
-
-type Favorite {
-  id: Int!
-  userId: Int!
-  productId: Int!
-}
-
-
-type Query {
-    users: [User!]!
-    user(input: Int!): User!
-    products: [Product]
+input UpdateUser {
+    firstName: String
+    lastName: String
 }
 
 
 type Mutation {
-    createUser(input: NewUser!): User!
-    updateUser(id: Int!, input: NewUser!): User!
-    deleteUser(id: Int!): User!
-    addProduct(input:AddProduct): Product
+    addUser(input: NewUser!): User!
+    updateUser(input: UpdateUser!): User!
 }
 
-
-
-type User {
-    id: Int!
-    fname: String!
-    lname: String!
-    createdAt: String!
-    age: Int!
-    address: String!
+type Favourite {
+    _id: String!
+    product: Product!
 }
 
-input NewUser {
-    name: String!
-    age: Int!
-    address: String!
+input AddUserFav {
+    userId: String!
+    productId: String!
 }
 
-
-enum ProductCerts {
-    EWG, FairTrade, LeapingBunny, PlasticFree, Vegan, Organic, MadeInAmerica,
+extend type Mutation {
+    addFav(request: AddUserFav!): Favourite!
 }
 
-enum CompanyCerts {
-    Bcorp, WomanOwned,BlackOwned, IndigenousOwned, AsianPacificIslanderOwned,LGBTQOwned
+type Department {
+    _id: String!
+    Title: String!
+    Categories: [Category]
 }
 
-input AddProduct {
-    url: String
-    description: String
-    Certifications: [ProductCerts]
-    #  Todo add support for a file upload
-    imgLink: [String]
-    Category: [CategoryInput]
-    PurchaseInfo: [PurchaseInfoInput]
-    CompanyInfo: CompanyInfoInput
+input AddDepartmentRequest {
+    Title: String!
 }
 
-input CompanyInfoInput{
-    Name: String
-    companyWebsite: String
-    companyCerts: [CompanyCerts]
+extend type Mutation {
+    addDepartment(request: AddDepartmentRequest!): Department!
 }
 
-input PurchaseInfoInput{
-    price: String
-    link: String
-    company: String
+type Category {
+    _id: String!
+    Types: [Type]
 }
 
-#  TODO make these enums
-input CategoryInput {
-    section: String
-    department: String
-    category: String
-    style: String
-    type: String
+input AddCategoryRequest {
+    Title: String!
+    DepartmentId: String!
 }
 
+type Type {
+    _id: String!
+    Title: String!
+    Styles: [Style]
+}
+
+input AddTypeRequest {
+    Title: String!
+    CategoryId: String!
+}
+
+extend type Mutation {
+    addType(request: AddTypeRequest!): Type!
+}
+
+type Style {
+    _id: String!
+    Title: String!
+    Products: [Product]
+}
+
+input AddStyleRequest {
+    Title: String!
+    TypeId: String!
+}
+
+extend type Mutation {
+    addStyle(request: AddStyleRequest!): Style!
+}
+
+input AddCertificationRequest {
+    CertifyingCompany: String!
+    CertName: String!
+}
+
+type Certification {
+    _id: String!
+    CertifyingCompany: String!
+    CertName: String!
+}
+
+type Image {
+    _id: String!
+    Location: String!
+}
 
 type Product {
-    Id: Int
-    url: String
-    description: String
-    imgId: String
+    _id: String!
+    Title: String!
+    Url: String!
+    Description: String!
+    UserId: String!
+    Image: Image!
 }
 
-input NewUser {
-    name: String!
-    age: Int!
-    address: String!
+input AddProductRequest {
+    Title: String!
+    Url: String!
+    Description: String!
+    UserId: String!
+    ImageLocation: String!
+    Certification: AddCertificationRequest!
+    StyleId: String!
+}
+
+extend type Mutation {
+    addProduct(request: AddProductRequest!): Product!
+}
+
+extend type Query {
+    getDepartments: [Department]!
 }
