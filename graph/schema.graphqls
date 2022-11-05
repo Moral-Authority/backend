@@ -1,140 +1,140 @@
 type User {
-    _id: String!
-    firstName: String!
-    lastName: String!
-    favourites: [Favourite]
+  _id: String!
+  firstName: String!
+  lastName: String!
+  favourites: [Favourite]
 }
 
 type Query {
-    user(_id: String!): User!
-    users: [User]!
+  user(_id: String!): User!
+  users: [User]!
 }
 
 input NewUser {
-    firstName: String!
-    lastName: String!
-    email: String!
-    password: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
 }
 
 input UpdateUser {
-    firstName: String
-    lastName: String
+  firstName: String
+  lastName: String
 }
 
 
 type Mutation {
-    addUser(input: NewUser!): User!
-    updateUser(input: UpdateUser!): User!
+  addUser(input: NewUser!): User!
+  updateUser(input: UpdateUser!): User!
 }
 
 type Favourite {
-    _id: String!
-    product: Product!
+  _id: String!
+  product: Product!
 }
 
 input AddUserFav {
-    userId: String!
-    productId: String!
+  userId: String!
+  productId: String!
 }
 
 extend type Mutation {
-    addFav(request: AddUserFav!): Favourite!
+  addFav(request: AddUserFav!): Favourite!
 }
 
 type Department {
-    _id: String!
-    Title: String!
-    Categories: [Category]
+  _id: String!
+  Title: String!
+  Categories: [Category]
 }
 
 input AddDepartmentRequest {
-    Title: String!
+  Title: String!
 }
 
 extend type Mutation {
-    addDepartment(request: AddDepartmentRequest!): Department!
+  addDepartment(request: AddDepartmentRequest!): Department!
 }
 
 type Category {
-    _id: String!
-    Types: [Type]
+  _id: String!
+  Types: [Type]
 }
 
 input AddCategoryRequest {
-    Title: String!
-    DepartmentId: String!
+  Title: String!
+  DepartmentId: String!
 }
 
 type Type {
-    _id: String!
-    Title: String!
-    Styles: [Style]
+  _id: String!
+  Title: String!
+  Styles: [Style]
 }
 
 input AddTypeRequest {
-    Title: String!
-    CategoryId: String!
+  Title: String!
+  CategoryId: String!
 }
 
 extend type Mutation {
-    addType(request: AddTypeRequest!): Type!
+  addType(request: AddTypeRequest!): Type!
 }
 
 type Style {
-    _id: String!
-    Title: String!
-    Products: [Product]
+  _id: String!
+  Title: String!
+  Products: [Product]
 }
 
 input AddStyleRequest {
-    Title: String!
-    TypeId: String!
+  Title: String!
+  TypeId: String!
 }
 
 extend type Mutation {
-    addStyle(request: AddStyleRequest!): Style!
+  addStyle(request: AddStyleRequest!): Style!
 }
 
 input AddCertificationRequest {
-    CertifyingCompany: String!
-    CertName: String!
+  CertifyingCompany: String!
+  CertName: String!
 }
 
 type Certification {
-    _id: String!
-    CertifyingCompany: String!
-    CertName: String!
+  _id: String!
+  CertifyingCompany: String!
+  CertName: String!
 }
 
 type Image {
-    _id: String!
-    Location: String!
+  _id: String!
+  Location: String!
 }
 
 type Product {
-    _id: String!
-    Title: String!
-    Url: String!
-    Description: String!
-    UserId: String!
-    Image: Image!
+  _id: String!
+  Title: String!
+  Url: String!
+  Description: String!
+  UserId: String!
+  Image: Image!
 }
 
 input AddProductRequest {
-    Title: String!
-    Url: String!
-    Description: String!
-    UserId: String!
-    ImageLocation: String!
-    Certification: AddCertificationRequest!
-    StyleId: String!
+  Title: String!
+  Url: String!
+  Description: String!
+  UserId: String!
+  ImageLocation: String!
+  Certification: AddCertificationRequest!
+  StyleId: String!
 }
 
 extend type Mutation {
-    addProduct(request: AddProductRequest!): Product!
+  addProduct(request: AddProductRequest!): Product!
 }
 
 extend type Query {
-    getDepartments: [Department]!
+  getDepartments: [Department]!
 }

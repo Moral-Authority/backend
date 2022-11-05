@@ -6,8 +6,6 @@ FROM golang:1.18-alpine
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
-# Add Maintainer Info
-LABEL maintainer="Abdul Mateen <mateeniem@gmail.com>"
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
