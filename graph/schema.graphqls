@@ -2,101 +2,119 @@
 #
 # https://gqlgen.com/getting-started/
 
-schema{
-  query: Query
-  mutation: Mutation
+schema {
+    query: Query
+    mutation: Mutation
 }
 
+scalar Timestamp
+
+type NewUser {
+    firstname: String!
+    lastname: String!
+    email: String!
+    password: String!
+}
+
+type User {
+  id: Int!
+  firstname: String!
+  lastname: String!
+}
+
+type Product {
+  id: Int!
+}
+
+type Favorite {
+  id: Int!
+  userId: Int!
+  productId: Int!
+}
+
+
 type Query {
-  users: [User!]!
-  user(input: Int!): User!
-  products: [Product]
+    users: [User!]!
+    user(input: Int!): User!
+    products: [Product]
 }
 
 
 type Mutation {
-  createUser(input: NewUser!): User!
-  updateUser(id: Int!, input: NewUser!): User!
-  deleteUser(id: Int!): User!
-  addProduct(input:AddProduct): Product
+    createUser(input: NewUser!): User!
+    updateUser(id: Int!, input: NewUser!): User!
+    deleteUser(id: Int!): User!
+    addProduct(input:AddProduct): Product
 }
 
 
-type User {
-  id: Int!
-  fname: String!
-  lname: String!
-  createdAt: String!
-  age: Int!
-  address: String!
-}
 
 type User {
-  id: Int!
-  fname: String!
-  lname: String!
-  createdAt: String!
-  age: Int!
-  address: String!
+    id: Int!
+    fname: String!
+    lname: String!
+    createdAt: String!
+    age: Int!
+    address: String!
 }
 
 input NewUser {
-  name: String!
-  age: Int!
-  address: String!
+    name: String!
+    age: Int!
+    address: String!
 }
 
 
 enum ProductCerts {
- EWG, FairTrade, LeapingBunny, PlasticFree, Vegan, Organic, MadeInAmerica,
+    EWG, FairTrade, LeapingBunny, PlasticFree, Vegan, Organic, MadeInAmerica,
 }
 
 enum CompanyCerts {
-  Bcorp, WomanOwned,BlackOwned, IndigenousOwned, AsianPacificIslanderOwned,LGBTQOwned
+    Bcorp, WomanOwned,BlackOwned, IndigenousOwned, AsianPacificIslanderOwned,LGBTQOwned
 }
 
 input AddProduct {
-  url: String
-  description: String
-  Certifications: [ProductCerts]
-  #  Todo add support for a file upload
-  imgLink: [String]
-  Category: [CategoryInput]
-  PurchaseInfo: [PurchaseInfoInput]
-  CompanyInfo: CompanyInfoInput
+    url: String
+    description: String
+    Certifications: [ProductCerts]
+    #  Todo add support for a file upload
+    imgLink: [String]
+    Category: [CategoryInput]
+    PurchaseInfo: [PurchaseInfoInput]
+    CompanyInfo: CompanyInfoInput
 }
 
 input CompanyInfoInput{
-  Name: String
-  companyWebsite: String
-  companyCerts: [CompanyCerts]
+    Name: String
+    companyWebsite: String
+    companyCerts: [CompanyCerts]
 }
 
 input PurchaseInfoInput{
-  price: String
-  link: String
-  company: String
+    price: String
+    link: String
+    company: String
 }
 
 #  TODO make these enums
 input CategoryInput {
-  section: String
-  department: String
-  category: String
-  style: String
-  type: String
+    section: String
+    department: String
+    category: String
+    style: String
+    type: String
 }
 
 
 type Product {
-  Id: Int
-  url: String
-  description: String
-  imgId: String
+    Id: Int
+    url: String
+    description: String
+    imgId: String
 }
 
 input NewUser {
-  name: String!
-  age: Int!
-  address: String!
+    name: String!
+    age: Int!
+    address: String!
 }
