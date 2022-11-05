@@ -18,6 +18,7 @@ input NewUser {
 }
 
 input UpdateUser {
+  userId: String!
   firstName: String
   lastName: String
 }
@@ -39,7 +40,7 @@ input AddUserFav {
 }
 
 extend type Mutation {
-  addFav(request: AddUserFav!): Favourite!
+  addFav(request: AddUserFav!): [Favourite]
 }
 
 type Department {

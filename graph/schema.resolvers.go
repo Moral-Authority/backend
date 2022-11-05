@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/generated"
 	"github.com/howstrongiam/backend/graph/model"
 	"github.com/howstrongiam/backend/handlers"
@@ -17,7 +18,7 @@ func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*m
 		LastName:  input.LastName,
 		Email:     input.Email,
 		Password:  input.Password,
-	})
+	}, database.UserDbServiceImpl{})
 	if err == nil {
 		return user, nil
 	} else {
@@ -30,7 +31,7 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 	user, err := handlers.UserService{}.UpdateUser(model.UpdateUser{
 		FirstName: input.FirstName,
 		LastName:  input.LastName,
-	})
+	}, database.UserDbServiceImpl{})
 	if err == nil {
 		return user, nil
 	} else {
@@ -39,11 +40,11 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 }
 
 // AddFav is the resolver for the addFav field.
-func (r *mutationResolver) AddFav(ctx context.Context, request model.AddUserFav) (*model.Favourite, error) {
+func (r *mutationResolver) AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error) {
 	fav, err := handlers.UserService{}.AddUserFav(model.AddUserFav{
 		UserID:    request.UserID,
 		ProductID: request.ProductID,
-	})
+	}, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err == nil {
 		return fav, nil
 	} else {

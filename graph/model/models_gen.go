@@ -97,6 +97,7 @@ type Type struct {
 }
 
 type UpdateUser struct {
+	UserId    *string `json:"userId"`
 	FirstName *string `json:"firstName"`
 	LastName  *string `json:"lastName"`
 }
