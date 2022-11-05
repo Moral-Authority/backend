@@ -12,6 +12,15 @@ type AddCertificationRequest struct {
 	CertName          string `json:"CertName"`
 }
 
+type AddCompanyRequest struct {
+	URL           string                   `json:"url"`
+	Description   string                   `json:"description"`
+	UserID        string                   `json:"userId"`
+	IsVerified    bool                     `json:"isVerified"`
+	ImageLocation string                   `json:"imageLocation"`
+	Certification *AddCertificationRequest `json:"certification"`
+}
+
 type AddDepartmentRequest struct {
 	Title string `json:"Title"`
 }
@@ -43,6 +52,7 @@ type AddUserFav struct {
 
 type Category struct {
 	ID    string  `json:"_id"`
+	Title string  `json:"Title"`
 	Types []*Type `json:"Types"`
 }
 
@@ -50,6 +60,16 @@ type Certification struct {
 	ID                string `json:"_id"`
 	CertifyingCompany string `json:"CertifyingCompany"`
 	CertName          string `json:"CertName"`
+}
+
+type Company struct {
+	ID            string         `json:"_id"`
+	URL           string         `json:"url"`
+	Description   string         `json:"description"`
+	User          *User          `json:"user"`
+	IsVerified    bool           `json:"isVerified"`
+	Image         *Image         `json:"image"`
+	Certification *Certification `json:"certification"`
 }
 
 type Department struct {
@@ -76,12 +96,13 @@ type NewUser struct {
 }
 
 type Product struct {
-	ID          string `json:"_id"`
-	Title       string `json:"Title"`
-	URL         string `json:"Url"`
-	Description string `json:"Description"`
-	UserID      string `json:"UserId"`
-	Image       *Image `json:"Image"`
+	ID            string         `json:"_id"`
+	Title         string         `json:"Title"`
+	URL           string         `json:"Url"`
+	Description   string         `json:"Description"`
+	UserID        string         `json:"UserId"`
+	Image         *Image         `json:"Image"`
+	Certification *Certification `json:"Certification"`
 }
 
 type Style struct {
@@ -97,7 +118,7 @@ type Type struct {
 }
 
 type UpdateUser struct {
-	UserId    *string `json:"userId"`
+	UserID    string  `json:"userId"`
 	FirstName *string `json:"firstName"`
 	LastName  *string `json:"lastName"`
 }

@@ -5,6 +5,8 @@ package graph
 
 import (
 	"context"
+	"fmt"
+
 	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/generated"
 	"github.com/howstrongiam/backend/graph/model"
@@ -13,12 +15,7 @@ import (
 
 // AddUser is the resolver for the addUser field.
 func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	user, err := handlers.UserService{}.AddNewUser(model.NewUser{
-		FirstName: input.FirstName,
-		LastName:  input.LastName,
-		Email:     input.Email,
-		Password:  input.Password,
-	}, database.UserDbServiceImpl{})
+	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{})
 	if err == nil {
 		return user, nil
 	} else {
@@ -28,10 +25,7 @@ func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*m
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
-	user, err := handlers.UserService{}.UpdateUser(model.UpdateUser{
-		FirstName: input.FirstName,
-		LastName:  input.LastName,
-	}, database.UserDbServiceImpl{})
+	user, err := handlers.UserService{}.UpdateUser(input, database.UserDbServiceImpl{})
 	if err == nil {
 		return user, nil
 	} else {
@@ -41,10 +35,7 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 
 // AddFav is the resolver for the addFav field.
 func (r *mutationResolver) AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error) {
-	fav, err := handlers.UserService{}.AddUserFav(model.AddUserFav{
-		UserID:    request.UserID,
-		ProductID: request.ProductID,
-	}, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+	fav, err := handlers.UserService{}.AddUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err == nil {
 		return fav, nil
 	} else {
@@ -54,9 +45,7 @@ func (r *mutationResolver) AddFav(ctx context.Context, request model.AddUserFav)
 
 // AddDepartment is the resolver for the addDepartment field.
 func (r *mutationResolver) AddDepartment(ctx context.Context, request model.AddDepartmentRequest) (*model.Department, error) {
-	dept, err := handlers.ProductService{}.AddNewDepartment(model.AddDepartmentRequest{
-		Title: request.Title,
-	})
+	dept, err := handlers.ProductService{}.AddNewDepartment(request, database.ProductDbServiceImpl{})
 	if err == nil {
 		return dept, nil
 	} else {
@@ -64,12 +53,19 @@ func (r *mutationResolver) AddDepartment(ctx context.Context, request model.AddD
 	}
 }
 
+// AddCategory is the resolver for the addCategory field.
+func (r *mutationResolver) AddCategory(ctx context.Context, request model.AddCategoryRequest) (*model.Category, error) {
+	cat, err := handlers.ProductService{}.AddNewCategory(request, database.ProductDbServiceImpl{})
+	if err == nil {
+		return cat, nil
+	} else {
+		return nil, err
+	}
+}
+
 // AddType is the resolver for the addType field.
 func (r *mutationResolver) AddType(ctx context.Context, request model.AddTypeRequest) (*model.Type, error) {
-	type_, err := handlers.ProductService{}.AddNewType(model.AddTypeRequest{
-		Title:      request.Title,
-		CategoryID: request.CategoryID,
-	})
+	type_, err := handlers.ProductService{}.AddNewType(request, database.ProductDbServiceImpl{})
 	if err == nil {
 		return type_, nil
 	} else {
@@ -79,10 +75,7 @@ func (r *mutationResolver) AddType(ctx context.Context, request model.AddTypeReq
 
 // AddStyle is the resolver for the addStyle field.
 func (r *mutationResolver) AddStyle(ctx context.Context, request model.AddStyleRequest) (*model.Style, error) {
-	style, err := handlers.ProductService{}.AddNewStyle(model.AddStyleRequest{
-		Title:  request.Title,
-		TypeID: request.TypeID,
-	})
+	style, err := handlers.ProductService{}.AddNewStyle(request, database.ProductDbServiceImpl{})
 	if err == nil {
 		return style, nil
 	} else {
@@ -92,15 +85,12 @@ func (r *mutationResolver) AddStyle(ctx context.Context, request model.AddStyleR
 
 // AddProduct is the resolver for the addProduct field.
 func (r *mutationResolver) AddProduct(ctx context.Context, request model.AddProductRequest) (*model.Product, error) {
-	product, err := handlers.ProductService{}.AddNewProduct(model.AddProductRequest{
-		Title:         request.Title,
-		URL:           request.URL,
-		Description:   request.Description,
-		UserID:        request.UserID,
-		ImageLocation: request.ImageLocation,
-		Certification: request.Certification,
-		StyleID:       request.StyleID,
-	})
+	product, err := handlers.ProductService{}.AddNewProduct(
+		request,
+		database.ProductDbServiceImpl{},
+		database.ImageDbServiceImpl{},
+		database.CertificatesDbServiceImpl{},
+	)
 	if err == nil {
 		return product, nil
 	} else {
@@ -108,9 +98,14 @@ func (r *mutationResolver) AddProduct(ctx context.Context, request model.AddProd
 	}
 }
 
+// AddCompany is the resolver for the addCompany field.
+func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompanyRequest) (*model.Company, error) {
+	panic(fmt.Errorf("not implemented: AddCompany - addCompany"))
+}
+
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	user, err := handlers.UserService{}.GetUserById(id)
+	user, err := handlers.UserService{}.GetUserById(id, database.UserDbServiceImpl{})
 	if err == nil {
 		return user, nil
 	} else {
@@ -120,7 +115,7 @@ func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	users, err := handlers.UserService{}.GetUsers()
+	users, err := handlers.UserService{}.GetUsers(database.UserDbServiceImpl{})
 	if err == nil {
 		return users, nil
 	} else {
@@ -130,12 +125,17 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 
 // GetDepartments is the resolver for the getDepartments field.
 func (r *queryResolver) GetDepartments(ctx context.Context) ([]*model.Department, error) {
-	departments, err := handlers.ProductService{}.GetDepartments()
+	departments, err := handlers.ProductService{}.GetDepartments(database.ProductDbServiceImpl{})
 	if err == nil {
 		return departments, nil
 	} else {
 		return nil, err
 	}
+}
+
+// GetCompany is the resolver for the getCompany field.
+func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Company, error) {
+	panic(fmt.Errorf("not implemented: GetCompany - getCompany"))
 }
 
 // Mutation returns generated.MutationResolver implementation.

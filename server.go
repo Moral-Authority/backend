@@ -8,6 +8,7 @@ import (
 	"github.com/alexflint/go-arg"
 	"github.com/gorilla/websocket"
 	"github.com/howstrongiam/backend/cmd"
+	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph"
 	"github.com/howstrongiam/backend/graph/generated"
 	"github.com/rs/cors"
@@ -31,6 +32,9 @@ func main() {
 	port := ":" + cfg.Port
 
 	c := cors.Default()
+
+	// initialize database
+	database.Connect(cfg.DatabaseConfig)
 
 	// setup graphql server
 	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))

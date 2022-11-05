@@ -7,8 +7,8 @@ import (
 
 type UserDbService interface {
 	AddNewUser(models.User) *models.User
-	GetUser(uint) *models.User
+	GetUser(string) *models.User
 	GetAllUsers() []models.User
-	UpdateUser(uint, model.UpdateUser) *models.User
+	UpdateUser(string, model.UpdateUser) *models.User
 	AddUserFav(model.AddUserFav, models.Product) []models.Favourite
 }

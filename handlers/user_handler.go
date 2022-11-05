@@ -34,7 +34,7 @@ func (s UserService) AddNewUser(request model.NewUser, dbService database.UserDb
 }
 
 func (s UserService) UpdateUser(request model.UpdateUser, dbService database.UserDbService) (*model.User, error) {
-	updatedUser := dbService.UpdateUser(*request.UserId, request)
+	updatedUser := dbService.UpdateUser(request.UserID, request)
 	if updatedUser == nil {
 		return nil, errors.New("unable to update user in db")
 	}

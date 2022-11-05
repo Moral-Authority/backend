@@ -46,6 +46,7 @@ type DirectiveRoot struct {
 type ComplexityRoot struct {
 	Category struct {
 		ID    func(childComplexity int) int
+		Title func(childComplexity int) int
 		Types func(childComplexity int) int
 	}
 
@@ -53,6 +54,16 @@ type ComplexityRoot struct {
 		CertName          func(childComplexity int) int
 		CertifyingCompany func(childComplexity int) int
 		ID                func(childComplexity int) int
+	}
+
+	Company struct {
+		Certification func(childComplexity int) int
+		Description   func(childComplexity int) int
+		ID            func(childComplexity int) int
+		Image         func(childComplexity int) int
+		IsVerified    func(childComplexity int) int
+		URL           func(childComplexity int) int
+		User          func(childComplexity int) int
 	}
 
 	Department struct {
@@ -72,6 +83,8 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
+		AddCategory   func(childComplexity int, request model.AddCategoryRequest) int
+		AddCompany    func(childComplexity int, request model.AddCompanyRequest) int
 		AddDepartment func(childComplexity int, request model.AddDepartmentRequest) int
 		AddFav        func(childComplexity int, request model.AddUserFav) int
 		AddProduct    func(childComplexity int, request model.AddProductRequest) int
@@ -82,15 +95,17 @@ type ComplexityRoot struct {
 	}
 
 	Product struct {
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Image       func(childComplexity int) int
-		Title       func(childComplexity int) int
-		URL         func(childComplexity int) int
-		UserID      func(childComplexity int) int
+		Certification func(childComplexity int) int
+		Description   func(childComplexity int) int
+		ID            func(childComplexity int) int
+		Image         func(childComplexity int) int
+		Title         func(childComplexity int) int
+		URL           func(childComplexity int) int
+		UserID        func(childComplexity int) int
 	}
 
 	Query struct {
+		GetCompany     func(childComplexity int, id string) int
 		GetDepartments func(childComplexity int) int
 		User           func(childComplexity int, id string) int
 		Users          func(childComplexity int) int
@@ -119,16 +134,19 @@ type ComplexityRoot struct {
 type MutationResolver interface {
 	AddUser(ctx context.Context, input model.NewUser) (*model.User, error)
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
-	AddFav(ctx context.Context, request model.AddUserFav) (*model.Favourite, error)
+	AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error)
 	AddDepartment(ctx context.Context, request model.AddDepartmentRequest) (*model.Department, error)
+	AddCategory(ctx context.Context, request model.AddCategoryRequest) (*model.Category, error)
 	AddType(ctx context.Context, request model.AddTypeRequest) (*model.Type, error)
 	AddStyle(ctx context.Context, request model.AddStyleRequest) (*model.Style, error)
 	AddProduct(ctx context.Context, request model.AddProductRequest) (*model.Product, error)
+	AddCompany(ctx context.Context, request model.AddCompanyRequest) (*model.Company, error)
 }
 type QueryResolver interface {
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
 	GetDepartments(ctx context.Context) ([]*model.Department, error)
+	GetCompany(ctx context.Context, id string) (*model.Company, error)
 }
 
 type executableSchema struct {
@@ -152,6 +170,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Category.ID(childComplexity), true
+
+	case "Category.Title":
+		if e.complexity.Category.Title == nil {
+			break
+		}
+
+		return e.complexity.Category.Title(childComplexity), true
 
 	case "Category.Types":
 		if e.complexity.Category.Types == nil {
@@ -180,6 +205,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Certification.ID(childComplexity), true
+
+	case "Company.certification":
+		if e.complexity.Company.Certification == nil {
+			break
+		}
+
+		return e.complexity.Company.Certification(childComplexity), true
+
+	case "Company.description":
+		if e.complexity.Company.Description == nil {
+			break
+		}
+
+		return e.complexity.Company.Description(childComplexity), true
+
+	case "Company._id":
+		if e.complexity.Company.ID == nil {
+			break
+		}
+
+		return e.complexity.Company.ID(childComplexity), true
+
+	case "Company.image":
+		if e.complexity.Company.Image == nil {
+			break
+		}
+
+		return e.complexity.Company.Image(childComplexity), true
+
+	case "Company.isVerified":
+		if e.complexity.Company.IsVerified == nil {
+			break
+		}
+
+		return e.complexity.Company.IsVerified(childComplexity), true
+
+	case "Company.url":
+		if e.complexity.Company.URL == nil {
+			break
+		}
+
+		return e.complexity.Company.URL(childComplexity), true
+
+	case "Company.user":
+		if e.complexity.Company.User == nil {
+			break
+		}
+
+		return e.complexity.Company.User(childComplexity), true
 
 	case "Department.Categories":
 		if e.complexity.Department.Categories == nil {
@@ -229,6 +303,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Image.Location(childComplexity), true
+
+	case "Mutation.addCategory":
+		if e.complexity.Mutation.AddCategory == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addCategory_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddCategory(childComplexity, args["request"].(model.AddCategoryRequest)), true
+
+	case "Mutation.addCompany":
+		if e.complexity.Mutation.AddCompany == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addCompany_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddCompany(childComplexity, args["request"].(model.AddCompanyRequest)), true
 
 	case "Mutation.addDepartment":
 		if e.complexity.Mutation.AddDepartment == nil {
@@ -314,6 +412,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateUser(childComplexity, args["input"].(model.UpdateUser)), true
 
+	case "Product.Certification":
+		if e.complexity.Product.Certification == nil {
+			break
+		}
+
+		return e.complexity.Product.Certification(childComplexity), true
+
 	case "Product.Description":
 		if e.complexity.Product.Description == nil {
 			break
@@ -355,6 +460,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Product.UserID(childComplexity), true
+
+	case "Query.getCompany":
+		if e.complexity.Query.GetCompany == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getCompany_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetCompany(childComplexity, args["id"].(string)), true
 
 	case "Query.getDepartments":
 		if e.complexity.Query.GetDepartments == nil {
@@ -462,6 +579,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputAddCategoryRequest,
 		ec.unmarshalInputAddCertificationRequest,
+		ec.unmarshalInputAddCompanyRequest,
 		ec.unmarshalInputAddDepartmentRequest,
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddStyleRequest,
@@ -549,6 +667,7 @@ input NewUser {
 }
 
 input UpdateUser {
+  userId: String!
   firstName: String
   lastName: String
 }
@@ -570,7 +689,7 @@ input AddUserFav {
 }
 
 extend type Mutation {
-  addFav(request: AddUserFav!): Favourite!
+  addFav(request: AddUserFav!): [Favourite]
 }
 
 type Department {
@@ -589,12 +708,17 @@ extend type Mutation {
 
 type Category {
   _id: String!
+  Title: String!
   Types: [Type]
 }
 
 input AddCategoryRequest {
   Title: String!
   DepartmentId: String!
+}
+
+extend type Mutation {
+  addCategory(request: AddCategoryRequest!): Category!
 }
 
 type Type {
@@ -650,6 +774,7 @@ type Product {
   Description: String!
   UserId: String!
   Image: Image!
+  Certification: Certification!
 }
 
 input AddProductRequest {
@@ -668,6 +793,33 @@ extend type Mutation {
 
 extend type Query {
   getDepartments: [Department]!
+}
+
+type Company {
+  _id: String!
+  url: String!
+  description: String!
+  user: User!
+  isVerified: Boolean!
+  image: Image!
+  certification: Certification!
+}
+
+input AddCompanyRequest {
+  url: String!
+  description: String!
+  userId: String!
+  isVerified: Boolean!
+  imageLocation: String!
+  certification: AddCertificationRequest!
+}
+
+extend type Mutation {
+  addCompany(request: AddCompanyRequest!): Company!
+}
+
+extend type Query {
+  getCompany(id: String!): Company!
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
@@ -675,6 +827,36 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 // endregion ************************** generated!.gotpl **************************
 
 // region    ***************************** args.gotpl *****************************
+
+func (ec *executionContext) field_Mutation_addCategory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.AddCategoryRequest
+	if tmp, ok := rawArgs["request"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+		arg0, err = ec.unmarshalNAddCategoryRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCategoryRequest(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["request"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_addCompany_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.AddCompanyRequest
+	if tmp, ok := rawArgs["request"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+		arg0, err = ec.unmarshalNAddCompanyRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCompanyRequest(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["request"] = arg0
+	return args, nil
+}
 
 func (ec *executionContext) field_Mutation_addDepartment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
@@ -796,6 +978,21 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_getCompany_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -881,6 +1078,50 @@ func (ec *executionContext) _Category__id(ctx context.Context, field graphql.Col
 }
 
 func (ec *executionContext) fieldContext_Category__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Category_Title(ctx context.Context, field graphql.CollectedField, obj *model.Category) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Category_Title(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Category_Title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -1074,6 +1315,338 @@ func (ec *executionContext) fieldContext_Certification_CertName(ctx context.Cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Company__id(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company__id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_url(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_url(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.URL, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_description(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_description(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_user(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_user(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.User, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.User)
+	fc.Result = res
+	return ec.marshalNUser2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_User__id(ctx, field)
+			case "firstName":
+				return ec.fieldContext_User_firstName(ctx, field)
+			case "lastName":
+				return ec.fieldContext_User_lastName(ctx, field)
+			case "favourites":
+				return ec.fieldContext_User_favourites(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_isVerified(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_isVerified(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsVerified, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_isVerified(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_image(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_image(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Image, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Image)
+	fc.Result = res
+	return ec.marshalNImage2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐImage(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_image(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Image__id(ctx, field)
+			case "Location":
+				return ec.fieldContext_Image_Location(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Image", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_certification(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_certification(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Certification, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Certification)
+	fc.Result = res
+	return ec.marshalNCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_certification(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Certification__id(ctx, field)
+			case "CertifyingCompany":
+				return ec.fieldContext_Certification_CertifyingCompany(ctx, field)
+			case "CertName":
+				return ec.fieldContext_Certification_CertName(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Department__id(ctx context.Context, field graphql.CollectedField, obj *model.Department) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Department__id(ctx, field)
 	if err != nil {
@@ -1200,6 +1773,8 @@ func (ec *executionContext) fieldContext_Department_Categories(ctx context.Conte
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Category__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Category_Title(ctx, field)
 			case "Types":
 				return ec.fieldContext_Category_Types(ctx, field)
 			}
@@ -1304,6 +1879,8 @@ func (ec *executionContext) fieldContext_Favourite_product(ctx context.Context, 
 				return ec.fieldContext_Product_UserId(ctx, field)
 			case "Image":
 				return ec.fieldContext_Product_Image(ctx, field)
+			case "Certification":
+				return ec.fieldContext_Product_Certification(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
@@ -1550,14 +2127,11 @@ func (ec *executionContext) _Mutation_addFav(ctx context.Context, field graphql.
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.Favourite)
+	res := resTmp.([]*model.Favourite)
 	fc.Result = res
-	return ec.marshalNFavourite2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, field.Selections, res)
+	return ec.marshalOFavourite2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_addFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1647,6 +2221,69 @@ func (ec *executionContext) fieldContext_Mutation_addDepartment(ctx context.Cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_addDepartment_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_addCategory(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addCategory(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().AddCategory(rctx, fc.Args["request"].(model.AddCategoryRequest))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Category)
+	fc.Result = res
+	return ec.marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Category__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Category_Title(ctx, field)
+			case "Types":
+				return ec.fieldContext_Category_Types(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Category", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addCategory_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -1830,6 +2467,8 @@ func (ec *executionContext) fieldContext_Mutation_addProduct(ctx context.Context
 				return ec.fieldContext_Product_UserId(ctx, field)
 			case "Image":
 				return ec.fieldContext_Product_Image(ctx, field)
+			case "Certification":
+				return ec.fieldContext_Product_Certification(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
@@ -1842,6 +2481,77 @@ func (ec *executionContext) fieldContext_Mutation_addProduct(ctx context.Context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_addProduct_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_addCompany(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addCompany(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().AddCompany(rctx, fc.Args["request"].(model.AddCompanyRequest))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Company)
+	fc.Result = res
+	return ec.marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_addCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Company__id(ctx, field)
+			case "url":
+				return ec.fieldContext_Company_url(ctx, field)
+			case "description":
+				return ec.fieldContext_Company_description(ctx, field)
+			case "user":
+				return ec.fieldContext_Company_user(ctx, field)
+			case "isVerified":
+				return ec.fieldContext_Company_isVerified(ctx, field)
+			case "image":
+				return ec.fieldContext_Company_image(ctx, field)
+			case "certification":
+				return ec.fieldContext_Company_certification(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Company", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addCompany_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -2118,6 +2828,58 @@ func (ec *executionContext) fieldContext_Product_Image(ctx context.Context, fiel
 	return fc, nil
 }
 
+func (ec *executionContext) _Product_Certification(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_Certification(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Certification, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Certification)
+	fc.Result = res
+	return ec.marshalNCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_Certification(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Certification__id(ctx, field)
+			case "CertifyingCompany":
+				return ec.fieldContext_Certification_CertifyingCompany(ctx, field)
+			case "CertName":
+				return ec.fieldContext_Certification_CertName(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_user(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_user(ctx, field)
 	if err != nil {
@@ -2285,6 +3047,77 @@ func (ec *executionContext) fieldContext_Query_getDepartments(ctx context.Contex
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Department", field.Name)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_getCompany(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getCompany(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GetCompany(rctx, fc.Args["id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.Company)
+	fc.Result = res
+	return ec.marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_getCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Company__id(ctx, field)
+			case "url":
+				return ec.fieldContext_Company_url(ctx, field)
+			case "description":
+				return ec.fieldContext_Company_description(ctx, field)
+			case "user":
+				return ec.fieldContext_Company_user(ctx, field)
+			case "isVerified":
+				return ec.fieldContext_Company_isVerified(ctx, field)
+			case "image":
+				return ec.fieldContext_Company_image(ctx, field)
+			case "certification":
+				return ec.fieldContext_Company_certification(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Company", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_getCompany_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -2554,6 +3387,8 @@ func (ec *executionContext) fieldContext_Style_Products(ctx context.Context, fie
 				return ec.fieldContext_Product_UserId(ctx, field)
 			case "Image":
 				return ec.fieldContext_Product_Image(ctx, field)
+			case "Certification":
+				return ec.fieldContext_Product_Certification(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
@@ -4722,6 +5557,74 @@ func (ec *executionContext) unmarshalInputAddCertificationRequest(ctx context.Co
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputAddCompanyRequest(ctx context.Context, obj interface{}) (model.AddCompanyRequest, error) {
+	var it model.AddCompanyRequest
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"url", "description", "userId", "isVerified", "imageLocation", "certification"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "url":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
+			it.URL, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "description":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			it.Description, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "userId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
+			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "isVerified":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isVerified"))
+			it.IsVerified, err = ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "imageLocation":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("imageLocation"))
+			it.ImageLocation, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "certification":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certification"))
+			it.Certification, err = ec.unmarshalNAddCertificationRequest2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertificationRequest(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputAddDepartmentRequest(ctx context.Context, obj interface{}) (model.AddDepartmentRequest, error) {
 	var it model.AddDepartmentRequest
 	asMap := map[string]interface{}{}
@@ -4993,13 +5896,21 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"firstName", "lastName"}
+	fieldsInOrder := [...]string{"userId", "firstName", "lastName"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
+		case "userId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
+			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "firstName":
 			var err error
 
@@ -5047,6 +5958,13 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "Title":
+
+			out.Values[i] = ec._Category_Title(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "Types":
 
 			out.Values[i] = ec._Category_Types(ctx, field, obj)
@@ -5089,6 +6007,76 @@ func (ec *executionContext) _Certification(ctx context.Context, sel ast.Selectio
 		case "CertName":
 
 			out.Values[i] = ec._Certification_CertName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var companyImplementors = []string{"Company"}
+
+func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, obj *model.Company) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, companyImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Company")
+		case "_id":
+
+			out.Values[i] = ec._Company__id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "url":
+
+			out.Values[i] = ec._Company_url(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "description":
+
+			out.Values[i] = ec._Company_description(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "user":
+
+			out.Values[i] = ec._Company_user(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "isVerified":
+
+			out.Values[i] = ec._Company_isVerified(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "image":
+
+			out.Values[i] = ec._Company_image(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "certification":
+
+			out.Values[i] = ec._Company_certification(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -5256,13 +6244,19 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_addFav(ctx, field)
 			})
 
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "addDepartment":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_addDepartment(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "addCategory":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addCategory(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -5290,6 +6284,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_addProduct(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "addCompany":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addCompany(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -5354,6 +6357,13 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 		case "Image":
 
 			out.Values[i] = ec._Product_Image(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Certification":
+
+			out.Values[i] = ec._Product_Certification(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -5444,6 +6454,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_getDepartments(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "getCompany":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_getCompany(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -5922,9 +6955,19 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
+func (ec *executionContext) unmarshalNAddCategoryRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCategoryRequest(ctx context.Context, v interface{}) (model.AddCategoryRequest, error) {
+	res, err := ec.unmarshalInputAddCategoryRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNAddCertificationRequest2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertificationRequest(ctx context.Context, v interface{}) (*model.AddCertificationRequest, error) {
 	res, err := ec.unmarshalInputAddCertificationRequest(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNAddCompanyRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCompanyRequest(ctx context.Context, v interface{}) (model.AddCompanyRequest, error) {
+	res, err := ec.unmarshalInputAddCompanyRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNAddDepartmentRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddDepartmentRequest(ctx context.Context, v interface{}) (model.AddDepartmentRequest, error) {
@@ -5965,6 +7008,44 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
+	return ec._Category(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Category(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v *model.Certification) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Certification(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNCompany2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v model.Company) graphql.Marshaler {
+	return ec._Company(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v *model.Company) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Company(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNDepartment2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐDepartment(ctx context.Context, sel ast.SelectionSet, v model.Department) graphql.Marshaler {
@@ -6017,20 +7098,6 @@ func (ec *executionContext) marshalNDepartment2ᚖgithubᚗcomᚋhowstrongiamᚋ
 		return graphql.Null
 	}
 	return ec._Department(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNFavourite2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v model.Favourite) graphql.Marshaler {
-	return ec._Favourite(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNFavourite2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v *model.Favourite) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._Favourite(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNImage2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐImage(ctx context.Context, sel ast.SelectionSet, v *model.Image) graphql.Marshaler {

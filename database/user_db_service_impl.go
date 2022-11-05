@@ -4,6 +4,7 @@ import (
 	"github.com/howstrongiam/backend/graph/model"
 	"github.com/howstrongiam/backend/models"
 	"github.com/sirupsen/logrus"
+	"strconv"
 )
 
 type UserDbServiceImpl struct{}
@@ -14,10 +15,10 @@ func (s UserDbServiceImpl) AddNewUser(newUser models.User) *models.User {
 		logrus.Errorf("Unable to save user, %s", result.Error)
 		return nil
 	}
-	return s.GetUser(newUser.ID)
+	return s.GetUser(strconv.Itoa(int(newUser.ID)))
 }
 
-func (s UserDbServiceImpl) GetUser(userId uint) *models.User {
+func (s UserDbServiceImpl) GetUser(userId string) *models.User {
 	var user models.User
 	result := GetDbConn().First(&user, "id = ?", userId)
 	if result.Error != nil {
@@ -37,7 +38,7 @@ func (s UserDbServiceImpl) GetAllUsers() []models.User {
 	return users
 }
 
-func (s UserDbServiceImpl) UpdateUser(userId uint, request model.UpdateUser) *models.User {
+func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) *models.User {
 	// 1: get the user first
 	user := s.GetUser(userId)
 	if user == nil {
@@ -59,12 +60,12 @@ func (s UserDbServiceImpl) UpdateUser(userId uint, request model.UpdateUser) *mo
 
 func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) []models.Favourite {
 	// 1: get the user first
-	id, err := stringToUint(request.UserID)
+	id, err := StringToUint(request.UserID)
 	if err == nil {
 		logrus.Errorf("Unable to convert id, %s", request.UserID)
 		return nil
 	}
-	user := s.GetUser(id)
+	user := s.GetUser(strconv.Itoa(int(id)))
 	if user == nil {
 		logrus.Errorf("unable to get user")
 		return nil
@@ -77,6 +78,6 @@ func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.P
 		logrus.Errorf("unable to append fav")
 		return nil
 	}
-	updatedUser := s.GetUser(id)
+	updatedUser := s.GetUser(strconv.Itoa(int(id)))
 	return updatedUser.Favourites
 }
