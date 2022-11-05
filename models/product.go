@@ -4,8 +4,13 @@ import "gorm.io/gorm"
 
 type Product struct {
 	gorm.Model
-	Url         string `json:"url"`
-	Description string `json:"description"`
-	UserId      uint   `json:"user_id"`
-	ImageId     uint   `json:"image_id"`
+	Url             string
+	Description     string
+	UserId          uint
+	User            User `gorm:"foreignKey:UserId"`
+	ImageId         uint
+	Image           Image `gorm:"foreignKey:ImageId"`
+	CertificationId uint
+	Certification   Certification `gorm:"foreignKey:CertificationId"`
+	StyleRefer      uint
 }

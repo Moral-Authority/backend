@@ -4,9 +4,13 @@ import "gorm.io/gorm"
 
 type Company struct {
 	gorm.Model
-	Url         string `json:"url"`
-	Description string `json:"description"`
-	UserId      uint   `json:"user_id"`
-	IsVerified  bool   `json:"is_verified"`
-	ImageId     uint   `json:"image_id"`
+	Url             string
+	Description     string
+	UserId          uint
+	User            User `gorm:"foreignKey:UserId"`
+	IsVerified      bool
+	ImageId         uint
+	Image           Image `gorm:"foreignKey:ImageId"`
+	CertificationId uint
+	Certification   Certification `gorm:"foreignKey:CertificationId"`
 }
