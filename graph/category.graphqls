@@ -1,0 +1,14 @@
+extend type Mutation {
+    addCategory(request: AddCategoryRequest!): Category!
+}
+
+type Category {
+    _id: String!
+    Title: String!
+    Types: [Type]
+}
+
+input AddCategoryRequest {
+    Title: String!
+    DepartmentId: String!
+}

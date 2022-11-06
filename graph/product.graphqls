@@ -1,0 +1,23 @@
+extend type Mutation {
+    addProduct(request: AddProductRequest!): Product!
+}
+
+input AddProductRequest {
+    Title: String!
+    Url: String!
+    Description: String!
+    UserId: String!
+    ImageLocation: String!
+    Certification: AddCertificationRequest!
+    StyleId: String!
+}
+
+type Product {
+    _id: String!
+    Title: String!
+    Url: String!
+    Description: String!
+    UserId: String!
+    Image: Image!
+    Certification: Certification!
+}

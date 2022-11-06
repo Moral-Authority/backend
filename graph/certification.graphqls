@@ -1,0 +1,10 @@
+input AddCertificationRequest {
+    CertifyingCompany: String!
+    CertName: String!
+}
+
+type Certification {
+    _id: String!
+    CertifyingCompany: String!
+    CertName: String!
+}

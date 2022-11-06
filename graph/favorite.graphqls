@@ -1,0 +1,13 @@
+extend type Mutation {
+    addFav(request: AddUserFav!): [Favourite]
+}
+
+type Favourite {
+_id: String!
+product: Product!
+}
+
+input AddUserFav {
+userId: String!
+productId: String!
+}

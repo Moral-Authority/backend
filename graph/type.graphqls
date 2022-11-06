@@ -1,0 +1,10 @@
+type Type {
+    _id: String!
+    Title: String!
+    Styles: [Style]
+}
+
+input AddTypeRequest {
+    Title: String!
+    CategoryId: String!
+}
