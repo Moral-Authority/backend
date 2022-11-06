@@ -1,13 +1,58 @@
+
+type Query {
+  user(_id: String!): User!
+  users: [User]!
+}
+
+type Mutation {
+  addUser(input: NewUser!): User!
+  updateUser(input: UpdateUser!): User!
+}
+
+extend type Mutation {
+  addDepartment(request: AddDepartmentRequest!): Department!
+}
+
+extend type Mutation {
+  addFav(request: AddUserFav!): [Favourite]
+}
+
+extend type Mutation {
+  addProduct(request: AddProductRequest!): Product!
+}
+
+
+extend type Mutation {
+  addStyle(request: AddStyleRequest!): Style!
+}
+
+extend type Mutation {
+  addType(request: AddTypeRequest!): Type!
+}
+
+extend type Mutation {
+  addCategory(request: AddCategoryRequest!): Category!
+}
+
+extend type Mutation {
+  addCompany(request: AddCompanyRequest!): Company!
+}
+
+extend type Query {
+  getCompany(id: String!): Company!
+}
+
+
+extend type Query {
+  getDepartments: [Department]!
+}
+
+
 type User {
   _id: String!
   firstName: String!
   lastName: String!
   favourites: [Favourite]
-}
-
-type Query {
-  user(_id: String!): User!
-  users: [User]!
 }
 
 input NewUser {
@@ -23,12 +68,6 @@ input UpdateUser {
   lastName: String
 }
 
-
-type Mutation {
-  addUser(input: NewUser!): User!
-  updateUser(input: UpdateUser!): User!
-}
-
 type Favourite {
   _id: String!
   product: Product!
@@ -39,10 +78,6 @@ input AddUserFav {
   productId: String!
 }
 
-extend type Mutation {
-  addFav(request: AddUserFav!): [Favourite]
-}
-
 type Department {
   _id: String!
   Title: String!
@@ -51,10 +86,6 @@ type Department {
 
 input AddDepartmentRequest {
   Title: String!
-}
-
-extend type Mutation {
-  addDepartment(request: AddDepartmentRequest!): Department!
 }
 
 type Category {
@@ -68,10 +99,6 @@ input AddCategoryRequest {
   DepartmentId: String!
 }
 
-extend type Mutation {
-  addCategory(request: AddCategoryRequest!): Category!
-}
-
 type Type {
   _id: String!
   Title: String!
@@ -83,10 +110,6 @@ input AddTypeRequest {
   CategoryId: String!
 }
 
-extend type Mutation {
-  addType(request: AddTypeRequest!): Type!
-}
-
 type Style {
   _id: String!
   Title: String!
@@ -96,10 +119,6 @@ type Style {
 input AddStyleRequest {
   Title: String!
   TypeId: String!
-}
-
-extend type Mutation {
-  addStyle(request: AddStyleRequest!): Style!
 }
 
 input AddCertificationRequest {
@@ -138,14 +157,6 @@ input AddProductRequest {
   StyleId: String!
 }
 
-extend type Mutation {
-  addProduct(request: AddProductRequest!): Product!
-}
-
-extend type Query {
-  getDepartments: [Department]!
-}
-
 type Company {
   _id: String!
   url: String!
@@ -163,12 +174,4 @@ input AddCompanyRequest {
   isVerified: Boolean!
   imageLocation: String!
   certification: AddCertificationRequest!
-}
-
-extend type Mutation {
-  addCompany(request: AddCompanyRequest!): Company!
-}
-
-extend type Query {
-  getCompany(id: String!): Company!
 }
