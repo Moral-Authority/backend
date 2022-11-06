@@ -32,7 +32,7 @@ func DefaultConfiguration() *Config {
 			Port: "8080",
 		},
 		DatabaseConfig: DatabaseConfig{
-			DatabaseName:           "backend_db",
+			DatabaseName:           "postgres",
 			DatabaseUsername:       "postgres",
 			DatabasePassword:       "postgres",
 			DatabaseConnectionUrl:  "localhost",
