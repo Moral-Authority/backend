@@ -93,7 +93,7 @@ func (s ProductDbServiceImpl) AddProduct(product models.Product) *models.Product
 }
 
 func (s ProductDbServiceImpl) GetDepartments() []*models.Department {
-	var departments []models.Department
+	var departments []*models.Department
 	result := GetDbConn().Find(&departments)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all departments, %s", result.Error)
@@ -101,7 +101,7 @@ func (s ProductDbServiceImpl) GetDepartments() []*models.Department {
 	}
 	var response []*models.Department
 	for _, e := range departments {
-		response = append(response, &e)
+		response = append(response, e)
 	}
 	return response
 }
