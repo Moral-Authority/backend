@@ -1,102 +1,174 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-schema{
-  query: Query
-  mutation: Mutation
+type User {
+  _id: String!
+  firstName: String!
+  lastName: String!
+  favourites: [Favourite]
 }
 
 type Query {
-  users: [User!]!
-  user(input: Int!): User!
-  products: [Product]
+  user(_id: String!): User!
+  users: [User]!
+}
+
+input NewUser {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUser {
+  userId: String!
+  firstName: String
+  lastName: String
 }
 
 
 type Mutation {
-  createUser(input: NewUser!): User!
-  updateUser(id: Int!, input: NewUser!): User!
-  deleteUser(id: Int!): User!
-  addProduct(input:AddProduct): Product
+  addUser(input: NewUser!): User!
+  updateUser(input: UpdateUser!): User!
 }
 
-
-type User {
-  id: Int!
-  fname: String!
-  lname: String!
-  createdAt: String!
-  age: Int!
-  address: String!
+type Favourite {
+  _id: String!
+  product: Product!
 }
 
-type User {
-  id: Int!
-  fname: String!
-  lname: String!
-  createdAt: String!
-  age: Int!
-  address: String!
+input AddUserFav {
+  userId: String!
+  productId: String!
 }
 
-input NewUser {
-  name: String!
-  age: Int!
-  address: String!
+extend type Mutation {
+  addFav(request: AddUserFav!): [Favourite]
 }
 
-
-enum ProductCerts {
- EWG, FairTrade, LeapingBunny, PlasticFree, Vegan, Organic, MadeInAmerica,
+type Department {
+  _id: String!
+  Title: String!
+  Categories: [Category]
 }
 
-enum CompanyCerts {
-  Bcorp, WomanOwned,BlackOwned, IndigenousOwned, AsianPacificIslanderOwned,LGBTQOwned
+input AddDepartmentRequest {
+  Title: String!
 }
 
-input AddProduct {
-  url: String
-  description: String
-  Certifications: [ProductCerts]
-  #  Todo add support for a file upload
-  imgLink: [String]
-  Category: [CategoryInput]
-  PurchaseInfo: [PurchaseInfoInput]
-  CompanyInfo: CompanyInfoInput
+extend type Mutation {
+  addDepartment(request: AddDepartmentRequest!): Department!
 }
 
-input CompanyInfoInput{
-  Name: String
-  companyWebsite: String
-  companyCerts: [CompanyCerts]
+type Category {
+  _id: String!
+  Title: String!
+  Types: [Type]
 }
 
-input PurchaseInfoInput{
-  price: String
-  link: String
-  company: String
+input AddCategoryRequest {
+  Title: String!
+  DepartmentId: String!
 }
 
-#  TODO make these enums
-input CategoryInput {
-  section: String
-  department: String
-  category: String
-  style: String
-  type: String
+extend type Mutation {
+  addCategory(request: AddCategoryRequest!): Category!
 }
 
+type Type {
+  _id: String!
+  Title: String!
+  Styles: [Style]
+}
+
+input AddTypeRequest {
+  Title: String!
+  CategoryId: String!
+}
+
+extend type Mutation {
+  addType(request: AddTypeRequest!): Type!
+}
+
+type Style {
+  _id: String!
+  Title: String!
+  Products: [Product]
+}
+
+input AddStyleRequest {
+  Title: String!
+  TypeId: String!
+}
+
+extend type Mutation {
+  addStyle(request: AddStyleRequest!): Style!
+}
+
+input AddCertificationRequest {
+  CertifyingCompany: String!
+  CertName: String!
+}
+
+type Certification {
+  _id: String!
+  CertifyingCompany: String!
+  CertName: String!
+}
+
+type Image {
+  _id: String!
+  Location: String!
+}
 
 type Product {
-  Id: Int
-  url: String
-  description: String
-  imgId: String
+  _id: String!
+  Title: String!
+  Url: String!
+  Description: String!
+  UserId: String!
+  Image: Image!
+  Certification: Certification!
 }
 
-input NewUser {
-  name: String!
-  age: Int!
-  address: String!
+input AddProductRequest {
+  Title: String!
+  Url: String!
+  Description: String!
+  UserId: String!
+  ImageLocation: String!
+  Certification: AddCertificationRequest!
+  StyleId: String!
+}
+
+extend type Mutation {
+  addProduct(request: AddProductRequest!): Product!
+}
+
+extend type Query {
+  getDepartments: [Department]!
+}
+
+type Company {
+  _id: String!
+  url: String!
+  description: String!
+  user: User!
+  isVerified: Boolean!
+  image: Image!
+  certification: Certification!
+}
+
+input AddCompanyRequest {
+  url: String!
+  description: String!
+  userId: String!
+  isVerified: Boolean!
+  imageLocation: String!
+  certification: AddCertificationRequest!
+}
+
+extend type Mutation {
+  addCompany(request: AddCompanyRequest!): Company!
+}
+
+extend type Query {
+  getCompany(id: String!): Company!
 }

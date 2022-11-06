@@ -2,8 +2,130 @@
 
 package model
 
+type AddCategoryRequest struct {
+	Title        string `json:"Title"`
+	DepartmentID string `json:"DepartmentId"`
+}
+
+type AddCertificationRequest struct {
+	CertifyingCompany string `json:"CertifyingCompany"`
+	CertName          string `json:"CertName"`
+}
+
+type AddCompanyRequest struct {
+	URL           string                   `json:"url"`
+	Description   string                   `json:"description"`
+	UserID        string                   `json:"userId"`
+	IsVerified    bool                     `json:"isVerified"`
+	ImageLocation string                   `json:"imageLocation"`
+	Certification *AddCertificationRequest `json:"certification"`
+}
+
+type AddDepartmentRequest struct {
+	Title string `json:"Title"`
+}
+
+type AddProductRequest struct {
+	Title         string                   `json:"Title"`
+	URL           string                   `json:"Url"`
+	Description   string                   `json:"Description"`
+	UserID        string                   `json:"UserId"`
+	ImageLocation string                   `json:"ImageLocation"`
+	Certification *AddCertificationRequest `json:"Certification"`
+	StyleID       string                   `json:"StyleId"`
+}
+
+type AddStyleRequest struct {
+	Title  string `json:"Title"`
+	TypeID string `json:"TypeId"`
+}
+
+type AddTypeRequest struct {
+	Title      string `json:"Title"`
+	CategoryID string `json:"CategoryId"`
+}
+
+type AddUserFav struct {
+	UserID    string `json:"userId"`
+	ProductID string `json:"productId"`
+}
+
+type Category struct {
+	ID    string  `json:"_id"`
+	Title string  `json:"Title"`
+	Types []*Type `json:"Types"`
+}
+
+type Certification struct {
+	ID                string `json:"_id"`
+	CertifyingCompany string `json:"CertifyingCompany"`
+	CertName          string `json:"CertName"`
+}
+
+type Company struct {
+	ID            string         `json:"_id"`
+	URL           string         `json:"url"`
+	Description   string         `json:"description"`
+	User          *User          `json:"user"`
+	IsVerified    bool           `json:"isVerified"`
+	Image         *Image         `json:"image"`
+	Certification *Certification `json:"certification"`
+}
+
+type Department struct {
+	ID         string      `json:"_id"`
+	Title      string      `json:"Title"`
+	Categories []*Category `json:"Categories"`
+}
+
+type Favourite struct {
+	ID      string   `json:"_id"`
+	Product *Product `json:"product"`
+}
+
+type Image struct {
+	ID       string `json:"_id"`
+	Location string `json:"Location"`
+}
+
 type NewUser struct {
-	Name    string `json:"name"`
-	Age     int    `json:"age"`
-	Address string `json:"address"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+}
+
+type Product struct {
+	ID            string         `json:"_id"`
+	Title         string         `json:"Title"`
+	URL           string         `json:"Url"`
+	Description   string         `json:"Description"`
+	UserID        string         `json:"UserId"`
+	Image         *Image         `json:"Image"`
+	Certification *Certification `json:"Certification"`
+}
+
+type Style struct {
+	ID       string     `json:"_id"`
+	Title    string     `json:"Title"`
+	Products []*Product `json:"Products"`
+}
+
+type Type struct {
+	ID     string   `json:"_id"`
+	Title  string   `json:"Title"`
+	Styles []*Style `json:"Styles"`
+}
+
+type UpdateUser struct {
+	UserID    string  `json:"userId"`
+	FirstName *string `json:"firstName"`
+	LastName  *string `json:"lastName"`
+}
+
+type User struct {
+	ID         string       `json:"_id"`
+	FirstName  string       `json:"firstName"`
+	LastName   string       `json:"lastName"`
+	Favourites []*Favourite `json:"favourites"`
 }
