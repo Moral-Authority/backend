@@ -29,7 +29,6 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 		instance = &DbConn{conn: db}
 		performMigrations(instance.conn)
 	}
-
 	return instance
 }
 
@@ -43,10 +42,10 @@ func GetDbConn() *gorm.DB {
 func performMigrations(db *gorm.DB) {
 	// Migrate the schema
 	err := db.AutoMigrate(
+		&models.Department{},
 		&models.Category{},
 		&models.Certification{},
 		&models.Company{},
-		&models.Department{},
 		&models.Favourite{},
 		&models.Image{},
 		&models.LoginCredentials{},

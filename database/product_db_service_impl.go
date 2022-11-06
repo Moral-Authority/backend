@@ -93,15 +93,49 @@ func (s ProductDbServiceImpl) AddProduct(product models.Product) *models.Product
 }
 
 func (s ProductDbServiceImpl) GetDepartments() []*models.Department {
-	var departments []models.Department
+	var departments []*models.Department
 	result := GetDbConn().Find(&departments)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all departments, %s", result.Error)
 		return nil
 	}
 	var response []*models.Department
-	for _, e := range departments {
-		response = append(response, &e)
+	for _, dept := range departments {
+		var categories []models.Category
+		result := GetDbConn().Model(&dept).Association("Categories").Find(&categories)
+		if result != nil {
+			logrus.Errorf("Unable to get categories, %s", result)
+			return nil
+		}
+		for _, cat := range categories {
+			var types []models.Type
+			result := GetDbConn().Model(&cat).Association("Types").Find(&types)
+			if result != nil {
+				logrus.Errorf("Unable to get types, %s", result)
+				return nil
+			}
+			for _, type_ := range types {
+				var styles []models.Style
+				result := GetDbConn().Model(&type_).Association("Styles").Find(&styles)
+				if result != nil {
+					logrus.Errorf("Unable to get styles, %s", result)
+					return nil
+				}
+				for _, style := range styles {
+					var products []models.Product
+					result := GetDbConn().Model(&style).Association("Products").Find(&products)
+					if result != nil {
+						logrus.Errorf("Unable to get products, %s", result)
+						return nil
+					}
+					style.Products = products
+				}
+				type_.Styles = styles
+			}
+			cat.Types = types
+		}
+		dept.Categories = categories
+		response = append(response, dept)
 	}
 	return response
 }
