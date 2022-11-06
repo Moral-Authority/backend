@@ -29,7 +29,6 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 		instance = &DbConn{conn: db}
 		performMigrations(instance.conn)
 	}
-
 	return instance
 }
 

@@ -18,7 +18,7 @@ func (s ProductService) AddNewDepartment(request model.AddDepartmentRequest, dbS
 	if addedDept == nil {
 		return nil, errors.New("unable to save department to db")
 	}
-	return nil, nil
+	return toDepartmentResponse(*addedDept), nil
 }
 
 func (s ProductService) AddNewCategory(request model.AddCategoryRequest, dbService database.ProductDbService) (*model.Category, error) {
@@ -35,7 +35,7 @@ func (s ProductService) AddNewCategory(request model.AddCategoryRequest, dbServi
 	if addedCategory == nil {
 		return nil, errors.New("unable to save category to db")
 	}
-	return nil, nil
+	return toCategoryResponse(*addedCategory), nil
 }
 
 func (s ProductService) AddNewType(request model.AddTypeRequest, dbService database.ProductDbService) (*model.Type, error) {
@@ -52,7 +52,7 @@ func (s ProductService) AddNewType(request model.AddTypeRequest, dbService datab
 	if addedType == nil {
 		return nil, errors.New("unable to save type to db")
 	}
-	return nil, nil
+	return toTypeResponse(*addedType), nil
 }
 
 func (s ProductService) AddNewStyle(request model.AddStyleRequest, dbService database.ProductDbService) (*model.Style, error) {
@@ -69,7 +69,7 @@ func (s ProductService) AddNewStyle(request model.AddStyleRequest, dbService dat
 	if addedStyle == nil {
 		return nil, errors.New("unable to save style to db")
 	}
-	return nil, nil
+	return toStyleResponse(*addedStyle), nil
 }
 
 func (s ProductService) AddNewProduct(
@@ -114,13 +114,13 @@ func (s ProductService) AddNewProduct(
 	if addedProduct == nil {
 		return nil, errors.New("unable to save product to db")
 	}
-	return nil, nil
+	return toProductResponse(*addedProduct), nil
 }
 
 func (s ProductService) GetDepartments(dbService database.ProductDbService) ([]*model.Department, error) {
 	departments := dbService.GetDepartments()
 	if departments == nil {
-		return nil, errors.New("unable to get departments")
+		return nil, errors.New("unable to get departments from db")
 	}
 	return toDepartmentsResponse(departments), nil
 }
