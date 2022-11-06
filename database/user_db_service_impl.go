@@ -25,6 +25,13 @@ func (s UserDbServiceImpl) GetUser(userId string) *models.User {
 		logrus.Errorf("Unable to get user, %s", result.Error)
 		return nil
 	}
+	var favs []models.Favourite
+	results := GetDbConn().Model(&user).Association("Favourites").Find(&favs)
+	if results != nil {
+		logrus.Errorf("Unable to get categories, %s", results)
+		return nil
+	}
+	user.Favourites = favs
 	return &user
 }
 
