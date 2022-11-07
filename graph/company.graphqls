@@ -1,0 +1,27 @@
+
+extend type Mutation {
+    addCompany(request: AddCompanyRequest!): Company!
+}
+
+extend type Query {
+    getCompany(id: String!): Company!
+}
+
+type Company {
+    _id: String!
+    url: String!
+    description: String!
+    user: User!
+    isVerified: Boolean!
+    image: Image!
+    certification: Certification!
+}
+
+input AddCompanyRequest {
+    url: String!
+    description: String!
+    userId: String!
+    isVerified: Boolean!
+    imageLocation: String!
+    certification: AddCertificationRequest!
+}

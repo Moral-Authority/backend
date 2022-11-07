@@ -4,13 +4,14 @@ schema:
 
 # Where should the generated server code go?
 exec:
-  filename: graph/generated/generated.go
+  layout: follow-schema
+  dir: graph/generated
   package: generated
 
-# Uncomment to enable federation
-# federation:
-#   filename: graph/generated/federation.go
-#   package: generated
+## Enable Apollo federation support
+#federation:
+#  filename: graph/generated/federation.go
+#  package: generated
 
 # Where should any generated models go?
 model:
@@ -22,6 +23,7 @@ resolver:
   layout: follow-schema
   dir: graph
   package: graph
+  filename_template: "{name}.resolvers.go"
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
 # struct_tag: json

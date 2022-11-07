@@ -1,0 +1,18 @@
+extend type Mutation {
+    addStyle(request: AddStyleRequest!): Style!
+}
+
+extend type Mutation {
+    addType(request: AddTypeRequest!): Type!
+}
+
+type Style {
+    _id: String!
+    Title: String!
+    Products: [Product]
+}
+
+input AddStyleRequest {
+    Title: String!
+    TypeId: String!
+}

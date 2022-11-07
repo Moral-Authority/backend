@@ -78,31 +78,31 @@ func (s ProductService) AddNewProduct(
 	imageDbService database.ImageDbService,
 	certDbService database.CertificatesDbService,
 ) (*model.Product, error) {
-	styleId, err := database.StringToUint(request.StyleID)
+	styleId, err := database.StringToUint("request.StyleID")
 	if err != nil {
 		return nil, err
 	}
-	userId, err := database.StringToUint(request.UserID)
+	userId, err := database.StringToUint("request.UserID")
 	if err != nil {
 		return nil, err
 	}
 	image := models.Image{
-		ImageLocation: request.ImageLocation,
+		ImageLocation: "request.ImageLocation",
 	}
 	addedImage := imageDbService.AddImage(image)
 	if addedImage == nil {
 		return nil, errors.New("unable to save image to db")
 	}
 	cert := models.Certification{
-		CertifyingCompany: request.Certification.CertifyingCompany,
-		CertName:          request.Certification.CertName,
+		CertifyingCompany: "request.Certification.CertifyingCompany",
+		CertName:          "request.Certification.CertName",
 	}
 	addedCert := certDbService.AddNewCertificate(cert)
 	if addedCert == nil {
 		return nil, errors.New("unable to save certificate to db")
 	}
 	product := models.Product{
-		Url:             request.URL,
+		Url:             "request.URL",
 		Description:     request.Description,
 		Title:           request.Title,
 		UserId:          userId,

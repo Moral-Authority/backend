@@ -9,26 +9,28 @@ import (
 
 type CompanyService struct{}
 
-func (s CompanyService) AddCompany(
-	request model.AddCompanyRequest,
-	dbService database.CompanyDbService,
+func (s CompanyService) AddCompany(request model.AddCompanyRequest, dbService database.CompanyDbService,
 	imageDbService database.ImageDbService,
 	certDbService database.CertificatesDbService,
 ) (*model.Company, error) {
 	userId, err := database.StringToUint(request.UserID)
+
 	if err != nil {
 		return nil, err
 	}
+
 	image := models.Image{
 		ImageLocation: request.ImageLocation,
 	}
+
 	addedImage := imageDbService.AddImage(image)
 	if addedImage == nil {
 		return nil, errors.New("unable to save image to db")
 	}
+
 	cert := models.Certification{
-		CertifyingCompany: request.Certification.CertifyingCompany,
-		CertName:          request.Certification.CertName,
+		CertifyingCompany: "request.Certification.CertifyingCompany",
+		CertName:          "request.Certification.CertName",
 	}
 	addedCert := certDbService.AddNewCertificate(cert)
 	if addedCert == nil {
