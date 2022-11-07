@@ -18,5 +18,24 @@ go mod tidy
 # setting your environment in .env file
 
 # serve your server
-docker-compose up 
+go run .
 ```
+
+### How to run it via docker-compose
+
+```bash
+# run this command in the project root directory
+docker-compose up
+```
+
+### Environment Variables
+      - ENVIRONMENT: running environment(default=dev)
+      - SERVER_PORT: port of the server(default=8080)
+      - SERVER_NAME: server name
+      - DATABASE_NAME: db name
+      - DATABASE_USERNAME: db username
+      - DATABASE_PASSWORD: db password
+      - DATABASE_CONNECTION_URL: db host url
+      - DATABASE_CONNECTION_PORT: db port
+
+Note : you can check to my documentation CRUD but you better use [Insomnia](https://insomnia.rest/), it was in this root directory with json format
