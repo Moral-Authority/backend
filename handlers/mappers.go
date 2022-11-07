@@ -8,10 +8,9 @@ import (
 
 func toUserResponse(user models.User) *model.User {
 	return &model.User{
-		ID:         strconv.Itoa(int(user.ID)),
-		FirstName:  user.FirstName,
-		LastName:   user.LastName,
-		Favourites: toFavsResponse(user.Favourites),
+		ID:        strconv.Itoa(int(user.ID)),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
 	}
 }
 
@@ -115,13 +114,11 @@ func toProductsResponse(products []models.Product) []*model.Product {
 }
 
 func toProductResponse(product models.Product) *model.Product {
+
 	return &model.Product{
 		ID:            strconv.Itoa(int(product.ID)),
 		Title:         product.Title,
-		URL:           product.Url,
 		Description:   product.Description,
-		UserID:        strconv.Itoa(int(product.UserId)),
-		Image:         toImageResponse(product.Image),
 		Certification: toCertificationResponse(product.Certification),
 	}
 }
@@ -139,9 +136,21 @@ func toCompanyResponse(company models.Company) *model.Company {
 }
 
 func toCertificationResponse(cert models.Certification) *model.Certification {
+	var temp = string("")
+	var booltemp = bool(false)
 	return &model.Certification{
-		ID:                strconv.Itoa(int(cert.ID)),
-		CertifyingCompany: cert.CertifyingCompany,
-		CertName:          cert.CertName,
+		ID:                      strconv.Itoa(int(cert.ID)),
+		Name:                    cert.CertName,
+		LogoLink:                &temp,
+		Industry:                "",
+		ProvidingCompany:        cert.CertifyingCompany,
+		Certifies:               "",
+		Type:                    &temp,
+		Audited:                 &booltemp,
+		Auditor:                 &temp,
+		ProvidingCompanyWebsite: "",
+		FoundWhere:              &temp,
+		HowToGetIt:              &temp,
+		Notes:                   &temp,
 	}
 }

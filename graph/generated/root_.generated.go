@@ -146,10 +146,10 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		Favourites func(childComplexity int) int
-		FirstName  func(childComplexity int) int
-		ID         func(childComplexity int) int
-		LastName   func(childComplexity int) int
+		Email     func(childComplexity int) int
+		FirstName func(childComplexity int) int
+		ID        func(childComplexity int) int
+		LastName  func(childComplexity int) int
 	}
 }
 
@@ -720,12 +720,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Type.Title(childComplexity), true
 
-	case "User.favourites":
-		if e.complexity.User.Favourites == nil {
+	case "User.email":
+		if e.complexity.User.Email == nil {
 			break
 		}
 
-		return e.complexity.User.Favourites(childComplexity), true
+		return e.complexity.User.Email(childComplexity), true
 
 	case "User.firstName":
 		if e.complexity.User.FirstName == nil {
@@ -1045,6 +1045,10 @@ type PurchaseInfo {
     Rating: String
 }`, BuiltIn: false},
 	{Name: "../schema.graphqls", Input: `
+schema {
+  query: Query
+  mutation: Mutation
+}
 type Query {
   user(_id: String!): User!
   users: [User]!
@@ -1093,7 +1097,7 @@ input AddTypeRequest {
     _id: String!
     firstName: String!
     lastName: String!
-    favourites: [Favourite]
+    email: String!
 }
 
 input NewUser {
@@ -1107,6 +1111,8 @@ input UpdateUser {
     userId: String!
     firstName: String
     lastName: String
+    email: String
+    password: String
 }`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
