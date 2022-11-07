@@ -1,10 +1,46 @@
+#    Name: String!
+#    LogoLink: String
+#	 ProvidingCompany: String!
+#    Certifies: PRODUCT, COMPANY, OTHER?
+#    Type: Certification, Network, Other
+#    Audited: Boolean
+#    Auditor: Who audits if this is audited
+#    Industry: Fashion, Beauty, etc
+#    CertifyingCompanyWebsite: String!
+#    FoundWhere: International, US, Australia etc
+#    HowToGetIt: paying a fee, applying, etc
+
 input AddCertificationRequest {
-    CertifyingCompany: String!
-    CertName: String!
+    Name: String!
+    LogoLink: String
+    Industry: String!
+    ProvidingCompany: String!
+    Certifies: certifies!
+    Type: String
+    Audited: Boolean
+    Auditor: String
+    ProvidingCompanyWebsite: String!
+    FoundWhere: String
+    HowToGetIt: String
+    Notes: String
 }
 
 type Certification {
     _id: String!
-    CertifyingCompany: String!
-    CertName: String!
+    Name: String!
+    LogoLink: String
+    Industry: String!
+    ProvidingCompany: String!
+    Certifies: certifies!
+    Type: String
+    Audited: Boolean
+    Auditor: String
+    ProvidingCompanyWebsite: String!
+    FoundWhere: String
+    HowToGetIt: String
+    Notes: String
+}
+
+enum certifies {
+    Product, Company, MaterialsAndIngredients, GiveBackProgram, OwnersAndFounders, Other
 }
