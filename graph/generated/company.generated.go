@@ -348,10 +348,30 @@ func (ec *executionContext) fieldContext_Company_certification(ctx context.Conte
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Certification__id(ctx, field)
-			case "CertifyingCompany":
-				return ec.fieldContext_Certification_CertifyingCompany(ctx, field)
-			case "CertName":
-				return ec.fieldContext_Certification_CertName(ctx, field)
+			case "Name":
+				return ec.fieldContext_Certification_Name(ctx, field)
+			case "LogoLink":
+				return ec.fieldContext_Certification_LogoLink(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "ProvidingCompany":
+				return ec.fieldContext_Certification_ProvidingCompany(ctx, field)
+			case "Certifies":
+				return ec.fieldContext_Certification_Certifies(ctx, field)
+			case "Type":
+				return ec.fieldContext_Certification_Type(ctx, field)
+			case "Audited":
+				return ec.fieldContext_Certification_Audited(ctx, field)
+			case "Auditor":
+				return ec.fieldContext_Certification_Auditor(ctx, field)
+			case "ProvidingCompanyWebsite":
+				return ec.fieldContext_Certification_ProvidingCompanyWebsite(ctx, field)
+			case "FoundWhere":
+				return ec.fieldContext_Certification_FoundWhere(ctx, field)
+			case "HowToGetIt":
+				return ec.fieldContext_Certification_HowToGetIt(ctx, field)
+			case "Notes":
+				return ec.fieldContext_Certification_Notes(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
 		},

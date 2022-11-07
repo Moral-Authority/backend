@@ -70,8 +70,8 @@ func (ec *executionContext) fieldContext_Certification__id(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Certification_CertifyingCompany(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Certification_CertifyingCompany(ctx, field)
+func (ec *executionContext) _Certification_Name(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Name(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -84,7 +84,7 @@ func (ec *executionContext) _Certification_CertifyingCompany(ctx context.Context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CertifyingCompany, nil
+		return obj.Name, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -101,7 +101,7 @@ func (ec *executionContext) _Certification_CertifyingCompany(ctx context.Context
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertifyingCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -114,8 +114,8 @@ func (ec *executionContext) fieldContext_Certification_CertifyingCompany(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Certification_CertName(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Certification_CertName(ctx, field)
+func (ec *executionContext) _Certification_LogoLink(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_LogoLink(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -128,7 +128,48 @@ func (ec *executionContext) _Certification_CertName(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CertName, nil
+		return obj.LogoLink, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_LogoLink(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Industry(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Industry(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Industry, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -145,7 +186,385 @@ func (ec *executionContext) _Certification_CertName(ctx context.Context, field g
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Industry(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_ProvidingCompany(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_ProvidingCompany(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProvidingCompany, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_ProvidingCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Certifies(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Certifies(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Certifies, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.Certifies)
+	fc.Result = res
+	return ec.marshalNcertifies2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertifies(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_Certifies(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type certifies does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Type(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Type(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Type, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_Type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Audited(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Audited(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Audited, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_Audited(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Auditor(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Auditor(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Auditor, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_Auditor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_ProvidingCompanyWebsite(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_ProvidingCompanyWebsite(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProvidingCompanyWebsite, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_ProvidingCompanyWebsite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_FoundWhere(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_FoundWhere(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FoundWhere, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_FoundWhere(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_HowToGetIt(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_HowToGetIt(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HowToGetIt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_HowToGetIt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Certification",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Certification_Notes(ctx context.Context, field graphql.CollectedField, obj *model.Certification) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Certification_Notes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Notes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Certification_Notes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -169,26 +588,106 @@ func (ec *executionContext) unmarshalInputAddCertificationRequest(ctx context.Co
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"CertifyingCompany", "CertName"}
+	fieldsInOrder := [...]string{"Name", "LogoLink", "Industry", "ProvidingCompany", "Certifies", "Type", "Audited", "Auditor", "ProvidingCompanyWebsite", "FoundWhere", "HowToGetIt", "Notes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "CertifyingCompany":
+		case "Name":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifyingCompany"))
-			it.CertifyingCompany, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Name"))
+			it.Name, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "CertName":
+		case "LogoLink":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertName"))
-			it.CertName, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("LogoLink"))
+			it.LogoLink, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Industry":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Industry"))
+			it.Industry, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "ProvidingCompany":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProvidingCompany"))
+			it.ProvidingCompany, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Certifies":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifies"))
+			it.Certifies, err = ec.unmarshalNcertifies2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertifies(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Type":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Type"))
+			it.Type, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Audited":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Audited"))
+			it.Audited, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Auditor":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Auditor"))
+			it.Auditor, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "ProvidingCompanyWebsite":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProvidingCompanyWebsite"))
+			it.ProvidingCompanyWebsite, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "FoundWhere":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("FoundWhere"))
+			it.FoundWhere, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "HowToGetIt":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("HowToGetIt"))
+			it.HowToGetIt, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "Notes":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Notes"))
+			it.Notes, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -223,20 +722,69 @@ func (ec *executionContext) _Certification(ctx context.Context, sel ast.Selectio
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "CertifyingCompany":
+		case "Name":
 
-			out.Values[i] = ec._Certification_CertifyingCompany(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "CertName":
-
-			out.Values[i] = ec._Certification_CertName(ctx, field, obj)
+			out.Values[i] = ec._Certification_Name(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "LogoLink":
+
+			out.Values[i] = ec._Certification_LogoLink(ctx, field, obj)
+
+		case "Industry":
+
+			out.Values[i] = ec._Certification_Industry(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "ProvidingCompany":
+
+			out.Values[i] = ec._Certification_ProvidingCompany(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Certifies":
+
+			out.Values[i] = ec._Certification_Certifies(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Type":
+
+			out.Values[i] = ec._Certification_Type(ctx, field, obj)
+
+		case "Audited":
+
+			out.Values[i] = ec._Certification_Audited(ctx, field, obj)
+
+		case "Auditor":
+
+			out.Values[i] = ec._Certification_Auditor(ctx, field, obj)
+
+		case "ProvidingCompanyWebsite":
+
+			out.Values[i] = ec._Certification_ProvidingCompanyWebsite(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "FoundWhere":
+
+			out.Values[i] = ec._Certification_FoundWhere(ctx, field, obj)
+
+		case "HowToGetIt":
+
+			out.Values[i] = ec._Certification_HowToGetIt(ctx, field, obj)
+
+		case "Notes":
+
+			out.Values[i] = ec._Certification_Notes(ctx, field, obj)
+
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -265,6 +813,16 @@ func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋhowstrongiam
 		return graphql.Null
 	}
 	return ec._Certification(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNcertifies2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertifies(ctx context.Context, v interface{}) (model.Certifies, error) {
+	var res model.Certifies
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNcertifies2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertifies(ctx context.Context, sel ast.SelectionSet, v model.Certifies) graphql.Marshaler {
+	return v
 }
 
 // endregion ***************************** type.gotpl *****************************

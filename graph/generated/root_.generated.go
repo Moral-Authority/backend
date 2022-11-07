@@ -45,9 +45,19 @@ type ComplexityRoot struct {
 	}
 
 	Certification struct {
-		CertName          func(childComplexity int) int
-		CertifyingCompany func(childComplexity int) int
-		ID                func(childComplexity int) int
+		Audited                 func(childComplexity int) int
+		Auditor                 func(childComplexity int) int
+		Certifies               func(childComplexity int) int
+		FoundWhere              func(childComplexity int) int
+		HowToGetIt              func(childComplexity int) int
+		ID                      func(childComplexity int) int
+		Industry                func(childComplexity int) int
+		LogoLink                func(childComplexity int) int
+		Name                    func(childComplexity int) int
+		Notes                   func(childComplexity int) int
+		ProvidingCompany        func(childComplexity int) int
+		ProvidingCompanyWebsite func(childComplexity int) int
+		Type                    func(childComplexity int) int
 	}
 
 	Company struct {
@@ -89,13 +99,31 @@ type ComplexityRoot struct {
 	}
 
 	Product struct {
-		Certification func(childComplexity int) int
-		Description   func(childComplexity int) int
-		ID            func(childComplexity int) int
-		Image         func(childComplexity int) int
-		Title         func(childComplexity int) int
-		URL           func(childComplexity int) int
-		UserID        func(childComplexity int) int
+		Category                func(childComplexity int) int
+		Certification           func(childComplexity int) int
+		CompanyCertifications   func(childComplexity int) int
+		Department              func(childComplexity int) int
+		Description             func(childComplexity int) int
+		GiveBackPrograms        func(childComplexity int) int
+		ID                      func(childComplexity int) int
+		ImageLinks              func(childComplexity int) int
+		MaterialsAndIngredients func(childComplexity int) int
+		OwnersAndFounders       func(childComplexity int) int
+		ProductCertifications   func(childComplexity int) int
+		PurchaseInfo            func(childComplexity int) int
+		Section                 func(childComplexity int) int
+		Style                   func(childComplexity int) int
+		Title                   func(childComplexity int) int
+		Type                    func(childComplexity int) int
+		Verified                func(childComplexity int) int
+		VerifiedBy              func(childComplexity int) int
+	}
+
+	PurchaseInfo struct {
+		Company func(childComplexity int) int
+		Link    func(childComplexity int) int
+		Price   func(childComplexity int) int
+		Rating  func(childComplexity int) int
 	}
 
 	Query struct {
@@ -161,19 +189,40 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.Types(childComplexity), true
 
-	case "Certification.CertName":
-		if e.complexity.Certification.CertName == nil {
+	case "Certification.Audited":
+		if e.complexity.Certification.Audited == nil {
 			break
 		}
 
-		return e.complexity.Certification.CertName(childComplexity), true
+		return e.complexity.Certification.Audited(childComplexity), true
 
-	case "Certification.CertifyingCompany":
-		if e.complexity.Certification.CertifyingCompany == nil {
+	case "Certification.Auditor":
+		if e.complexity.Certification.Auditor == nil {
 			break
 		}
 
-		return e.complexity.Certification.CertifyingCompany(childComplexity), true
+		return e.complexity.Certification.Auditor(childComplexity), true
+
+	case "Certification.Certifies":
+		if e.complexity.Certification.Certifies == nil {
+			break
+		}
+
+		return e.complexity.Certification.Certifies(childComplexity), true
+
+	case "Certification.FoundWhere":
+		if e.complexity.Certification.FoundWhere == nil {
+			break
+		}
+
+		return e.complexity.Certification.FoundWhere(childComplexity), true
+
+	case "Certification.HowToGetIt":
+		if e.complexity.Certification.HowToGetIt == nil {
+			break
+		}
+
+		return e.complexity.Certification.HowToGetIt(childComplexity), true
 
 	case "Certification._id":
 		if e.complexity.Certification.ID == nil {
@@ -181,6 +230,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Certification.ID(childComplexity), true
+
+	case "Certification.Industry":
+		if e.complexity.Certification.Industry == nil {
+			break
+		}
+
+		return e.complexity.Certification.Industry(childComplexity), true
+
+	case "Certification.LogoLink":
+		if e.complexity.Certification.LogoLink == nil {
+			break
+		}
+
+		return e.complexity.Certification.LogoLink(childComplexity), true
+
+	case "Certification.Name":
+		if e.complexity.Certification.Name == nil {
+			break
+		}
+
+		return e.complexity.Certification.Name(childComplexity), true
+
+	case "Certification.Notes":
+		if e.complexity.Certification.Notes == nil {
+			break
+		}
+
+		return e.complexity.Certification.Notes(childComplexity), true
+
+	case "Certification.ProvidingCompany":
+		if e.complexity.Certification.ProvidingCompany == nil {
+			break
+		}
+
+		return e.complexity.Certification.ProvidingCompany(childComplexity), true
+
+	case "Certification.ProvidingCompanyWebsite":
+		if e.complexity.Certification.ProvidingCompanyWebsite == nil {
+			break
+		}
+
+		return e.complexity.Certification.ProvidingCompanyWebsite(childComplexity), true
+
+	case "Certification.Type":
+		if e.complexity.Certification.Type == nil {
+			break
+		}
+
+		return e.complexity.Certification.Type(childComplexity), true
 
 	case "Company.certification":
 		if e.complexity.Company.Certification == nil {
@@ -388,12 +486,33 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateUser(childComplexity, args["input"].(model.UpdateUser)), true
 
+	case "Product.Category":
+		if e.complexity.Product.Category == nil {
+			break
+		}
+
+		return e.complexity.Product.Category(childComplexity), true
+
 	case "Product.Certification":
 		if e.complexity.Product.Certification == nil {
 			break
 		}
 
 		return e.complexity.Product.Certification(childComplexity), true
+
+	case "Product.CompanyCertifications":
+		if e.complexity.Product.CompanyCertifications == nil {
+			break
+		}
+
+		return e.complexity.Product.CompanyCertifications(childComplexity), true
+
+	case "Product.Department":
+		if e.complexity.Product.Department == nil {
+			break
+		}
+
+		return e.complexity.Product.Department(childComplexity), true
 
 	case "Product.Description":
 		if e.complexity.Product.Description == nil {
@@ -402,6 +521,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.Description(childComplexity), true
 
+	case "Product.GiveBackPrograms":
+		if e.complexity.Product.GiveBackPrograms == nil {
+			break
+		}
+
+		return e.complexity.Product.GiveBackPrograms(childComplexity), true
+
 	case "Product._id":
 		if e.complexity.Product.ID == nil {
 			break
@@ -409,12 +535,54 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.ID(childComplexity), true
 
-	case "Product.Image":
-		if e.complexity.Product.Image == nil {
+	case "Product.ImageLinks":
+		if e.complexity.Product.ImageLinks == nil {
 			break
 		}
 
-		return e.complexity.Product.Image(childComplexity), true
+		return e.complexity.Product.ImageLinks(childComplexity), true
+
+	case "Product.MaterialsAndIngredients":
+		if e.complexity.Product.MaterialsAndIngredients == nil {
+			break
+		}
+
+		return e.complexity.Product.MaterialsAndIngredients(childComplexity), true
+
+	case "Product.OwnersAndFounders":
+		if e.complexity.Product.OwnersAndFounders == nil {
+			break
+		}
+
+		return e.complexity.Product.OwnersAndFounders(childComplexity), true
+
+	case "Product.ProductCertifications":
+		if e.complexity.Product.ProductCertifications == nil {
+			break
+		}
+
+		return e.complexity.Product.ProductCertifications(childComplexity), true
+
+	case "Product.PurchaseInfo":
+		if e.complexity.Product.PurchaseInfo == nil {
+			break
+		}
+
+		return e.complexity.Product.PurchaseInfo(childComplexity), true
+
+	case "Product.Section":
+		if e.complexity.Product.Section == nil {
+			break
+		}
+
+		return e.complexity.Product.Section(childComplexity), true
+
+	case "Product.Style":
+		if e.complexity.Product.Style == nil {
+			break
+		}
+
+		return e.complexity.Product.Style(childComplexity), true
 
 	case "Product.Title":
 		if e.complexity.Product.Title == nil {
@@ -423,19 +591,54 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.Title(childComplexity), true
 
-	case "Product.Url":
-		if e.complexity.Product.URL == nil {
+	case "Product.Type":
+		if e.complexity.Product.Type == nil {
 			break
 		}
 
-		return e.complexity.Product.URL(childComplexity), true
+		return e.complexity.Product.Type(childComplexity), true
 
-	case "Product.UserId":
-		if e.complexity.Product.UserID == nil {
+	case "Product.Verified":
+		if e.complexity.Product.Verified == nil {
 			break
 		}
 
-		return e.complexity.Product.UserID(childComplexity), true
+		return e.complexity.Product.Verified(childComplexity), true
+
+	case "Product.VerifiedBy":
+		if e.complexity.Product.VerifiedBy == nil {
+			break
+		}
+
+		return e.complexity.Product.VerifiedBy(childComplexity), true
+
+	case "PurchaseInfo.Company":
+		if e.complexity.PurchaseInfo.Company == nil {
+			break
+		}
+
+		return e.complexity.PurchaseInfo.Company(childComplexity), true
+
+	case "PurchaseInfo.Link":
+		if e.complexity.PurchaseInfo.Link == nil {
+			break
+		}
+
+		return e.complexity.PurchaseInfo.Link(childComplexity), true
+
+	case "PurchaseInfo.Price":
+		if e.complexity.PurchaseInfo.Price == nil {
+			break
+		}
+
+		return e.complexity.PurchaseInfo.Price(childComplexity), true
+
+	case "PurchaseInfo.Rating":
+		if e.complexity.PurchaseInfo.Rating == nil {
+			break
+		}
+
+		return e.complexity.PurchaseInfo.Rating(childComplexity), true
 
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
@@ -561,7 +764,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddStyleRequest,
 		ec.unmarshalInputAddTypeRequest,
 		ec.unmarshalInputAddUserFav,
+		ec.unmarshalInputAllCertificationsInput,
+		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputNewUser,
+		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputUpdateUser,
 	)
 	first := true
@@ -637,15 +843,51 @@ input AddCategoryRequest {
     Title: String!
     DepartmentId: String!
 }`, BuiltIn: false},
-	{Name: "../certification.graphqls", Input: `input AddCertificationRequest {
-    CertifyingCompany: String!
-    CertName: String!
+	{Name: "../certification.graphqls", Input: `#    Name: String!
+#    LogoLink: String
+#	 ProvidingCompany: String!
+#    Certifies: PRODUCT, COMPANY, OTHER?
+#    Type: Certification, Network, Other
+#    Audited: Boolean
+#    Auditor: Who audits if this is audited
+#    Industry: Fashion, Beauty, etc
+#    CertifyingCompanyWebsite: String!
+#    FoundWhere: International, US, Australia etc
+#    HowToGetIt: paying a fee, applying, etc
+
+input AddCertificationRequest {
+    Name: String!
+    LogoLink: String
+    Industry: String!
+    ProvidingCompany: String!
+    Certifies: certifies!
+    Type: String
+    Audited: Boolean
+    Auditor: String
+    ProvidingCompanyWebsite: String!
+    FoundWhere: String
+    HowToGetIt: String
+    Notes: String
 }
 
 type Certification {
     _id: String!
-    CertifyingCompany: String!
-    CertName: String!
+    Name: String!
+    LogoLink: String
+    Industry: String!
+    ProvidingCompany: String!
+    Certifies: certifies!
+    Type: String
+    Audited: Boolean
+    Auditor: String
+    ProvidingCompanyWebsite: String!
+    FoundWhere: String
+    HowToGetIt: String
+    Notes: String
+}
+
+enum certifies {
+    Product, Company, MaterialsAndIngredients, GiveBackProgram, OwnersAndFounders, Other
 }`, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `
 extend type Mutation {
@@ -712,22 +954,95 @@ productId: String!
 
 input AddProductRequest {
     Title: String!
-    Url: String!
     Description: String!
-    UserId: String!
-    ImageLocation: String!
-    Certification: AddCertificationRequest!
-    StyleId: String!
+    Categorization: CategorizationInput!
+    Certifications: AllCertificationsInput!
+    PurchaseInfo: PurchaseInfoInput!
+    ImageLinks: [String]
+}
+
+input PurchaseInfoInput {
+    Price: String!
+    Link: String!
+    Rating: String
+    Company: CompanyEnum
+    IfOtherCompany: String
+}
+
+input AllCertificationsInput {
+    ProductCertifications: [String]
+    CompanyCertifications: CompanyCertifications
+    IfCompanyIsOther: String
+    MaterialsAndIngredients: MaterialsAndIngredients
+    IfMaterialsAndIngredientsIsOther: String
+    GiveBackPrograms: GiveBackPrograms
+    IfGiveBackProgramsIsOther: String
+    OwnersAndFounders: OwnersAndFounders
+    IfOwnersAndFoundersIsOther: String
+}
+
+input CategorizationInput {
+    Section: Section!
+    Department: String
+    Category: String
+    Type: String
+    Style: String
+}
+
+enum CompanyEnum {
+    Amazon, Etsy, Woocommerce, Ebay, Shopify, Other
+}
+
+enum Section {
+    Service, Product
+}
+
+enum CompanyCertifications {
+    Bcorp, PlasticBankPartner, rePurposeGlobalPartner, ClimateNeutral
+    CrueltyFree, LeapingBunny, FairTradeCertified, SafeAndFairLabor, Other
+}
+
+enum MaterialsAndIngredients {
+    LowImpactDyesOrInks, OEKOTEX, ParabenFree, PhthalateFree, SulfateFree
+    OrganicContent, USDACertifiedOrganic, GOTSCertified, RecycledPETFabric
+    RecycledPlastic, RecycledContent, SustainablyHarvestedRubber,
+    SustainablyHarvestedWood, PlasticFree, Vegan, Organic, MadeInAmerica, Handmade, OTHER
+}
+
+enum GiveBackPrograms {
+    GetOneGiveOne, PlantsATree, Charitable, OnePercentForThePlanet, OTHER
+}
+
+enum OwnersAndFounders {
+    WomanOwned, MomOwned, BlackOwned, IndigenousOwned, AsianPacificIslanderOwned, LGBTQPlusOwned, OTHER
 }
 
 type Product {
     _id: String!
     Title: String!
-    Url: String!
     Description: String!
-    UserId: String!
-    Image: Image!
     Certification: Certification!
+    ProductCertifications: [String]
+    CompanyCertifications:[String]
+    MaterialsAndIngredients: [String]
+    GiveBackPrograms: [String]
+    OwnersAndFounders: [String]
+    Section: [String]
+    Department: [String]
+    Category: [String]
+    Type: [String]
+    Style: [String]
+    ImageLinks: [String]
+    PurchaseInfo: [PurchaseInfo]
+    Verified: Boolean
+    VerifiedBy: [String]
+}
+
+type PurchaseInfo {
+    Price: String
+    Link: String
+    Company: String
+    Rating: String
 }`, BuiltIn: false},
 	{Name: "../schema.graphqls", Input: `
 type Query {

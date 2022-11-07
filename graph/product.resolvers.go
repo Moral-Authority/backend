@@ -5,10 +5,10 @@ package graph
 
 import (
 	"context"
-	"github.com/howstrongiam/backend/database"
-	"github.com/howstrongiam/backend/handlers"
 
+	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
+	"github.com/howstrongiam/backend/handlers"
 )
 
 // AddProduct is the resolver for the addProduct field.

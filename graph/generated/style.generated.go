@@ -156,16 +156,38 @@ func (ec *executionContext) fieldContext_Style_Products(ctx context.Context, fie
 				return ec.fieldContext_Product__id(ctx, field)
 			case "Title":
 				return ec.fieldContext_Product_Title(ctx, field)
-			case "Url":
-				return ec.fieldContext_Product_Url(ctx, field)
 			case "Description":
 				return ec.fieldContext_Product_Description(ctx, field)
-			case "UserId":
-				return ec.fieldContext_Product_UserId(ctx, field)
-			case "Image":
-				return ec.fieldContext_Product_Image(ctx, field)
 			case "Certification":
 				return ec.fieldContext_Product_Certification(ctx, field)
+			case "ProductCertifications":
+				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
+			case "MaterialsAndIngredients":
+				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
+			case "GiveBackPrograms":
+				return ec.fieldContext_Product_GiveBackPrograms(ctx, field)
+			case "OwnersAndFounders":
+				return ec.fieldContext_Product_OwnersAndFounders(ctx, field)
+			case "Section":
+				return ec.fieldContext_Product_Section(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
+			case "Category":
+				return ec.fieldContext_Product_Category(ctx, field)
+			case "Type":
+				return ec.fieldContext_Product_Type(ctx, field)
+			case "Style":
+				return ec.fieldContext_Product_Style(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "Verified":
+				return ec.fieldContext_Product_Verified(ctx, field)
+			case "VerifiedBy":
+				return ec.fieldContext_Product_VerifiedBy(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
