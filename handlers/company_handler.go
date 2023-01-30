@@ -9,7 +9,7 @@ import (
 
 type CompanyService struct{}
 
-func (s CompanyService) AddCompany(request model.AddCompanyRequest, dbService database.CompanyDbService,
+func (s CompanyService) AddCompany(request model.AddCompany, dbService database.CompanyDbService,
 	imageDbService database.ImageDbService,
 	certDbService database.CertificatesDbService,
 ) (*model.Company, error) {

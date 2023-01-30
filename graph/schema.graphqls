@@ -4,17 +4,12 @@ schema {
   mutation: Mutation
 }
 type Query {
-  user(_id: String!): User!
-  users: [User]!
+  BaseQuery: Any
 }
 
 type Mutation {
-  addUser(input: NewUser!): User!
-  updateUser(input: UpdateUser!): User!
+  BaseMutation: Any
 }
 
-type Image {
-  _id: String!
-  Location: String!
-}
 
+scalar Any

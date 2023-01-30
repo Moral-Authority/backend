@@ -8,12 +8,12 @@ import (
 	"strconv"
 )
 
-type AddCategoryRequest struct {
+type AddCategory struct {
 	Title        string `json:"Title"`
 	DepartmentID string `json:"DepartmentId"`
 }
 
-type AddCertificationRequest struct {
+type AddCertification struct {
 	Name                    string    `json:"Name"`
 	LogoLink                *string   `json:"LogoLink"`
 	Industry                string    `json:"Industry"`
@@ -28,22 +28,27 @@ type AddCertificationRequest struct {
 	Notes                   *string   `json:"Notes"`
 }
 
-type AddCompanyRequest struct {
-	URL           string                   `json:"url"`
-	Description   string                   `json:"description"`
-	UserID        string                   `json:"userId"`
-	IsVerified    bool                     `json:"isVerified"`
-	ImageLocation string                   `json:"imageLocation"`
-	Certification *AddCertificationRequest `json:"certification"`
+type AddCompany struct {
+	URL           string            `json:"url"`
+	Description   string            `json:"description"`
+	UserID        string            `json:"userId"`
+	IsVerified    bool              `json:"isVerified"`
+	ImageLocation string            `json:"imageLocation"`
+	Certification *AddCertification `json:"certification"`
 }
 
-type AddDepartmentRequest struct {
-	Title string `json:"Title"`
+type AddDepartment struct {
+	Title        string `json:"Title"`
+	SubSectionID string `json:"SubSectionId"`
+}
+
+type AddFilter struct {
+	FilterCategory FilterCategory `json:"FilterCategory"`
+	FilterType     FilterType     `json:"FilterType"`
 }
 
 type AddProductRequest struct {
 	Title          string                  `json:"Title"`
-	Test           string                  `json:"TEST"`
 	Description    string                  `json:"Description"`
 	Categorization *CategorizationInput    `json:"Categorization"`
 	Certifications *AllCertificationsInput `json:"Certifications"`
@@ -51,14 +56,28 @@ type AddProductRequest struct {
 	ImageLinks     []*string               `json:"ImageLinks"`
 }
 
+type AddSection struct {
+	Title string `json:"Title"`
+}
+
 type AddStyleRequest struct {
 	Title  string `json:"Title"`
 	TypeID string `json:"TypeId"`
 }
 
-type AddTypeRequest struct {
+type AddSubCategory struct {
 	Title      string `json:"Title"`
 	CategoryID string `json:"CategoryId"`
+}
+
+type AddSubSection struct {
+	Title     string `json:"Title"`
+	SectionID string `json:"SectionId"`
+}
+
+type AddTypeRequest struct {
+	Title         string `json:"Title"`
+	SubCategoryID string `json:"SubCategoryId"`
 }
 
 type AddUserFav struct {
@@ -79,17 +98,18 @@ type AllCertificationsInput struct {
 }
 
 type CategorizationInput struct {
-	Section    Section `json:"Section"`
-	Department *string `json:"Department"`
-	Category   *string `json:"Category"`
-	Type       *string `json:"Type"`
-	Style      *string `json:"Style"`
+	Section     *string `json:"Section"`
+	SubSection  *string `json:"SubSection"`
+	Department  *string `json:"Department"`
+	Category    *string `json:"Category"`
+	SubCategory *string `json:"SubCategory"`
+	Type        *string `json:"Type"`
+	Style       *string `json:"Style"`
 }
 
 type Category struct {
-	ID    string  `json:"_id"`
-	Title string  `json:"Title"`
-	Types []*Type `json:"Types"`
+	ID    string `json:"_id"`
+	Title string `json:"Title"`
 }
 
 type Certification struct {
@@ -151,11 +171,14 @@ type Product struct {
 	MaterialsAndIngredients []*string       `json:"MaterialsAndIngredients"`
 	GiveBackPrograms        []*string       `json:"GiveBackPrograms"`
 	OwnersAndFounders       []*string       `json:"OwnersAndFounders"`
-	Section                 []*string       `json:"Section"`
+	Section                 *string         `json:"Section"`
+	Subsection              *string         `json:"Subsection"`
 	Department              []*string       `json:"Department"`
-	Category                []*string       `json:"Category"`
-	Type                    []*string       `json:"Type"`
-	Style                   []*string       `json:"Style"`
+	Category                *string         `json:"Category"`
+	SubCategory             *string         `json:"SubCategory"`
+	Type                    *string         `json:"Type"`
+	Style                   *string         `json:"Style"`
+	Filters                 []*string       `json:"Filters"`
 	ImageLinks              []*string       `json:"ImageLinks"`
 	PurchaseInfo            []*PurchaseInfo `json:"PurchaseInfo"`
 	Verified                *bool           `json:"Verified"`
@@ -177,10 +200,26 @@ type PurchaseInfoInput struct {
 	IfOtherCompany *string      `json:"IfOtherCompany"`
 }
 
+type Section struct {
+	ID    string `json:"_id"`
+	Title string `json:"Title"`
+}
+
 type Style struct {
 	ID       string     `json:"_id"`
 	Title    string     `json:"Title"`
 	Products []*Product `json:"Products"`
+}
+
+type SubCategory struct {
+	ID    string  `json:"_id"`
+	Title string  `json:"Title"`
+	Types []*Type `json:"Types"`
+}
+
+type SubSection struct {
+	ID    string `json:"_id"`
+	Title string `json:"Title"`
 }
 
 type Type struct {
@@ -305,6 +344,132 @@ func (e *CompanyEnum) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CompanyEnum) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type FilterCategory string
+
+const (
+	FilterCategorySection     FilterCategory = "Section"
+	FilterCategorySubsection  FilterCategory = "Subsection"
+	FilterCategoryDepartment  FilterCategory = "Department"
+	FilterCategoryCategory    FilterCategory = "Category"
+	FilterCategorySubCategory FilterCategory = "SubCategory"
+	FilterCategoryType        FilterCategory = "Type"
+	FilterCategoryStyle       FilterCategory = "Style"
+)
+
+var AllFilterCategory = []FilterCategory{
+	FilterCategorySection,
+	FilterCategorySubsection,
+	FilterCategoryDepartment,
+	FilterCategoryCategory,
+	FilterCategorySubCategory,
+	FilterCategoryType,
+	FilterCategoryStyle,
+}
+
+func (e FilterCategory) IsValid() bool {
+	switch e {
+	case FilterCategorySection, FilterCategorySubsection, FilterCategoryDepartment, FilterCategoryCategory, FilterCategorySubCategory, FilterCategoryType, FilterCategoryStyle:
+		return true
+	}
+	return false
+}
+
+func (e FilterCategory) String() string {
+	return string(e)
+}
+
+func (e *FilterCategory) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = FilterCategory(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid FilterCategory", str)
+	}
+	return nil
+}
+
+func (e FilterCategory) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type FilterType string
+
+const (
+	FilterTypeColor        FilterType = "color"
+	FilterTypeStyle        FilterType = "style"
+	FilterTypeShape        FilterType = "shape"
+	FilterTypeMaterial     FilterType = "material"
+	FilterTypeSetting      FilterType = "setting"
+	FilterTypeScent        FilterType = "scent"
+	FilterTypePattern      FilterType = "pattern"
+	FilterTypeChainType    FilterType = "chainType"
+	FilterTypeClosureType  FilterType = "closureType"
+	FilterTypeCutType      FilterType = "cutType"
+	FilterTypeGemstone     FilterType = "gemstone"
+	FilterTypeLocation     FilterType = "location"
+	FilterTypeHoliday      FilterType = "holiday"
+	FilterTypeOccasion     FilterType = "occasion"
+	FilterTypeSize         FilterType = "size"
+	FilterTypeMount        FilterType = "mount"
+	FilterTypeFillMaterial FilterType = "fillMaterial"
+	FilterTypeHeight       FilterType = "height"
+	FilterTypeLength       FilterType = "length"
+)
+
+var AllFilterType = []FilterType{
+	FilterTypeColor,
+	FilterTypeStyle,
+	FilterTypeShape,
+	FilterTypeMaterial,
+	FilterTypeSetting,
+	FilterTypeScent,
+	FilterTypePattern,
+	FilterTypeChainType,
+	FilterTypeClosureType,
+	FilterTypeCutType,
+	FilterTypeGemstone,
+	FilterTypeLocation,
+	FilterTypeHoliday,
+	FilterTypeOccasion,
+	FilterTypeSize,
+	FilterTypeMount,
+	FilterTypeFillMaterial,
+	FilterTypeHeight,
+	FilterTypeLength,
+}
+
+func (e FilterType) IsValid() bool {
+	switch e {
+	case FilterTypeColor, FilterTypeStyle, FilterTypeShape, FilterTypeMaterial, FilterTypeSetting, FilterTypeScent, FilterTypePattern, FilterTypeChainType, FilterTypeClosureType, FilterTypeCutType, FilterTypeGemstone, FilterTypeLocation, FilterTypeHoliday, FilterTypeOccasion, FilterTypeSize, FilterTypeMount, FilterTypeFillMaterial, FilterTypeHeight, FilterTypeLength:
+		return true
+	}
+	return false
+}
+
+func (e FilterType) String() string {
+	return string(e)
+}
+
+func (e *FilterType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = FilterType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid FilterType", str)
+	}
+	return nil
+}
+
+func (e FilterType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -478,47 +643,6 @@ func (e *OwnersAndFounders) UnmarshalGQL(v interface{}) error {
 }
 
 func (e OwnersAndFounders) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type Section string
-
-const (
-	SectionService Section = "Service"
-	SectionProduct Section = "Product"
-)
-
-var AllSection = []Section{
-	SectionService,
-	SectionProduct,
-}
-
-func (e Section) IsValid() bool {
-	switch e {
-	case SectionService, SectionProduct:
-		return true
-	}
-	return false
-}
-
-func (e Section) String() string {
-	return string(e)
-}
-
-func (e *Section) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = Section(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid Section", str)
-	}
-	return nil
-}
-
-func (e Section) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

@@ -1,0 +1,126 @@
+extend type Mutation {
+
+    #   ========== SECTION ==========
+    addSection(input: AddSection!): Section!
+    addSubSection(input: AddSubSection!): SubSection!
+
+    #   ========== DEPARTMENT ==========
+    addDepartment(input: AddDepartment!): Department!
+
+    #   ========== CATEGORY ==========
+    addCategory(input: AddCategory!): Category!
+    addSubCategory(input: AddSubCategory!): SubCategory!
+
+    #   ========== TYPE ==========
+    addType(input: AddTypeRequest!): Type!
+
+    #   ========== STYLE ==========
+    addStyle(input: AddStyleRequest!): Style!
+
+    addProductFilter(input: AddFilter!): String!
+
+}
+
+extend type Query {
+    getSections(input: ID): [Section]!
+    getSubSections(input: ID): [SubSection]!
+    getDepartments(input: ID): [Department]!
+    getCategories(input: ID): [Category]!
+    getSubCategories(input: ID): [SubCategory]!
+    getTypes(input: ID): [Type]!
+    getStyle(input: ID): [Style]!
+    getFilters(input: ID): [String]!
+}
+
+# ======= INPUTS ======
+
+input AddSection {
+    Title: String!
+}
+
+input AddSubSection {
+    Title: String!
+    SectionId: String!
+}
+
+input AddDepartment {
+    Title: String!
+    SubSectionId: String!
+}
+
+input AddCategory {
+    Title: String!
+    DepartmentId: String!
+}
+
+input AddSubCategory {
+    Title: String!
+    CategoryId: String!
+}
+
+input AddTypeRequest {
+    Title: String!
+    SubCategoryId: String!
+}
+
+input AddStyleRequest {
+    Title: String!
+    TypeId: String!
+}
+
+input AddFilter {
+    FilterCategory: FilterCategory!
+    FilterType: FilterType!
+
+}
+
+enum FilterCategory {
+    Section, Subsection, Department, Category, SubCategory, Type, Style
+}
+
+enum FilterType {
+    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
+    holiday, occasion, size, mount, fillMaterial, height, length
+}
+
+
+# ======= INPUTS END ======
+
+type Section {
+    _id: String!
+    Title: String!
+}
+
+type SubSection {
+    _id: String!
+    Title: String!
+}
+
+type Category {
+    _id: String!
+    Title: String!
+}
+
+type SubCategory {
+    _id: String!
+    Title: String!
+    Types: [Type]
+}
+
+type Department {
+    _id: String!
+    Title: String!
+    Categories: [Category]
+}
+
+type Style {
+    _id: String!
+    Title: String!
+    Products: [Product]
+}
+
+type Type {
+    _id: String!
+    Title: String!
+    Styles: [Style]
+}

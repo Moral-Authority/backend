@@ -9,69 +9,6 @@ import (
 
 type ProductService struct{}
 
-func (s ProductService) AddNewDepartment(request model.AddDepartmentRequest, dbService database.ProductDbService) (*model.Department, error) {
-	department := models.Department{
-		Title:      request.Title,
-		Categories: []models.Category{},
-	}
-	addedDept := dbService.AddDepartment(department)
-	if addedDept == nil {
-		return nil, errors.New("unable to save department to db")
-	}
-	return toDepartmentResponse(*addedDept), nil
-}
-
-func (s ProductService) AddNewCategory(request model.AddCategoryRequest, dbService database.ProductDbService) (*model.Category, error) {
-	deptId, err := database.StringToUint(request.DepartmentID)
-	if err != nil {
-		return nil, err
-	}
-	category := models.Category{
-		Title:           request.Title,
-		DepartmentRefer: deptId,
-		Types:           []models.Type{},
-	}
-	addedCategory := dbService.AddCategory(category)
-	if addedCategory == nil {
-		return nil, errors.New("unable to save category to db")
-	}
-	return toCategoryResponse(*addedCategory), nil
-}
-
-func (s ProductService) AddNewType(request model.AddTypeRequest, dbService database.ProductDbService) (*model.Type, error) {
-	catId, err := database.StringToUint(request.CategoryID)
-	if err != nil {
-		return nil, err
-	}
-	typeModel := models.Type{
-		Title:         request.Title,
-		CategoryRefer: catId,
-		Styles:        []models.Style{},
-	}
-	addedType := dbService.AddType(typeModel)
-	if addedType == nil {
-		return nil, errors.New("unable to save type to db")
-	}
-	return toTypeResponse(*addedType), nil
-}
-
-func (s ProductService) AddNewStyle(request model.AddStyleRequest, dbService database.ProductDbService) (*model.Style, error) {
-	typeId, err := database.StringToUint(request.TypeID)
-	if err != nil {
-		return nil, err
-	}
-	style := models.Style{
-		Title:     request.Title,
-		TypeRefer: typeId,
-		Products:  []models.Product{},
-	}
-	addedStyle := dbService.AddStyle(style)
-	if addedStyle == nil {
-		return nil, errors.New("unable to save style to db")
-	}
-	return toStyleResponse(*addedStyle), nil
-}
-
 func (s ProductService) AddNewProduct(
 	request model.AddProductRequest,
 	productDbService database.ProductDbService,
@@ -115,12 +52,4 @@ func (s ProductService) AddNewProduct(
 		return nil, errors.New("unable to save product to db")
 	}
 	return toProductResponse(*addedProduct), nil
-}
-
-func (s ProductService) GetDepartments(dbService database.ProductDbService) ([]*model.Department, error) {
-	departments := dbService.GetDepartments()
-	if departments == nil {
-		return nil, errors.New("unable to get departments from db")
-	}
-	return toDepartmentsResponse(departments), nil
 }

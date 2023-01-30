@@ -165,12 +165,185 @@ func (ec *executionContext) fieldContext_Category_Types(ctx context.Context, fie
 	return fc, nil
 }
 
+func (ec *executionContext) _SubCategory__id(ctx context.Context, field graphql.CollectedField, obj *model.SubCategory) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_SubCategory__id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_SubCategory__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SubCategory",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _SubCategory_Title(ctx context.Context, field graphql.CollectedField, obj *model.SubCategory) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_SubCategory_Title(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_SubCategory_Title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SubCategory",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _SubCategory_Types(ctx context.Context, field graphql.CollectedField, obj *model.SubCategory) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_SubCategory_Types(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Types, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Type)
+	fc.Result = res
+	return ec.marshalOType2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_SubCategory_Types(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SubCategory",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Type__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Type_Title(ctx, field)
+			case "Styles":
+				return ec.fieldContext_Type_Styles(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Type", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputAddCategoryRequest(ctx context.Context, obj interface{}) (model.AddCategoryRequest, error) {
-	var it model.AddCategoryRequest
+func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj interface{}) (model.AddCategory, error) {
+	var it model.AddCategory
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"Title", "DepartmentId"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "Title":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Title"))
+			it.Title, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "DepartmentId":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("DepartmentId"))
+			it.DepartmentID, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputAddSubCategory(ctx context.Context, obj interface{}) (model.AddSubCategory, error) {
+	var it model.AddSubCategory
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -252,12 +425,56 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 	return out
 }
 
+var subCategoryImplementors = []string{"SubCategory"}
+
+func (ec *executionContext) _SubCategory(ctx context.Context, sel ast.SelectionSet, obj *model.SubCategory) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, subCategoryImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("SubCategory")
+		case "_id":
+
+			out.Values[i] = ec._SubCategory__id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Title":
+
+			out.Values[i] = ec._SubCategory_Title(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "Types":
+
+			out.Values[i] = ec._SubCategory_Types(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCategoryRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCategoryRequest(ctx context.Context, v interface{}) (model.AddCategoryRequest, error) {
-	res, err := ec.unmarshalInputAddCategoryRequest(ctx, v)
+func (ec *executionContext) unmarshalNAddCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCategory(ctx context.Context, v interface{}) (model.AddCategory, error) {
+	res, err := ec.unmarshalInputAddCategory(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNAddSubCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddSubCategory(ctx context.Context, v interface{}) (model.AddSubCategory, error) {
+	res, err := ec.unmarshalInputAddSubCategory(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -273,6 +490,20 @@ func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋba
 		return graphql.Null
 	}
 	return ec._Category(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNSubCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSubCategory(ctx context.Context, sel ast.SelectionSet, v model.SubCategory) graphql.Marshaler {
+	return ec._SubCategory(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNSubCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSubCategory(ctx context.Context, sel ast.SelectionSet, v *model.SubCategory) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._SubCategory(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOCategory2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {

@@ -383,8 +383,8 @@ func (ec *executionContext) fieldContext_Company_certification(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputAddCompanyRequest(ctx context.Context, obj interface{}) (model.AddCompanyRequest, error) {
-	var it model.AddCompanyRequest
+func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj interface{}) (model.AddCompany, error) {
+	var it model.AddCompany
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -441,7 +441,7 @@ func (ec *executionContext) unmarshalInputAddCompanyRequest(ctx context.Context,
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certification"))
-			it.Certification, err = ec.unmarshalNAddCertificationRequest2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertificationRequest(ctx, v)
+			it.Certification, err = ec.unmarshalNAddCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -533,8 +533,8 @@ func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, 
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCompanyRequest2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCompanyRequest(ctx context.Context, v interface{}) (model.AddCompanyRequest, error) {
-	res, err := ec.unmarshalInputAddCompanyRequest(ctx, v)
+func (ec *executionContext) unmarshalNAddCompany2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCompany(ctx context.Context, v interface{}) (model.AddCompany, error) {
+	res, err := ec.unmarshalInputAddCompany(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

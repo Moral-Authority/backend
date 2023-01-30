@@ -170,7 +170,7 @@ func (ec *executionContext) fieldContext_Department_Categories(ctx context.Conte
 // region    **************************** input.gotpl *****************************
 
 func (ec *executionContext) unmarshalInputAddDepartmentRequest(ctx context.Context, obj interface{}) (model.AddDepartmentRequest, error) {
-	var it model.AddDepartmentRequest
+	var it model.AddDepartment
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v

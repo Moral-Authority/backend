@@ -10,7 +10,7 @@
 #    FoundWhere: International, US, Australia etc
 #    HowToGetIt: paying a fee, applying, etc
 
-input AddCertificationRequest {
+input AddCertification {
     Name: String!
     LogoLink: String
     Industry: String!

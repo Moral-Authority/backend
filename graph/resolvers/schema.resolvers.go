@@ -5,51 +5,19 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/generated"
-	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/handlers"
 )
 
-// AddUser is the resolver for the addUser field.
-func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{})
-	if err == nil {
-		return user, nil
-	} else {
-		return nil, err
-	}
+// BaseMutation is the resolver for the BaseMutation field.
+func (r *mutationResolver) BaseMutation(ctx context.Context) (interface{}, error) {
+	panic(fmt.Errorf("not implemented: BaseMutation - BaseMutation"))
 }
 
-// UpdateUser is the resolver for the updateUser field.
-func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
-	user, err := handlers.UserService{}.UpdateUser(input, database.UserDbServiceImpl{})
-	if err == nil {
-		return user, nil
-	} else {
-		return nil, err
-	}
-}
-
-// User is the resolver for the user field.
-func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	user, err := handlers.UserService{}.GetUserById(id, database.UserDbServiceImpl{})
-	if err == nil {
-		return user, nil
-	} else {
-		return nil, err
-	}
-}
-
-// Users is the resolver for the users field.
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	users, err := handlers.UserService{}.GetUsers(database.UserDbServiceImpl{})
-	if err == nil {
-		return users, nil
-	} else {
-		return nil, err
-	}
+// BaseQuery is the resolver for the BaseQuery field.
+func (r *queryResolver) BaseQuery(ctx context.Context) (interface{}, error) {
+	panic(fmt.Errorf("not implemented: BaseQuery - BaseQuery"))
 }
 
 // Mutation returns generated.MutationResolver implementation.

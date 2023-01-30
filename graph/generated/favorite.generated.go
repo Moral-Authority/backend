@@ -131,14 +131,20 @@ func (ec *executionContext) fieldContext_Favourite_product(ctx context.Context, 
 				return ec.fieldContext_Product_OwnersAndFounders(ctx, field)
 			case "Section":
 				return ec.fieldContext_Product_Section(ctx, field)
+			case "Subsection":
+				return ec.fieldContext_Product_Subsection(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "Category":
 				return ec.fieldContext_Product_Category(ctx, field)
+			case "SubCategory":
+				return ec.fieldContext_Product_SubCategory(ctx, field)
 			case "Type":
 				return ec.fieldContext_Product_Type(ctx, field)
 			case "Style":
 				return ec.fieldContext_Product_Style(ctx, field)
+			case "Filters":
+				return ec.fieldContext_Product_Filters(ctx, field)
 			case "ImageLinks":
 				return ec.fieldContext_Product_ImageLinks(ctx, field)
 			case "PurchaseInfo":

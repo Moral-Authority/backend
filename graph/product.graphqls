@@ -44,10 +44,10 @@ input CategorizationInput {
 enum CompanyEnum {
     Amazon, Etsy, Woocommerce, Ebay, Shopify, Other
 }
-
-enum Section {
-    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
-}
+#
+#enum SectionEnum {
+#    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
+#}
 
 
 enum CompanyCertifications {

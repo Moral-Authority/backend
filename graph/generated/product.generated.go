@@ -460,12 +460,53 @@ func (ec *executionContext) _Product_Section(ctx context.Context, field graphql.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_Section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Product_Subsection(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_Subsection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Subsection, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_Subsection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Product",
 		Field:      field,
@@ -542,12 +583,53 @@ func (ec *executionContext) _Product_Category(ctx context.Context, field graphql
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_Category(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Product_SubCategory(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_SubCategory(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SubCategory, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_SubCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Product",
 		Field:      field,
@@ -583,9 +665,9 @@ func (ec *executionContext) _Product_Type(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_Type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -624,12 +706,53 @@ func (ec *executionContext) _Product_Style(ctx context.Context, field graphql.Co
 	if resTmp == nil {
 		return graphql.Null
 	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_Style(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Product_Filters(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_Filters(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Filters, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
 	res := resTmp.([]*string)
 	fc.Result = res
 	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Product_Style(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Product_Filters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Product",
 		Field:      field,
@@ -991,7 +1114,7 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"Title", "TEST", "Description", "Categorization", "Certifications", "PurchaseInfo", "ImageLinks"}
+	fieldsInOrder := [...]string{"Title", "Description", "Categorization", "Certifications", "PurchaseInfo", "ImageLinks"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -1003,14 +1126,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Title"))
 			it.Title, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "TEST":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("TEST"))
-			it.Test, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1159,7 +1274,7 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"Section", "Department", "Category", "Type", "Style"}
+	fieldsInOrder := [...]string{"Section", "SubSection", "Department", "Category", "SubCategory", "Type", "Style"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -1170,7 +1285,15 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Section"))
-			it.Section, err = ec.unmarshalNSection2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSection(ctx, v)
+			it.Section, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "SubSection":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SubSection"))
+			it.SubSection, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1187,6 +1310,14 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Category"))
 			it.Category, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "SubCategory":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SubCategory"))
+			it.SubCategory, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1342,6 +1473,10 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 
 			out.Values[i] = ec._Product_Section(ctx, field, obj)
 
+		case "Subsection":
+
+			out.Values[i] = ec._Product_Subsection(ctx, field, obj)
+
 		case "Department":
 
 			out.Values[i] = ec._Product_Department(ctx, field, obj)
@@ -1350,6 +1485,10 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 
 			out.Values[i] = ec._Product_Category(ctx, field, obj)
 
+		case "SubCategory":
+
+			out.Values[i] = ec._Product_SubCategory(ctx, field, obj)
+
 		case "Type":
 
 			out.Values[i] = ec._Product_Type(ctx, field, obj)
@@ -1357,6 +1496,10 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 		case "Style":
 
 			out.Values[i] = ec._Product_Style(ctx, field, obj)
+
+		case "Filters":
+
+			out.Values[i] = ec._Product_Filters(ctx, field, obj)
 
 		case "ImageLinks":
 
@@ -1458,16 +1601,6 @@ func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋhowstrongiamᚋbac
 func (ec *executionContext) unmarshalNPurchaseInfoInput2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx context.Context, v interface{}) (*model.PurchaseInfoInput, error) {
 	res, err := ec.unmarshalInputPurchaseInfoInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNSection2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSection(ctx context.Context, v interface{}) (model.Section, error) {
-	var res model.Section
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNSection2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSection(ctx context.Context, sel ast.SelectionSet, v model.Section) graphql.Marshaler {
-	return v
 }
 
 func (ec *executionContext) unmarshalOCompanyCertifications2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompanyCertifications(ctx context.Context, v interface{}) (*model.CompanyCertifications, error) {

@@ -1,6 +1,6 @@
 
 extend type Mutation {
-    addCompany(request: AddCompanyRequest!): Company!
+    addCompany(request: AddCompany!): Company!
 }
 
 extend type Query {
@@ -17,11 +17,11 @@ type Company {
     certification: Certification!
 }
 
-input AddCompanyRequest {
+input AddCompany {
     url: String!
     description: String!
     userId: String!
     isVerified: Boolean!
     imageLocation: String!
-    certification: AddCertificationRequest!
+    certification: AddCertification!
 }

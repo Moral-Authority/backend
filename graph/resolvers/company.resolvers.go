@@ -11,7 +11,7 @@ import (
 )
 
 // AddCompany is the resolver for the addCompany field.
-func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompanyRequest) (*model.Company, error) {
+func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error) {
 	panic(fmt.Errorf("not implemented: AddCompany - addCompany"))
 }
 

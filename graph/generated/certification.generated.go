@@ -581,8 +581,8 @@ func (ec *executionContext) fieldContext_Certification_Notes(ctx context.Context
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputAddCertificationRequest(ctx context.Context, obj interface{}) (model.AddCertificationRequest, error) {
-	var it model.AddCertificationRequest
+func (ec *executionContext) unmarshalInputAddCertification(ctx context.Context, obj interface{}) (model.AddCertification, error) {
+	var it model.AddCertification
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -800,8 +800,8 @@ func (ec *executionContext) _Certification(ctx context.Context, sel ast.Selectio
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCertificationRequest2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertificationRequest(ctx context.Context, v interface{}) (*model.AddCertificationRequest, error) {
-	res, err := ec.unmarshalInputAddCertificationRequest(ctx, v)
+func (ec *executionContext) unmarshalNAddCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) (*model.AddCertification, error) {
+	res, err := ec.unmarshalInputAddCertification(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 

@@ -41,7 +41,6 @@ type ComplexityRoot struct {
 	Category struct {
 		ID    func(childComplexity int) int
 		Title func(childComplexity int) int
-		Types func(childComplexity int) int
 	}
 
 	Certification struct {
@@ -87,15 +86,20 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCategory   func(childComplexity int, request model.AddCategoryRequest) int
-		AddCompany    func(childComplexity int, request model.AddCompanyRequest) int
-		AddDepartment func(childComplexity int, request model.AddDepartmentRequest) int
-		AddFav        func(childComplexity int, request model.AddUserFav) int
-		AddProduct    func(childComplexity int, request model.AddProductRequest) int
-		AddStyle      func(childComplexity int, request model.AddStyleRequest) int
-		AddType       func(childComplexity int, request model.AddTypeRequest) int
-		AddUser       func(childComplexity int, input model.NewUser) int
-		UpdateUser    func(childComplexity int, input model.UpdateUser) int
+		AddCategory      func(childComplexity int, input model.AddCategory) int
+		AddCompany       func(childComplexity int, request model.AddCompany) int
+		AddDepartment    func(childComplexity int, input model.AddDepartment) int
+		AddFav           func(childComplexity int, request model.AddUserFav) int
+		AddProduct       func(childComplexity int, request model.AddProductRequest) int
+		AddProductFilter func(childComplexity int, input model.AddFilter) int
+		AddSection       func(childComplexity int, input model.AddSection) int
+		AddStyle         func(childComplexity int, input model.AddStyleRequest) int
+		AddSubCategory   func(childComplexity int, input model.AddSubCategory) int
+		AddSubSection    func(childComplexity int, input model.AddSubSection) int
+		AddType          func(childComplexity int, input model.AddTypeRequest) int
+		AddUser          func(childComplexity int, input model.NewUser) int
+		BaseMutation     func(childComplexity int) int
+		UpdateUser       func(childComplexity int, input model.UpdateUser) int
 	}
 
 	Product struct {
@@ -104,6 +108,7 @@ type ComplexityRoot struct {
 		CompanyCertifications   func(childComplexity int) int
 		Department              func(childComplexity int) int
 		Description             func(childComplexity int) int
+		Filters                 func(childComplexity int) int
 		GiveBackPrograms        func(childComplexity int) int
 		ID                      func(childComplexity int) int
 		ImageLinks              func(childComplexity int) int
@@ -113,6 +118,8 @@ type ComplexityRoot struct {
 		PurchaseInfo            func(childComplexity int) int
 		Section                 func(childComplexity int) int
 		Style                   func(childComplexity int) int
+		SubCategory             func(childComplexity int) int
+		Subsection              func(childComplexity int) int
 		Title                   func(childComplexity int) int
 		Type                    func(childComplexity int) int
 		Verified                func(childComplexity int) int
@@ -127,16 +134,40 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		GetCompany     func(childComplexity int, id string) int
-		GetDepartments func(childComplexity int) int
-		User           func(childComplexity int, id string) int
-		Users          func(childComplexity int) int
+		BaseQuery        func(childComplexity int) int
+		GetCategories    func(childComplexity int, input *string) int
+		GetCompany       func(childComplexity int, id string) int
+		GetDepartments   func(childComplexity int, input *string) int
+		GetFilters       func(childComplexity int, input *string) int
+		GetSections      func(childComplexity int, input *string) int
+		GetStyle         func(childComplexity int, input *string) int
+		GetSubCategories func(childComplexity int, input *string) int
+		GetSubSections   func(childComplexity int, input *string) int
+		GetTypes         func(childComplexity int, input *string) int
+		User             func(childComplexity int, id string) int
+		Users            func(childComplexity int) int
+	}
+
+	Section struct {
+		ID    func(childComplexity int) int
+		Title func(childComplexity int) int
 	}
 
 	Style struct {
 		ID       func(childComplexity int) int
 		Products func(childComplexity int) int
 		Title    func(childComplexity int) int
+	}
+
+	SubCategory struct {
+		ID    func(childComplexity int) int
+		Title func(childComplexity int) int
+		Types func(childComplexity int) int
+	}
+
+	SubSection struct {
+		ID    func(childComplexity int) int
+		Title func(childComplexity int) int
 	}
 
 	Type struct {
@@ -181,13 +212,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Category.Title(childComplexity), true
-
-	case "Category.Types":
-		if e.complexity.Category.Types == nil {
-			break
-		}
-
-		return e.complexity.Category.Types(childComplexity), true
 
 	case "Certification.Audited":
 		if e.complexity.Certification.Audited == nil {
@@ -388,7 +412,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddCategory(childComplexity, args["request"].(model.AddCategoryRequest)), true
+		return e.complexity.Mutation.AddCategory(childComplexity, args["input"].(model.AddCategory)), true
 
 	case "Mutation.addCompany":
 		if e.complexity.Mutation.AddCompany == nil {
@@ -400,7 +424,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddCompany(childComplexity, args["request"].(model.AddCompanyRequest)), true
+		return e.complexity.Mutation.AddCompany(childComplexity, args["request"].(model.AddCompany)), true
 
 	case "Mutation.addDepartment":
 		if e.complexity.Mutation.AddDepartment == nil {
@@ -412,7 +436,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddDepartment(childComplexity, args["request"].(model.AddDepartmentRequest)), true
+		return e.complexity.Mutation.AddDepartment(childComplexity, args["input"].(model.AddDepartment)), true
 
 	case "Mutation.addFav":
 		if e.complexity.Mutation.AddFav == nil {
@@ -438,6 +462,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddProduct(childComplexity, args["request"].(model.AddProductRequest)), true
 
+	case "Mutation.addProductFilter":
+		if e.complexity.Mutation.AddProductFilter == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addProductFilter_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddProductFilter(childComplexity, args["input"].(model.AddFilter)), true
+
+	case "Mutation.addSection":
+		if e.complexity.Mutation.AddSection == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addSection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddSection(childComplexity, args["input"].(model.AddSection)), true
+
 	case "Mutation.addStyle":
 		if e.complexity.Mutation.AddStyle == nil {
 			break
@@ -448,7 +496,31 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddStyle(childComplexity, args["request"].(model.AddStyleRequest)), true
+		return e.complexity.Mutation.AddStyle(childComplexity, args["input"].(model.AddStyleRequest)), true
+
+	case "Mutation.addSubCategory":
+		if e.complexity.Mutation.AddSubCategory == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addSubCategory_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddSubCategory(childComplexity, args["input"].(model.AddSubCategory)), true
+
+	case "Mutation.addSubSection":
+		if e.complexity.Mutation.AddSubSection == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addSubSection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddSubSection(childComplexity, args["input"].(model.AddSubSection)), true
 
 	case "Mutation.addType":
 		if e.complexity.Mutation.AddType == nil {
@@ -460,7 +532,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddType(childComplexity, args["request"].(model.AddTypeRequest)), true
+		return e.complexity.Mutation.AddType(childComplexity, args["input"].(model.AddTypeRequest)), true
 
 	case "Mutation.addUser":
 		if e.complexity.Mutation.AddUser == nil {
@@ -473,6 +545,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.AddUser(childComplexity, args["input"].(model.NewUser)), true
+
+	case "Mutation.BaseMutation":
+		if e.complexity.Mutation.BaseMutation == nil {
+			break
+		}
+
+		return e.complexity.Mutation.BaseMutation(childComplexity), true
 
 	case "Mutation.updateUser":
 		if e.complexity.Mutation.UpdateUser == nil {
@@ -520,6 +599,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Product.Description(childComplexity), true
+
+	case "Product.Filters":
+		if e.complexity.Product.Filters == nil {
+			break
+		}
+
+		return e.complexity.Product.Filters(childComplexity), true
 
 	case "Product.GiveBackPrograms":
 		if e.complexity.Product.GiveBackPrograms == nil {
@@ -584,6 +670,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.Style(childComplexity), true
 
+	case "Product.SubCategory":
+		if e.complexity.Product.SubCategory == nil {
+			break
+		}
+
+		return e.complexity.Product.SubCategory(childComplexity), true
+
+	case "Product.Subsection":
+		if e.complexity.Product.Subsection == nil {
+			break
+		}
+
+		return e.complexity.Product.Subsection(childComplexity), true
+
 	case "Product.Title":
 		if e.complexity.Product.Title == nil {
 			break
@@ -640,6 +740,25 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PurchaseInfo.Rating(childComplexity), true
 
+	case "Query.BaseQuery":
+		if e.complexity.Query.BaseQuery == nil {
+			break
+		}
+
+		return e.complexity.Query.BaseQuery(childComplexity), true
+
+	case "Query.getCategories":
+		if e.complexity.Query.GetCategories == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getCategories_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetCategories(childComplexity, args["input"].(*string)), true
+
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
 			break
@@ -657,7 +776,84 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.GetDepartments(childComplexity), true
+		args, err := ec.field_Query_getDepartments_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetDepartments(childComplexity, args["input"].(*string)), true
+
+	case "Query.getFilters":
+		if e.complexity.Query.GetFilters == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getFilters_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetFilters(childComplexity, args["input"].(*string)), true
+
+	case "Query.getSections":
+		if e.complexity.Query.GetSections == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getSections_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetSections(childComplexity, args["input"].(*string)), true
+
+	case "Query.getStyle":
+		if e.complexity.Query.GetStyle == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getStyle_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetStyle(childComplexity, args["input"].(*string)), true
+
+	case "Query.getSubCategories":
+		if e.complexity.Query.GetSubCategories == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getSubCategories_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetSubCategories(childComplexity, args["input"].(*string)), true
+
+	case "Query.getSubSections":
+		if e.complexity.Query.GetSubSections == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getSubSections_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetSubSections(childComplexity, args["input"].(*string)), true
+
+	case "Query.getTypes":
+		if e.complexity.Query.GetTypes == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getTypes_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetTypes(childComplexity, args["input"].(*string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -677,6 +873,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.Users(childComplexity), true
+
+	case "Section._id":
+		if e.complexity.Section.ID == nil {
+			break
+		}
+
+		return e.complexity.Section.ID(childComplexity), true
+
+	case "Section.Title":
+		if e.complexity.Section.Title == nil {
+			break
+		}
+
+		return e.complexity.Section.Title(childComplexity), true
 
 	case "Style._id":
 		if e.complexity.Style.ID == nil {
@@ -698,6 +908,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Style.Title(childComplexity), true
+
+	case "SubCategory._id":
+		if e.complexity.SubCategory.ID == nil {
+			break
+		}
+
+		return e.complexity.SubCategory.ID(childComplexity), true
+
+	case "SubCategory.Title":
+		if e.complexity.SubCategory.Title == nil {
+			break
+		}
+
+		return e.complexity.SubCategory.Title(childComplexity), true
+
+	case "SubCategory.Types":
+		if e.complexity.SubCategory.Types == nil {
+			break
+		}
+
+		return e.complexity.SubCategory.Types(childComplexity), true
+
+	case "SubSection._id":
+		if e.complexity.SubSection.ID == nil {
+			break
+		}
+
+		return e.complexity.SubSection.ID(childComplexity), true
+
+	case "SubSection.Title":
+		if e.complexity.SubSection.Title == nil {
+			break
+		}
+
+		return e.complexity.SubSection.Title(childComplexity), true
 
 	case "Type._id":
 		if e.complexity.Type.ID == nil {
@@ -756,12 +1001,16 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputAddCategoryRequest,
-		ec.unmarshalInputAddCertificationRequest,
-		ec.unmarshalInputAddCompanyRequest,
-		ec.unmarshalInputAddDepartmentRequest,
+		ec.unmarshalInputAddCategory,
+		ec.unmarshalInputAddCertification,
+		ec.unmarshalInputAddCompany,
+		ec.unmarshalInputAddDepartment,
+		ec.unmarshalInputAddFilter,
 		ec.unmarshalInputAddProductRequest,
+		ec.unmarshalInputAddSection,
 		ec.unmarshalInputAddStyleRequest,
+		ec.unmarshalInputAddSubCategory,
+		ec.unmarshalInputAddSubSection,
 		ec.unmarshalInputAddTypeRequest,
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputAllCertificationsInput,
@@ -829,20 +1078,6 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../category.graphqls", Input: `extend type Mutation {
-    addCategory(request: AddCategoryRequest!): Category!
-}
-
-type Category {
-    _id: String!
-    Title: String!
-    Types: [Type]
-}
-
-input AddCategoryRequest {
-    Title: String!
-    DepartmentId: String!
-}`, BuiltIn: false},
 	{Name: "../certification.graphqls", Input: `#    Name: String!
 #    LogoLink: String
 #	 ProvidingCompany: String!
@@ -855,7 +1090,7 @@ input AddCategoryRequest {
 #    FoundWhere: International, US, Australia etc
 #    HowToGetIt: paying a fee, applying, etc
 
-input AddCertificationRequest {
+input AddCertification {
     Name: String!
     LogoLink: String
     Industry: String!
@@ -891,7 +1126,7 @@ enum certifies {
 }`, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `
 extend type Mutation {
-    addCompany(request: AddCompanyRequest!): Company!
+    addCompany(request: AddCompany!): Company!
 }
 
 extend type Query {
@@ -908,32 +1143,15 @@ type Company {
     certification: Certification!
 }
 
-input AddCompanyRequest {
+input AddCompany {
     url: String!
     description: String!
     userId: String!
     isVerified: Boolean!
     imageLocation: String!
-    certification: AddCertificationRequest!
+    certification: AddCertification!
 }
 `, BuiltIn: false},
-	{Name: "../department.graphqls", Input: `extend type Mutation {
-    addDepartment(request: AddDepartmentRequest!): Department!
-}
-
-extend type Query {
-    getDepartments: [Department]!
-}
-
-type Department {
-    _id: String!
-    Title: String!
-    Categories: [Category]
-}
-
-input AddDepartmentRequest {
-    Title: String!
-}`, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
     addFav(request: AddUserFav!): [Favourite]
 }
@@ -948,13 +1166,138 @@ userId: String!
 productId: String!
 }
 `, BuiltIn: false},
+	{Name: "../prodCategorization.graphqls", Input: `extend type Mutation {
+
+    #   ========== SECTION ==========
+    addSection(input: AddSection!): Section!
+    addSubSection(input: AddSubSection!): SubSection!
+
+    #   ========== DEPARTMENT ==========
+    addDepartment(input: AddDepartment!): Department!
+
+    #   ========== CATEGORY ==========
+    addCategory(input: AddCategory!): Category!
+    addSubCategory(input: AddSubCategory!): SubCategory!
+
+    #   ========== TYPE ==========
+    addType(input: AddTypeRequest!): Type!
+
+    #   ========== STYLE ==========
+    addStyle(input: AddStyleRequest!): Style!
+
+    addProductFilter(input: AddFilter!): String!
+
+}
+
+extend type Query {
+    getSections(input: ID): [Section]!
+    getSubSections(input: ID): [SubSection]!
+    getDepartments(input: ID): [Department]!
+    getCategories(input: ID): [Category]!
+    getSubCategories(input: ID): [SubCategory]!
+    getTypes(input: ID): [Type]!
+    getStyle(input: ID): [Style]!
+    getFilters(input: ID): [String]!
+}
+
+# ======= INPUTS ======
+
+input AddSection {
+    Title: String!
+}
+
+input AddSubSection {
+    Title: String!
+    SectionId: String!
+}
+
+input AddDepartment {
+    Title: String!
+    SubSectionId: String!
+}
+
+input AddCategory {
+    Title: String!
+    DepartmentId: String!
+}
+
+input AddSubCategory {
+    Title: String!
+    CategoryId: String!
+}
+
+input AddTypeRequest {
+    Title: String!
+    SubCategoryId: String!
+}
+
+input AddStyleRequest {
+    Title: String!
+    TypeId: String!
+}
+
+input AddFilter {
+    FilterCategory: FilterCategory!
+    FilterType: FilterType!
+
+}
+
+enum FilterCategory {
+    Section, Subsection, Department, Category, SubCategory, Type, Style
+}
+
+enum FilterType {
+    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
+    holiday, occasion, size, mount, fillMaterial, height, length
+}
+
+
+# ======= INPUTS END ======
+
+type Section {
+    _id: String!
+    Title: String!
+}
+
+type SubSection {
+    _id: String!
+    Title: String!
+}
+
+type Category {
+    _id: String!
+    Title: String!
+}
+
+type SubCategory {
+    _id: String!
+    Title: String!
+    Types: [Type]
+}
+
+type Department {
+    _id: String!
+    Title: String!
+    Categories: [Category]
+}
+
+type Style {
+    _id: String!
+    Title: String!
+    Products: [Product]
+}
+
+type Type {
+    _id: String!
+    Title: String!
+    Styles: [Style]
+}`, BuiltIn: false},
 	{Name: "../product.graphqls", Input: `extend type Mutation {
     addProduct(request: AddProductRequest!): Product!
 }
 
 input AddProductRequest {
     Title: String!
-    TEST: String!
     Description: String!
     Categorization: CategorizationInput!
     Certifications: AllCertificationsInput!
@@ -983,9 +1326,11 @@ input AllCertificationsInput {
 }
 
 input CategorizationInput {
-    Section: Section!
+    Section: String
+    SubSection: String
     Department: String
     Category: String
+    SubCategory:String
     Type: String
     Style: String
 }
@@ -993,10 +1338,11 @@ input CategorizationInput {
 enum CompanyEnum {
     Amazon, Etsy, Woocommerce, Ebay, Shopify, Other
 }
+#
+#enum SectionEnum {
+#    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
+#}
 
-enum Section {
-    Service, Product
-}
 
 enum CompanyCertifications {
     Bcorp, PlasticBankPartner, rePurposeGlobalPartner, ClimateNeutral
@@ -1028,11 +1374,14 @@ type Product {
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
-    Section: [String]
+    Section: String
+    Subsection: String
     Department: [String]
-    Category: [String]
-    Type: [String]
-    Style: [String]
+    Category: String
+    SubCategory: String
+    Type: String
+    Style: String
+    Filters: [String]
     ImageLinks: [String]
     PurchaseInfo: [PurchaseInfo]
     Verified: Boolean
@@ -1051,50 +1400,31 @@ schema {
   mutation: Mutation
 }
 type Query {
-  user(_id: String!): User!
-  users: [User]!
+  BaseQuery: Any
 }
 
 type Mutation {
-  addUser(input: NewUser!): User!
-  updateUser(input: UpdateUser!): User!
+  BaseMutation: Any
 }
 
-type Image {
-  _id: String!
-  Location: String!
-}
 
-`, BuiltIn: false},
-	{Name: "../style.graphqls", Input: `extend type Mutation {
-    addStyle(request: AddStyleRequest!): Style!
+scalar Any`, BuiltIn: false},
+	{Name: "../user.graphqls", Input: `extend type Query {
+    user(_id: String!): User!
+    users: [User]!
 }
 
 extend type Mutation {
-    addType(request: AddTypeRequest!): Type!
+    addUser(input: NewUser!): User!
+    updateUser(input: UpdateUser!): User!
 }
 
-type Style {
+type Image {
     _id: String!
-    Title: String!
-    Products: [Product]
+    Location: String!
 }
 
-input AddStyleRequest {
-    Title: String!
-    TypeId: String!
-}`, BuiltIn: false},
-	{Name: "../type.graphqls", Input: `type Type {
-    _id: String!
-    Title: String!
-    Styles: [Style]
-}
-
-input AddTypeRequest {
-    Title: String!
-    CategoryId: String!
-}`, BuiltIn: false},
-	{Name: "../user.graphqls", Input: `type User {
+type User {
     _id: String!
     firstName: String!
     lastName: String!
