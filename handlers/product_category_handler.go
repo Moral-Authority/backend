@@ -9,7 +9,7 @@ import (
 
 type ProductCategorizationService struct{}
 
-func (s ProductService) AddNewSection(request model.AddSection, dbService database.ProductDbService) (*model.Department, error) {
+func (s ProductService) AddNewSection(request model.AddSection, dbService database.ProductDbService) (*model.Section, error) {
 	department := models.Section{
 		Title:      request.Title,
 		Categories: []models.Category{},
@@ -18,10 +18,10 @@ func (s ProductService) AddNewSection(request model.AddSection, dbService databa
 	if addedDept == nil {
 		return nil, errors.New("unable to save department to db")
 	}
-	return toDepartmentResponse(*addedDept), nil
+	return toSectionResponse(*addedDept), nil
 }
 
-func (s ProductService) AddNewSubSection(request model.AddSection, dbService database.ProductDbService) (*model.Department, error) {
+func (s ProductService) AddNewSubSection(request model.AddSubSection, dbService database.ProductDbService) (*model.SubSection, error) {
 	department := models.Department{
 		Title:      request.Title,
 		Categories: []models.Category{},
@@ -30,7 +30,7 @@ func (s ProductService) AddNewSubSection(request model.AddSection, dbService dat
 	if addedDept == nil {
 		return nil, errors.New("unable to save department to db")
 	}
-	return toDepartmentResponse(*addedDept), nil
+	return toSubSectionResponse(*addedDept), nil
 }
 
 func (s ProductService) AddNewDepartment(request model.AddDepartment, dbService database.ProductDbService) (*model.Department, error) {
@@ -62,25 +62,24 @@ func (s ProductService) AddNewCategory(request model.AddCategory, dbService data
 	return toCategoryResponse(*addedCategory), nil
 }
 
-func (s ProductService) AddNewSubCategory(request model.AddCategory, dbService database.ProductDbService) (*model.Category, error) {
-	deptId, err := database.StringToUint(request.DepartmentID)
+func (s ProductService) AddNewSubCategory(request model.AddSubCategory, dbService database.ProductDbService) (*model.SubCategory, error) {
+	categoryID, err := database.StringToUint(request.CategoryID)
 	if err != nil {
 		return nil, err
 	}
-	category := models.Category{
-		Title:           request.Title,
-		DepartmentRefer: deptId,
-		Types:           []models.Type{},
+	subcategory := models.SubCategory{
+		Title:         request.Title,
+		CategoryRefer: categoryID,
 	}
-	addedCategory := dbService.AddSubCategory(category)
+	addedCategory := dbService.AddSubCategory(subcategory)
 	if addedCategory == nil {
 		return nil, errors.New("unable to save category to db")
 	}
-	return toCategoryResponse(*addedCategory), nil
+	return toSubCategoryResponse(*addedCategory), nil
 }
 
 func (s ProductService) AddNewType(request model.AddTypeRequest, dbService database.ProductDbService) (*model.Type, error) {
-	catId, err := database.StringToUint(request.CategoryID)
+	catId, err := database.StringToUint(request.SubCategoryID)
 	if err != nil {
 		return nil, err
 	}

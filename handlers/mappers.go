@@ -37,6 +37,22 @@ func toImageResponse(image models.Image) *model.Image {
 	}
 }
 
+func toSectionResponse(department models.Section) *model.Section {
+	return &model.Section{
+		ID:         strconv.Itoa(int(department.ID)),
+		Title:      department.Title,
+		Categories: toCategoriesResponse(department.Categories),
+	}
+}
+
+func toSubSectionResponse(department models.SubSection) *model.SubSection {
+	return &model.SubSection{
+		ID:         strconv.Itoa(int(department.ID)),
+		Title:      department.Title,
+		Categories: toCategoriesResponse(department.Categories),
+	}
+}
+
 func toDepartmentsResponse(departments []*models.Department) []*model.Department {
 	var response []*model.Department
 	for _, e := range departments {
@@ -68,6 +84,14 @@ func toCategoryResponse(category models.Category) *model.Category {
 		ID:    strconv.Itoa(int(category.ID)),
 		Title: category.Title,
 		Types: toTypesResponse(category.Types),
+	}
+}
+
+func toSubCategoryResponse(subcategory models.SubCategory) *model.SubCategory {
+	return &model.SubCategory{
+		ID:    strconv.Itoa(int(subcategory.ID)),
+		Title: subcategory.Title,
+		Types: toTypesResponse(subcategory.Departments),
 	}
 }
 

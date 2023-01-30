@@ -8,3 +8,10 @@ type Category struct {
 	Title           string
 	Types           []Type `gorm:"foreignKey:CategoryRefer"`
 }
+
+type SubCategory struct {
+	gorm.Model
+	CategoryRefer uint
+	Title         string
+	Departments   []Type `gorm:"foreignKey:CategoryRefer"`
+}

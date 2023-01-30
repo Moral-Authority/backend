@@ -14,9 +14,9 @@ import (
 
 // AddSection is the resolver for the addSection field.
 func (r *mutationResolver) AddSection(ctx context.Context, input model.AddSection) (*model.Section, error) {
-	dept, err := handlers.ProductService{}.AddNewSection(input, database.ProductDbServiceImpl{})
+	section, err := handlers.ProductService{}.AddNewSection(input, database.ProductDbServiceImpl{})
 	if err == nil {
-		return dept, nil
+		return section, nil
 	} else {
 		return nil, err
 	}
@@ -24,9 +24,9 @@ func (r *mutationResolver) AddSection(ctx context.Context, input model.AddSectio
 
 // AddSubSection is the resolver for the addSubSection field.
 func (r *mutationResolver) AddSubSection(ctx context.Context, input model.AddSubSection) (*model.SubSection, error) {
-	dept, err := handlers.ProductService{}.AddNewSubSection(input, database.ProductDbServiceImpl{})
+	subsection, err := handlers.ProductService{}.AddNewSubSection(input, database.ProductDbServiceImpl{})
 	if err == nil {
-		return dept, nil
+		return subsection, nil
 	} else {
 		return nil, err
 	}
@@ -54,9 +54,9 @@ func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCateg
 
 // AddSubCategory is the resolver for the addSubCategory field.
 func (r *mutationResolver) AddSubCategory(ctx context.Context, input model.AddSubCategory) (*model.SubCategory, error) {
-	dept, err := handlers.ProductService{}.AddNewSubCategory(input, database.ProductDbServiceImpl{})
+	subcat, err := handlers.ProductService{}.AddNewSubCategory(input, database.ProductDbServiceImpl{})
 	if err == nil {
-		return dept, nil
+		return subcat, nil
 	} else {
 		return nil, err
 	}
