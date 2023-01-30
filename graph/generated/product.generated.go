@@ -991,7 +991,7 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"Title", "Description", "Categorization", "Certifications", "PurchaseInfo", "ImageLinks"}
+	fieldsInOrder := [...]string{"Title", "TEST", "Description", "Categorization", "Certifications", "PurchaseInfo", "ImageLinks"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -1003,6 +1003,14 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Title"))
 			it.Title, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "TEST":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("TEST"))
+			it.Test, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

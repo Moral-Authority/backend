@@ -9,8 +9,8 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/howstrongiam/backend/cmd"
 	"github.com/howstrongiam/backend/database"
-	"github.com/howstrongiam/backend/graph"
 	"github.com/howstrongiam/backend/graph/generated"
+	r "github.com/howstrongiam/backend/graph/resolvers"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -37,7 +37,7 @@ func main() {
 	database.Connect(cfg.DatabaseConfig)
 
 	// setup graphql server
-	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
 	srv.AddTransport(transport.POST{})
 	srv.AddTransport(transport.Websocket{
 		KeepAlivePingInterval: 10 * time.Second,
@@ -53,7 +53,7 @@ func main() {
 		port = defaultPort
 	}
 
-	srv = handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv = handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", c.Handler(srv))

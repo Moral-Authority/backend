@@ -954,6 +954,7 @@ productId: String!
 
 input AddProductRequest {
     Title: String!
+    TEST: String!
     Description: String!
     Categorization: CategorizationInput!
     Certifications: AllCertificationsInput!

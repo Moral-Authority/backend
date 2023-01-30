@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
@@ -23,10 +24,5 @@ func (r *mutationResolver) AddDepartment(ctx context.Context, request model.AddD
 
 // GetDepartments is the resolver for the getDepartments field.
 func (r *queryResolver) GetDepartments(ctx context.Context) ([]*model.Department, error) {
-	departments, err := handlers.ProductService{}.GetDepartments(database.ProductDbServiceImpl{})
-	if err == nil {
-		return departments, nil
-	} else {
-		return nil, err
-	}
+	panic(fmt.Errorf("not implemented: GetDepartments - getDepartments"))
 }

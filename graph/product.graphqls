@@ -32,9 +32,11 @@ input AllCertificationsInput {
 }
 
 input CategorizationInput {
-    Section: Section!
+    Section: Section
+    SubSection: String
     Department: String
     Category: String
+    SubCategory:String
     Type: String
     Style: String
 }

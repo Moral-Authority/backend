@@ -43,6 +43,7 @@ type AddDepartmentRequest struct {
 
 type AddProductRequest struct {
 	Title          string                  `json:"Title"`
+	Test           string                  `json:"TEST"`
 	Description    string                  `json:"Description"`
 	Categorization *CategorizationInput    `json:"Categorization"`
 	Certifications *AllCertificationsInput `json:"Certifications"`
