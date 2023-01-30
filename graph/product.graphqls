@@ -32,7 +32,7 @@ input AllCertificationsInput {
 }
 
 input CategorizationInput {
-    Section: Section
+    Section: String
     SubSection: String
     Department: String
     Category: String
@@ -46,8 +46,9 @@ enum CompanyEnum {
 }
 
 enum Section {
-    Service, Product
+    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
 }
+
 
 enum CompanyCertifications {
     Bcorp, PlasticBankPartner, rePurposeGlobalPartner, ClimateNeutral
@@ -79,11 +80,14 @@ type Product {
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
-    Section: [String]
+    Section: String
+    Subsection: String
     Department: [String]
-    Category: [String]
-    Type: [String]
-    Style: [String]
+    Category: String
+    SubCategory: String
+    Type: String
+    Style: String
+    Filters: [String]
     ImageLinks: [String]
     PurchaseInfo: [PurchaseInfo]
     Verified: Boolean
