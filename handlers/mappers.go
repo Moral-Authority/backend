@@ -37,96 +37,23 @@ func toImageResponse(image models.Image) *model.Image {
 	}
 }
 
-func toSectionResponse(department models.Section) *model.Section {
-	return &model.Section{
-		ID:         strconv.Itoa(int(department.ID)),
-		Title:      department.Title,
-		Categories: toCategoriesResponse(department.Categories),
-	}
-}
-
-func toSubSectionResponse(department models.SubSection) *model.SubSection {
-	return &model.SubSection{
-		ID:         strconv.Itoa(int(department.ID)),
-		Title:      department.Title,
-		Categories: toCategoriesResponse(department.Categories),
-	}
-}
-
-func toDepartmentsResponse(departments []*models.Department) []*model.Department {
-	var response []*model.Department
-	for _, e := range departments {
-		dept := toDepartmentResponse(*e)
-		response = append(response, dept)
-	}
-	return response
-}
-
-func toDepartmentResponse(department models.Department) *model.Department {
-	return &model.Department{
-		ID:         strconv.Itoa(int(department.ID)),
-		Title:      department.Title,
-		Categories: toCategoriesResponse(department.Categories),
-	}
-}
-
-func toCategoriesResponse(categories []models.Category) []*model.Category {
+func toCategoriesResponse(categories []models.Categories) []*model.Category {
 	var response []*model.Category
-	for _, e := range categories {
-		cat := toCategoryResponse(e)
-		response = append(response, cat)
-	}
+	//for _, e := range categories {
+	//	cat := toCategoryResponse(e)
+	//	response = append(response, cat)
+	//}
 	return response
 }
 
-func toCategoryResponse(category models.Category) *model.Category {
-	return &model.Category{
-		ID:    strconv.Itoa(int(category.ID)),
-		Title: category.Title,
-		Types: toTypesResponse(category.Types),
-	}
-}
-
-func toSubCategoryResponse(subcategory models.SubCategory) *model.SubCategory {
-	return &model.SubCategory{
-		ID:    strconv.Itoa(int(subcategory.ID)),
-		Title: subcategory.Title,
-		Types: toTypesResponse(subcategory.Departments),
-	}
-}
-
-func toTypesResponse(types []models.Type) []*model.Type {
-	var response []*model.Type
-	for _, e := range types {
-		type_ := toTypeResponse(e)
-		response = append(response, type_)
-	}
-	return response
-}
-
-func toTypeResponse(type_ models.Type) *model.Type {
-	return &model.Type{
-		ID:     strconv.Itoa(int(type_.ID)),
-		Title:  type_.Title,
-		Styles: toStylesResponse(type_.Styles),
-	}
-}
-
-func toStylesResponse(styles []models.Style) []*model.Style {
-	var response []*model.Style
-	for _, e := range styles {
-		style := toStyleResponse(e)
-		response = append(response, style)
-	}
-	return response
-}
-
-func toStyleResponse(style models.Style) *model.Style {
-	return &model.Style{
-		ID:       strconv.Itoa(int(style.ID)),
-		Products: toProductsResponse(style.Products),
-	}
-}
+//func toFilterResponse(filter models.Filter) *model.Filter {
+//	//return &model.Filter{
+//    //    ID:    strconv.Itoa(int(filter.ID)),
+//    //    : filter.Value,
+//    //}
+//
+//	return model.Filter{}
+//}
 
 func toProductsResponse(products []models.Product) []*model.Product {
 	var response []*model.Product
@@ -149,32 +76,29 @@ func toProductResponse(product models.Product) *model.Product {
 
 func toCompanyResponse(company models.Company) *model.Company {
 	return &model.Company{
-		ID:            strconv.Itoa(int(company.ID)),
-		URL:           company.Url,
-		Description:   company.Description,
-		User:          toUserResponse(company.User),
-		IsVerified:    company.IsVerified,
-		Image:         toImageResponse(company.Image),
-		Certification: toCertificationResponse(company.Certification),
+		//ID:            strconv.Itoa(int(company.ID)),
+		URL:         &company.Url.String,
+		Description: &company.Description.String,
+		IsVerified:  &company.IsVerified.Bool,
+		Logo:        &company.Image.String,
 	}
 }
 
 func toCertificationResponse(cert models.Certification) *model.Certification {
-	var temp = string("")
-	var booltemp = bool(false)
 	return &model.Certification{
-		ID:                      strconv.Itoa(int(cert.ID)),
-		Name:                    cert.CertName,
-		LogoLink:                &temp,
-		Industry:                "",
-		ProvidingCompany:        cert.CertifyingCompany,
-		Certifies:               "",
-		Type:                    &temp,
-		Audited:                 &booltemp,
-		Auditor:                 &temp,
-		ProvidingCompanyWebsite: "",
-		FoundWhere:              &temp,
-		HowToGetIt:              &temp,
-		Notes:                   &temp,
+		ID:               strconv.Itoa(int(cert.ID)),
+		Name:             cert.Name.String,
+		Logo:             &cert.Logo.String,
+		Industry:         cert.Industry.String,
+		Certifier:        cert.Certifier.String,
+		CertifiesCompany: &cert.CertifiesCompany.Bool,
+		CertifiesProduct: &cert.CertifiesProduct.Bool,
+		CertifiesProcess: &cert.CertifiesProcess.Bool,
+		CertifierContact: &cert.CertifierContact.String,
+		Audited:          &cert.Audited.Bool,
+		Auditor:          &cert.Auditor.String,
+		Region:           &cert.Region.String,
+		Qualifiers:       &cert.Qualifiers.String,
+		Sources:          &cert.Sources.String,
 	}
 }

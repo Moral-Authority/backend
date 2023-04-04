@@ -2,16 +2,16 @@ package models
 
 import "gorm.io/gorm"
 
-type Category struct {
+type ProductCategories struct {
 	gorm.Model
-	DepartmentRefer uint
-	Title           string
-	Types           []Type `gorm:"foreignKey:CategoryRefer"`
+	ID         uint `gorm:"primaryKey"`
+	CategoryId uint `gorm:"foreignKey:CategoryRefer"`
+	ProductId  uint `gorm:"foreignKey:ProductRefer"`
 }
 
-type SubCategory struct {
+type Categories struct {
 	gorm.Model
-	CategoryRefer uint
-	Title         string
-	Departments   []Type `gorm:"foreignKey:CategoryRefer"`
+	ID       uint `gorm:"primaryKey"`
+	Name     string
+	ParentId uint `gorm:"foreignKey:CategoryRefer"`
 }

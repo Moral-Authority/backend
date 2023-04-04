@@ -42,16 +42,13 @@ func GetDbConn() *gorm.DB {
 func performMigrations(db *gorm.DB) {
 	// Migrate the schema
 	err := db.AutoMigrate(
-		&models.Department{},
-		&models.Category{},
+		&models.Categories{},
 		&models.Certification{},
 		&models.Company{},
 		&models.Favourite{},
 		&models.Image{},
 		&models.LoginCredentials{},
 		&models.Product{},
-		&models.Style{},
-		&models.Type{},
 		&models.User{},
 	)
 	if err != nil {

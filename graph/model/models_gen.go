@@ -9,42 +9,32 @@ import (
 )
 
 type AddCategory struct {
-	Title        string `json:"Title"`
-	DepartmentID string `json:"DepartmentId"`
+	Name         string       `json:"Name"`
+	ParentID     string       `json:"ParentId"`
+	CategoryType CategoryEnum `json:"CategoryType"`
 }
 
 type AddCertification struct {
-	Name                    string    `json:"Name"`
-	LogoLink                *string   `json:"LogoLink"`
-	Industry                string    `json:"Industry"`
-	ProvidingCompany        string    `json:"ProvidingCompany"`
-	Certifies               Certifies `json:"Certifies"`
-	Type                    *string   `json:"Type"`
-	Audited                 *bool     `json:"Audited"`
-	Auditor                 *string   `json:"Auditor"`
-	ProvidingCompanyWebsite string    `json:"ProvidingCompanyWebsite"`
-	FoundWhere              *string   `json:"FoundWhere"`
-	HowToGetIt              *string   `json:"HowToGetIt"`
-	Notes                   *string   `json:"Notes"`
+	Name             *string `json:"Name"`
+	Logo             *string `json:"Logo"`
+	Industry         *string `json:"Industry"`
+	Certifier        *string `json:"Certifier"`
+	CertifiesCompany *bool   `json:"CertifiesCompany"`
+	CertifiesProduct *bool   `json:"CertifiesProduct"`
+	CertifiesProcess *bool   `json:"CertifiesProcess"`
+	CertifierContact *string `json:"CertifierContact"`
+	Audited          *bool   `json:"Audited"`
+	Auditor          *string `json:"Auditor"`
+	Region           *string `json:"Region"`
+	Qualifiers       *string `json:"Qualifiers"`
+	Sources          *string `json:"Sources"`
 }
 
 type AddCompany struct {
-	URL           string            `json:"url"`
-	Description   string            `json:"description"`
-	UserID        string            `json:"userId"`
-	IsVerified    bool              `json:"isVerified"`
-	ImageLocation string            `json:"imageLocation"`
-	Certification *AddCertification `json:"certification"`
-}
-
-type AddDepartment struct {
-	Title        string `json:"Title"`
-	SubSectionID string `json:"SubSectionId"`
-}
-
-type AddFilter struct {
-	FilterCategory FilterCategory `json:"FilterCategory"`
-	FilterType     FilterType     `json:"FilterType"`
+	URL         *string `json:"url"`
+	Description *string `json:"description"`
+	IsVerified  *bool   `json:"isVerified"`
+	Logo        *string `json:"logo"`
 }
 
 type AddProductRequest struct {
@@ -54,30 +44,6 @@ type AddProductRequest struct {
 	Certifications *AllCertificationsInput `json:"Certifications"`
 	PurchaseInfo   *PurchaseInfoInput      `json:"PurchaseInfo"`
 	ImageLinks     []*string               `json:"ImageLinks"`
-}
-
-type AddSection struct {
-	Title string `json:"Title"`
-}
-
-type AddStyleRequest struct {
-	Title  string `json:"Title"`
-	TypeID string `json:"TypeId"`
-}
-
-type AddSubCategory struct {
-	Title      string `json:"Title"`
-	CategoryID string `json:"CategoryId"`
-}
-
-type AddSubSection struct {
-	Title     string `json:"Title"`
-	SectionID string `json:"SectionId"`
-}
-
-type AddTypeRequest struct {
-	Title         string `json:"Title"`
-	SubCategoryID string `json:"SubCategoryId"`
 }
 
 type AddUserFav struct {
@@ -108,34 +74,37 @@ type CategorizationInput struct {
 }
 
 type Category struct {
-	ID    string `json:"_id"`
-	Title string `json:"Title"`
+	ID            string         `json:"_id"`
+	Title         string         `json:"Title"`
+	SubCategories []*SubCategory `json:"SubCategories"`
 }
 
 type Certification struct {
-	ID                      string    `json:"_id"`
-	Name                    string    `json:"Name"`
-	LogoLink                *string   `json:"LogoLink"`
-	Industry                string    `json:"Industry"`
-	ProvidingCompany        string    `json:"ProvidingCompany"`
-	Certifies               Certifies `json:"Certifies"`
-	Type                    *string   `json:"Type"`
-	Audited                 *bool     `json:"Audited"`
-	Auditor                 *string   `json:"Auditor"`
-	ProvidingCompanyWebsite string    `json:"ProvidingCompanyWebsite"`
-	FoundWhere              *string   `json:"FoundWhere"`
-	HowToGetIt              *string   `json:"HowToGetIt"`
-	Notes                   *string   `json:"Notes"`
+	ID               string  `json:"_id"`
+	Name             string  `json:"Name"`
+	Logo             *string `json:"Logo"`
+	Industry         string  `json:"Industry"`
+	Certifier        string  `json:"Certifier"`
+	CertifiesCompany *bool   `json:"CertifiesCompany"`
+	CertifiesProduct *bool   `json:"CertifiesProduct"`
+	CertifiesProcess *bool   `json:"CertifiesProcess"`
+	CertifierContact *string `json:"CertifierContact"`
+	Audited          *bool   `json:"Audited"`
+	Auditor          *string `json:"Auditor"`
+	Region           *string `json:"Region"`
+	Qualifiers       *string `json:"Qualifiers"`
+	Sources          *string `json:"Sources"`
+	CreatedAt        *string `json:"CreatedAt"`
+	UpdatedAt        *string `json:"UpdatedAt"`
 }
 
 type Company struct {
-	ID            string         `json:"_id"`
-	URL           string         `json:"url"`
-	Description   string         `json:"description"`
-	User          *User          `json:"user"`
-	IsVerified    bool           `json:"isVerified"`
-	Image         *Image         `json:"image"`
-	Certification *Certification `json:"certification"`
+	ID          *string `json:"_id"`
+	URL         *string `json:"url"`
+	Description *string `json:"description"`
+	User        *User   `json:"user"`
+	IsVerified  *bool   `json:"isVerified"`
+	Logo        *string `json:"logo"`
 }
 
 type Department struct {
@@ -178,7 +147,6 @@ type Product struct {
 	SubCategory             *string         `json:"SubCategory"`
 	Type                    *string         `json:"Type"`
 	Style                   *string         `json:"Style"`
-	Filters                 []*string       `json:"Filters"`
 	ImageLinks              []*string       `json:"ImageLinks"`
 	PurchaseInfo            []*PurchaseInfo `json:"PurchaseInfo"`
 	Verified                *bool           `json:"Verified"`
@@ -201,14 +169,9 @@ type PurchaseInfoInput struct {
 }
 
 type Section struct {
-	ID    string `json:"_id"`
-	Title string `json:"Title"`
-}
-
-type Style struct {
-	ID       string     `json:"_id"`
-	Title    string     `json:"Title"`
-	Products []*Product `json:"Products"`
+	ID          string        `json:"_id"`
+	Title       string        `json:"Title"`
+	SubSections []*SubSection `json:"SubSections"`
 }
 
 type SubCategory struct {
@@ -218,14 +181,37 @@ type SubCategory struct {
 }
 
 type SubSection struct {
+	ID          string        `json:"_id"`
+	Title       string        `json:"Title"`
+	Departments []*Department `json:"Departments"`
+}
+
+type SubType struct {
 	ID    string `json:"_id"`
 	Title string `json:"Title"`
 }
 
 type Type struct {
-	ID     string   `json:"_id"`
-	Title  string   `json:"Title"`
-	Styles []*Style `json:"Styles"`
+	ID       string     `json:"_id"`
+	Title    string     `json:"Title"`
+	SubTypes []*SubType `json:"SubTypes"`
+}
+
+type UpdateCertification struct {
+	ID               string  `json:"ID"`
+	Name             *string `json:"Name"`
+	Logo             *string `json:"Logo"`
+	Industry         *string `json:"Industry"`
+	Certifier        *string `json:"Certifier"`
+	CertifiesCompany *bool   `json:"CertifiesCompany"`
+	CertifiesProduct *bool   `json:"CertifiesProduct"`
+	CertifiesProcess *bool   `json:"CertifiesProcess"`
+	CertifierContact *string `json:"CertifierContact"`
+	Audited          *bool   `json:"Audited"`
+	Auditor          *string `json:"Auditor"`
+	Region           *string `json:"Region"`
+	Qualifiers       *string `json:"Qualifiers"`
+	Sources          *string `json:"Sources"`
 }
 
 type UpdateUser struct {
@@ -241,6 +227,57 @@ type User struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
+}
+
+type CategoryEnum string
+
+const (
+	CategoryEnumSection     CategoryEnum = "Section"
+	CategoryEnumSubsection  CategoryEnum = "Subsection"
+	CategoryEnumDepartment  CategoryEnum = "Department"
+	CategoryEnumCategory    CategoryEnum = "Category"
+	CategoryEnumSubCategory CategoryEnum = "SubCategory"
+	CategoryEnumType        CategoryEnum = "Type"
+	CategoryEnumSubType     CategoryEnum = "SubType"
+)
+
+var AllCategoryEnum = []CategoryEnum{
+	CategoryEnumSection,
+	CategoryEnumSubsection,
+	CategoryEnumDepartment,
+	CategoryEnumCategory,
+	CategoryEnumSubCategory,
+	CategoryEnumType,
+	CategoryEnumSubType,
+}
+
+func (e CategoryEnum) IsValid() bool {
+	switch e {
+	case CategoryEnumSection, CategoryEnumSubsection, CategoryEnumDepartment, CategoryEnumCategory, CategoryEnumSubCategory, CategoryEnumType, CategoryEnumSubType:
+		return true
+	}
+	return false
+}
+
+func (e CategoryEnum) String() string {
+	return string(e)
+}
+
+func (e *CategoryEnum) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CategoryEnum(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CategoryEnum", str)
+	}
+	return nil
+}
+
+func (e CategoryEnum) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 type CompanyCertifications string
@@ -344,132 +381,6 @@ func (e *CompanyEnum) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CompanyEnum) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type FilterCategory string
-
-const (
-	FilterCategorySection     FilterCategory = "Section"
-	FilterCategorySubsection  FilterCategory = "Subsection"
-	FilterCategoryDepartment  FilterCategory = "Department"
-	FilterCategoryCategory    FilterCategory = "Category"
-	FilterCategorySubCategory FilterCategory = "SubCategory"
-	FilterCategoryType        FilterCategory = "Type"
-	FilterCategoryStyle       FilterCategory = "Style"
-)
-
-var AllFilterCategory = []FilterCategory{
-	FilterCategorySection,
-	FilterCategorySubsection,
-	FilterCategoryDepartment,
-	FilterCategoryCategory,
-	FilterCategorySubCategory,
-	FilterCategoryType,
-	FilterCategoryStyle,
-}
-
-func (e FilterCategory) IsValid() bool {
-	switch e {
-	case FilterCategorySection, FilterCategorySubsection, FilterCategoryDepartment, FilterCategoryCategory, FilterCategorySubCategory, FilterCategoryType, FilterCategoryStyle:
-		return true
-	}
-	return false
-}
-
-func (e FilterCategory) String() string {
-	return string(e)
-}
-
-func (e *FilterCategory) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = FilterCategory(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid FilterCategory", str)
-	}
-	return nil
-}
-
-func (e FilterCategory) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type FilterType string
-
-const (
-	FilterTypeColor        FilterType = "color"
-	FilterTypeStyle        FilterType = "style"
-	FilterTypeShape        FilterType = "shape"
-	FilterTypeMaterial     FilterType = "material"
-	FilterTypeSetting      FilterType = "setting"
-	FilterTypeScent        FilterType = "scent"
-	FilterTypePattern      FilterType = "pattern"
-	FilterTypeChainType    FilterType = "chainType"
-	FilterTypeClosureType  FilterType = "closureType"
-	FilterTypeCutType      FilterType = "cutType"
-	FilterTypeGemstone     FilterType = "gemstone"
-	FilterTypeLocation     FilterType = "location"
-	FilterTypeHoliday      FilterType = "holiday"
-	FilterTypeOccasion     FilterType = "occasion"
-	FilterTypeSize         FilterType = "size"
-	FilterTypeMount        FilterType = "mount"
-	FilterTypeFillMaterial FilterType = "fillMaterial"
-	FilterTypeHeight       FilterType = "height"
-	FilterTypeLength       FilterType = "length"
-)
-
-var AllFilterType = []FilterType{
-	FilterTypeColor,
-	FilterTypeStyle,
-	FilterTypeShape,
-	FilterTypeMaterial,
-	FilterTypeSetting,
-	FilterTypeScent,
-	FilterTypePattern,
-	FilterTypeChainType,
-	FilterTypeClosureType,
-	FilterTypeCutType,
-	FilterTypeGemstone,
-	FilterTypeLocation,
-	FilterTypeHoliday,
-	FilterTypeOccasion,
-	FilterTypeSize,
-	FilterTypeMount,
-	FilterTypeFillMaterial,
-	FilterTypeHeight,
-	FilterTypeLength,
-}
-
-func (e FilterType) IsValid() bool {
-	switch e {
-	case FilterTypeColor, FilterTypeStyle, FilterTypeShape, FilterTypeMaterial, FilterTypeSetting, FilterTypeScent, FilterTypePattern, FilterTypeChainType, FilterTypeClosureType, FilterTypeCutType, FilterTypeGemstone, FilterTypeLocation, FilterTypeHoliday, FilterTypeOccasion, FilterTypeSize, FilterTypeMount, FilterTypeFillMaterial, FilterTypeHeight, FilterTypeLength:
-		return true
-	}
-	return false
-}
-
-func (e FilterType) String() string {
-	return string(e)
-}
-
-func (e *FilterType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = FilterType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid FilterType", str)
-	}
-	return nil
-}
-
-func (e FilterType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -643,54 +554,5 @@ func (e *OwnersAndFounders) UnmarshalGQL(v interface{}) error {
 }
 
 func (e OwnersAndFounders) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type Certifies string
-
-const (
-	CertifiesProduct                 Certifies = "Product"
-	CertifiesCompany                 Certifies = "Company"
-	CertifiesMaterialsAndIngredients Certifies = "MaterialsAndIngredients"
-	CertifiesGiveBackProgram         Certifies = "GiveBackProgram"
-	CertifiesOwnersAndFounders       Certifies = "OwnersAndFounders"
-	CertifiesOther                   Certifies = "Other"
-)
-
-var AllCertifies = []Certifies{
-	CertifiesProduct,
-	CertifiesCompany,
-	CertifiesMaterialsAndIngredients,
-	CertifiesGiveBackProgram,
-	CertifiesOwnersAndFounders,
-	CertifiesOther,
-}
-
-func (e Certifies) IsValid() bool {
-	switch e {
-	case CertifiesProduct, CertifiesCompany, CertifiesMaterialsAndIngredients, CertifiesGiveBackProgram, CertifiesOwnersAndFounders, CertifiesOther:
-		return true
-	}
-	return false
-}
-
-func (e Certifies) String() string {
-	return string(e)
-}
-
-func (e *Certifies) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = Certifies(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid certifies", str)
-	}
-	return nil
-}
-
-func (e Certifies) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }

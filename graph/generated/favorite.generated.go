@@ -143,8 +143,6 @@ func (ec *executionContext) fieldContext_Favourite_product(ctx context.Context, 
 				return ec.fieldContext_Product_Type(ctx, field)
 			case "Style":
 				return ec.fieldContext_Product_Style(ctx, field)
-			case "Filters":
-				return ec.fieldContext_Product_Filters(ctx, field)
 			case "ImageLinks":
 				return ec.fieldContext_Product_ImageLinks(ctx, field)
 			case "PurchaseInfo":

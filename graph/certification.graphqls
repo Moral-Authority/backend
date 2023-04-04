@@ -1,46 +1,61 @@
-#    Name: String!
-#    LogoLink: String
-#	 ProvidingCompany: String!
-#    Certifies: PRODUCT, COMPANY, OTHER?
-#    Type: Certification, Network, Other
-#    Audited: Boolean
-#    Auditor: Who audits if this is audited
-#    Industry: Fashion, Beauty, etc
-#    CertifyingCompanyWebsite: String!
-#    FoundWhere: International, US, Australia etc
-#    HowToGetIt: paying a fee, applying, etc
+extend type Mutation {
+    addCertification(input: AddCertification!): Certification!
+#    updateCertification(input: UpdateCertification!): Certification!
+}
 
-input AddCertification {
-    Name: String!
-    LogoLink: String
-    Industry: String!
-    ProvidingCompany: String!
-    Certifies: certifies!
-    Type: String
+extend type Query {
+    getAllCertifications: [Certification]!
+}
+
+input UpdateCertification {
+    ID: String!
+    Name: String
+    Logo: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
     Audited: Boolean
     Auditor: String
-    ProvidingCompanyWebsite: String!
-    FoundWhere: String
-    HowToGetIt: String
-    Notes: String
+    Region: String
+    Qualifiers: String
+    Sources: String
+}
+
+input AddCertification {
+    Name: String
+    Logo: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
+    Audited: Boolean
+    Auditor: String
+    Region: String
+    Qualifiers: String
+    Sources: String
 }
 
 type Certification {
     _id: String!
     Name: String!
-    LogoLink: String
+    Logo: String
     Industry: String!
-    ProvidingCompany: String!
-    Certifies: certifies!
-    Type: String
+    Certifier: String!
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
     Audited: Boolean
     Auditor: String
-    ProvidingCompanyWebsite: String!
-    FoundWhere: String
-    HowToGetIt: String
-    Notes: String
-}
+    Region: String
+    Qualifiers: String
+    Sources: String
+    CreatedAt: String
+    UpdatedAt: String
 
-enum certifies {
-    Product, Company, MaterialsAndIngredients, GiveBackProgram, OwnersAndFounders, Other
 }

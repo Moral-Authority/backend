@@ -87,7 +87,6 @@ type Product {
     SubCategory: String
     Type: String
     Style: String
-    Filters: [String]
     ImageLinks: [String]
     PurchaseInfo: [PurchaseInfo]
     Verified: Boolean

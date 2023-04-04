@@ -39,34 +39,37 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Category struct {
-		ID    func(childComplexity int) int
-		Title func(childComplexity int) int
+		ID            func(childComplexity int) int
+		SubCategories func(childComplexity int) int
+		Title         func(childComplexity int) int
 	}
 
 	Certification struct {
-		Audited                 func(childComplexity int) int
-		Auditor                 func(childComplexity int) int
-		Certifies               func(childComplexity int) int
-		FoundWhere              func(childComplexity int) int
-		HowToGetIt              func(childComplexity int) int
-		ID                      func(childComplexity int) int
-		Industry                func(childComplexity int) int
-		LogoLink                func(childComplexity int) int
-		Name                    func(childComplexity int) int
-		Notes                   func(childComplexity int) int
-		ProvidingCompany        func(childComplexity int) int
-		ProvidingCompanyWebsite func(childComplexity int) int
-		Type                    func(childComplexity int) int
+		Audited          func(childComplexity int) int
+		Auditor          func(childComplexity int) int
+		Certifier        func(childComplexity int) int
+		CertifierContact func(childComplexity int) int
+		CertifiesCompany func(childComplexity int) int
+		CertifiesProcess func(childComplexity int) int
+		CertifiesProduct func(childComplexity int) int
+		CreatedAt        func(childComplexity int) int
+		ID               func(childComplexity int) int
+		Industry         func(childComplexity int) int
+		Logo             func(childComplexity int) int
+		Name             func(childComplexity int) int
+		Qualifiers       func(childComplexity int) int
+		Region           func(childComplexity int) int
+		Sources          func(childComplexity int) int
+		UpdatedAt        func(childComplexity int) int
 	}
 
 	Company struct {
-		Certification func(childComplexity int) int
-		Description   func(childComplexity int) int
-		ID            func(childComplexity int) int
-		Image         func(childComplexity int) int
-		IsVerified    func(childComplexity int) int
-		URL           func(childComplexity int) int
-		User          func(childComplexity int) int
+		Description func(childComplexity int) int
+		ID          func(childComplexity int) int
+		IsVerified  func(childComplexity int) int
+		Logo        func(childComplexity int) int
+		URL         func(childComplexity int) int
+		User        func(childComplexity int) int
 	}
 
 	Department struct {
@@ -87,16 +90,10 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		AddCategory      func(childComplexity int, input model.AddCategory) int
+		AddCertification func(childComplexity int, input model.AddCertification) int
 		AddCompany       func(childComplexity int, request model.AddCompany) int
-		AddDepartment    func(childComplexity int, input model.AddDepartment) int
 		AddFav           func(childComplexity int, request model.AddUserFav) int
 		AddProduct       func(childComplexity int, request model.AddProductRequest) int
-		AddProductFilter func(childComplexity int, input model.AddFilter) int
-		AddSection       func(childComplexity int, input model.AddSection) int
-		AddStyle         func(childComplexity int, input model.AddStyleRequest) int
-		AddSubCategory   func(childComplexity int, input model.AddSubCategory) int
-		AddSubSection    func(childComplexity int, input model.AddSubSection) int
-		AddType          func(childComplexity int, input model.AddTypeRequest) int
 		AddUser          func(childComplexity int, input model.NewUser) int
 		BaseMutation     func(childComplexity int) int
 		UpdateUser       func(childComplexity int, input model.UpdateUser) int
@@ -108,7 +105,6 @@ type ComplexityRoot struct {
 		CompanyCertifications   func(childComplexity int) int
 		Department              func(childComplexity int) int
 		Description             func(childComplexity int) int
-		Filters                 func(childComplexity int) int
 		GiveBackPrograms        func(childComplexity int) int
 		ID                      func(childComplexity int) int
 		ImageLinks              func(childComplexity int) int
@@ -134,29 +130,18 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		BaseQuery        func(childComplexity int) int
-		GetCategories    func(childComplexity int, input *string) int
-		GetCompany       func(childComplexity int, id string) int
-		GetDepartments   func(childComplexity int, input *string) int
-		GetFilters       func(childComplexity int, input *string) int
-		GetSections      func(childComplexity int, input *string) int
-		GetStyle         func(childComplexity int, input *string) int
-		GetSubCategories func(childComplexity int, input *string) int
-		GetSubSections   func(childComplexity int, input *string) int
-		GetTypes         func(childComplexity int, input *string) int
-		User             func(childComplexity int, id string) int
-		Users            func(childComplexity int) int
+		BaseQuery            func(childComplexity int) int
+		GetAllCategories     func(childComplexity int) int
+		GetAllCertifications func(childComplexity int) int
+		GetCompany           func(childComplexity int, id string) int
+		User                 func(childComplexity int, id string) int
+		Users                func(childComplexity int) int
 	}
 
 	Section struct {
-		ID    func(childComplexity int) int
-		Title func(childComplexity int) int
-	}
-
-	Style struct {
-		ID       func(childComplexity int) int
-		Products func(childComplexity int) int
-		Title    func(childComplexity int) int
+		ID          func(childComplexity int) int
+		SubSections func(childComplexity int) int
+		Title       func(childComplexity int) int
 	}
 
 	SubCategory struct {
@@ -166,14 +151,20 @@ type ComplexityRoot struct {
 	}
 
 	SubSection struct {
+		Departments func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Title       func(childComplexity int) int
+	}
+
+	SubType struct {
 		ID    func(childComplexity int) int
 		Title func(childComplexity int) int
 	}
 
 	Type struct {
-		ID     func(childComplexity int) int
-		Styles func(childComplexity int) int
-		Title  func(childComplexity int) int
+		ID       func(childComplexity int) int
+		SubTypes func(childComplexity int) int
+		Title    func(childComplexity int) int
 	}
 
 	User struct {
@@ -206,6 +197,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.ID(childComplexity), true
 
+	case "Category.SubCategories":
+		if e.complexity.Category.SubCategories == nil {
+			break
+		}
+
+		return e.complexity.Category.SubCategories(childComplexity), true
+
 	case "Category.Title":
 		if e.complexity.Category.Title == nil {
 			break
@@ -227,26 +225,47 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.Auditor(childComplexity), true
 
-	case "Certification.Certifies":
-		if e.complexity.Certification.Certifies == nil {
+	case "Certification.Certifier":
+		if e.complexity.Certification.Certifier == nil {
 			break
 		}
 
-		return e.complexity.Certification.Certifies(childComplexity), true
+		return e.complexity.Certification.Certifier(childComplexity), true
 
-	case "Certification.FoundWhere":
-		if e.complexity.Certification.FoundWhere == nil {
+	case "Certification.CertifierContact":
+		if e.complexity.Certification.CertifierContact == nil {
 			break
 		}
 
-		return e.complexity.Certification.FoundWhere(childComplexity), true
+		return e.complexity.Certification.CertifierContact(childComplexity), true
 
-	case "Certification.HowToGetIt":
-		if e.complexity.Certification.HowToGetIt == nil {
+	case "Certification.CertifiesCompany":
+		if e.complexity.Certification.CertifiesCompany == nil {
 			break
 		}
 
-		return e.complexity.Certification.HowToGetIt(childComplexity), true
+		return e.complexity.Certification.CertifiesCompany(childComplexity), true
+
+	case "Certification.CertifiesProcess":
+		if e.complexity.Certification.CertifiesProcess == nil {
+			break
+		}
+
+		return e.complexity.Certification.CertifiesProcess(childComplexity), true
+
+	case "Certification.CertifiesProduct":
+		if e.complexity.Certification.CertifiesProduct == nil {
+			break
+		}
+
+		return e.complexity.Certification.CertifiesProduct(childComplexity), true
+
+	case "Certification.CreatedAt":
+		if e.complexity.Certification.CreatedAt == nil {
+			break
+		}
+
+		return e.complexity.Certification.CreatedAt(childComplexity), true
 
 	case "Certification._id":
 		if e.complexity.Certification.ID == nil {
@@ -262,12 +281,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.Industry(childComplexity), true
 
-	case "Certification.LogoLink":
-		if e.complexity.Certification.LogoLink == nil {
+	case "Certification.Logo":
+		if e.complexity.Certification.Logo == nil {
 			break
 		}
 
-		return e.complexity.Certification.LogoLink(childComplexity), true
+		return e.complexity.Certification.Logo(childComplexity), true
 
 	case "Certification.Name":
 		if e.complexity.Certification.Name == nil {
@@ -276,40 +295,33 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.Name(childComplexity), true
 
-	case "Certification.Notes":
-		if e.complexity.Certification.Notes == nil {
+	case "Certification.Qualifiers":
+		if e.complexity.Certification.Qualifiers == nil {
 			break
 		}
 
-		return e.complexity.Certification.Notes(childComplexity), true
+		return e.complexity.Certification.Qualifiers(childComplexity), true
 
-	case "Certification.ProvidingCompany":
-		if e.complexity.Certification.ProvidingCompany == nil {
+	case "Certification.Region":
+		if e.complexity.Certification.Region == nil {
 			break
 		}
 
-		return e.complexity.Certification.ProvidingCompany(childComplexity), true
+		return e.complexity.Certification.Region(childComplexity), true
 
-	case "Certification.ProvidingCompanyWebsite":
-		if e.complexity.Certification.ProvidingCompanyWebsite == nil {
+	case "Certification.Sources":
+		if e.complexity.Certification.Sources == nil {
 			break
 		}
 
-		return e.complexity.Certification.ProvidingCompanyWebsite(childComplexity), true
+		return e.complexity.Certification.Sources(childComplexity), true
 
-	case "Certification.Type":
-		if e.complexity.Certification.Type == nil {
+	case "Certification.UpdatedAt":
+		if e.complexity.Certification.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Certification.Type(childComplexity), true
-
-	case "Company.certification":
-		if e.complexity.Company.Certification == nil {
-			break
-		}
-
-		return e.complexity.Company.Certification(childComplexity), true
+		return e.complexity.Certification.UpdatedAt(childComplexity), true
 
 	case "Company.description":
 		if e.complexity.Company.Description == nil {
@@ -325,19 +337,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Company.ID(childComplexity), true
 
-	case "Company.image":
-		if e.complexity.Company.Image == nil {
-			break
-		}
-
-		return e.complexity.Company.Image(childComplexity), true
-
 	case "Company.isVerified":
 		if e.complexity.Company.IsVerified == nil {
 			break
 		}
 
 		return e.complexity.Company.IsVerified(childComplexity), true
+
+	case "Company.logo":
+		if e.complexity.Company.Logo == nil {
+			break
+		}
+
+		return e.complexity.Company.Logo(childComplexity), true
 
 	case "Company.url":
 		if e.complexity.Company.URL == nil {
@@ -414,6 +426,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddCategory(childComplexity, args["input"].(model.AddCategory)), true
 
+	case "Mutation.addCertification":
+		if e.complexity.Mutation.AddCertification == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addCertification_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddCertification(childComplexity, args["input"].(model.AddCertification)), true
+
 	case "Mutation.addCompany":
 		if e.complexity.Mutation.AddCompany == nil {
 			break
@@ -425,18 +449,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.AddCompany(childComplexity, args["request"].(model.AddCompany)), true
-
-	case "Mutation.addDepartment":
-		if e.complexity.Mutation.AddDepartment == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addDepartment_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddDepartment(childComplexity, args["input"].(model.AddDepartment)), true
 
 	case "Mutation.addFav":
 		if e.complexity.Mutation.AddFav == nil {
@@ -461,78 +473,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.AddProduct(childComplexity, args["request"].(model.AddProductRequest)), true
-
-	case "Mutation.addProductFilter":
-		if e.complexity.Mutation.AddProductFilter == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addProductFilter_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddProductFilter(childComplexity, args["input"].(model.AddFilter)), true
-
-	case "Mutation.addSection":
-		if e.complexity.Mutation.AddSection == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addSection_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddSection(childComplexity, args["input"].(model.AddSection)), true
-
-	case "Mutation.addStyle":
-		if e.complexity.Mutation.AddStyle == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addStyle_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddStyle(childComplexity, args["input"].(model.AddStyleRequest)), true
-
-	case "Mutation.addSubCategory":
-		if e.complexity.Mutation.AddSubCategory == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addSubCategory_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddSubCategory(childComplexity, args["input"].(model.AddSubCategory)), true
-
-	case "Mutation.addSubSection":
-		if e.complexity.Mutation.AddSubSection == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addSubSection_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddSubSection(childComplexity, args["input"].(model.AddSubSection)), true
-
-	case "Mutation.addType":
-		if e.complexity.Mutation.AddType == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addType_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddType(childComplexity, args["input"].(model.AddTypeRequest)), true
 
 	case "Mutation.addUser":
 		if e.complexity.Mutation.AddUser == nil {
@@ -599,13 +539,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Product.Description(childComplexity), true
-
-	case "Product.Filters":
-		if e.complexity.Product.Filters == nil {
-			break
-		}
-
-		return e.complexity.Product.Filters(childComplexity), true
 
 	case "Product.GiveBackPrograms":
 		if e.complexity.Product.GiveBackPrograms == nil {
@@ -747,17 +680,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.BaseQuery(childComplexity), true
 
-	case "Query.getCategories":
-		if e.complexity.Query.GetCategories == nil {
+	case "Query.getAllCategories":
+		if e.complexity.Query.GetAllCategories == nil {
 			break
 		}
 
-		args, err := ec.field_Query_getCategories_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
+		return e.complexity.Query.GetAllCategories(childComplexity), true
+
+	case "Query.getAllCertifications":
+		if e.complexity.Query.GetAllCertifications == nil {
+			break
 		}
 
-		return e.complexity.Query.GetCategories(childComplexity, args["input"].(*string)), true
+		return e.complexity.Query.GetAllCertifications(childComplexity), true
 
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
@@ -770,90 +705,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.GetCompany(childComplexity, args["id"].(string)), true
-
-	case "Query.getDepartments":
-		if e.complexity.Query.GetDepartments == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getDepartments_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetDepartments(childComplexity, args["input"].(*string)), true
-
-	case "Query.getFilters":
-		if e.complexity.Query.GetFilters == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getFilters_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetFilters(childComplexity, args["input"].(*string)), true
-
-	case "Query.getSections":
-		if e.complexity.Query.GetSections == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getSections_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetSections(childComplexity, args["input"].(*string)), true
-
-	case "Query.getStyle":
-		if e.complexity.Query.GetStyle == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getStyle_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetStyle(childComplexity, args["input"].(*string)), true
-
-	case "Query.getSubCategories":
-		if e.complexity.Query.GetSubCategories == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getSubCategories_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetSubCategories(childComplexity, args["input"].(*string)), true
-
-	case "Query.getSubSections":
-		if e.complexity.Query.GetSubSections == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getSubSections_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetSubSections(childComplexity, args["input"].(*string)), true
-
-	case "Query.getTypes":
-		if e.complexity.Query.GetTypes == nil {
-			break
-		}
-
-		args, err := ec.field_Query_getTypes_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.GetTypes(childComplexity, args["input"].(*string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -881,33 +732,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Section.ID(childComplexity), true
 
+	case "Section.SubSections":
+		if e.complexity.Section.SubSections == nil {
+			break
+		}
+
+		return e.complexity.Section.SubSections(childComplexity), true
+
 	case "Section.Title":
 		if e.complexity.Section.Title == nil {
 			break
 		}
 
 		return e.complexity.Section.Title(childComplexity), true
-
-	case "Style._id":
-		if e.complexity.Style.ID == nil {
-			break
-		}
-
-		return e.complexity.Style.ID(childComplexity), true
-
-	case "Style.Products":
-		if e.complexity.Style.Products == nil {
-			break
-		}
-
-		return e.complexity.Style.Products(childComplexity), true
-
-	case "Style.Title":
-		if e.complexity.Style.Title == nil {
-			break
-		}
-
-		return e.complexity.Style.Title(childComplexity), true
 
 	case "SubCategory._id":
 		if e.complexity.SubCategory.ID == nil {
@@ -930,6 +767,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.SubCategory.Types(childComplexity), true
 
+	case "SubSection.Departments":
+		if e.complexity.SubSection.Departments == nil {
+			break
+		}
+
+		return e.complexity.SubSection.Departments(childComplexity), true
+
 	case "SubSection._id":
 		if e.complexity.SubSection.ID == nil {
 			break
@@ -944,6 +788,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.SubSection.Title(childComplexity), true
 
+	case "SubType._id":
+		if e.complexity.SubType.ID == nil {
+			break
+		}
+
+		return e.complexity.SubType.ID(childComplexity), true
+
+	case "SubType.Title":
+		if e.complexity.SubType.Title == nil {
+			break
+		}
+
+		return e.complexity.SubType.Title(childComplexity), true
+
 	case "Type._id":
 		if e.complexity.Type.ID == nil {
 			break
@@ -951,12 +809,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Type.ID(childComplexity), true
 
-	case "Type.Styles":
-		if e.complexity.Type.Styles == nil {
+	case "Type.SubTypes":
+		if e.complexity.Type.SubTypes == nil {
 			break
 		}
 
-		return e.complexity.Type.Styles(childComplexity), true
+		return e.complexity.Type.SubTypes(childComplexity), true
 
 	case "Type.Title":
 		if e.complexity.Type.Title == nil {
@@ -1004,19 +862,13 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddCategory,
 		ec.unmarshalInputAddCertification,
 		ec.unmarshalInputAddCompany,
-		ec.unmarshalInputAddDepartment,
-		ec.unmarshalInputAddFilter,
 		ec.unmarshalInputAddProductRequest,
-		ec.unmarshalInputAddSection,
-		ec.unmarshalInputAddStyleRequest,
-		ec.unmarshalInputAddSubCategory,
-		ec.unmarshalInputAddSubSection,
-		ec.unmarshalInputAddTypeRequest,
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputAllCertificationsInput,
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputPurchaseInfoInput,
+		ec.unmarshalInputUpdateCertification,
 		ec.unmarshalInputUpdateUser,
 	)
 	first := true
@@ -1078,52 +930,68 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../certification.graphqls", Input: `#    Name: String!
-#    LogoLink: String
-#	 ProvidingCompany: String!
-#    Certifies: PRODUCT, COMPANY, OTHER?
-#    Type: Certification, Network, Other
-#    Audited: Boolean
-#    Auditor: Who audits if this is audited
-#    Industry: Fashion, Beauty, etc
-#    CertifyingCompanyWebsite: String!
-#    FoundWhere: International, US, Australia etc
-#    HowToGetIt: paying a fee, applying, etc
+	{Name: "../certification.graphqls", Input: `extend type Mutation {
+    addCertification(input: AddCertification!): Certification!
+#    updateCertification(input: UpdateCertification!): Certification!
+}
 
-input AddCertification {
-    Name: String!
-    LogoLink: String
-    Industry: String!
-    ProvidingCompany: String!
-    Certifies: certifies!
-    Type: String
+extend type Query {
+    getAllCertifications: [Certification]!
+}
+
+input UpdateCertification {
+    ID: String!
+    Name: String
+    Logo: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
     Audited: Boolean
     Auditor: String
-    ProvidingCompanyWebsite: String!
-    FoundWhere: String
-    HowToGetIt: String
-    Notes: String
+    Region: String
+    Qualifiers: String
+    Sources: String
+}
+
+input AddCertification {
+    Name: String
+    Logo: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
+    Audited: Boolean
+    Auditor: String
+    Region: String
+    Qualifiers: String
+    Sources: String
 }
 
 type Certification {
     _id: String!
     Name: String!
-    LogoLink: String
+    Logo: String
     Industry: String!
-    ProvidingCompany: String!
-    Certifies: certifies!
-    Type: String
+    Certifier: String!
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContact: String
     Audited: Boolean
     Auditor: String
-    ProvidingCompanyWebsite: String!
-    FoundWhere: String
-    HowToGetIt: String
-    Notes: String
-}
+    Region: String
+    Qualifiers: String
+    Sources: String
+    CreatedAt: String
+    UpdatedAt: String
 
-enum certifies {
-    Product, Company, MaterialsAndIngredients, GiveBackProgram, OwnersAndFounders, Other
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `
 extend type Mutation {
     addCompany(request: AddCompany!): Company!
@@ -1134,22 +1002,19 @@ extend type Query {
 }
 
 type Company {
-    _id: String!
-    url: String!
-    description: String!
-    user: User!
-    isVerified: Boolean!
-    image: Image!
-    certification: Certification!
+    _id: String
+    url: String
+    description: String
+    user: User
+    isVerified: Boolean
+    logo: String
 }
 
 input AddCompany {
-    url: String!
-    description: String!
-    userId: String!
-    isVerified: Boolean!
-    imageLocation: String!
-    certification: AddCertification!
+    url: String
+    description: String
+    isVerified: Boolean
+    logo: String
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
@@ -1166,113 +1031,39 @@ userId: String!
 productId: String!
 }
 `, BuiltIn: false},
-	{Name: "../prodCategorization.graphqls", Input: `extend type Mutation {
+	{Name: "../prodCategorization.graphqls", Input: `
 
-    #   ========== SECTION ==========
-    addSection(input: AddSection!): Section!
-    addSubSection(input: AddSubSection!): SubSection!
-
-    #   ========== DEPARTMENT ==========
-    addDepartment(input: AddDepartment!): Department!
-
-    #   ========== CATEGORY ==========
-    addCategory(input: AddCategory!): Category!
-    addSubCategory(input: AddSubCategory!): SubCategory!
-
-    #   ========== TYPE ==========
-    addType(input: AddTypeRequest!): Type!
-
-    #   ========== STYLE ==========
-    addStyle(input: AddStyleRequest!): Style!
-
-    addProductFilter(input: AddFilter!): String!
-
+extend type Mutation {
+    addCategory(input: AddCategory!): Section!
 }
 
 extend type Query {
-    getSections(input: ID): [Section]!
-    getSubSections(input: ID): [SubSection]!
-    getDepartments(input: ID): [Department]!
-    getCategories(input: ID): [Category]!
-    getSubCategories(input: ID): [SubCategory]!
-    getTypes(input: ID): [Type]!
-    getStyle(input: ID): [Style]!
-    getFilters(input: ID): [String]!
+    getAllCategories:[Section]!
 }
 
 # ======= INPUTS ======
 
-input AddSection {
-    Title: String!
-}
-
-input AddSubSection {
-    Title: String!
-    SectionId: String!
-}
-
-input AddDepartment {
-    Title: String!
-    SubSectionId: String!
-}
-
 input AddCategory {
-    Title: String!
-    DepartmentId: String!
+    Name: String!
+    ParentId: String!
+    CategoryType: CategoryEnum!
 }
 
-input AddSubCategory {
-    Title: String!
-    CategoryId: String!
+enum CategoryEnum {
+    Section, Subsection, Department, Category, SubCategory, Type, SubType
 }
 
-input AddTypeRequest {
-    Title: String!
-    SubCategoryId: String!
-}
-
-input AddStyleRequest {
-    Title: String!
-    TypeId: String!
-}
-
-input AddFilter {
-    FilterCategory: FilterCategory!
-    FilterType: FilterType!
-
-}
-
-enum FilterCategory {
-    Section, Subsection, Department, Category, SubCategory, Type, Style
-}
-
-enum FilterType {
-    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
-    holiday, occasion, size, mount, fillMaterial, height, length
-}
-
-
-# ======= INPUTS END ======
-
+# ======= TYPES ======
 type Section {
     _id: String!
     Title: String!
+    SubSections: [SubSection]
 }
 
 type SubSection {
     _id: String!
     Title: String!
-}
-
-type Category {
-    _id: String!
-    Title: String!
-}
-
-type SubCategory {
-    _id: String!
-    Title: String!
-    Types: [Type]
+    Departments: [Department]
 }
 
 type Department {
@@ -1281,17 +1072,36 @@ type Department {
     Categories: [Category]
 }
 
-type Style {
+
+type Category {
     _id: String!
     Title: String!
-    Products: [Product]
+    SubCategories: [SubCategory]
+}
+
+type SubCategory {
+    _id: String!
+    Title: String!
+    Types: [Type]
 }
 
 type Type {
     _id: String!
     Title: String!
-    Styles: [Style]
-}`, BuiltIn: false},
+    SubTypes: [SubType]
+}
+
+type SubType {
+    _id: String!
+    Title: String!
+}
+
+#enum FilterType {
+#    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
+#    holiday, occasion, size, mount, fillMaterial, height, length
+#}
+
+`, BuiltIn: false},
 	{Name: "../product.graphqls", Input: `extend type Mutation {
     addProduct(request: AddProductRequest!): Product!
 }
@@ -1381,7 +1191,6 @@ type Product {
     SubCategory: String
     Type: String
     Style: String
-    Filters: [String]
     ImageLinks: [String]
     PurchaseInfo: [PurchaseInfo]
     Verified: Boolean

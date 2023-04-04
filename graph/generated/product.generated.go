@@ -203,28 +203,34 @@ func (ec *executionContext) fieldContext_Product_Certification(ctx context.Conte
 				return ec.fieldContext_Certification__id(ctx, field)
 			case "Name":
 				return ec.fieldContext_Certification_Name(ctx, field)
-			case "LogoLink":
-				return ec.fieldContext_Certification_LogoLink(ctx, field)
+			case "Logo":
+				return ec.fieldContext_Certification_Logo(ctx, field)
 			case "Industry":
 				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "ProvidingCompany":
-				return ec.fieldContext_Certification_ProvidingCompany(ctx, field)
-			case "Certifies":
-				return ec.fieldContext_Certification_Certifies(ctx, field)
-			case "Type":
-				return ec.fieldContext_Certification_Type(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "CertifiesCompany":
+				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
+			case "CertifiesProduct":
+				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
+			case "CertifiesProcess":
+				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
+			case "CertifierContact":
+				return ec.fieldContext_Certification_CertifierContact(ctx, field)
 			case "Audited":
 				return ec.fieldContext_Certification_Audited(ctx, field)
 			case "Auditor":
 				return ec.fieldContext_Certification_Auditor(ctx, field)
-			case "ProvidingCompanyWebsite":
-				return ec.fieldContext_Certification_ProvidingCompanyWebsite(ctx, field)
-			case "FoundWhere":
-				return ec.fieldContext_Certification_FoundWhere(ctx, field)
-			case "HowToGetIt":
-				return ec.fieldContext_Certification_HowToGetIt(ctx, field)
-			case "Notes":
-				return ec.fieldContext_Certification_Notes(ctx, field)
+			case "Region":
+				return ec.fieldContext_Certification_Region(ctx, field)
+			case "Qualifiers":
+				return ec.fieldContext_Certification_Qualifiers(ctx, field)
+			case "Sources":
+				return ec.fieldContext_Certification_Sources(ctx, field)
+			case "CreatedAt":
+				return ec.fieldContext_Certification_CreatedAt(ctx, field)
+			case "UpdatedAt":
+				return ec.fieldContext_Certification_UpdatedAt(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
 		},
@@ -712,47 +718,6 @@ func (ec *executionContext) _Product_Style(ctx context.Context, field graphql.Co
 }
 
 func (ec *executionContext) fieldContext_Product_Style(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Product",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Product_Filters(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Product_Filters(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Filters, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*string)
-	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Product_Filters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Product",
 		Field:      field,
@@ -1497,10 +1462,6 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 
 			out.Values[i] = ec._Product_Style(ctx, field, obj)
 
-		case "Filters":
-
-			out.Values[i] = ec._Product_Filters(ctx, field, obj)
-
 		case "ImageLinks":
 
 			out.Values[i] = ec._Product_ImageLinks(ctx, field, obj)
@@ -1681,54 +1642,6 @@ func (ec *executionContext) marshalOOwnersAndFounders2ᚖgithubᚗcomᚋhowstron
 		return graphql.Null
 	}
 	return v
-}
-
-func (ec *executionContext) marshalOProduct2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v []*model.Product) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOProduct2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐProduct(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
-func (ec *executionContext) marshalOProduct2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Product(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx context.Context, sel ast.SelectionSet, v []*model.PurchaseInfo) graphql.Marshaler {

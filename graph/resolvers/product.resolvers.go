@@ -17,7 +17,6 @@ func (r *mutationResolver) AddProduct(ctx context.Context, request model.AddProd
 		request,
 		database.ProductDbServiceImpl{},
 		database.ImageDbServiceImpl{},
-		database.CertificatesDbServiceImpl{},
 	)
 	if err == nil {
 		return product, nil

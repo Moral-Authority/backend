@@ -1,110 +1,36 @@
+
+
 extend type Mutation {
-
-    #   ========== SECTION ==========
-    addSection(input: AddSection!): Section!
-    addSubSection(input: AddSubSection!): SubSection!
-
-    #   ========== DEPARTMENT ==========
-    addDepartment(input: AddDepartment!): Department!
-
-    #   ========== CATEGORY ==========
-    addCategory(input: AddCategory!): Category!
-    addSubCategory(input: AddSubCategory!): SubCategory!
-
-    #   ========== TYPE ==========
-    addType(input: AddTypeRequest!): Type!
-
-    #   ========== STYLE ==========
-    addStyle(input: AddStyleRequest!): Style!
-
-    addProductFilter(input: AddFilter!): String!
-
+    addCategory(input: AddCategory!): Section!
 }
 
 extend type Query {
-    getSections(input: ID): [Section]!
-    getSubSections(input: ID): [SubSection]!
-    getDepartments(input: ID): [Department]!
-    getCategories(input: ID): [Category]!
-    getSubCategories(input: ID): [SubCategory]!
-    getTypes(input: ID): [Type]!
-    getStyle(input: ID): [Style]!
-    getFilters(input: ID): [String]!
+    getAllCategories:[Section]!
 }
 
 # ======= INPUTS ======
 
-input AddSection {
-    Title: String!
-}
-
-input AddSubSection {
-    Title: String!
-    SectionId: String!
-}
-
-input AddDepartment {
-    Title: String!
-    SubSectionId: String!
-}
-
 input AddCategory {
-    Title: String!
-    DepartmentId: String!
+    Name: String!
+    ParentId: String!
+    CategoryType: CategoryEnum!
 }
 
-input AddSubCategory {
-    Title: String!
-    CategoryId: String!
+enum CategoryEnum {
+    Section, Subsection, Department, Category, SubCategory, Type, SubType
 }
 
-input AddTypeRequest {
-    Title: String!
-    SubCategoryId: String!
-}
-
-input AddStyleRequest {
-    Title: String!
-    TypeId: String!
-}
-
-input AddFilter {
-    FilterCategory: FilterCategory!
-    FilterType: FilterType!
-
-}
-
-enum FilterCategory {
-    Section, Subsection, Department, Category, SubCategory, Type, Style
-}
-
-enum FilterType {
-    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
-    holiday, occasion, size, mount, fillMaterial, height, length
-}
-
-
-# ======= INPUTS END ======
-
+# ======= TYPES ======
 type Section {
     _id: String!
     Title: String!
+    SubSections: [SubSection]
 }
 
 type SubSection {
     _id: String!
     Title: String!
-}
-
-type Category {
-    _id: String!
-    Title: String!
-}
-
-type SubCategory {
-    _id: String!
-    Title: String!
-    Types: [Type]
+    Departments: [Department]
 }
 
 type Department {
@@ -113,14 +39,32 @@ type Department {
     Categories: [Category]
 }
 
-type Style {
+
+type Category {
     _id: String!
     Title: String!
-    Products: [Product]
+    SubCategories: [SubCategory]
+}
+
+type SubCategory {
+    _id: String!
+    Title: String!
+    Types: [Type]
 }
 
 type Type {
     _id: String!
     Title: String!
-    Styles: [Style]
+    SubTypes: [SubType]
 }
+
+type SubType {
+    _id: String!
+    Title: String!
+}
+
+#enum FilterType {
+#    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,
+#    holiday, occasion, size, mount, fillMaterial, height, length
+#}
+

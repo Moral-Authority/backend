@@ -8,20 +8,17 @@ extend type Query {
 }
 
 type Company {
-    _id: String!
-    url: String!
-    description: String!
-    user: User!
-    isVerified: Boolean!
-    image: Image!
-    certification: Certification!
+    _id: String
+    url: String
+    description: String
+    user: User
+    isVerified: Boolean
+    logo: String
 }
 
 input AddCompany {
-    url: String!
-    description: String!
-    userId: String!
-    isVerified: Boolean!
-    imageLocation: String!
-    certification: AddCertification!
+    url: String
+    description: String
+    isVerified: Boolean
+    logo: String
 }
