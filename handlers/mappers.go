@@ -67,10 +67,9 @@ func toProductsResponse(products []models.Product) []*model.Product {
 func toProductResponse(product models.Product) *model.Product {
 
 	return &model.Product{
-		ID:            strconv.Itoa(int(product.ID)),
-		Title:         product.Title,
-		Description:   product.Description,
-		Certification: toCertificationResponse(product.Certification),
+		ID:          strconv.Itoa(int(product.ID)),
+		Title:       product.Title,
+		Description: product.Description,
 	}
 }
 
@@ -91,10 +90,10 @@ func toCertificationResponse(cert models.Certification) *model.Certification {
 		Logo:             &cert.Logo.String,
 		Industry:         cert.Industry.String,
 		Certifier:        cert.Certifier.String,
-		CertifiesCompany: &cert.CertifiesCompany.Bool,
-		CertifiesProduct: &cert.CertifiesProduct.Bool,
-		CertifiesProcess: &cert.CertifiesProcess.Bool,
-		CertifierContact: &cert.CertifierContact.String,
+		CertifiesCompany: &cert.CertifiesCompanies.Bool,
+		CertifiesProduct: &cert.CertifiesProducts.Bool,
+		CertifiesProcess: &cert.CertifiesProcesses.Bool,
+		CertifierContact: &cert.CertifierContactID.String,
 		Audited:          &cert.Audited.Bool,
 		Auditor:          &cert.Auditor.String,
 		Region:           &cert.Region.String,

@@ -64,10 +64,14 @@ type ComplexityRoot struct {
 	}
 
 	Company struct {
+		City        func(childComplexity int) int
+		Country     func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		IsVerified  func(childComplexity int) int
 		Logo        func(childComplexity int) int
+		Name        func(childComplexity int) int
+		State       func(childComplexity int) int
 		URL         func(childComplexity int) int
 		User        func(childComplexity int) int
 	}
@@ -323,6 +327,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.UpdatedAt(childComplexity), true
 
+	case "Company.city":
+		if e.complexity.Company.City == nil {
+			break
+		}
+
+		return e.complexity.Company.City(childComplexity), true
+
+	case "Company.country":
+		if e.complexity.Company.Country == nil {
+			break
+		}
+
+		return e.complexity.Company.Country(childComplexity), true
+
 	case "Company.description":
 		if e.complexity.Company.Description == nil {
 			break
@@ -350,6 +368,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Company.Logo(childComplexity), true
+
+	case "Company.name":
+		if e.complexity.Company.Name == nil {
+			break
+		}
+
+		return e.complexity.Company.Name(childComplexity), true
+
+	case "Company.state":
+		if e.complexity.Company.State == nil {
+			break
+		}
+
+		return e.complexity.Company.State(childComplexity), true
 
 	case "Company.url":
 		if e.complexity.Company.URL == nil {
@@ -1003,20 +1035,27 @@ extend type Query {
 
 type Company {
     _id: String
+    name: String
     url: String
     description: String
+    city: String
+    state: String
+    country: String
     user: User
     isVerified: Boolean
     logo: String
 }
 
 input AddCompany {
+    name: String
     url: String
     description: String
+    city: String
+    state: String
+    country: String
     isVerified: Boolean
     logo: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
     addFav(request: AddUserFav!): [Favourite]
 }

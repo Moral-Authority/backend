@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 	"sync"
 )
-git
+
 // lock mutex
 var lock = &sync.Mutex{}
 

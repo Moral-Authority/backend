@@ -13,19 +13,19 @@ type CertificationService struct{}
 func (s CertificationService) AddNewCertification(request model.AddCertification, dbService database.CertificationDbService) (*model.Certification, error) {
 
 	cert := models.Certification{
-		Name:             null.StringFrom(*request.Name),
-		Logo:             null.StringFrom(*request.Logo),
-		Industry:         null.StringFrom(*request.Industry),
-		Certifier:        null.StringFrom(*request.Certifier),
-		CertifiesCompany: null.BoolFrom(*request.CertifiesCompany),
-		CertifiesProduct: null.BoolFrom(*request.CertifiesProduct),
-		CertifiesProcess: null.BoolFrom(*request.CertifiesProcess),
-		CertifierContact: null.StringFrom(*request.CertifierContact),
-		Audited:          null.BoolFrom(*request.Audited),
-		Auditor:          null.StringFrom(*request.Auditor),
-		Region:           null.StringFrom(*request.Region),
-		Qualifiers:       null.StringFrom(*request.Qualifiers),
-		Sources:          null.StringFrom(*request.Sources),
+		Name:               null.StringFrom(*request.Name),
+		Logo:               null.StringFrom(*request.Logo),
+		Industry:           null.StringFrom(*request.Industry),
+		Certifier:          null.StringFrom(*request.Certifier),
+		CertifiesCompanies: null.BoolFrom(*request.CertifiesCompany),
+		CertifiesProducts:  null.BoolFrom(*request.CertifiesProduct),
+		CertifiesProcesses: null.BoolFrom(*request.CertifiesProcess),
+		CertifierContactID: null.StringFrom(*request.CertifierContact),
+		Audited:            null.BoolFrom(*request.Audited),
+		Auditor:            null.StringFrom(*request.Auditor),
+		Region:             null.StringFrom(*request.Region),
+		Qualifiers:         null.StringFrom(*request.Qualifiers),
+		Sources:            null.StringFrom(*request.Sources),
 	}
 
 	addedCert := dbService.AddNewCertification(cert)

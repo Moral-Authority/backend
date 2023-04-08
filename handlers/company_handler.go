@@ -4,52 +4,66 @@ import (
 	"errors"
 	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
+	"github.com/howstrongiam/backend/models"
+	"github.com/volatiletech/null/v8"
 )
 
 type CompanyService struct{}
 
-func (s CompanyService) AddCompany(request model.AddCompany, dbService database.CompanyDbService,
-	imageDbService database.ImageDbService,
-	certDbService database.CertificationDbService,
-) (*model.Company, error) {
+func (s CompanyService) AddCompany(request model.AddCompany, dbService database.CompanyDbService, imageDbService database.ImageDbService, certDbService database.CertificationDbService) (*model.Company, error) {
 	//userId, err := database.StringToUint(request.UserID)
 	//if err != nil {
 	//	return nil, err
 	//}
 
-	//if request.Logo.Valid {
-	//
-	//}
-	//image := models.Image{
-	//	ImageLocation: request.Logo,
-	//}
-	//
-	//addedImage := imageDbService.AddImage(image)
-	//if addedImage == nil {
-	//	return nil, errors.New("unable to save image to db")
-	//}
-	//
+	company := models.Company{
+		Name: *request.Name,
+	}
+
+	if &request.Logo != nil {
+		company.Image = null.StringFrom(*request.Logo)
+	}
+
+	if &request.URL != nil {
+		company.Url = null.StringFrom(*request.URL)
+
+	}
+
+	if &request.Description != nil {
+		company.Description = null.StringFrom(*request.Description)
+
+	}
+
+	if &request.City != nil {
+		company.City = null.StringFrom(*request.City)
+
+	}
+
+	if &request.State != nil {
+		company.State = null.StringFrom(*request.State)
+
+	}
+
+	if &request.Country != nil {
+		company.Country = null.StringFrom(*request.Country)
+
+	}
+
 	//cert := models.Certification{
 	//	CertifyingCompany: "request.Certification.CertifyingCompany",
 	//	CertName:          "request.Certification.CertName",
 	//}
-	//addedCert := certDbService.AddNewCertificate(cert)
+	//
+	//addedCert := certDbService.AddNewCertification(cert)
 	//if addedCert == nil {
 	//	return nil, errors.New("unable to save certificate to db")
 	//}
-	//company := models.Company{
-	//	Url:             request.URL,
-	//	Description:     request.Description,
-	//	UserId:          userId,
-	//	IsVerified:      request.IsVerified,
-	//	ImageId:         addedImage.ID,
-	//	CertificationId: addedCert.ID,
-	//}
-	//savedCompany := dbService.AddCompany(company)
-	//if savedCompany == nil {
-	//	return nil, errors.New("unable to save company in db")
-	//}
-	//return toCompanyResponse(*savedCompany), nil
+
+	savedCompany := dbService.AddCompany(company)
+	if savedCompany == nil {
+		return nil, errors.New("unable to save company in db")
+	}
+	return toCompanyResponse(*savedCompany), nil
 	return nil, nil
 }
 

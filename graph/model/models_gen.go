@@ -31,8 +31,12 @@ type AddCertification struct {
 }
 
 type AddCompany struct {
+	Name        *string `json:"name"`
 	URL         *string `json:"url"`
 	Description *string `json:"description"`
+	City        *string `json:"city"`
+	State       *string `json:"state"`
+	Country     *string `json:"country"`
 	IsVerified  *bool   `json:"isVerified"`
 	Logo        *string `json:"logo"`
 }
@@ -100,8 +104,12 @@ type Certification struct {
 
 type Company struct {
 	ID          *string `json:"_id"`
+	Name        *string `json:"name"`
 	URL         *string `json:"url"`
 	Description *string `json:"description"`
+	City        *string `json:"city"`
+	State       *string `json:"state"`
+	Country     *string `json:"country"`
 	User        *User   `json:"user"`
 	IsVerified  *bool   `json:"isVerified"`
 	Logo        *string `json:"logo"`

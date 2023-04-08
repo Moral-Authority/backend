@@ -369,10 +369,18 @@ func (ec *executionContext) fieldContext_Mutation_addCompany(ctx context.Context
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Company__id(ctx, field)
+			case "name":
+				return ec.fieldContext_Company_name(ctx, field)
 			case "url":
 				return ec.fieldContext_Company_url(ctx, field)
 			case "description":
 				return ec.fieldContext_Company_description(ctx, field)
+			case "city":
+				return ec.fieldContext_Company_city(ctx, field)
+			case "state":
+				return ec.fieldContext_Company_state(ctx, field)
+			case "country":
+				return ec.fieldContext_Company_country(ctx, field)
 			case "user":
 				return ec.fieldContext_Company_user(ctx, field)
 			case "isVerified":
@@ -905,10 +913,18 @@ func (ec *executionContext) fieldContext_Query_getCompany(ctx context.Context, f
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Company__id(ctx, field)
+			case "name":
+				return ec.fieldContext_Company_name(ctx, field)
 			case "url":
 				return ec.fieldContext_Company_url(ctx, field)
 			case "description":
 				return ec.fieldContext_Company_description(ctx, field)
+			case "city":
+				return ec.fieldContext_Company_city(ctx, field)
+			case "state":
+				return ec.fieldContext_Company_state(ctx, field)
+			case "country":
+				return ec.fieldContext_Company_country(ctx, field)
 			case "user":
 				return ec.fieldContext_Company_user(ctx, field)
 			case "isVerified":
