@@ -3,11 +3,11 @@ package database
 import (
 	"github.com/howstrongiam/backend/cmd"
 	"github.com/howstrongiam/backend/models"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"sync"
 )
-import "gorm.io/gorm"
-import "gorm.io/driver/postgres"
-
+git
 // lock mutex
 var lock = &sync.Mutex{}
 
