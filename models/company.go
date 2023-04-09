@@ -18,3 +18,9 @@ type Company struct {
 	ImageId     null.Int64  `gorm:"column:image_id" json:"image_id"`
 	Image       null.String `gorm:"foreignKey:ImageId"`
 }
+
+type Company_Certs struct {
+	gorm.Model
+	CompanyId       Company
+	CertificationId Certification
+}
