@@ -5,8 +5,8 @@ Built with:
 - gql-gen
 - postgresSQL
 
-## Helpful Links
-- [ Your first Pull Request ]( https://github.com/howstrongiam/frontend/wiki/Find-or-Create-An-Issue )
+## Docs
+- Please Check The Wiki for contribution information! 
 
 ### How to run this code
 ```bash
