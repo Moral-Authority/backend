@@ -29,4 +29,5 @@ input AddCompany {
     country: String
     isVerified: Boolean
     logo: String
+    certifications: [AddCertification]
 }
