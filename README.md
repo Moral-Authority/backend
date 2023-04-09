@@ -3,7 +3,6 @@ Built with:
 - golang
 - graphql
 - gql-gen
-- docker
 - postgresSQL
 
 ## Helpful Links
