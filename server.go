@@ -13,6 +13,7 @@ import (
 	r "github.com/howstrongiam/backend/graph/resolvers"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
+	"log"
 	"net/http"
 	"time"
 )
@@ -27,6 +28,7 @@ func main() {
 
 	// Initialize config struct and populate it from env vars and flags.
 	cfg := cmd.DefaultConfiguration()
+	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
 
 	port := ":" + cfg.Port
