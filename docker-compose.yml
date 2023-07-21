@@ -28,7 +28,7 @@ services:
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_CONNECTION_URL=postgres://ehxxgxaamkwsaz:15acfc1d3ddc307e898673d17a669f2169913ef6467380439410f045e42f3e4d@ec2-52-0-79-72.compute-1.amazonaws.com:5432/d7mdhbr0m054dr
-#      - DATABASE_CONNECTION_PORT=5432
+      - DATABASE_CONNECTION_PORT=5432
     ports:
       - "8080:8080"
     restart: unless-stopped
