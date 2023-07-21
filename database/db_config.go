@@ -18,9 +18,11 @@ type DbConn struct {
 var instance *DbConn
 
 func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
+
 	lock.Lock()
 	defer lock.Unlock()
 	if instance == nil {
+
 		dsn := "host=" + dbConfig.DatabaseConnectionUrl + " user=" + dbConfig.DatabaseUsername + " password=" + dbConfig.DatabasePassword + " dbname=" + dbConfig.DatabaseName + " port=" + dbConfig.DatabaseConnectionPort + " sslmode=disable"
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {

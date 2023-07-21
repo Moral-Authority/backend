@@ -34,7 +34,18 @@ func main() {
 	c := cors.Default()
 
 	// initialize database
-	database.Connect(cfg.DatabaseConfig)
+	database.Connect(cfg.DatabaseConfig) // Pass the entire DatabaseConfig struct
+
+	// Initialize config struct and populate it from env vars and flags.
+	//cfg := cmd.DefaultConfiguration()
+	//arg.MustParse(cfg)
+	//
+	//port := ":" + cfg.Port
+	//
+	//c := cors.Default()
+	//
+	//// initialize database
+	//database.Connect(cfg.DatabaseConfig)
 
 	// setup graphql server
 	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))

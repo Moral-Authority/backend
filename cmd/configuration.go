@@ -36,7 +36,7 @@ func DefaultConfiguration() *Config {
 			DatabaseName:          os.Getenv("DATABASE_NAME"),
 			DatabaseUsername:      os.Getenv("DATABASE_USERNAME"),
 			DatabasePassword:      os.Getenv("DATABASE_PASSWORD"),
-			DatabaseConnectionUrl: os.Getenv("DATABASE_URL"),
+			DatabaseConnectionUrl: os.Getenv("DATABASE_CONNECTION_URL"),
 			//DatabaseConnectionPort: os.Getenv("DATABASE_CONNECTION_PORT"),
 		},
 	}
