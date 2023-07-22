@@ -1055,6 +1055,7 @@ input AddCompany {
     country: String
     isVerified: Boolean
     logo: String
+    certifications: [AddCertification]
 }`, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
     addFav(request: AddUserFav!): [Favourite]

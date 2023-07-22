@@ -21,6 +21,8 @@ type Company struct {
 
 type Company_Certs struct {
 	gorm.Model
-	CompanyId       Company
+	Company         Company
 	CertificationId Certification
+	//CompanyId       Company
+	//CertificationId Certification
 }

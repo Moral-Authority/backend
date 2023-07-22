@@ -458,7 +458,7 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"name", "url", "description", "city", "state", "country", "isVerified", "logo"}
+	fieldsInOrder := [...]string{"name", "url", "description", "city", "state", "country", "isVerified", "logo", "certifications"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -526,6 +526,14 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("logo"))
 			it.Logo, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "certifications":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifications"))
+			it.Certifications, err = ec.unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
 			if err != nil {
 				return it, err
 			}

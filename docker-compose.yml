@@ -27,7 +27,7 @@ services:
       - DATABASE_NAME=postgres
       - DATABASE_USERNAME=postgres
       - DATABASE_PASSWORD=postgres
-      - DATABASE_CONNECTION_URL=postgres://ehxxgxaamkwsaz:15acfc1d3ddc307e898673d17a669f2169913ef6467380439410f045e42f3e4d@ec2-52-0-79-72.compute-1.amazonaws.com:5432/d7mdhbr0m054dr
+      - DATABASE_CONNECTION_URL=postgres://izuhmncpslglsb:ce096c2a2beb33bffe5a808fb2348dee3f604513e0d9adafc0167d0ea828214b@ec2-54-234-13-16.compute-1.amazonaws.com:5432/d6qe0ng81n9d2n
       - DATABASE_CONNECTION_PORT=5432
     ports:
       - "8080:8080"
