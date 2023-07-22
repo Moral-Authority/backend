@@ -24,6 +24,8 @@ RUN go build -o main .
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
+CMD gunicorn --bind 0.0.0.0:$PORT wsgi
+
 # Run the executable
 CMD ["./main"]
 

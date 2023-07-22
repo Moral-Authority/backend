@@ -19,7 +19,7 @@ import (
 	"time"
 )
 
-const defaultPort = "5432"
+const defaultPort = "8080"
 
 func init() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
@@ -67,16 +67,16 @@ func main() {
 		},
 	})
 	srv.Use(extension.Introspection{})
-
-	if port == "" {
-		port = defaultPort
-	}
+	//
+	//if port == "" {
+	//	port = defaultPort
+	//}
 
 	srv = handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", c.Handler(srv))
 
-	logrus.Printf("connect to http://localhost%s/ for GraphQL playground", port)
+	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Fatal(http.ListenAndServe(port, nil))
 }
