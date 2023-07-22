@@ -5,18 +5,12 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/handlers"
 )
 
 // AddFav is the resolver for the addFav field.
 func (r *mutationResolver) AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error) {
-	fav, err := handlers.UserService{}.AddUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
-	if err == nil {
-		return fav, nil
-	} else {
-		return nil, err
-	}
+	panic(fmt.Errorf("not implemented: AddFav - addFav"))
 }

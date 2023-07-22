@@ -21,9 +21,9 @@ type Company struct {
 
 type Company_Certs struct {
 	gorm.Model
-	CompanyID       uint    `gorm:"foreignKey:CompanyID"`
-	Company         Company `gorm:"foreignKey:CompanyRefer"`
-	CertificationId Certification
+	//CompanyID       uint    `gorm:"foreignKey:CompanyID"`
+	//Company         Company `gorm:"foreignKey:CompanyRefer"`
+	//CertificationId Certification
 	//CompanyId       Company
 	//CertificationId Certification
 }
