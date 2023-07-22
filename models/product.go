@@ -9,7 +9,8 @@ type Product struct {
 	Title       string
 	CompanyID   uint    `gorm:"foreignKey:CompanyID"`
 	Company     Company `gorm:"foreignKey:CompanyID"`
-	User        User
-	//CompanyID   Company `gorm:"foreignKey:CompanyId"`
-	//User        User    `gorm:"foreignKey:UserId"`
+	User        User    `gorm:"foreignKey:UserId"`
 }
+
+//CompanyID   Company `gorm:"foreignKey:CompanyId"`
+//User        User    `gorm:"foreignKey:UserId"`
