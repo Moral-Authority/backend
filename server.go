@@ -15,6 +15,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -31,7 +32,12 @@ func main() {
 	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
 
-	port := ":" + cfg.Port
+	//port := ":" + cfg.Port
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Use a default port if $PORT is not set
+	}
 
 	c := cors.Default()
 
