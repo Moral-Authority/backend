@@ -30,5 +30,5 @@ services:
       - DATABASE_CONNECTION_URL=postgres://izuhmncpslglsb:ce096c2a2beb33bffe5a808fb2348dee3f604513e0d9adafc0167d0ea828214b@ec2-54-234-13-16.compute-1.amazonaws.com:5432/d6qe0ng81n9d2n
       - DATABASE_CONNECTION_PORT=5432
     ports:
-      - "8080:8080"
+      - "5432:5432"
     restart: unless-stopped

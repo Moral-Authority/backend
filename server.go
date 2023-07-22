@@ -19,7 +19,7 @@ import (
 	"time"
 )
 
-const defaultPort = "8080"
+const defaultPort = "5432"
 
 func init() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
@@ -36,7 +36,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Use a default port if $PORT is not set
+		port = "5432" // Use a default port if $PORT is not set
 	}
 
 	c := cors.Default()
