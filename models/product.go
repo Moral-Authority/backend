@@ -7,6 +7,7 @@ type Product struct {
 	Url         string
 	Description string
 	Title       string
+	CompanyID   uint `gorm:"foreignKey:CompanyID"`
 	Company     Company
 	User        User
 	//CompanyID   Company `gorm:"foreignKey:CompanyId"`
