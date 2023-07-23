@@ -27,38 +27,24 @@ func init() {
 }
 
 func main() {
-
 	// Initialize config struct and populate it from env vars and flags.
 	cfg := cmd.DefaultConfiguration()
 	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
 
-	//port := ":" + cfg.Port
-
+	// Port configuration
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Use a default port if $PORT is not set
+		port = defaultPort // Use a default port if $PORT is not set
 	}
 
+	// Initialize CORS
 	c := cors.Default()
 
-	// initialize database
-	database.Connect(cfg.DatabaseConfig) // Pass the entire DatabaseConfig struct
+	// Initialize the database
+	database.Connect(cfg.DatabaseConfig)
 
-	// Initialize config struct and populate it from env vars and flags.
-	//cfg := cmd.DefaultConfiguration()
-	//arg.MustParse(cfg)
-	//
-	//port := ":" + cfg.Port
-	//
-	//c := cors.Default()
-	//
-	//// initialize database
-	//database.Connect(cfg.DatabaseConfig)
-
-	// setup graphql server
-
-	// srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
+	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
 	srv.AddTransport(transport.POST{})
 	srv.AddTransport(transport.Websocket{
@@ -70,17 +56,12 @@ func main() {
 		},
 	})
 	srv.Use(extension.Introspection{})
-	//
-	//if port == "" {
-	//	port = defaultPort
-	//}
 
-	srv = handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
-
+	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", c.Handler(srv))
 
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Printf("Using port: %s", port)
-	logrus.Fatal(http.ListenAndServe(port, nil))
+	logrus.Fatal(http.ListenAndServe(":"+port, nil))
 }
