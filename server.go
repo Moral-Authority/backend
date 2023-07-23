@@ -1,6 +1,11 @@
 package main
 
 import (
+	"log"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
@@ -13,10 +18,6 @@ import (
 	r "github.com/howstrongiam/backend/graph/resolvers"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
-	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
 const defaultPort = "8080"
@@ -36,7 +37,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "5432" // Use a default port if $PORT is not set
+		port = "8080" // Use a default port if $PORT is not set
 	}
 
 	c := cors.Default()
@@ -56,7 +57,9 @@ func main() {
 	//database.Connect(cfg.DatabaseConfig)
 
 	// setup graphql server
-	srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
+
+	// srv := handler.New(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
 	srv.AddTransport(transport.POST{})
 	srv.AddTransport(transport.Websocket{
 		KeepAlivePingInterval: 10 * time.Second,
