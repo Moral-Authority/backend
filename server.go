@@ -81,5 +81,6 @@ func main() {
 	http.Handle("/query", c.Handler(srv))
 
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+	logrus.Printf("Using port: %s", port)
 	logrus.Fatal(http.ListenAndServe(port, nil))
 }
