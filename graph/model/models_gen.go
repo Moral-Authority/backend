@@ -10,7 +10,7 @@ import (
 
 type AddCategory struct {
 	Name     string       `json:"Name"`
-	ParentID *string      `json:"ParentId"`
+	ParentID *string      `json:"ParentID"`
 	Type     CategoryEnum `json:"Type"`
 }
 
@@ -80,7 +80,7 @@ type CategorizationInput struct {
 
 type Category struct {
 	ID       string      `json:"_id"`
-	ParentID *string     `json:"ParentId"`
+	ParentID *string     `json:"ParentID"`
 	Type     *string     `json:"Type"`
 	Name     string      `json:"Name"`
 	Children []*Category `json:"Children"`

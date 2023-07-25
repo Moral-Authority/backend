@@ -182,7 +182,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.Name(childComplexity), true
 
-	case "Category.ParentId":
+	case "Category.ParentID":
 		if e.complexity.Category.ParentID == nil {
 			break
 		}
@@ -947,7 +947,7 @@ extend type Query {
 
 input AddCategory {
     Name: String!
-    ParentId: String
+    ParentID: String
     Type: CategoryEnum!
 }
 
@@ -958,7 +958,7 @@ enum CategoryEnum {
 # ======= TYPES ======
 type Category {
     _id: String!
-    ParentId: String
+    ParentID: String
     Type: String
     Name: String!
     Children: [Category]

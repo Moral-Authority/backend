@@ -12,7 +12,7 @@ extend type Query {
 
 input AddCategory {
     Name: String!
-    ParentId: String
+    ParentID: String
     Type: CategoryEnum!
 }
 
@@ -23,7 +23,7 @@ enum CategoryEnum {
 # ======= TYPES ======
 type Category {
     _id: String!
-    ParentId: String
+    ParentID: String
     Type: String
     Name: String!
     Children: [Category]

@@ -72,8 +72,8 @@ func (ec *executionContext) fieldContext_Category__id(ctx context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Category_ParentId(ctx context.Context, field graphql.CollectedField, obj *model.Category) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Category_ParentId(ctx, field)
+func (ec *executionContext) _Category_ParentID(ctx context.Context, field graphql.CollectedField, obj *model.Category) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Category_ParentID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -100,7 +100,7 @@ func (ec *executionContext) _Category_ParentId(ctx context.Context, field graphq
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_ParentId(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_ParentID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -236,8 +236,8 @@ func (ec *executionContext) fieldContext_Category_Children(ctx context.Context, 
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Category__id(ctx, field)
-			case "ParentId":
-				return ec.fieldContext_Category_ParentId(ctx, field)
+			case "ParentID":
+				return ec.fieldContext_Category_ParentID(ctx, field)
 			case "Type":
 				return ec.fieldContext_Category_Type(ctx, field)
 			case "Name":
@@ -262,7 +262,7 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"Name", "ParentId", "Type"}
+	fieldsInOrder := [...]string{"Name", "ParentID", "Type"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -277,10 +277,10 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 			if err != nil {
 				return it, err
 			}
-		case "ParentId":
+		case "ParentID":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ParentId"))
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ParentID"))
 			it.ParentID, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
@@ -324,9 +324,9 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "ParentId":
+		case "ParentID":
 
-			out.Values[i] = ec._Category_ParentId(ctx, field, obj)
+			out.Values[i] = ec._Category_ParentID(ctx, field, obj)
 
 		case "Type":
 

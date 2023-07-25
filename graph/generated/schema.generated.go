@@ -504,8 +504,8 @@ func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Contex
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Category__id(ctx, field)
-			case "ParentId":
-				return ec.fieldContext_Category_ParentId(ctx, field)
+			case "ParentID":
+				return ec.fieldContext_Category_ParentID(ctx, field)
 			case "Type":
 				return ec.fieldContext_Category_Type(ctx, field)
 			case "Name":
@@ -994,8 +994,8 @@ func (ec *executionContext) fieldContext_Query_getAllCategories(ctx context.Cont
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_Category__id(ctx, field)
-			case "ParentId":
-				return ec.fieldContext_Category_ParentId(ctx, field)
+			case "ParentID":
+				return ec.fieldContext_Category_ParentID(ctx, field)
 			case "Type":
 				return ec.fieldContext_Category_Type(ctx, field)
 			case "Name":

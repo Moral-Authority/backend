@@ -12,5 +12,5 @@ type Category struct {
 	gorm.Model
 	Name     string
 	Type     string
-	ParentId *uint // `gorm:"foreignKey:CategoryRefer"`
+	ParentID *uint // `gorm:"foreignKey:CategoryRefer"`
 }

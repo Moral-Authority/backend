@@ -53,9 +53,10 @@ func toCategoryResponse(category *models.Category) *model.Category {
 	}
 
 	categoryResponse := &model.Category{
-		ID:   strconv.Itoa(int(category.ID)),
-		Type: &category.Type,
-		Name: category.Name,
+		ID:       strconv.Itoa(int(category.ID)),
+		Type:     &category.Type,
+		Name:     category.Name,
+		ParentID: UintPtrToStringPtr(category.ParentID),
 	}
 
 	log.Printf("Category response: %+v\n", categoryResponse) // Log the category response

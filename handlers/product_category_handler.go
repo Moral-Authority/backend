@@ -23,7 +23,7 @@ func (s ProductService) AddCategory(request model.AddCategory, dbService databas
 	category := models.Category{
 		Name:     request.Name,
 		Type:     fmt.Sprintf("%s", request.Type),
-		ParentId: parentID,
+		ParentID: parentID,
 	}
 
 	addedCategory := dbService.AddCategory(category)
