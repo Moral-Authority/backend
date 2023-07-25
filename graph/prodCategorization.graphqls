@@ -1,19 +1,19 @@
 
 
 extend type Mutation {
-    addCategory(input: AddCategory!): Section!
+    addCategory(input: AddCategory!): Category!
 }
 
 extend type Query {
-    getAllCategories:[Section]!
+    getAllCategories:[Category]!
 }
 
 # ======= INPUTS ======
 
 input AddCategory {
     Name: String!
-    ParentId: String!
-    CategoryType: CategoryEnum!
+    ParentId: String
+    Type: CategoryEnum!
 }
 
 enum CategoryEnum {
@@ -21,47 +21,49 @@ enum CategoryEnum {
 }
 
 # ======= TYPES ======
-type Section {
-    _id: String!
-    Title: String!
-    SubSections: [SubSection]
-}
-
-type SubSection {
-    _id: String!
-    Title: String!
-    Departments: [Department]
-}
-
-type Department {
-    _id: String!
-    Title: String!
-    Categories: [Category]
-}
-
-
 type Category {
     _id: String!
-    Title: String!
-    SubCategories: [SubCategory]
+    ParentId: String
+    Type: String
+    Name: String!
+    Children: [Category]
 }
 
-type SubCategory {
-    _id: String!
-    Title: String!
-    Types: [Type]
-}
 
-type Type {
-    _id: String!
-    Title: String!
-    SubTypes: [SubType]
-}
+#type Section {
+#    _id: String!
+#    Title: String!
+#    SubSections: [SubSection]
+#}
+#
+#type SubSection {
+#    _id: String!
+#    Title: String!
+#    Departments: [Department]
+#}
 
-type SubType {
-    _id: String!
-    Title: String!
-}
+#type Department {
+#    _id: String!
+#    Title: String!
+#    Categories: [Category]
+#}
+#
+#type SubCategory {
+#    _id: String!
+#    Title: String!
+#    Types: [Type]
+#}
+#
+#type Type {
+#    _id: String!
+#    Title: String!
+#    SubTypes: [SubType]
+#}
+#
+#type SubType {
+#    _id: String!
+#    Title: String!
+#}
 
 #enum FilterType {
 #    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,

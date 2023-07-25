@@ -39,9 +39,11 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	Category struct {
-		ID            func(childComplexity int) int
-		SubCategories func(childComplexity int) int
-		Title         func(childComplexity int) int
+		Children func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Name     func(childComplexity int) int
+		ParentID func(childComplexity int) int
+		Type     func(childComplexity int) int
 	}
 
 	Certification struct {
@@ -74,12 +76,6 @@ type ComplexityRoot struct {
 		State       func(childComplexity int) int
 		URL         func(childComplexity int) int
 		User        func(childComplexity int) int
-	}
-
-	Department struct {
-		Categories func(childComplexity int) int
-		ID         func(childComplexity int) int
-		Title      func(childComplexity int) int
 	}
 
 	Favourite struct {
@@ -142,35 +138,6 @@ type ComplexityRoot struct {
 		Users                func(childComplexity int) int
 	}
 
-	Section struct {
-		ID          func(childComplexity int) int
-		SubSections func(childComplexity int) int
-		Title       func(childComplexity int) int
-	}
-
-	SubCategory struct {
-		ID    func(childComplexity int) int
-		Title func(childComplexity int) int
-		Types func(childComplexity int) int
-	}
-
-	SubSection struct {
-		Departments func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Title       func(childComplexity int) int
-	}
-
-	SubType struct {
-		ID    func(childComplexity int) int
-		Title func(childComplexity int) int
-	}
-
-	Type struct {
-		ID       func(childComplexity int) int
-		SubTypes func(childComplexity int) int
-		Title    func(childComplexity int) int
-	}
-
 	User struct {
 		Email     func(childComplexity int) int
 		FirstName func(childComplexity int) int
@@ -194,6 +161,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
+	case "Category.Children":
+		if e.complexity.Category.Children == nil {
+			break
+		}
+
+		return e.complexity.Category.Children(childComplexity), true
+
 	case "Category._id":
 		if e.complexity.Category.ID == nil {
 			break
@@ -201,19 +175,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.ID(childComplexity), true
 
-	case "Category.SubCategories":
-		if e.complexity.Category.SubCategories == nil {
+	case "Category.Name":
+		if e.complexity.Category.Name == nil {
 			break
 		}
 
-		return e.complexity.Category.SubCategories(childComplexity), true
+		return e.complexity.Category.Name(childComplexity), true
 
-	case "Category.Title":
-		if e.complexity.Category.Title == nil {
+	case "Category.ParentId":
+		if e.complexity.Category.ParentID == nil {
 			break
 		}
 
-		return e.complexity.Category.Title(childComplexity), true
+		return e.complexity.Category.ParentID(childComplexity), true
+
+	case "Category.Type":
+		if e.complexity.Category.Type == nil {
+			break
+		}
+
+		return e.complexity.Category.Type(childComplexity), true
 
 	case "Certification.Audited":
 		if e.complexity.Certification.Audited == nil {
@@ -396,27 +377,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Company.User(childComplexity), true
-
-	case "Department.Categories":
-		if e.complexity.Department.Categories == nil {
-			break
-		}
-
-		return e.complexity.Department.Categories(childComplexity), true
-
-	case "Department._id":
-		if e.complexity.Department.ID == nil {
-			break
-		}
-
-		return e.complexity.Department.ID(childComplexity), true
-
-	case "Department.Title":
-		if e.complexity.Department.Title == nil {
-			break
-		}
-
-		return e.complexity.Department.Title(childComplexity), true
 
 	case "Favourite._id":
 		if e.complexity.Favourite.ID == nil {
@@ -757,104 +717,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity), true
 
-	case "Section._id":
-		if e.complexity.Section.ID == nil {
-			break
-		}
-
-		return e.complexity.Section.ID(childComplexity), true
-
-	case "Section.SubSections":
-		if e.complexity.Section.SubSections == nil {
-			break
-		}
-
-		return e.complexity.Section.SubSections(childComplexity), true
-
-	case "Section.Title":
-		if e.complexity.Section.Title == nil {
-			break
-		}
-
-		return e.complexity.Section.Title(childComplexity), true
-
-	case "SubCategory._id":
-		if e.complexity.SubCategory.ID == nil {
-			break
-		}
-
-		return e.complexity.SubCategory.ID(childComplexity), true
-
-	case "SubCategory.Title":
-		if e.complexity.SubCategory.Title == nil {
-			break
-		}
-
-		return e.complexity.SubCategory.Title(childComplexity), true
-
-	case "SubCategory.Types":
-		if e.complexity.SubCategory.Types == nil {
-			break
-		}
-
-		return e.complexity.SubCategory.Types(childComplexity), true
-
-	case "SubSection.Departments":
-		if e.complexity.SubSection.Departments == nil {
-			break
-		}
-
-		return e.complexity.SubSection.Departments(childComplexity), true
-
-	case "SubSection._id":
-		if e.complexity.SubSection.ID == nil {
-			break
-		}
-
-		return e.complexity.SubSection.ID(childComplexity), true
-
-	case "SubSection.Title":
-		if e.complexity.SubSection.Title == nil {
-			break
-		}
-
-		return e.complexity.SubSection.Title(childComplexity), true
-
-	case "SubType._id":
-		if e.complexity.SubType.ID == nil {
-			break
-		}
-
-		return e.complexity.SubType.ID(childComplexity), true
-
-	case "SubType.Title":
-		if e.complexity.SubType.Title == nil {
-			break
-		}
-
-		return e.complexity.SubType.Title(childComplexity), true
-
-	case "Type._id":
-		if e.complexity.Type.ID == nil {
-			break
-		}
-
-		return e.complexity.Type.ID(childComplexity), true
-
-	case "Type.SubTypes":
-		if e.complexity.Type.SubTypes == nil {
-			break
-		}
-
-		return e.complexity.Type.SubTypes(childComplexity), true
-
-	case "Type.Title":
-		if e.complexity.Type.Title == nil {
-			break
-		}
-
-		return e.complexity.Type.Title(childComplexity), true
-
 	case "User.email":
 		if e.complexity.User.Email == nil {
 			break
@@ -1074,19 +936,19 @@ productId: String!
 	{Name: "../prodCategorization.graphqls", Input: `
 
 extend type Mutation {
-    addCategory(input: AddCategory!): Section!
+    addCategory(input: AddCategory!): Category!
 }
 
 extend type Query {
-    getAllCategories:[Section]!
+    getAllCategories:[Category]!
 }
 
 # ======= INPUTS ======
 
 input AddCategory {
     Name: String!
-    ParentId: String!
-    CategoryType: CategoryEnum!
+    ParentId: String
+    Type: CategoryEnum!
 }
 
 enum CategoryEnum {
@@ -1094,47 +956,49 @@ enum CategoryEnum {
 }
 
 # ======= TYPES ======
-type Section {
-    _id: String!
-    Title: String!
-    SubSections: [SubSection]
-}
-
-type SubSection {
-    _id: String!
-    Title: String!
-    Departments: [Department]
-}
-
-type Department {
-    _id: String!
-    Title: String!
-    Categories: [Category]
-}
-
-
 type Category {
     _id: String!
-    Title: String!
-    SubCategories: [SubCategory]
+    ParentId: String
+    Type: String
+    Name: String!
+    Children: [Category]
 }
 
-type SubCategory {
-    _id: String!
-    Title: String!
-    Types: [Type]
-}
 
-type Type {
-    _id: String!
-    Title: String!
-    SubTypes: [SubType]
-}
+#type Section {
+#    _id: String!
+#    Title: String!
+#    SubSections: [SubSection]
+#}
+#
+#type SubSection {
+#    _id: String!
+#    Title: String!
+#    Departments: [Department]
+#}
 
-type SubType {
-    _id: String!
-    Title: String!
-}
+#type Department {
+#    _id: String!
+#    Title: String!
+#    Categories: [Category]
+#}
+#
+#type SubCategory {
+#    _id: String!
+#    Title: String!
+#    Types: [Type]
+#}
+#
+#type Type {
+#    _id: String!
+#    Title: String!
+#    SubTypes: [SubType]
+#}
+#
+#type SubType {
+#    _id: String!
+#    Title: String!
+#}
 
 #enum FilterType {
 #    color, style, shape, material, setting, scent, pattern, chainType, closureType, cutType, gemstone, location,

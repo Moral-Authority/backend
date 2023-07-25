@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/howstrongiam/backend/graph/model"
 	"github.com/howstrongiam/backend/models"
+	"log"
 	"strconv"
 )
 
@@ -14,21 +15,21 @@ func toUserResponse(user models.User) *model.User {
 	}
 }
 
-//func toFavsResponse(favs []models.Favourite) []*model.Favourite {
-//	var response []*model.Favourite
-//	for _, e := range favs {
-//		fav := toFavResponse(e)
-//		response = append(response, fav)
-//	}
-//	return response
-//}
+func toFavsResponse(favs []models.Favourite) []*model.Favourite {
+	var response []*model.Favourite
+	for _, e := range favs {
+		fav := toFavResponse(e)
+		response = append(response, fav)
+	}
+	return response
+}
 
-//func toFavResponse(fav models.Favourite) *model.Favourite {
-//	return &model.Favourite{
-//		ID:      strconv.Itoa(int(fav.ID)),
-//		Product: toProductResponse(fav.Product),
-//	}
-//}
+func toFavResponse(fav models.Favourite) *model.Favourite {
+	return &model.Favourite{
+		ID: strconv.Itoa(int(fav.ID)),
+		//Product: toProductResponse(fav.Product),
+	}
+}
 
 func toImageResponse(image models.Image) *model.Image {
 	return &model.Image{
@@ -37,13 +38,29 @@ func toImageResponse(image models.Image) *model.Image {
 	}
 }
 
-func toCategoriesResponse(categories []models.Categories) []*model.Category {
+func toCategoriesResponse(categories []*models.Category) []*model.Category {
 	var response []*model.Category
-	//for _, e := range categories {
-	//	cat := toCategoryResponse(e)
-	//	response = append(response, cat)
-	//}
+	for _, e := range categories {
+		cat := toCategoryResponse(e)
+		response = append(response, cat)
+	}
 	return response
+}
+
+func toCategoryResponse(category *models.Category) *model.Category {
+	if category == nil {
+		return nil
+	}
+
+	categoryResponse := &model.Category{
+		ID:   strconv.Itoa(int(category.ID)),
+		Type: &category.Type,
+		Name: category.Name,
+	}
+
+	log.Printf("Category response: %+v\n", categoryResponse) // Log the category response
+
+	return categoryResponse
 }
 
 //func toFilterResponse(filter models.Filter) *model.Filter {
@@ -70,6 +87,7 @@ func toProductResponse(product models.Product) *model.Product {
 		ID:          strconv.Itoa(int(product.ID)),
 		Title:       product.Title,
 		Description: product.Description,
+		//Certification: toCertificationResponse(product.Certification),
 	}
 }
 
@@ -85,19 +103,27 @@ func toCompanyResponse(company models.Company) *model.Company {
 
 func toCertificationResponse(cert models.Certification) *model.Certification {
 	return &model.Certification{
-		ID:               strconv.Itoa(int(cert.ID)),
-		Name:             cert.Name.String,
-		Logo:             &cert.Logo.String,
-		Industry:         cert.Industry.String,
-		Certifier:        cert.Certifier.String,
-		CertifiesCompany: &cert.CertifiesCompanies.Bool,
-		CertifiesProduct: &cert.CertifiesProducts.Bool,
-		CertifiesProcess: &cert.CertifiesProcesses.Bool,
-		CertifierContact: &cert.CertifierContactID.String,
-		Audited:          &cert.Audited.Bool,
-		Auditor:          &cert.Auditor.String,
-		Region:           &cert.Region.String,
-		Qualifiers:       &cert.Qualifiers.String,
-		Sources:          &cert.Sources.String,
+		ID:        strconv.Itoa(int(cert.ID)),
+		Name:      cert.Name.String,
+		Logo:      &cert.Logo.String,
+		Industry:  cert.Industry.String,
+		Certifier: cert.Certifier.String,
+		//CertifiesCompany: &cert.CertifiesCompany.Bool,
+		//CertifiesProduct: &cert.CertifiesProduct.Bool,
+		//CertifiesProcess: &cert.CertifiesProcess.Bool,
+		//CertifierContact: &cert.CertifierContact.String,
+		Audited:    &cert.Audited.Bool,
+		Auditor:    &cert.Auditor.String,
+		Region:     &cert.Region.String,
+		Qualifiers: &cert.Qualifiers.String,
+		Sources:    &cert.Sources.String,
 	}
+}
+
+func UintPtrToStringPtr(u *uint) *string {
+	if u == nil {
+		return nil
+	}
+	s := strconv.FormatUint(uint64(*u), 10)
+	return &s
 }

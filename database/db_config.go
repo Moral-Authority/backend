@@ -46,7 +46,7 @@ func GetDbConn() *gorm.DB {
 func performMigrations(db *gorm.DB) {
 	// Migrate the schema
 	err := db.AutoMigrate(
-		&models.Categories{},
+		&models.Category{},
 		&models.Certification{},
 		&models.Company{},
 		&models.Favourite{},

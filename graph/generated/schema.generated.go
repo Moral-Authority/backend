@@ -22,7 +22,7 @@ type MutationResolver interface {
 	AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error)
 	AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error)
-	AddCategory(ctx context.Context, input model.AddCategory) (*model.Section, error)
+	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
 	AddProduct(ctx context.Context, request model.AddProductRequest) (*model.Product, error)
 	AddUser(ctx context.Context, input model.NewUser) (*model.User, error)
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
@@ -31,7 +31,7 @@ type QueryResolver interface {
 	BaseQuery(ctx context.Context) (interface{}, error)
 	GetAllCertifications(ctx context.Context) ([]*model.Certification, error)
 	GetCompany(ctx context.Context, id string) (*model.Company, error)
-	GetAllCategories(ctx context.Context) ([]*model.Section, error)
+	GetAllCategories(ctx context.Context) ([]*model.Category, error)
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
 }
@@ -489,9 +489,9 @@ func (ec *executionContext) _Mutation_addCategory(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.Section)
+	res := resTmp.(*model.Category)
 	fc.Result = res
-	return ec.marshalNSection2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSection(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -503,13 +503,17 @@ func (ec *executionContext) fieldContext_Mutation_addCategory(ctx context.Contex
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "_id":
-				return ec.fieldContext_Section__id(ctx, field)
-			case "Title":
-				return ec.fieldContext_Section_Title(ctx, field)
-			case "SubSections":
-				return ec.fieldContext_Section_SubSections(ctx, field)
+				return ec.fieldContext_Category__id(ctx, field)
+			case "ParentId":
+				return ec.fieldContext_Category_ParentId(ctx, field)
+			case "Type":
+				return ec.fieldContext_Category_Type(ctx, field)
+			case "Name":
+				return ec.fieldContext_Category_Name(ctx, field)
+			case "Children":
+				return ec.fieldContext_Category_Children(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Section", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Category", field.Name)
 		},
 	}
 	defer func() {
@@ -975,9 +979,9 @@ func (ec *executionContext) _Query_getAllCategories(ctx context.Context, field g
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Section)
+	res := resTmp.([]*model.Category)
 	fc.Result = res
-	return ec.marshalNSection2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐSection(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getAllCategories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -989,13 +993,17 @@ func (ec *executionContext) fieldContext_Query_getAllCategories(ctx context.Cont
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "_id":
-				return ec.fieldContext_Section__id(ctx, field)
-			case "Title":
-				return ec.fieldContext_Section_Title(ctx, field)
-			case "SubSections":
-				return ec.fieldContext_Section_SubSections(ctx, field)
+				return ec.fieldContext_Category__id(ctx, field)
+			case "ParentId":
+				return ec.fieldContext_Category_ParentId(ctx, field)
+			case "Type":
+				return ec.fieldContext_Category_Type(ctx, field)
+			case "Name":
+				return ec.fieldContext_Category_Name(ctx, field)
+			case "Children":
+				return ec.fieldContext_Category_Children(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Section", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Category", field.Name)
 		},
 	}
 	return fc, nil

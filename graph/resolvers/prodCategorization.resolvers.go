@@ -5,28 +5,29 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
+	"github.com/howstrongiam/backend/handlers"
 )
 
 // AddCategory is the resolver for the addCategory field.
-func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCategory) (*model.Section, error) {
-	//cat, err := handlers.ProductService{}.AddNewCategory(input, database.ProductDbServiceImpl{})
-	//if err != nil {
-	//	return nil, err
-	//}
+func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error) {
+	cat, err := handlers.ProductService{}.AddCategory(input, database.ProductDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
 
-	return nil, nil
+	return cat, nil
 }
 
 // GetAllCategories is the resolver for the getAllCategories field.
-func (r *queryResolver) GetAllCategories(ctx context.Context) ([]*model.Section, error) {
-	//type_, err := handlers.ProductService{}.AddNewType(input, database.ProductDbServiceImpl{})
-	//if err == nil {
-	//	return type_, nil
-	//} else {
-	//	return nil, err
-	//}
-	panic(fmt.Errorf("not implemented: GetAllCategories - getAllCategories"))
+func (r *queryResolver) GetAllCategories(ctx context.Context) ([]*model.Category, error) {
+	categories, err := handlers.ProductService{}.GetAllCategories(database.ProductDbServiceImpl{})
+	if err == nil {
+		return categories, nil
+	} else {
+		return nil, err
+	}
+	return categories, nil
 }

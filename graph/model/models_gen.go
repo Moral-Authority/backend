@@ -9,9 +9,9 @@ import (
 )
 
 type AddCategory struct {
-	Name         string       `json:"Name"`
-	ParentID     string       `json:"ParentId"`
-	CategoryType CategoryEnum `json:"CategoryType"`
+	Name     string       `json:"Name"`
+	ParentID *string      `json:"ParentId"`
+	Type     CategoryEnum `json:"Type"`
 }
 
 type AddCertification struct {
@@ -79,9 +79,11 @@ type CategorizationInput struct {
 }
 
 type Category struct {
-	ID            string         `json:"_id"`
-	Title         string         `json:"Title"`
-	SubCategories []*SubCategory `json:"SubCategories"`
+	ID       string      `json:"_id"`
+	ParentID *string     `json:"ParentId"`
+	Type     *string     `json:"Type"`
+	Name     string      `json:"Name"`
+	Children []*Category `json:"Children"`
 }
 
 type Certification struct {
@@ -114,12 +116,6 @@ type Company struct {
 	User        *User   `json:"user"`
 	IsVerified  *bool   `json:"isVerified"`
 	Logo        *string `json:"logo"`
-}
-
-type Department struct {
-	ID         string      `json:"_id"`
-	Title      string      `json:"Title"`
-	Categories []*Category `json:"Categories"`
 }
 
 type Favourite struct {
@@ -175,35 +171,6 @@ type PurchaseInfoInput struct {
 	Rating         *string      `json:"Rating"`
 	Company        *CompanyEnum `json:"Company"`
 	IfOtherCompany *string      `json:"IfOtherCompany"`
-}
-
-type Section struct {
-	ID          string        `json:"_id"`
-	Title       string        `json:"Title"`
-	SubSections []*SubSection `json:"SubSections"`
-}
-
-type SubCategory struct {
-	ID    string  `json:"_id"`
-	Title string  `json:"Title"`
-	Types []*Type `json:"Types"`
-}
-
-type SubSection struct {
-	ID          string        `json:"_id"`
-	Title       string        `json:"Title"`
-	Departments []*Department `json:"Departments"`
-}
-
-type SubType struct {
-	ID    string `json:"_id"`
-	Title string `json:"Title"`
-}
-
-type Type struct {
-	ID       string     `json:"_id"`
-	Title    string     `json:"Title"`
-	SubTypes []*SubType `json:"SubTypes"`
 }
 
 type UpdateCertification struct {

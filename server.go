@@ -27,6 +27,10 @@ func init() {
 }
 
 func main() {
+
+	// Set the log output to stdout
+	log.SetOutput(os.Stdout)
+
 	// Initialize config struct and populate it from env vars and flags.
 	cfg := cmd.DefaultConfiguration()
 	log.Print("CFG", cfg)
