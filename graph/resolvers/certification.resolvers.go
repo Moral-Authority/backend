@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
@@ -39,5 +38,10 @@ func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Cert
 //     it when you're done.
 //   - You have helper methods in this file. Move them out to keep these resolver files clean.
 func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
-	panic(fmt.Errorf("not implemented: UpdateCertification - updateCertification"))
+	//certs, err := handlers.CertificationService{}.GetAllCertifications(database.CertificationDbServiceImpl{})
+	//if err != nil {
+	//	return certs, err
+	//}
+
+	return nil, nil
 }

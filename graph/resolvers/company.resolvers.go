@@ -5,17 +5,39 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/howstrongiam/backend/database"
 	"github.com/howstrongiam/backend/graph/model"
+	"github.com/howstrongiam/backend/handlers"
 )
 
 // AddCompany is the resolver for the addCompany field.
 func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error) {
-	panic(fmt.Errorf("not implemented: AddCompany - addCompany"))
+	// TODO figure out err for companydbserviceimpl
+	company, err := handlers.CompanyService{}.AddCompany(request, nil, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return company, nil
 }
 
 // GetCompany is the resolver for the getCompany field.
 func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Company, error) {
-	panic(fmt.Errorf("not implemented: GetCompany - getCompany"))
+	// TODO figure out err for companydbserviceimpl
+	company, err := handlers.CompanyService{}.GetCompanyById(id, nil)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
+}
+
+// GetAllCompanies is the resolver for the getAllCompanies field.
+func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, error) {
+	// TODO figure out err for companydbserviceimpl
+	company, err := handlers.CompanyService{}.GetAllCompanies(nil)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }

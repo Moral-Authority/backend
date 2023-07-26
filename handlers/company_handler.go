@@ -63,7 +63,7 @@ func (s CompanyService) AddCompany(request model.AddCompany, dbService database.
 	if savedCompany == nil {
 		return nil, errors.New("unable to save company in db")
 	}
-	return toCompanyResponse(*savedCompany), nil
+	return toCompanyResponse(savedCompany), nil
 	return nil, nil
 }
 
@@ -72,5 +72,13 @@ func (s CompanyService) GetCompanyById(companyId string, dbService database.Comp
 	if company == nil {
 		return nil, errors.New("unable to get company from db")
 	}
-	return toCompanyResponse(*company), nil
+	return toCompanyResponse(company), nil
+}
+
+func (s CompanyService) GetAllCompanies(dbService database.CompanyDbService) ([]*model.Company, error) {
+	companies := dbService.GetAllCompanies()
+	if companies == nil {
+		return nil, errors.New("unable to get companies from db")
+	}
+	return toCompaniesResponse(companies), nil
 }

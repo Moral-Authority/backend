@@ -92,7 +92,7 @@ func toProductResponse(product models.Product) *model.Product {
 	}
 }
 
-func toCompanyResponse(company models.Company) *model.Company {
+func toCompanyResponse(company *models.Company) *model.Company {
 	return &model.Company{
 		//ID:            strconv.Itoa(int(company.ID)),
 		URL:         &company.Url.String,
@@ -100,6 +100,15 @@ func toCompanyResponse(company models.Company) *model.Company {
 		IsVerified:  &company.IsVerified.Bool,
 		Logo:        &company.Image.String,
 	}
+}
+
+func toCompaniesResponse(companies []*models.Company) []*model.Company {
+	var response []*model.Company
+	for _, c := range companies {
+		company := toCompanyResponse(c)
+		response = append(response, company)
+	}
+	return response
 }
 
 func toCertificationResponse(cert models.Certification) *model.Certification {

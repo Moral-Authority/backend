@@ -133,6 +133,7 @@ type ComplexityRoot struct {
 		BaseQuery            func(childComplexity int) int
 		GetAllCategories     func(childComplexity int) int
 		GetAllCertifications func(childComplexity int) int
+		GetAllCompanies      func(childComplexity int) int
 		GetCompany           func(childComplexity int, id string) int
 		User                 func(childComplexity int, id string) int
 		Users                func(childComplexity int) int
@@ -686,6 +687,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllCertifications(childComplexity), true
 
+	case "Query.getAllCompanies":
+		if e.complexity.Query.GetAllCompanies == nil {
+			break
+		}
+
+		return e.complexity.Query.GetAllCompanies(childComplexity), true
+
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
 			break
@@ -893,6 +901,7 @@ extend type Mutation {
 
 extend type Query {
     getCompany(id: String!): Company!
+    getAllCompanies: [Company!]
 }
 
 type Company {

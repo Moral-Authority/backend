@@ -24,10 +24,8 @@ func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCateg
 // GetAllCategories is the resolver for the getAllCategories field.
 func (r *queryResolver) GetAllCategories(ctx context.Context) ([]*model.Category, error) {
 	categories, err := handlers.ProductService{}.GetAllCategories(database.ProductDbServiceImpl{})
-	if err == nil {
+	if err != nil {
 		return categories, nil
-	} else {
-		return nil, err
 	}
 	return categories, nil
 }
