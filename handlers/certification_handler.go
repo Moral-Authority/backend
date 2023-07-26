@@ -46,10 +46,20 @@ func (s CertificationService) GetAllCertifications(dbService database.Certificat
 	return response, nil
 }
 
-//func (s CompanyService) GetCertificationById(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
-//	cert := dbService.GetCertificationById(certId)
-//	if cert == nil {
-//		return nil, errors.New("unable to get cert from db")
-//	}
-//	return toCertificationResponse(*cert), nil
-//}
+func (s CertificationService) GetCertificationById(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
+	cert := dbService.GetCertificationById(certId)
+	if cert == nil {
+		return nil, errors.New("unable to get cert from db")
+	}
+	return toCertificationResponse(*cert), nil
+}
+
+func (s CertificationService) UpdateCertification(cert model.UpdateCertification, dbService database.CertificationDbService) (*model.Certification, error) {
+	//cert := dbService.UpdateCertification(cert)
+	//if cert == nil {
+	//	return nil, errors.New("unable to get cert from db")
+	//}
+	//return toCertificationResponse(*cert), nil
+
+	return nil, nil
+}

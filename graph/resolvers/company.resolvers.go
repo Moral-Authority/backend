@@ -14,7 +14,7 @@ import (
 // AddCompany is the resolver for the addCompany field.
 func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error) {
 	// TODO figure out err for companydbserviceimpl
-	company, err := handlers.CompanyService{}.AddCompany(request, nil, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	company, err := handlers.CompanyService{}.AddCompany(request, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}

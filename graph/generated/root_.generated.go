@@ -89,14 +89,15 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCategory      func(childComplexity int, input model.AddCategory) int
-		AddCertification func(childComplexity int, input model.AddCertification) int
-		AddCompany       func(childComplexity int, request model.AddCompany) int
-		AddFav           func(childComplexity int, request model.AddUserFav) int
-		AddProduct       func(childComplexity int, request model.AddProductRequest) int
-		AddUser          func(childComplexity int, input model.NewUser) int
-		BaseMutation     func(childComplexity int) int
-		UpdateUser       func(childComplexity int, input model.UpdateUser) int
+		AddCategory         func(childComplexity int, input model.AddCategory) int
+		AddCertification    func(childComplexity int, input model.AddCertification) int
+		AddCompany          func(childComplexity int, request model.AddCompany) int
+		AddFav              func(childComplexity int, request model.AddUserFav) int
+		AddProduct          func(childComplexity int, request model.AddProductRequest) int
+		AddUser             func(childComplexity int, input model.NewUser) int
+		BaseMutation        func(childComplexity int) int
+		UpdateCertification func(childComplexity int, input model.UpdateCertification) int
+		UpdateUser          func(childComplexity int, input model.UpdateUser) int
 	}
 
 	Product struct {
@@ -486,6 +487,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.BaseMutation(childComplexity), true
 
+	case "Mutation.updateCertification":
+		if e.complexity.Mutation.UpdateCertification == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateCertification_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateCertification(childComplexity, args["input"].(model.UpdateCertification)), true
+
 	case "Mutation.updateUser":
 		if e.complexity.Mutation.UpdateUser == nil {
 			break
@@ -834,7 +847,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "../certification.graphqls", Input: `extend type Mutation {
     addCertification(input: AddCertification!): Certification!
-#    updateCertification(input: UpdateCertification!): Certification!
+    updateCertification(input: UpdateCertification!): Certification!
 }
 
 extend type Query {

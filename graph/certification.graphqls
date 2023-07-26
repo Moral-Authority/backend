@@ -1,6 +1,6 @@
 extend type Mutation {
     addCertification(input: AddCertification!): Certification!
-#    updateCertification(input: UpdateCertification!): Certification!
+    updateCertification(input: UpdateCertification!): Certification!
 }
 
 extend type Query {

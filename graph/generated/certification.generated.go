@@ -1121,6 +1121,11 @@ func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋhowstrongiam
 	return ec._Certification(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalNUpdateCertification2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐUpdateCertification(ctx context.Context, v interface{}) (model.UpdateCertification, error) {
+	res, err := ec.unmarshalInputUpdateCertification(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) ([]*model.AddCertification, error) {
 	if v == nil {
 		return nil, nil
