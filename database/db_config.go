@@ -24,9 +24,7 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 	if instance == nil {
 
 		dsn := "dbname=" + dbConfig.DatabaseName + " host=" + dbConfig.DatabaseConnectionUrl + " user=" + dbConfig.DatabaseUsername + " password=" + dbConfig.DatabasePassword + " sslmode=require"
-		//dsn := "host=" + dbConfig.DatabaseConnectionUrl + " user=" + dbConfig.DatabaseUsername + " password=" + dbConfig.DatabasePassword + " port=" + dbConfig.DatabaseConnectionPort
-		//+ " sslmode=disable"
-		//dsn := "dbname=d6qe0ng81n9d2n host=ec2-54-234-13-16.compute-1.amazonaws.com port=5432 user=izuhmncpslglsb password=ce096c2a2beb33bffe5a808fb2348dee3f604513e0d9adafc0167d0ea828214b sslmode=require"
+
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {
 			panic("failed to connect database")
