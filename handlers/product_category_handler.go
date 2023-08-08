@@ -28,7 +28,7 @@ func (s ProductService) AddCategory(request model.AddCategory, dbService databas
 
 	addedCategory := dbService.AddCategory(category)
 	if addedCategory == nil {
-		return nil, errors.New("unable to save category to db")
+		return nil, errors.New("unable to save category to db with error %s")
 	}
 
 	log.Printf("Added category: %+v\n", addedCategory) // Log the added category
