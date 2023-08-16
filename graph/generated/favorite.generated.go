@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
+	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -100,7 +101,7 @@ func (ec *executionContext) _Favourite_product(ctx context.Context, field graphq
 	}
 	res := resTmp.(*model.Product)
 	fc.Result = res
-	return ec.marshalNProduct2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
+	return ec.marshalNProduct2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Favourite_product(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -180,18 +181,20 @@ func (ec *executionContext) unmarshalInputAddUserFav(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
-			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.UserID = data
 		case "productId":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("productId"))
-			it.ProductID, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ProductID = data
 		}
 	}
 
@@ -210,34 +213,43 @@ var favouriteImplementors = []string{"Favourite"}
 
 func (ec *executionContext) _Favourite(ctx context.Context, sel ast.SelectionSet, obj *model.Favourite) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, favouriteImplementors)
+
 	out := graphql.NewFieldSet(fields)
-	var invalids uint32
+	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Favourite")
 		case "_id":
-
 			out.Values[i] = ec._Favourite__id(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "product":
-
 			out.Values[i] = ec._Favourite_product(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	out.Dispatch()
-	if invalids > 0 {
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
 		return graphql.Null
 	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
 	return out
 }
 
@@ -245,12 +257,12 @@ func (ec *executionContext) _Favourite(ctx context.Context, sel ast.SelectionSet
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddUserFav2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddUserFav(ctx context.Context, v interface{}) (model.AddUserFav, error) {
+func (ec *executionContext) unmarshalNAddUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddUserFav(ctx context.Context, v interface{}) (model.AddUserFav, error) {
 	res, err := ec.unmarshalInputAddUserFav(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v []*model.Favourite) graphql.Marshaler {
+func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v []*model.Favourite) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -277,7 +289,7 @@ func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋhowstrongiam�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOFavourite2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, sel, v[i])
+			ret[i] = ec.marshalOFavourite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -291,7 +303,7 @@ func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋhowstrongiam�
 	return ret
 }
 
-func (ec *executionContext) marshalOFavourite2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v *model.Favourite) graphql.Marshaler {
+func (ec *executionContext) marshalOFavourite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v *model.Favourite) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

@@ -7,6 +7,7 @@ import (
 	"errors"
 	"strconv"
 	"sync"
+	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -717,106 +718,119 @@ func (ec *executionContext) unmarshalInputAddCertification(ctx context.Context, 
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Name"))
-			it.Name, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Name = data
 		case "Logo":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Logo"))
-			it.Logo, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Logo = data
 		case "Industry":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Industry"))
-			it.Industry, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Industry = data
 		case "Certifier":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifier"))
-			it.Certifier, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Certifier = data
 		case "CertifiesCompany":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesCompany"))
-			it.CertifiesCompany, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesCompany = data
 		case "CertifiesProduct":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesProduct"))
-			it.CertifiesProduct, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesProduct = data
 		case "CertifiesProcess":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesProcess"))
-			it.CertifiesProcess, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesProcess = data
 		case "CertifierContact":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifierContact"))
-			it.CertifierContact, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifierContact = data
 		case "Audited":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Audited"))
-			it.Audited, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Audited = data
 		case "Auditor":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Auditor"))
-			it.Auditor, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Auditor = data
 		case "Region":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Region"))
-			it.Region, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Region = data
 		case "Qualifiers":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Qualifiers"))
-			it.Qualifiers, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Qualifiers = data
 		case "Sources":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Sources"))
-			it.Sources, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Sources = data
 		}
 	}
 
@@ -841,114 +855,128 @@ func (ec *executionContext) unmarshalInputUpdateCertification(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ID"))
-			it.ID, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ID = data
 		case "Name":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Name"))
-			it.Name, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Name = data
 		case "Logo":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Logo"))
-			it.Logo, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Logo = data
 		case "Industry":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Industry"))
-			it.Industry, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Industry = data
 		case "Certifier":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifier"))
-			it.Certifier, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Certifier = data
 		case "CertifiesCompany":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesCompany"))
-			it.CertifiesCompany, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesCompany = data
 		case "CertifiesProduct":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesProduct"))
-			it.CertifiesProduct, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesProduct = data
 		case "CertifiesProcess":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifiesProcess"))
-			it.CertifiesProcess, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifiesProcess = data
 		case "CertifierContact":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertifierContact"))
-			it.CertifierContact, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.CertifierContact = data
 		case "Audited":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Audited"))
-			it.Audited, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Audited = data
 		case "Auditor":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Auditor"))
-			it.Auditor, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Auditor = data
 		case "Region":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Region"))
-			it.Region, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Region = data
 		case "Qualifiers":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Qualifiers"))
-			it.Qualifiers, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Qualifiers = data
 		case "Sources":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Sources"))
-			it.Sources, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Sources = data
 		}
 	}
 
@@ -967,96 +995,77 @@ var certificationImplementors = []string{"Certification"}
 
 func (ec *executionContext) _Certification(ctx context.Context, sel ast.SelectionSet, obj *model.Certification) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, certificationImplementors)
+
 	out := graphql.NewFieldSet(fields)
-	var invalids uint32
+	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Certification")
 		case "_id":
-
 			out.Values[i] = ec._Certification__id(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "Name":
-
 			out.Values[i] = ec._Certification_Name(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "Logo":
-
 			out.Values[i] = ec._Certification_Logo(ctx, field, obj)
-
 		case "Industry":
-
 			out.Values[i] = ec._Certification_Industry(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "Certifier":
-
 			out.Values[i] = ec._Certification_Certifier(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "CertifiesCompany":
-
 			out.Values[i] = ec._Certification_CertifiesCompany(ctx, field, obj)
-
 		case "CertifiesProduct":
-
 			out.Values[i] = ec._Certification_CertifiesProduct(ctx, field, obj)
-
 		case "CertifiesProcess":
-
 			out.Values[i] = ec._Certification_CertifiesProcess(ctx, field, obj)
-
 		case "CertifierContact":
-
 			out.Values[i] = ec._Certification_CertifierContact(ctx, field, obj)
-
 		case "Audited":
-
 			out.Values[i] = ec._Certification_Audited(ctx, field, obj)
-
 		case "Auditor":
-
 			out.Values[i] = ec._Certification_Auditor(ctx, field, obj)
-
 		case "Region":
-
 			out.Values[i] = ec._Certification_Region(ctx, field, obj)
-
 		case "Qualifiers":
-
 			out.Values[i] = ec._Certification_Qualifiers(ctx, field, obj)
-
 		case "Sources":
-
 			out.Values[i] = ec._Certification_Sources(ctx, field, obj)
-
 		case "CreatedAt":
-
 			out.Values[i] = ec._Certification_CreatedAt(ctx, field, obj)
-
 		case "UpdatedAt":
-
 			out.Values[i] = ec._Certification_UpdatedAt(ctx, field, obj)
-
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	out.Dispatch()
-	if invalids > 0 {
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
 		return graphql.Null
 	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
 	return out
 }
 
@@ -1064,16 +1073,16 @@ func (ec *executionContext) _Certification(ctx context.Context, sel ast.Selectio
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCertification2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) (model.AddCertification, error) {
+func (ec *executionContext) unmarshalNAddCertification2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) (model.AddCertification, error) {
 	res, err := ec.unmarshalInputAddCertification(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCertification2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v model.Certification) graphql.Marshaler {
+func (ec *executionContext) marshalNCertification2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v model.Certification) graphql.Marshaler {
 	return ec._Certification(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCertification2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v []*model.Certification) graphql.Marshaler {
+func (ec *executionContext) marshalNCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v []*model.Certification) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -1097,7 +1106,7 @@ func (ec *executionContext) marshalNCertification2ᚕᚖgithubᚗcomᚋhowstrong
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx, sel, v[i])
+			ret[i] = ec.marshalOCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -1111,7 +1120,7 @@ func (ec *executionContext) marshalNCertification2ᚕᚖgithubᚗcomᚋhowstrong
 	return ret
 }
 
-func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v *model.Certification) graphql.Marshaler {
+func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v *model.Certification) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -1121,12 +1130,12 @@ func (ec *executionContext) marshalNCertification2ᚖgithubᚗcomᚋhowstrongiam
 	return ec._Certification(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNUpdateCertification2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐUpdateCertification(ctx context.Context, v interface{}) (model.UpdateCertification, error) {
+func (ec *executionContext) unmarshalNUpdateCertification2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUpdateCertification(ctx context.Context, v interface{}) (model.UpdateCertification, error) {
 	res, err := ec.unmarshalInputUpdateCertification(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) ([]*model.AddCertification, error) {
+func (ec *executionContext) unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) ([]*model.AddCertification, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -1138,7 +1147,7 @@ func (ec *executionContext) unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhows
 	res := make([]*model.AddCertification, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalOAddCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, vSlice[i])
+		res[i], err = ec.unmarshalOAddCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -1146,7 +1155,7 @@ func (ec *executionContext) unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhows
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalOAddCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) (*model.AddCertification, error) {
+func (ec *executionContext) unmarshalOAddCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx context.Context, v interface{}) (*model.AddCertification, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -1154,7 +1163,7 @@ func (ec *executionContext) unmarshalOAddCertification2ᚖgithubᚗcomᚋhowstro
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOCertification2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v *model.Certification) graphql.Marshaler {
+func (ec *executionContext) marshalOCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v *model.Certification) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

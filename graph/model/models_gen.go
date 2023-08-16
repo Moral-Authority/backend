@@ -10,36 +10,36 @@ import (
 
 type AddCategory struct {
 	Name     string       `json:"Name"`
-	ParentID *string      `json:"ParentID"`
+	ParentID *string      `json:"ParentID,omitempty"`
 	Type     CategoryEnum `json:"Type"`
 }
 
 type AddCertification struct {
-	Name             *string `json:"Name"`
-	Logo             *string `json:"Logo"`
-	Industry         *string `json:"Industry"`
-	Certifier        *string `json:"Certifier"`
-	CertifiesCompany *bool   `json:"CertifiesCompany"`
-	CertifiesProduct *bool   `json:"CertifiesProduct"`
-	CertifiesProcess *bool   `json:"CertifiesProcess"`
-	CertifierContact *string `json:"CertifierContact"`
-	Audited          *bool   `json:"Audited"`
-	Auditor          *string `json:"Auditor"`
-	Region           *string `json:"Region"`
-	Qualifiers       *string `json:"Qualifiers"`
-	Sources          *string `json:"Sources"`
+	Name             *string `json:"Name,omitempty"`
+	Logo             *string `json:"Logo,omitempty"`
+	Industry         *string `json:"Industry,omitempty"`
+	Certifier        *string `json:"Certifier,omitempty"`
+	CertifiesCompany *bool   `json:"CertifiesCompany,omitempty"`
+	CertifiesProduct *bool   `json:"CertifiesProduct,omitempty"`
+	CertifiesProcess *bool   `json:"CertifiesProcess,omitempty"`
+	CertifierContact *string `json:"CertifierContact,omitempty"`
+	Audited          *bool   `json:"Audited,omitempty"`
+	Auditor          *string `json:"Auditor,omitempty"`
+	Region           *string `json:"Region,omitempty"`
+	Qualifiers       *string `json:"Qualifiers,omitempty"`
+	Sources          *string `json:"Sources,omitempty"`
 }
 
 type AddCompany struct {
-	Name           *string             `json:"name"`
-	URL            *string             `json:"url"`
-	Description    *string             `json:"description"`
-	City           *string             `json:"city"`
-	State          *string             `json:"state"`
-	Country        *string             `json:"country"`
-	IsVerified     *bool               `json:"isVerified"`
-	Logo           *string             `json:"logo"`
-	Certifications []*AddCertification `json:"certifications"`
+	Name           *string             `json:"name,omitempty"`
+	URL            *string             `json:"url,omitempty"`
+	Description    *string             `json:"description,omitempty"`
+	City           *string             `json:"city,omitempty"`
+	State          *string             `json:"state,omitempty"`
+	Country        *string             `json:"country,omitempty"`
+	IsVerified     *bool               `json:"isVerified,omitempty"`
+	Logo           *string             `json:"logo,omitempty"`
+	Certifications []*AddCertification `json:"certifications,omitempty"`
 }
 
 type AddProductRequest struct {
@@ -48,7 +48,7 @@ type AddProductRequest struct {
 	Categorization *CategorizationInput    `json:"Categorization"`
 	Certifications *AllCertificationsInput `json:"Certifications"`
 	PurchaseInfo   *PurchaseInfoInput      `json:"PurchaseInfo"`
-	ImageLinks     []*string               `json:"ImageLinks"`
+	ImageLinks     []*string               `json:"ImageLinks,omitempty"`
 }
 
 type AddUserFav struct {
@@ -57,65 +57,65 @@ type AddUserFav struct {
 }
 
 type AllCertificationsInput struct {
-	ProductCertifications            []*string                `json:"ProductCertifications"`
-	CompanyCertifications            *CompanyCertifications   `json:"CompanyCertifications"`
-	IfCompanyIsOther                 *string                  `json:"IfCompanyIsOther"`
-	MaterialsAndIngredients          *MaterialsAndIngredients `json:"MaterialsAndIngredients"`
-	IfMaterialsAndIngredientsIsOther *string                  `json:"IfMaterialsAndIngredientsIsOther"`
-	GiveBackPrograms                 *GiveBackPrograms        `json:"GiveBackPrograms"`
-	IfGiveBackProgramsIsOther        *string                  `json:"IfGiveBackProgramsIsOther"`
-	OwnersAndFounders                *OwnersAndFounders       `json:"OwnersAndFounders"`
-	IfOwnersAndFoundersIsOther       *string                  `json:"IfOwnersAndFoundersIsOther"`
+	ProductCertifications            []*string                `json:"ProductCertifications,omitempty"`
+	CompanyCertifications            *CompanyCertifications   `json:"CompanyCertifications,omitempty"`
+	IfCompanyIsOther                 *string                  `json:"IfCompanyIsOther,omitempty"`
+	MaterialsAndIngredients          *MaterialsAndIngredients `json:"MaterialsAndIngredients,omitempty"`
+	IfMaterialsAndIngredientsIsOther *string                  `json:"IfMaterialsAndIngredientsIsOther,omitempty"`
+	GiveBackPrograms                 *GiveBackPrograms        `json:"GiveBackPrograms,omitempty"`
+	IfGiveBackProgramsIsOther        *string                  `json:"IfGiveBackProgramsIsOther,omitempty"`
+	OwnersAndFounders                *OwnersAndFounders       `json:"OwnersAndFounders,omitempty"`
+	IfOwnersAndFoundersIsOther       *string                  `json:"IfOwnersAndFoundersIsOther,omitempty"`
 }
 
 type CategorizationInput struct {
-	Section     *string `json:"Section"`
-	SubSection  *string `json:"SubSection"`
-	Department  *string `json:"Department"`
-	Category    *string `json:"Category"`
-	SubCategory *string `json:"SubCategory"`
-	Type        *string `json:"Type"`
-	Style       *string `json:"Style"`
+	Section     *string `json:"Section,omitempty"`
+	SubSection  *string `json:"SubSection,omitempty"`
+	Department  *string `json:"Department,omitempty"`
+	Category    *string `json:"Category,omitempty"`
+	SubCategory *string `json:"SubCategory,omitempty"`
+	Type        *string `json:"Type,omitempty"`
+	Style       *string `json:"Style,omitempty"`
 }
 
 type Category struct {
 	ID       string      `json:"_id"`
-	ParentID *string     `json:"ParentID"`
-	Type     *string     `json:"Type"`
+	ParentID *string     `json:"ParentID,omitempty"`
+	Type     *string     `json:"Type,omitempty"`
 	Name     string      `json:"Name"`
-	Children []*Category `json:"Children"`
+	Children []*Category `json:"Children,omitempty"`
 }
 
 type Certification struct {
 	ID               string  `json:"_id"`
 	Name             string  `json:"Name"`
-	Logo             *string `json:"Logo"`
+	Logo             *string `json:"Logo,omitempty"`
 	Industry         string  `json:"Industry"`
 	Certifier        string  `json:"Certifier"`
-	CertifiesCompany *bool   `json:"CertifiesCompany"`
-	CertifiesProduct *bool   `json:"CertifiesProduct"`
-	CertifiesProcess *bool   `json:"CertifiesProcess"`
-	CertifierContact *string `json:"CertifierContact"`
-	Audited          *bool   `json:"Audited"`
-	Auditor          *string `json:"Auditor"`
-	Region           *string `json:"Region"`
-	Qualifiers       *string `json:"Qualifiers"`
-	Sources          *string `json:"Sources"`
-	CreatedAt        *string `json:"CreatedAt"`
-	UpdatedAt        *string `json:"UpdatedAt"`
+	CertifiesCompany *bool   `json:"CertifiesCompany,omitempty"`
+	CertifiesProduct *bool   `json:"CertifiesProduct,omitempty"`
+	CertifiesProcess *bool   `json:"CertifiesProcess,omitempty"`
+	CertifierContact *string `json:"CertifierContact,omitempty"`
+	Audited          *bool   `json:"Audited,omitempty"`
+	Auditor          *string `json:"Auditor,omitempty"`
+	Region           *string `json:"Region,omitempty"`
+	Qualifiers       *string `json:"Qualifiers,omitempty"`
+	Sources          *string `json:"Sources,omitempty"`
+	CreatedAt        *string `json:"CreatedAt,omitempty"`
+	UpdatedAt        *string `json:"UpdatedAt,omitempty"`
 }
 
 type Company struct {
-	ID          *string `json:"_id"`
-	Name        *string `json:"name"`
-	URL         *string `json:"url"`
-	Description *string `json:"description"`
-	City        *string `json:"city"`
-	State       *string `json:"state"`
-	Country     *string `json:"country"`
-	User        *User   `json:"user"`
-	IsVerified  *bool   `json:"isVerified"`
-	Logo        *string `json:"logo"`
+	ID          *string `json:"_id,omitempty"`
+	Name        *string `json:"name,omitempty"`
+	URL         *string `json:"url,omitempty"`
+	Description *string `json:"description,omitempty"`
+	City        *string `json:"city,omitempty"`
+	State       *string `json:"state,omitempty"`
+	Country     *string `json:"country,omitempty"`
+	User        *User   `json:"user,omitempty"`
+	IsVerified  *bool   `json:"isVerified,omitempty"`
+	Logo        *string `json:"logo,omitempty"`
 }
 
 type Favourite struct {
@@ -140,62 +140,62 @@ type Product struct {
 	Title                   string          `json:"Title"`
 	Description             string          `json:"Description"`
 	Certification           *Certification  `json:"Certification"`
-	ProductCertifications   []*string       `json:"ProductCertifications"`
-	CompanyCertifications   []*string       `json:"CompanyCertifications"`
-	MaterialsAndIngredients []*string       `json:"MaterialsAndIngredients"`
-	GiveBackPrograms        []*string       `json:"GiveBackPrograms"`
-	OwnersAndFounders       []*string       `json:"OwnersAndFounders"`
-	Section                 *string         `json:"Section"`
-	Subsection              *string         `json:"Subsection"`
-	Department              []*string       `json:"Department"`
-	Category                *string         `json:"Category"`
-	SubCategory             *string         `json:"SubCategory"`
-	Type                    *string         `json:"Type"`
-	Style                   *string         `json:"Style"`
-	ImageLinks              []*string       `json:"ImageLinks"`
-	PurchaseInfo            []*PurchaseInfo `json:"PurchaseInfo"`
-	Verified                *bool           `json:"Verified"`
-	VerifiedBy              []*string       `json:"VerifiedBy"`
+	ProductCertifications   []*string       `json:"ProductCertifications,omitempty"`
+	CompanyCertifications   []*string       `json:"CompanyCertifications,omitempty"`
+	MaterialsAndIngredients []*string       `json:"MaterialsAndIngredients,omitempty"`
+	GiveBackPrograms        []*string       `json:"GiveBackPrograms,omitempty"`
+	OwnersAndFounders       []*string       `json:"OwnersAndFounders,omitempty"`
+	Section                 *string         `json:"Section,omitempty"`
+	Subsection              *string         `json:"Subsection,omitempty"`
+	Department              []*string       `json:"Department,omitempty"`
+	Category                *string         `json:"Category,omitempty"`
+	SubCategory             *string         `json:"SubCategory,omitempty"`
+	Type                    *string         `json:"Type,omitempty"`
+	Style                   *string         `json:"Style,omitempty"`
+	ImageLinks              []*string       `json:"ImageLinks,omitempty"`
+	PurchaseInfo            []*PurchaseInfo `json:"PurchaseInfo,omitempty"`
+	Verified                *bool           `json:"Verified,omitempty"`
+	VerifiedBy              []*string       `json:"VerifiedBy,omitempty"`
 }
 
 type PurchaseInfo struct {
-	Price   *string `json:"Price"`
-	Link    *string `json:"Link"`
-	Company *string `json:"Company"`
-	Rating  *string `json:"Rating"`
+	Price   *string `json:"Price,omitempty"`
+	Link    *string `json:"Link,omitempty"`
+	Company *string `json:"Company,omitempty"`
+	Rating  *string `json:"Rating,omitempty"`
 }
 
 type PurchaseInfoInput struct {
 	Price          string       `json:"Price"`
 	Link           string       `json:"Link"`
-	Rating         *string      `json:"Rating"`
-	Company        *CompanyEnum `json:"Company"`
-	IfOtherCompany *string      `json:"IfOtherCompany"`
+	Rating         *string      `json:"Rating,omitempty"`
+	Company        *CompanyEnum `json:"Company,omitempty"`
+	IfOtherCompany *string      `json:"IfOtherCompany,omitempty"`
 }
 
 type UpdateCertification struct {
 	ID               string  `json:"ID"`
-	Name             *string `json:"Name"`
-	Logo             *string `json:"Logo"`
-	Industry         *string `json:"Industry"`
-	Certifier        *string `json:"Certifier"`
-	CertifiesCompany *bool   `json:"CertifiesCompany"`
-	CertifiesProduct *bool   `json:"CertifiesProduct"`
-	CertifiesProcess *bool   `json:"CertifiesProcess"`
-	CertifierContact *string `json:"CertifierContact"`
-	Audited          *bool   `json:"Audited"`
-	Auditor          *string `json:"Auditor"`
-	Region           *string `json:"Region"`
-	Qualifiers       *string `json:"Qualifiers"`
-	Sources          *string `json:"Sources"`
+	Name             *string `json:"Name,omitempty"`
+	Logo             *string `json:"Logo,omitempty"`
+	Industry         *string `json:"Industry,omitempty"`
+	Certifier        *string `json:"Certifier,omitempty"`
+	CertifiesCompany *bool   `json:"CertifiesCompany,omitempty"`
+	CertifiesProduct *bool   `json:"CertifiesProduct,omitempty"`
+	CertifiesProcess *bool   `json:"CertifiesProcess,omitempty"`
+	CertifierContact *string `json:"CertifierContact,omitempty"`
+	Audited          *bool   `json:"Audited,omitempty"`
+	Auditor          *string `json:"Auditor,omitempty"`
+	Region           *string `json:"Region,omitempty"`
+	Qualifiers       *string `json:"Qualifiers,omitempty"`
+	Sources          *string `json:"Sources,omitempty"`
 }
 
 type UpdateUser struct {
 	UserID    string  `json:"userId"`
-	FirstName *string `json:"firstName"`
-	LastName  *string `json:"lastName"`
-	Email     *string `json:"email"`
-	Password  *string `json:"password"`
+	FirstName *string `json:"firstName,omitempty"`
+	LastName  *string `json:"lastName,omitempty"`
+	Email     *string `json:"email,omitempty"`
+	Password  *string `json:"password,omitempty"`
 }
 
 type User struct {

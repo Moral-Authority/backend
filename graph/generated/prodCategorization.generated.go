@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
+	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -223,7 +224,7 @@ func (ec *executionContext) _Category_Children(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*model.Category)
 	fc.Result = res
-	return ec.marshalOCategory2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
+	return ec.marshalOCategory2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Category_Children(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -273,26 +274,29 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Name"))
-			it.Name, err = ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Name = data
 		case "ParentID":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ParentID"))
-			it.ParentID, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.ParentID = data
 		case "Type":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Type"))
-			it.Type, err = ec.unmarshalNCategoryEnum2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx, v)
+			data, err := ec.unmarshalNCategoryEnum2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Type = data
 		}
 	}
 
@@ -311,46 +315,49 @@ var categoryImplementors = []string{"Category"}
 
 func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet, obj *model.Category) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, categoryImplementors)
+
 	out := graphql.NewFieldSet(fields)
-	var invalids uint32
+	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Category")
 		case "_id":
-
 			out.Values[i] = ec._Category__id(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "ParentID":
-
 			out.Values[i] = ec._Category_ParentID(ctx, field, obj)
-
 		case "Type":
-
 			out.Values[i] = ec._Category_Type(ctx, field, obj)
-
 		case "Name":
-
 			out.Values[i] = ec._Category_Name(ctx, field, obj)
-
 			if out.Values[i] == graphql.Null {
-				invalids++
+				out.Invalids++
 			}
 		case "Children":
-
 			out.Values[i] = ec._Category_Children(ctx, field, obj)
-
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	out.Dispatch()
-	if invalids > 0 {
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
 		return graphql.Null
 	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
 	return out
 }
 
@@ -358,16 +365,16 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCategory(ctx context.Context, v interface{}) (model.AddCategory, error) {
+func (ec *executionContext) unmarshalNAddCategory2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCategory(ctx context.Context, v interface{}) (model.AddCategory, error) {
 	res, err := ec.unmarshalInputAddCategory(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCategory2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v model.Category) graphql.Marshaler {
 	return ec._Category(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -391,7 +398,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋhowstrongiam�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
+			ret[i] = ec.marshalOCategory2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -405,7 +412,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋhowstrongiam�
 	return ret
 }
 
-func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -415,17 +422,17 @@ func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋhowstrongiamᚋba
 	return ec._Category(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNCategoryEnum2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx context.Context, v interface{}) (model.CategoryEnum, error) {
+func (ec *executionContext) unmarshalNCategoryEnum2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx context.Context, v interface{}) (model.CategoryEnum, error) {
 	var res model.CategoryEnum
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCategoryEnum2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx context.Context, sel ast.SelectionSet, v model.CategoryEnum) graphql.Marshaler {
+func (ec *executionContext) marshalNCategoryEnum2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx context.Context, sel ast.SelectionSet, v model.CategoryEnum) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) marshalOCategory2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalOCategory2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v []*model.Category) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -452,7 +459,7 @@ func (ec *executionContext) marshalOCategory2ᚕᚖgithubᚗcomᚋhowstrongiam�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
+			ret[i] = ec.marshalOCategory2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -466,7 +473,7 @@ func (ec *executionContext) marshalOCategory2ᚕᚖgithubᚗcomᚋhowstrongiam�
 	return ret
 }
 
-func (ec *executionContext) marshalOCategory2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
+func (ec *executionContext) marshalOCategory2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx context.Context, sel ast.SelectionSet, v *model.Category) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

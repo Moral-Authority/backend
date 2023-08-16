@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"strconv"
 	"sync"
+	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -340,7 +341,7 @@ func (ec *executionContext) _Company_user(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*model.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Company_user(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -470,74 +471,83 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
-			it.Name, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Name = data
 		case "url":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
-			it.URL, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.URL = data
 		case "description":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
-			it.Description, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Description = data
 		case "city":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("city"))
-			it.City, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.City = data
 		case "state":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("state"))
-			it.State, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.State = data
 		case "country":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("country"))
-			it.Country, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Country = data
 		case "isVerified":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isVerified"))
-			it.IsVerified, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.IsVerified = data
 		case "logo":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("logo"))
-			it.Logo, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Logo = data
 		case "certifications":
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifications"))
-			it.Certifications, err = ec.unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
+			data, err := ec.unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
 			if err != nil {
 				return it, err
 			}
+			it.Certifications = data
 		}
 	}
 
@@ -556,60 +566,53 @@ var companyImplementors = []string{"Company"}
 
 func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, obj *model.Company) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, companyImplementors)
+
 	out := graphql.NewFieldSet(fields)
-	var invalids uint32
+	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Company")
 		case "_id":
-
 			out.Values[i] = ec._Company__id(ctx, field, obj)
-
 		case "name":
-
 			out.Values[i] = ec._Company_name(ctx, field, obj)
-
 		case "url":
-
 			out.Values[i] = ec._Company_url(ctx, field, obj)
-
 		case "description":
-
 			out.Values[i] = ec._Company_description(ctx, field, obj)
-
 		case "city":
-
 			out.Values[i] = ec._Company_city(ctx, field, obj)
-
 		case "state":
-
 			out.Values[i] = ec._Company_state(ctx, field, obj)
-
 		case "country":
-
 			out.Values[i] = ec._Company_country(ctx, field, obj)
-
 		case "user":
-
 			out.Values[i] = ec._Company_user(ctx, field, obj)
-
 		case "isVerified":
-
 			out.Values[i] = ec._Company_isVerified(ctx, field, obj)
-
 		case "logo":
-
 			out.Values[i] = ec._Company_logo(ctx, field, obj)
-
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
 	}
-	out.Dispatch()
-	if invalids > 0 {
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
 		return graphql.Null
 	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
 	return out
 }
 
@@ -617,16 +620,16 @@ func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, 
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalNAddCompany2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐAddCompany(ctx context.Context, v interface{}) (model.AddCompany, error) {
+func (ec *executionContext) unmarshalNAddCompany2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCompany(ctx context.Context, v interface{}) (model.AddCompany, error) {
 	res, err := ec.unmarshalInputAddCompany(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCompany2githubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v model.Company) graphql.Marshaler {
+func (ec *executionContext) marshalNCompany2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v model.Company) graphql.Marshaler {
 	return ec._Company(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v *model.Company) graphql.Marshaler {
+func (ec *executionContext) marshalNCompany2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompany(ctx context.Context, sel ast.SelectionSet, v *model.Company) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -636,7 +639,7 @@ func (ec *executionContext) marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbac
 	return ec._Company(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompanyᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Company) graphql.Marshaler {
+func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Company) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -663,7 +666,7 @@ func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋhowstrongiamᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCompany2ᚖgithubᚗcomᚋhowstrongiamᚋbackendᚋgraphᚋmodelᚐCompany(ctx, sel, v[i])
+			ret[i] = ec.marshalNCompany2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompany(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
