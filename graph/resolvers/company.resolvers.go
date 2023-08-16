@@ -6,9 +6,9 @@ package graph
 import (
 	"context"
 
-	"github.com/howstrongiam/backend/database"
-	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/handlers"
+	"github.com/Moral-Authority/backend/database"
+	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddCompany is the resolver for the addCompany field.

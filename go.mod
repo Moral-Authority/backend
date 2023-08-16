@@ -1,4 +1,4 @@
-module github.com/howstrongiam/backend
+module github.com/Moral-Authority/backend
 
 go 1.16
 

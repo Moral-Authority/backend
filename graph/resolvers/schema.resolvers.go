@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/howstrongiam/backend/graph/generated"
+	"github.com/Moral-Authority/backend/graph/generated"
 )
 
 // BaseMutation is the resolver for the BaseMutation field.

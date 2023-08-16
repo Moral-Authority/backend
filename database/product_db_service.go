@@ -1,6 +1,6 @@
 package database
 
-import "github.com/howstrongiam/backend/models"
+import "github.com/Moral-Authority/backend/models"
 
 type ProductDbService interface {
 	GetProduct(productId string) *models.Product

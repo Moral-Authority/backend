@@ -7,7 +7,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/howstrongiam/backend/graph/model"
+	"github.com/Moral-Authority/backend/graph/model"
 )
 
 // AddFav is the resolver for the addFav field.

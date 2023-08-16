@@ -11,7 +11,7 @@ Built with:
 ### How to run this code
 ```bash
 # clone this repository
-git clone https://github.com/howstrongiam/backend.git
+git clone https://github.com/Moral-Authority/backend.git
 cd backend
 
 # run go mod tidy

@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"errors"
-	"github.com/howstrongiam/backend/database"
-	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/models"
+	"github.com/Moral-Authority/backend/database"
+	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/models"
 	"github.com/volatiletech/null/v8"
 )
 

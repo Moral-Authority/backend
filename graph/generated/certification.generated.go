@@ -9,7 +9,7 @@ import (
 	"sync"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/howstrongiam/backend/graph/model"
+	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/vektah/gqlparser/v2/ast"
 )
 

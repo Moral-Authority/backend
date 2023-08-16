@@ -6,8 +6,8 @@ package graph
 import (
 	"context"
 
-	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/handlers"
+	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddCertification is the resolver for the addCertification field.

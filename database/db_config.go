@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/howstrongiam/backend/cmd"
-	"github.com/howstrongiam/backend/models"
+	"github.com/Moral-Authority/backend/cmd"
+	"github.com/Moral-Authority/backend/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"sync"

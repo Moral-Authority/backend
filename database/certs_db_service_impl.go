@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/howstrongiam/backend/models"
+	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
 )
 

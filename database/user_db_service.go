@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/howstrongiam/backend/graph/model"
-	"github.com/howstrongiam/backend/models"
+	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/models"
 )
 
 type UserDbService interface {
