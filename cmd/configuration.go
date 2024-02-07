@@ -41,21 +41,3 @@ func DefaultConfiguration() *Config {
 		},
 	}
 }
-
-//// DefaultConfiguration return dev configuration as default config
-//func DefaultConfiguration() *Config {
-//	return &Config{
-//		Environment: "dev",
-//		ServerConfig: ServerConfig{
-//			Name: "backend",
-//			Port: "8080",
-//		},
-//		DatabaseConfig: DatabaseConfig{
-//			DatabaseName:          "postgres",
-//			DatabaseUsername:      "postgres",
-//			DatabasePassword:      "postgres",
-//			DatabaseConnectionUrl: "postgres://ehxxgxaamkwsaz:15acfc1d3ddc307e898673d17a669f2169913ef6467380439410f045e42f3e4d@ec2-52-0-79-72.compute-1.amazonaws.com:5432/d7mdhbr0m054dr",
-//			//DatabaseConnectionPort: "5432",
-//		},
-//	}
-//}
