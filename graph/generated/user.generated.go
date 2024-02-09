@@ -311,8 +311,6 @@ func (ec *executionContext) unmarshalInputNewUser(ctx context.Context, obj inter
 		}
 		switch k {
 		case "firstName":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("firstName"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -320,8 +318,6 @@ func (ec *executionContext) unmarshalInputNewUser(ctx context.Context, obj inter
 			}
 			it.FirstName = data
 		case "lastName":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("lastName"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -329,8 +325,6 @@ func (ec *executionContext) unmarshalInputNewUser(ctx context.Context, obj inter
 			}
 			it.LastName = data
 		case "email":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -338,8 +332,6 @@ func (ec *executionContext) unmarshalInputNewUser(ctx context.Context, obj inter
 			}
 			it.Email = data
 		case "password":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -367,8 +359,6 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 		}
 		switch k {
 		case "userId":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -376,8 +366,6 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 			}
 			it.UserID = data
 		case "firstName":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("firstName"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -385,8 +373,6 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 			}
 			it.FirstName = data
 		case "lastName":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("lastName"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -394,8 +380,6 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 			}
 			it.LastName = data
 		case "email":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -403,8 +387,6 @@ func (ec *executionContext) unmarshalInputUpdateUser(ctx context.Context, obj in
 			}
 			it.Email = data
 		case "password":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("password"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {

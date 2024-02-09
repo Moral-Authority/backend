@@ -112,22 +112,62 @@ func toCompaniesResponse(companies []*models.Company) []*model.Company {
 }
 
 func toCertificationResponse(cert models.Certification) *model.Certification {
-	return &model.Certification{
-		ID:        strconv.Itoa(int(cert.ID)),
-		Name:      cert.Name.String,
-		Logo:      &cert.Logo.String,
-		Industry:  cert.Industry.String,
-		Certifier: cert.Certifier.String,
-		//CertifiesCompany: &cert.CertifiesCompany.Bool,
-		//CertifiesProduct: &cert.CertifiesProduct.Bool,
-		//CertifiesProcess: &cert.CertifiesProcess.Bool,
-		//CertifierContact: &cert.CertifierContact.String,
-		Audited:    &cert.Audited.Bool,
-		Auditor:    &cert.Auditor.String,
-		Region:     &cert.Region.String,
-		Qualifiers: &cert.Qualifiers.String,
-		Sources:    &cert.Sources.String,
-	}
+    var industry, certifier, logo, certifierContactID, auditor, region, qualifiers, sources *string
+    var certifiesCompany, certifiesProduct, certifiesProcess, audited *bool
+
+    if cert.Industry.Valid {
+        industry = &cert.Industry.String
+    }
+    if cert.Certifier.Valid {
+        certifier = &cert.Certifier.String
+    }
+    if cert.Logo.Valid {
+        logo = &cert.Logo.String
+    }
+    if cert.CertifierContactID.Valid {
+        certifierContactID = &cert.CertifierContactID.String
+    }
+    if cert.Auditor.Valid {
+        auditor = &cert.Auditor.String
+    }
+    if cert.Region.Valid {
+        region = &cert.Region.String
+    }
+    if cert.Qualifiers.Valid {
+        qualifiers = &cert.Qualifiers.String
+    }
+    if cert.Sources.Valid {
+        sources = &cert.Sources.String
+    }
+    if cert.CertifiesCompany.Valid {
+        certifiesCompany = &cert.CertifiesCompany.Bool
+    }
+    if cert.CertifiesProduct.Valid {
+        certifiesProduct = &cert.CertifiesProduct.Bool
+    }
+    if cert.CertifiesProcess.Valid {
+        certifiesProcess = &cert.CertifiesProcess.Bool
+    }
+    if cert.Audited.Valid {
+        audited = &cert.Audited.Bool
+    }
+
+    return &model.Certification{
+        ID:                strconv.Itoa(int(cert.ID)),
+        Name:              cert.Name.String,
+        Logo:              logo,
+        Industry:          industry,
+        Certifier:         certifier,
+        CertifiesCompany:  certifiesCompany,
+        CertifiesProduct:  certifiesProduct,
+        CertifiesProcess:  certifiesProcess,
+        CertifierContactID :certifierContactID,
+        Audited:           audited,
+        Auditor:           auditor,
+        Region:            region,
+        Qualifiers:        qualifiers,
+        Sources:           sources,
+    }
 }
 
 func UintPtrToStringPtr(u *uint) *string {

@@ -18,6 +18,7 @@ import (
 // NewExecutableSchema creates an ExecutableSchema from the ResolverRoot interface.
 func NewExecutableSchema(cfg Config) graphql.ExecutableSchema {
 	return &executableSchema{
+		schema:     cfg.Schema,
 		resolvers:  cfg.Resolvers,
 		directives: cfg.Directives,
 		complexity: cfg.Complexity,
@@ -25,6 +26,7 @@ func NewExecutableSchema(cfg Config) graphql.ExecutableSchema {
 }
 
 type Config struct {
+	Schema     *ast.Schema
 	Resolvers  ResolverRoot
 	Directives DirectiveRoot
 	Complexity ComplexityRoot
@@ -48,22 +50,24 @@ type ComplexityRoot struct {
 	}
 
 	Certification struct {
-		Audited          func(childComplexity int) int
-		Auditor          func(childComplexity int) int
-		Certifier        func(childComplexity int) int
-		CertifierContact func(childComplexity int) int
-		CertifiesCompany func(childComplexity int) int
-		CertifiesProcess func(childComplexity int) int
-		CertifiesProduct func(childComplexity int) int
-		CreatedAt        func(childComplexity int) int
-		ID               func(childComplexity int) int
-		Industry         func(childComplexity int) int
-		Logo             func(childComplexity int) int
-		Name             func(childComplexity int) int
-		Qualifiers       func(childComplexity int) int
-		Region           func(childComplexity int) int
-		Sources          func(childComplexity int) int
-		UpdatedAt        func(childComplexity int) int
+		Audited            func(childComplexity int) int
+		Auditor            func(childComplexity int) int
+		Certifier          func(childComplexity int) int
+		CertifierContactID func(childComplexity int) int
+		CertifiesCompany   func(childComplexity int) int
+		CertifiesProcess   func(childComplexity int) int
+		CertifiesProduct   func(childComplexity int) int
+		CreatedAt          func(childComplexity int) int
+		Description        func(childComplexity int) int
+		ID                 func(childComplexity int) int
+		Industry           func(childComplexity int) int
+		Logo               func(childComplexity int) int
+		Name               func(childComplexity int) int
+		Qualifiers         func(childComplexity int) int
+		Region             func(childComplexity int) int
+		Sources            func(childComplexity int) int
+		UpdatedAt          func(childComplexity int) int
+		Website            func(childComplexity int) int
 	}
 
 	Company struct {
@@ -150,12 +154,16 @@ type ComplexityRoot struct {
 }
 
 type executableSchema struct {
+	schema     *ast.Schema
 	resolvers  ResolverRoot
 	directives DirectiveRoot
 	complexity ComplexityRoot
 }
 
 func (e *executableSchema) Schema() *ast.Schema {
+	if e.schema != nil {
+		return e.schema
+	}
 	return parsedSchema
 }
 
@@ -220,12 +228,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.Certifier(childComplexity), true
 
-	case "Certification.CertifierContact":
-		if e.complexity.Certification.CertifierContact == nil {
+	case "Certification.CertifierContactID":
+		if e.complexity.Certification.CertifierContactID == nil {
 			break
 		}
 
-		return e.complexity.Certification.CertifierContact(childComplexity), true
+		return e.complexity.Certification.CertifierContactID(childComplexity), true
 
 	case "Certification.CertifiesCompany":
 		if e.complexity.Certification.CertifiesCompany == nil {
@@ -254,6 +262,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Certification.CreatedAt(childComplexity), true
+
+	case "Certification.Description":
+		if e.complexity.Certification.Description == nil {
+			break
+		}
+
+		return e.complexity.Certification.Description(childComplexity), true
 
 	case "Certification._id":
 		if e.complexity.Certification.ID == nil {
@@ -310,6 +325,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Certification.UpdatedAt(childComplexity), true
+
+	case "Certification.Website":
+		if e.complexity.Certification.Website == nil {
+			break
+		}
+
+		return e.complexity.Certification.Website(childComplexity), true
 
 	case "Company.city":
 		if e.complexity.Company.City == nil {
@@ -872,14 +894,14 @@ func (ec *executionContext) introspectSchema() (*introspection.Schema, error) {
 	if ec.DisableIntrospection {
 		return nil, errors.New("introspection disabled")
 	}
-	return introspection.WrapSchema(parsedSchema), nil
+	return introspection.WrapSchema(ec.Schema()), nil
 }
 
 func (ec *executionContext) introspectType(name string) (*introspection.Type, error) {
 	if ec.DisableIntrospection {
 		return nil, errors.New("introspection disabled")
 	}
-	return introspection.WrapTypeFromDef(parsedSchema, parsedSchema.Types[name]), nil
+	return introspection.WrapTypeFromDef(ec.Schema(), ec.Schema().Types[name]), nil
 }
 
 var sources = []*ast.Source{
@@ -896,12 +918,14 @@ input UpdateCertification {
     ID: String!
     Name: String
     Logo: String
-    Industry: String
-    Certifier: String
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -912,12 +936,14 @@ input UpdateCertification {
 input AddCertification {
     Name: String
     Logo: String
-    Industry: String
-    Certifier: String
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -929,12 +955,14 @@ type Certification {
     _id: String!
     Name: String!
     Logo: String
-    Industry: String!
-    Certifier: String!
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -942,9 +970,7 @@ type Certification {
     Sources: String
     CreatedAt: String
     UpdatedAt: String
-
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `
 extend type Mutation {
     addCompany(request: AddCompany!): Company!

@@ -11,12 +11,14 @@ input UpdateCertification {
     ID: String!
     Name: String
     Logo: String
-    Industry: String
-    Certifier: String
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -27,12 +29,14 @@ input UpdateCertification {
 input AddCertification {
     Name: String
     Logo: String
-    Industry: String
-    Certifier: String
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -44,12 +48,14 @@ type Certification {
     _id: String!
     Name: String!
     Logo: String
-    Industry: String!
-    Certifier: String!
+    Website: String
+    Description: String
     CertifiesCompany: Boolean
     CertifiesProduct: Boolean
     CertifiesProcess: Boolean
-    CertifierContact: String
+    CertifierContactID: String
+    Industry: String
+    Certifier: String
     Audited: Boolean
     Auditor: String
     Region: String
@@ -57,5 +63,4 @@ type Certification {
     Sources: String
     CreatedAt: String
     UpdatedAt: String
-
 }

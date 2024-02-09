@@ -301,18 +301,22 @@ func (ec *executionContext) fieldContext_Mutation_addCertification(ctx context.C
 				return ec.fieldContext_Certification_Name(ctx, field)
 			case "Logo":
 				return ec.fieldContext_Certification_Logo(ctx, field)
-			case "Industry":
-				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "Certifier":
-				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
 			case "CertifiesCompany":
 				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
 			case "CertifiesProduct":
 				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
 			case "CertifiesProcess":
 				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
-			case "CertifierContact":
-				return ec.fieldContext_Certification_CertifierContact(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
 			case "Audited":
 				return ec.fieldContext_Certification_Audited(ctx, field)
 			case "Auditor":
@@ -390,18 +394,22 @@ func (ec *executionContext) fieldContext_Mutation_updateCertification(ctx contex
 				return ec.fieldContext_Certification_Name(ctx, field)
 			case "Logo":
 				return ec.fieldContext_Certification_Logo(ctx, field)
-			case "Industry":
-				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "Certifier":
-				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
 			case "CertifiesCompany":
 				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
 			case "CertifiesProduct":
 				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
 			case "CertifiesProcess":
 				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
-			case "CertifierContact":
-				return ec.fieldContext_Certification_CertifierContact(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
 			case "Audited":
 				return ec.fieldContext_Certification_Audited(ctx, field)
 			case "Auditor":
@@ -949,18 +957,22 @@ func (ec *executionContext) fieldContext_Query_getAllCertifications(ctx context.
 				return ec.fieldContext_Certification_Name(ctx, field)
 			case "Logo":
 				return ec.fieldContext_Certification_Logo(ctx, field)
-			case "Industry":
-				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "Certifier":
-				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
 			case "CertifiesCompany":
 				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
 			case "CertifiesProduct":
 				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
 			case "CertifiesProcess":
 				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
-			case "CertifierContact":
-				return ec.fieldContext_Certification_CertifierContact(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
 			case "Audited":
 				return ec.fieldContext_Certification_Audited(ctx, field)
 			case "Auditor":

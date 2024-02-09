@@ -271,8 +271,6 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 		}
 		switch k {
 		case "Name":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Name"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -280,8 +278,6 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 			}
 			it.Name = data
 		case "ParentID":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ParentID"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -289,8 +285,6 @@ func (ec *executionContext) unmarshalInputAddCategory(ctx context.Context, obj i
 			}
 			it.ParentID = data
 		case "Type":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Type"))
 			data, err := ec.unmarshalNCategoryEnum2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategoryEnum(ctx, v)
 			if err != nil {

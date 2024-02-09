@@ -206,18 +206,22 @@ func (ec *executionContext) fieldContext_Product_Certification(ctx context.Conte
 				return ec.fieldContext_Certification_Name(ctx, field)
 			case "Logo":
 				return ec.fieldContext_Certification_Logo(ctx, field)
-			case "Industry":
-				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "Certifier":
-				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
 			case "CertifiesCompany":
 				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
 			case "CertifiesProduct":
 				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
 			case "CertifiesProcess":
 				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
-			case "CertifierContact":
-				return ec.fieldContext_Certification_CertifierContact(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
 			case "Audited":
 				return ec.fieldContext_Certification_Audited(ctx, field)
 			case "Auditor":
@@ -1088,8 +1092,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 		}
 		switch k {
 		case "Title":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Title"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -1097,8 +1099,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			}
 			it.Title = data
 		case "Description":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Description"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -1106,8 +1106,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			}
 			it.Description = data
 		case "Categorization":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Categorization"))
 			data, err := ec.unmarshalNCategorizationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategorizationInput(ctx, v)
 			if err != nil {
@@ -1115,8 +1113,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			}
 			it.Categorization = data
 		case "Certifications":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifications"))
 			data, err := ec.unmarshalNAllCertificationsInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAllCertificationsInput(ctx, v)
 			if err != nil {
@@ -1124,8 +1120,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			}
 			it.Certifications = data
 		case "PurchaseInfo":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("PurchaseInfo"))
 			data, err := ec.unmarshalNPurchaseInfoInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx, v)
 			if err != nil {
@@ -1133,8 +1127,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			}
 			it.PurchaseInfo = data
 		case "ImageLinks":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ImageLinks"))
 			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
 			if err != nil {
@@ -1162,8 +1154,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 		}
 		switch k {
 		case "ProductCertifications":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProductCertifications"))
 			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
 			if err != nil {
@@ -1171,8 +1161,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.ProductCertifications = data
 		case "CompanyCertifications":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CompanyCertifications"))
 			data, err := ec.unmarshalOCompanyCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertifications(ctx, v)
 			if err != nil {
@@ -1180,8 +1168,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.CompanyCertifications = data
 		case "IfCompanyIsOther":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfCompanyIsOther"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1189,8 +1175,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.IfCompanyIsOther = data
 		case "MaterialsAndIngredients":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("MaterialsAndIngredients"))
 			data, err := ec.unmarshalOMaterialsAndIngredients2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐMaterialsAndIngredients(ctx, v)
 			if err != nil {
@@ -1198,8 +1182,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.MaterialsAndIngredients = data
 		case "IfMaterialsAndIngredientsIsOther":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfMaterialsAndIngredientsIsOther"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1207,8 +1189,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.IfMaterialsAndIngredientsIsOther = data
 		case "GiveBackPrograms":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("GiveBackPrograms"))
 			data, err := ec.unmarshalOGiveBackPrograms2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐGiveBackPrograms(ctx, v)
 			if err != nil {
@@ -1216,8 +1196,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.GiveBackPrograms = data
 		case "IfGiveBackProgramsIsOther":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfGiveBackProgramsIsOther"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1225,8 +1203,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.IfGiveBackProgramsIsOther = data
 		case "OwnersAndFounders":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("OwnersAndFounders"))
 			data, err := ec.unmarshalOOwnersAndFounders2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐOwnersAndFounders(ctx, v)
 			if err != nil {
@@ -1234,8 +1210,6 @@ func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Con
 			}
 			it.OwnersAndFounders = data
 		case "IfOwnersAndFoundersIsOther":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfOwnersAndFoundersIsOther"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1263,8 +1237,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 		}
 		switch k {
 		case "Section":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Section"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1272,8 +1244,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.Section = data
 		case "SubSection":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SubSection"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1281,8 +1251,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.SubSection = data
 		case "Department":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Department"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1290,8 +1258,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.Department = data
 		case "Category":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Category"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1299,8 +1265,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.Category = data
 		case "SubCategory":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SubCategory"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1308,8 +1272,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.SubCategory = data
 		case "Type":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Type"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1317,8 +1279,6 @@ func (ec *executionContext) unmarshalInputCategorizationInput(ctx context.Contex
 			}
 			it.Type = data
 		case "Style":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Style"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1346,8 +1306,6 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 		}
 		switch k {
 		case "Price":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Price"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -1355,8 +1313,6 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 			}
 			it.Price = data
 		case "Link":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Link"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -1364,8 +1320,6 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 			}
 			it.Link = data
 		case "Rating":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Rating"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -1373,8 +1327,6 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 			}
 			it.Rating = data
 		case "Company":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Company"))
 			data, err := ec.unmarshalOCompanyEnum2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyEnum(ctx, v)
 			if err != nil {
@@ -1382,8 +1334,6 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 			}
 			it.Company = data
 		case "IfOtherCompany":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfOtherCompany"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {

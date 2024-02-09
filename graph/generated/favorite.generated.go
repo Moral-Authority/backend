@@ -178,8 +178,6 @@ func (ec *executionContext) unmarshalInputAddUserFav(ctx context.Context, obj in
 		}
 		switch k {
 		case "userId":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
@@ -187,8 +185,6 @@ func (ec *executionContext) unmarshalInputAddUserFav(ctx context.Context, obj in
 			}
 			it.UserID = data
 		case "productId":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("productId"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {

@@ -1,10 +1,7 @@
 package database
 
 import (
-	"log"
 	"sync"
-    // "fmt"
-    // "net/url"
 	"github.com/Moral-Authority/backend/cmd"
 	"github.com/Moral-Authority/backend/models"
 	"gorm.io/driver/postgres"

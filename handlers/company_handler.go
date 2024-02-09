@@ -59,26 +59,25 @@ func (s CompanyService) AddCompany(request model.AddCompany, dbService database.
 	//	return nil, errors.New("unable to save certificate to db")
 	//}
 
-	savedCompany := dbService.AddCompany(company)
-	if savedCompany == nil {
-		return nil, errors.New("unable to save company in db")
-	}
+    savedCompany, err := dbService.AddCompany(company)
+    if err != nil || savedCompany == nil {
+        return nil, errors.New("unable to save company in db")
+    }
 	return toCompanyResponse(savedCompany), nil
-	return nil, nil
 }
 
 func (s CompanyService) GetCompanyById(companyId string, dbService database.CompanyDbService) (*model.Company, error) {
-	company := dbService.GetCompanyById(companyId)
-	if company == nil {
-		return nil, errors.New("unable to get company from db")
-	}
-	return toCompanyResponse(company), nil
+    company, err := dbService.GetCompanyById(companyId)
+    if err != nil || company == nil {
+        return nil, errors.New("unable to get company from db")
+    }
+    return toCompanyResponse(company), nil
 }
 
 func (s CompanyService) GetAllCompanies(dbService database.CompanyDbService) ([]*model.Company, error) {
-	companies := dbService.GetAllCompanies()
-	if companies == nil {
-		return nil, errors.New("unable to get companies from db")
-	}
-	return toCompaniesResponse(companies), nil
+    companies, err := dbService.GetAllCompanies()
+    if err != nil || companies == nil {
+        return nil, errors.New("unable to get companies from db")
+    }
+    return toCompaniesResponse(companies), nil
 }

@@ -13,9 +13,9 @@ type Certification struct {
 	Description        null.String `json:"description"`
 	Industry           null.String `json:"industry"`
 	Certifier          null.String `json:"certifying_company"`
-	CertifiesCompanies null.Bool   `json:"certifies_company"`
-	CertifiesProducts  null.Bool   `json:"certifies_product"`
-	CertifiesProcesses null.Bool   `json:"certifies_process"`
+	CertifiesCompany   null.Bool   `json:"certifies_company"`
+	CertifiesProduct   null.Bool   `json:"certifies_product"`
+	CertifiesProcess   null.Bool   `json:"certifies_process"`
 	CertifierContactID null.String `json:"certifier_contact_id"`
 	Audited            null.Bool   `json:"audited"`
 	Auditor            null.String `json:"auditor"`

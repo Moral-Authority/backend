@@ -468,8 +468,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 		}
 		switch k {
 		case "name":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -477,8 +475,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.Name = data
 		case "url":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -486,8 +482,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.URL = data
 		case "description":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -495,8 +489,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.Description = data
 		case "city":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("city"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -504,8 +496,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.City = data
 		case "state":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("state"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -513,8 +503,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.State = data
 		case "country":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("country"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -522,8 +510,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.Country = data
 		case "isVerified":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isVerified"))
 			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
@@ -531,8 +517,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.IsVerified = data
 		case "logo":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("logo"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
@@ -540,8 +524,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			}
 			it.Logo = data
 		case "certifications":
-			var err error
-
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifications"))
 			data, err := ec.unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
 			if err != nil {

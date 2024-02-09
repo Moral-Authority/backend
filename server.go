@@ -18,6 +18,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
+	seed "github.com/Moral-Authority/backend/seed_data"
 )
 
 const defaultPort = "8080"
@@ -46,7 +47,9 @@ func main() {
 	c := cors.Default()
 
 	// Initialize the database
-	database.Connect(cfg.DatabaseConfig)
+    db := database.Connect(cfg.DatabaseConfig) // assign the result to db
+
+	seed.SeedCertifications(db)
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
