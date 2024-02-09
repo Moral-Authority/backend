@@ -49,7 +49,7 @@ func main() {
 	// Initialize the database
 	db := database.Connect(cfg.DatabaseConfig) // assign the result to db
 
-	seed.SeedCertifications(db)
+	// seed.SeedCertifications(db)
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
