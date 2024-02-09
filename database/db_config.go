@@ -24,8 +24,8 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 	defer lock.Unlock()
 	if instance == nil {
 
-		dsn := "dbname=" + dbConfig.DatabaseName + " host=" + dbConfig.DatabaseConnectionUrl + " user=" + dbConfig.DatabaseUsername + " password=" + dbConfig.DatabasePassword + " sslmode=require"
-		// dsn := dbConfig.DatabaseConnectionUrl + "?sslmode=require"
+		// dsn := "dbname=" + dbConfig.DatabaseName + " host=" + dbConfig.DatabaseConnectionUrl + " user=" + dbConfig.DatabaseUsername + " password=" + dbConfig.DatabasePassword + " sslmode=require"
+		dsn := dbConfig.DatabaseUrl + "?sslmode=require"
 
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {

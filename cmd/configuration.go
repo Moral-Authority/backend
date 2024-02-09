@@ -23,6 +23,7 @@ type DatabaseConfig struct {
 	DatabasePassword       string `arg:"env:DATABASE_PASSWORD"`
 	DatabaseConnectionUrl  string `arg:"env:DATABASE_CONNECTION_URL"`
 	DatabaseConnectionPort string `arg:"env:DATABASE_CONNECTION_PORT"`
+	DatabaseUrl            string `arg:"env:DATABASE_URL"`
 }
 
 func DefaultConfiguration() *Config {
@@ -34,6 +35,7 @@ func DefaultConfiguration() *Config {
 		},
 		DatabaseConfig: DatabaseConfig{
 			DatabaseName:           os.Getenv("DATABASE_NAME"),
+			DatabaseUrl:            os.Getenv("DATABASE_URL"),
 			DatabaseUsername:       os.Getenv("DATABASE_USERNAME"),
 			DatabasePassword:       os.Getenv("DATABASE_PASSWORD"),
 			DatabaseConnectionUrl:  os.Getenv("DATABASE_CONNECTION_URL"),
