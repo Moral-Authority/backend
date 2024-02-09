@@ -20,7 +20,7 @@ func SeedCertifications(db *database.DbConn) {
     reader := csv.NewReader(file)
 
     // Read the first line (header)
-	_, err = reader.Read()
+    _, err = reader.Read()
     if err != nil {
         logrus.Fatal(err)
     }
@@ -31,13 +31,15 @@ func SeedCertifications(db *database.DbConn) {
         logrus.Fatal(err)
     }
 
+	gormDB := database.GetDbConn()
+
     // Iterate over the records
     for _, record := range records {
         // Prepare a SQL statement
-        stmt := `INSERT INTO your_table_name(Name, Logo, Website, Description, CertifiesCompany, CertifiesProduct) VALUES (?, ?, ?, ?, ?, ?)`
+        stmt := `INSERT INTO certifications(Name, Logo, Website, Description, CertifiesCompany, CertifiesProduct) VALUES (?, ?, ?, ?, ?, ?)`
 
         // Execute the SQL statement
-        db.DB.Exec(stmt, record[0], record[1], record[2], record[3], record[4], record[5])
+		gormDB.Exec(stmt, record[0], record[1], record[2], record[3], record[4], record[5])
     }
 
     logrus.Println("Data imported successfully.")

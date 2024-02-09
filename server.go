@@ -12,13 +12,13 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/Moral-Authority/backend/cmd"
 	"github.com/Moral-Authority/backend/database"
+	seed "github.com/Moral-Authority/backend/database/seed_data"
 	"github.com/Moral-Authority/backend/graph/generated"
 	r "github.com/Moral-Authority/backend/graph/resolvers"
 	"github.com/alexflint/go-arg"
 	"github.com/gorilla/websocket"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
-	seed "github.com/Moral-Authority/backend/seed_data"
 )
 
 const defaultPort = "8080"
@@ -47,7 +47,7 @@ func main() {
 	c := cors.Default()
 
 	// Initialize the database
-    db := database.Connect(cfg.DatabaseConfig) // assign the result to db
+	db := database.Connect(cfg.DatabaseConfig) // assign the result to db
 
 	seed.SeedCertifications(db)
 

@@ -2,6 +2,7 @@ package database
 
 import (
 	"sync"
+
 	"github.com/Moral-Authority/backend/cmd"
 	"github.com/Moral-Authority/backend/models"
 	"gorm.io/driver/postgres"
@@ -14,8 +15,6 @@ var lock = &sync.Mutex{}
 type DbConn struct {
 	conn *gorm.DB
 }
-
-
 
 var instance *DbConn
 
