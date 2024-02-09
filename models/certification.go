@@ -8,7 +8,9 @@ import (
 type Certification struct {
 	gorm.Model
 	Name               null.String `json:"name"`
+	Website            null.String `json:"website"`
 	Logo               null.String `json:"logo"`
+	Description        null.String `json:"description"`
 	Industry           null.String `json:"industry"`
 	Certifier          null.String `json:"certifying_company"`
 	CertifiesCompanies null.Bool   `json:"certifies_company"`

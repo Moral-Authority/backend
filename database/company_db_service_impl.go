@@ -33,12 +33,13 @@ func (s CompanyDbServiceImpl) GetCompanyById(companyId string) *models.Company {
 	return &company
 }
 
-func (s CompanyDbServiceImpl) GetAllCompanies() []*models.Company {
-	var companies []*models.Company
-	//result := GetDbConn().First(&company, "id = ?", companyId)
-	//if result.Error != nil {
-	//	logrus.Errorf("Unable to get company, %s", result.Error)
-	//	return nil, result.Error
-	//}
-	return companies
+
+func (s CompanyDbServiceImpl) GetAllCompanies() ([]*models.Company, error) {
+    var companies []*models.Company
+    result := GetDbConn().Find(&companies)
+    if result.Error != nil {
+        logrus.Errorf("Unable to get companies, %s", result.Error)
+        return nil, result.Error
+    }
+    return companies, nil
 }
