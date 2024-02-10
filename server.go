@@ -11,7 +11,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/Moral-Authority/backend/cmd"
-	// "github.com/Moral-Authority/backend/database"
+	"github.com/Moral-Authority/backend/database"
 	// seed "github.com/Moral-Authority/backend/database/seed_data"
 	"github.com/Moral-Authority/backend/graph/generated"
 	r "github.com/Moral-Authority/backend/graph/resolvers"
