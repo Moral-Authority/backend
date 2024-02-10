@@ -7,39 +7,39 @@ import (
 
 type CertificationDbServiceImpl struct{}
 
-func (s CertificationDbServiceImpl) AddNewCertification(cert models.Certification) *models.Certification {
+func (s CertificationDbServiceImpl) AddNewCertification(cert models.Certification) (*models.Certification, error) {
 	result := GetDbConn().Create(&cert)
 	if result.Error != nil {
 		logrus.Errorf("Unable to save certificate, %s", result.Error)
-		return &cert
+		return &cert, result.Error
 	}
 	var addedCert models.Certification
 	result = GetDbConn().First(&addedCert, "id = ?", cert.ID)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get certificate, %s", result.Error)
-		return &cert
+		return &cert, result.Error
 	}
-	return &addedCert
+	return &addedCert, nil
 }
 
-func (s CertificationDbServiceImpl) GetAllCertifications() []models.Certification {
+func (s CertificationDbServiceImpl) GetAllCertifications() ([]models.Certification, error) {
 	var certs []models.Certification
 	result := GetDbConn().Find(&certs)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all certification, %s", result.Error)
-		return nil
+		return nil, result.Error
 	}
-	return certs
+	return certs, nil
 }
 
-func (s CertificationDbServiceImpl) GetCertificationById(certId string) *models.Certification {
+func (s CertificationDbServiceImpl) GetCertificationById(certId string) (*models.Certification, error) {
 	var certs models.Certification
 	result := GetDbConn().Find(&certs)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all certification, %s", result.Error)
-		return &models.Certification{}
+		return &models.Certification{}, result.Error
 	}
-	return &certs
+	return &certs, nil
 }
 
 func (s CertificationDbServiceImpl) UpdateCertification(cert models.Certification) *models.Certification {

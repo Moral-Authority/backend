@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+    "fmt"
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
@@ -28,38 +29,43 @@ func (s CertificationService) AddNewCertification(request model.AddCertification
         Sources:            null.StringFrom(*request.Sources),
     }
 
-    addedCert := dbService.AddNewCertification(cert)
-    if addedCert == nil {
-        return nil, errors.New("unable to save certificate to db")
-    }
+    addedCert, err := dbService.AddNewCertification(cert)
+    if err != nil || addedCert == nil {
+        return nil, errors.New(fmt.Sprintf("unable to add cert to db, ERROR: %s", err))
+    }    
 
     return toCertificationResponse(*addedCert), nil
 }
 
 func (s CertificationService) GetAllCertifications(dbService database.CertificationDbService) ([]*model.Certification, error) {
-	certs := dbService.GetAllCertifications()
-	var response []*model.Certification
-	for _, e := range certs {
-		cert := toCertificationResponse(e)
-		response = append(response, cert)
-	}
-	return response, nil
+    certs, err := dbService.GetAllCertifications()
+    if err != nil {
+        return nil, err
+    }
+
+    var response []*model.Certification
+    for _, e := range certs {
+        cert := toCertificationResponse(e)
+        response = append(response, cert)
+    }
+    return response, nil
 }
 
 func (s CertificationService) GetCertificationById(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
-	cert := dbService.GetCertificationById(certId)
-	if cert == nil {
-		return nil, errors.New("unable to get cert from db")
-	}
+	cert, err := dbService.GetCertificationById(certId)
+    if err != nil || cert == nil {
+        return nil, errors.New(fmt.Sprintf("unable to get cert from db, ERROR: %s", err))
+    }   
+
 	return toCertificationResponse(*cert), nil
 }
 
 func (s CertificationService) UpdateCertification(request model.UpdateCertification, dbService database.CertificationDbService) (*model.Certification, error) {
     // Retrieve the existing certification
-    cert := dbService.GetCertificationById(request.ID)
-    if cert == nil {
-        return nil, errors.New("unable to find certificate in db")
-    }
+    cert, err := dbService.GetCertificationById(request.ID)
+    if err != nil || cert == nil {
+        return nil, errors.New(fmt.Sprintf("unable to get cert from db, ERROR: %s", err))
+    }   
 
     // Update the fields
     cert.Name = null.StringFrom(*request.Name)
