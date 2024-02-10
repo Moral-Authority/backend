@@ -24,7 +24,7 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 	defer lock.Unlock()
 	if instance == nil {
 
-		dsn := dbConfig.DatabaseConnectionUrl
+		dsn := dbConfig.DatabaseUrl
 
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {
