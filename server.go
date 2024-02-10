@@ -12,7 +12,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/Moral-Authority/backend/cmd"
 	"github.com/Moral-Authority/backend/database"
-	seed "github.com/Moral-Authority/backend/database/seed_data"
+	// seed "github.com/Moral-Authority/backend/database/seed_data"
 	"github.com/Moral-Authority/backend/graph/generated"
 	r "github.com/Moral-Authority/backend/graph/resolvers"
 	"github.com/alexflint/go-arg"
@@ -47,9 +47,9 @@ func main() {
 	c := cors.Default()
 
 	// Initialize the database
-	db := database.Connect(cfg.DatabaseConfig) // assign the result to db
-	// database.Connect(cfg.DatabaseConfig)
-	seed.SeedCertifications(db)
+	// db := database.Connect(cfg.DatabaseConfig) // assign the result to db
+	databxase.Connect(cfg.DatabaseConfig)
+	// seed.SeedCertifications(db)
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
