@@ -48,7 +48,7 @@ func main() {
 
 	// Initialize the database
 	// db := database.Connect(cfg.DatabaseConfig) // assign the result to db
-	databxase.Connect(cfg.DatabaseConfig)
+	database.Connect(cfg.DatabaseConfig)
 	// seed.SeedCertifications(db)
 
 	// Setup GraphQL server
