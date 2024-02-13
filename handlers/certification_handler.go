@@ -84,9 +84,9 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 	cert.Sources = null.StringFrom(*request.Sources)
 
 	// Save the updated certification
-	updatedCert := dbService.UpdateCertification(*cert)
-	if updatedCert == nil {
-		return nil, errors.New("unable to update certificate in db")
+	updatedCert,err := dbService.UpdateCertification(*cert)
+	if err != nil ||updatedCert == nil {
+		return nil, err
 	}
 
 	return toCertificationResponse(*updatedCert), nil

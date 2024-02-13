@@ -80,7 +80,7 @@ func (s UserService) GetUsers(dbService database.UserDbService) ([]*model.User, 
     }
     var response []*model.User
     for _, e := range users {
-        user := toUserResponse(e)
+        user := toUserResponse(*e)
         response = append(response, user)
     }
     return response, nil

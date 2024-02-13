@@ -12,10 +12,10 @@ type ProductService struct{}
 
 func (s ProductService) AddNewProduct(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService,) (*model.Product, error) {
 
-	_, err := database.StringToUint(request.UserID)
-	if err != nil {
-		return nil, err
-	}
+	// _, err := database.StringToUint(request.UserID)
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 
 	product := models.Product{
