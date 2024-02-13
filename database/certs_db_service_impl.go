@@ -42,12 +42,20 @@ func (s CertificationDbServiceImpl) GetCertificationById(certId string) (*models
 	return &certs, nil
 }
 
-func (s CertificationDbServiceImpl) UpdateCertification(cert models.Certification) *models.Certification {
-	//cert := dbService.UpdateCertification(cert)
-	//if cert == nil {
-	//	return nil, errors.New("unable to get cert from db")
-	//}
-	//return toCertificationResponse(*cert), nil
+func (s CertificationDbServiceImpl) UpdateCertification(cert models.Certification) (*models.Certification, error) {
+    var existingCert models.Certification
+    result := GetDbConn().First(&existingCert, "id = ?", cert.ID)
+    if result.Error != nil {
+        logrus.Errorf("Unable to find certification, %s", result.Error)
+        return nil, result.Error
+    }
 
-	return &models.Certification{}
+    // Update the existing certification with the new data
+    result = GetDbConn().Model(&existingCert).Updates(cert)
+    if result.Error != nil {
+        logrus.Errorf("Unable to update certification, %s", result.Error)
+        return nil, result.Error
+    }
+
+    return &existingCert, nil
 }
