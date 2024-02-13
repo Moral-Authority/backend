@@ -31,6 +31,3 @@ EXPOSE 8080
 
 # Run the executable
 CMD ["./main"]
-
-## Seed the database
-##CMD ["./database/seed_data.sh"]

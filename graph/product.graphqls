@@ -6,7 +6,7 @@ input AddProductRequest {
     Title: String!
     Description: String!
     Categorization: CategorizationInput!
-    Certifications: AllCertificationsInput!
+    Certifications: [Int]
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
 }
@@ -15,21 +15,11 @@ input PurchaseInfoInput {
     Price: String!
     Link: String!
     Rating: String
-    Company: CompanyEnum
+    Company: String
     IfOtherCompany: String
 }
 
-input AllCertificationsInput {
-    ProductCertifications: [String]
-    CompanyCertifications: CompanyCertifications
-    IfCompanyIsOther: String
-    MaterialsAndIngredients: MaterialsAndIngredients
-    IfMaterialsAndIngredientsIsOther: String
-    GiveBackPrograms: GiveBackPrograms
-    IfGiveBackProgramsIsOther: String
-    OwnersAndFounders: OwnersAndFounders
-    IfOwnersAndFoundersIsOther: String
-}
+
 
 input CategorizationInput {
     Section: String
@@ -39,35 +29,6 @@ input CategorizationInput {
     SubCategory:String
     Type: String
     Style: String
-}
-
-enum CompanyEnum {
-    Amazon, Etsy, Woocommerce, Ebay, Shopify, Other
-}
-#
-#enum SectionEnum {
-#    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
-#}
-
-
-enum CompanyCertifications {
-    Bcorp, PlasticBankPartner, rePurposeGlobalPartner, ClimateNeutral
-    CrueltyFree, LeapingBunny, FairTradeCertified, SafeAndFairLabor, Other
-}
-
-enum MaterialsAndIngredients {
-    LowImpactDyesOrInks, OEKOTEX, ParabenFree, PhthalateFree, SulfateFree
-    OrganicContent, USDACertifiedOrganic, GOTSCertified, RecycledPETFabric
-    RecycledPlastic, RecycledContent, SustainablyHarvestedRubber,
-    SustainablyHarvestedWood, PlasticFree, Vegan, Organic, MadeInAmerica, Handmade, OTHER
-}
-
-enum GiveBackPrograms {
-    GetOneGiveOne, PlantsATree, Charitable, OnePercentForThePlanet, OTHER
-}
-
-enum OwnersAndFounders {
-    WomanOwned, MomOwned, BlackOwned, IndigenousOwned, AsianPacificIslanderOwned, LGBTQPlusOwned, OTHER
 }
 
 type Product {

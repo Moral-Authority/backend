@@ -7,79 +7,79 @@ import (
 
 type ProductDbServiceImpl struct{}
 
-func (s ProductDbServiceImpl) GetProduct(productId string) *models.Product {
+func (s ProductDbServiceImpl) GetProduct(productId string) (*models.Product, error) {
 	var product models.Product
 	result := GetDbConn().First(&product, "id = ?", productId)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get product, %s", result.Error)
-		return nil
+		return nil, result.Error
 	}
-	return &product
+	return &product, nil
 }
 
 func (s ProductDbServiceImpl) GetAllProducts() ([]*models.Product, error) {
-    var products []*models.Product
-    result := GetDbConn().Find(&products)
-    if result.Error != nil {
-        logrus.Errorf("Unable to get all products, %s", result.Error)
-        return nil, result.Error
-    }
-    return products, nil
+	var products []*models.Product
+	result := GetDbConn().Find(&products)
+	if result.Error != nil {
+		logrus.Errorf("Unable to get all products, %s", result.Error)
+		return nil, result.Error
+	}
+	return products, nil
 }
 
 func (s ProductDbServiceImpl) AddProduct(product models.Product) (*models.Product, error) {
-    result := GetDbConn().Create(&product)
-    if result.Error != nil {
-        logrus.Errorf("Unable to save product, %s", result.Error)
-        return nil, result.Error
-    }
-    var addedProduct models.Product
-    result = GetDbConn().First(&addedProduct, "id = ?", product.ID)
-    if result.Error != nil {
-        logrus.Errorf("Unable to get product, %s", result.Error)
-        return nil, result.Error
-    }
-    return &addedProduct, nil
+	result := GetDbConn().Create(&product)
+	if result.Error != nil {
+		logrus.Errorf("Unable to save product, %s", result.Error)
+		return nil, result.Error
+	}
+	var addedProduct models.Product
+	result = GetDbConn().First(&addedProduct, "id = ?", product.ID)
+	if result.Error != nil {
+		logrus.Errorf("Unable to get product, %s", result.Error)
+		return nil, result.Error
+	}
+	return &addedProduct, nil
 }
 
 func (s ProductDbServiceImpl) DeleteProduct(productId string) error {
-    var product models.Product
-    result := GetDbConn().First(&product, "id = ?", productId)
-    if result.Error != nil {
-        logrus.Errorf("Unable to find product, %s", result.Error)
-        return result.Error
-    }
-    result = GetDbConn().Delete(&product)
-    if result.Error != nil {
-        logrus.Errorf("Unable to delete product, %s", result.Error)
-        return result.Error
-    }
-    return nil
+	var product models.Product
+	result := GetDbConn().First(&product, "id = ?", productId)
+	if result.Error != nil {
+		logrus.Errorf("Unable to find product, %s", result.Error)
+		return result.Error
+	}
+	result = GetDbConn().Delete(&product)
+	if result.Error != nil {
+		logrus.Errorf("Unable to delete product, %s", result.Error)
+		return result.Error
+	}
+	return nil
 }
 
-func (s ProductDbServiceImpl) AddCategory(category models.Category) *models.Category {
+func (s ProductDbServiceImpl) AddCategory(category models.Category) (*models.Category, error) {
 	result := GetDbConn().Create(&category)
 	if result.Error != nil {
 		logrus.Errorf("Unable to save category, %s", result.Error)
-		return nil
+		return nil, result.Error
 	}
 	var addedCategory models.Category
 	result = GetDbConn().First(&addedCategory, "id = ?", category.ID)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get category, %s", result.Error)
-		return nil
+		return nil, result.Error
 	}
-	return &addedCategory
+	return &addedCategory, nil
 }
 
-func (s ProductDbServiceImpl) GetAllCategories() []*models.Category {
+func (s ProductDbServiceImpl) GetAllCategories() ([]*models.Category, error) {
 	var categories []*models.Category
 	result := GetDbConn().Find(&categories)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all categories, %s", result.Error)
-		return nil
+		return nil, result.Error
 	}
-	return categories
+	return categories, nil
 }
 
 //var response []*models.Category

@@ -11,10 +11,10 @@ import (
 type CompanyService struct{}
 
 func (s CompanyService) AddCompany(request model.AddCompany, dbService database.CompanyDbService, imageDbService database.ImageDbService, certDbService database.CertificationDbService) (*model.Company, error) {
-	//userId, err := database.StringToUint(request.UserID)
-	//if err != nil {
-	//	return nil, err
-	//}
+    _, err := database.StringToUint(request.UserID)
+    if err != nil {
+        return nil, err
+    }
 
 	company := models.Company{
 		Name: *request.Name,

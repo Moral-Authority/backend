@@ -85,10 +85,14 @@ func toProductsResponse(products []models.Product) []*model.Product {
 func toProductResponse(product models.Product) *model.Product {
 
 	return &model.Product{
-		ID:          strconv.Itoa(int(product.ID)),
-		Title:       product.Title,
+		ID: strconv.Itoa(int(product.ID)),
+		PurchaseInfo: []*model.PurchaseInfo{
+			{
+				Link: &product.Url,
+			},
+		},
 		Description: product.Description,
-		//Certification: toCertificationResponse(product.Certification),
+		Title:       product.Title,
 	}
 }
 

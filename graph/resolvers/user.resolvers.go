@@ -8,25 +8,43 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddUser is the resolver for the addUser field.
 func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: AddUser - addUser"))
+	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{}) // create an instance and pass it
+	if err != nil {
+		return nil, fmt.Errorf("failed to add user: %w", err)
+	}
+	return user, nil
 }
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: UpdateUser - updateUser"))
+	user, err := handlers.UserService{}.UpdateUser(input, database.UserDbServiceImpl{}) // create an instance and pass it
+	if err != nil {
+		return nil, fmt.Errorf("failed to update user: %w", err)
+	}
+	return user, nil
 }
 
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	panic(fmt.Errorf("not implemented: User - user"))
+	user, err := handlers.UserService{}.GetUserById(id, database.UserDbServiceImpl{}) // create an instance and pass it
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user: %w", err)
+	}
+	return user, nil
 }
 
 // Users is the resolver for the users field.
 func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	panic(fmt.Errorf("not implemented: Users - users"))
+	users, err := handlers.UserService{}.GetUsers(database.UserDbServiceImpl{}) // create an instance and pass it
+	if err != nil {
+		return nil, fmt.Errorf("failed to get users: %w", err)
+	}
+	return users, nil
 }

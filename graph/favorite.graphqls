@@ -3,11 +3,12 @@ extend type Mutation {
 }
 
 type Favourite {
-_id: String!
-product: Product!
+    id: ID!
+    user: User!
+    product: Product!
 }
 
 input AddUserFav {
-userId: String!
-productId: String!
+    userId: String!
+    productId: String!
 }

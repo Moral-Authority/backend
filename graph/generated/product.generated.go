@@ -1114,7 +1114,7 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 			it.Categorization = data
 		case "Certifications":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifications"))
-			data, err := ec.unmarshalNAllCertificationsInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAllCertificationsInput(ctx, v)
+			data, err := ec.unmarshalOInt2ᚕᚖint(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1133,89 +1133,6 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 				return it, err
 			}
 			it.ImageLinks = data
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputAllCertificationsInput(ctx context.Context, obj interface{}) (model.AllCertificationsInput, error) {
-	var it model.AllCertificationsInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"ProductCertifications", "CompanyCertifications", "IfCompanyIsOther", "MaterialsAndIngredients", "IfMaterialsAndIngredientsIsOther", "GiveBackPrograms", "IfGiveBackProgramsIsOther", "OwnersAndFounders", "IfOwnersAndFoundersIsOther"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "ProductCertifications":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProductCertifications"))
-			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.ProductCertifications = data
-		case "CompanyCertifications":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CompanyCertifications"))
-			data, err := ec.unmarshalOCompanyCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertifications(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.CompanyCertifications = data
-		case "IfCompanyIsOther":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfCompanyIsOther"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.IfCompanyIsOther = data
-		case "MaterialsAndIngredients":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("MaterialsAndIngredients"))
-			data, err := ec.unmarshalOMaterialsAndIngredients2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐMaterialsAndIngredients(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.MaterialsAndIngredients = data
-		case "IfMaterialsAndIngredientsIsOther":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfMaterialsAndIngredientsIsOther"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.IfMaterialsAndIngredientsIsOther = data
-		case "GiveBackPrograms":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("GiveBackPrograms"))
-			data, err := ec.unmarshalOGiveBackPrograms2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐGiveBackPrograms(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.GiveBackPrograms = data
-		case "IfGiveBackProgramsIsOther":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfGiveBackProgramsIsOther"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.IfGiveBackProgramsIsOther = data
-		case "OwnersAndFounders":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("OwnersAndFounders"))
-			data, err := ec.unmarshalOOwnersAndFounders2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐOwnersAndFounders(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.OwnersAndFounders = data
-		case "IfOwnersAndFoundersIsOther":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("IfOwnersAndFoundersIsOther"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.IfOwnersAndFoundersIsOther = data
 		}
 	}
 
@@ -1328,7 +1245,7 @@ func (ec *executionContext) unmarshalInputPurchaseInfoInput(ctx context.Context,
 			it.Rating = data
 		case "Company":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Company"))
-			data, err := ec.unmarshalOCompanyEnum2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyEnum(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1491,11 +1408,6 @@ func (ec *executionContext) unmarshalNAddProductRequest2githubᚗcomᚋMoralᚑA
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNAllCertificationsInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAllCertificationsInput(ctx context.Context, v interface{}) (*model.AllCertificationsInput, error) {
-	res, err := ec.unmarshalInputAllCertificationsInput(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) unmarshalNCategorizationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategorizationInput(ctx context.Context, v interface{}) (*model.CategorizationInput, error) {
 	res, err := ec.unmarshalInputCategorizationInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
@@ -1518,86 +1430,6 @@ func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋMoralᚑAuthority�
 func (ec *executionContext) unmarshalNPurchaseInfoInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx context.Context, v interface{}) (*model.PurchaseInfoInput, error) {
 	res, err := ec.unmarshalInputPurchaseInfoInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalOCompanyCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertifications(ctx context.Context, v interface{}) (*model.CompanyCertifications, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.CompanyCertifications)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOCompanyCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertifications(ctx context.Context, sel ast.SelectionSet, v *model.CompanyCertifications) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
-}
-
-func (ec *executionContext) unmarshalOCompanyEnum2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyEnum(ctx context.Context, v interface{}) (*model.CompanyEnum, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.CompanyEnum)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOCompanyEnum2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyEnum(ctx context.Context, sel ast.SelectionSet, v *model.CompanyEnum) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
-}
-
-func (ec *executionContext) unmarshalOGiveBackPrograms2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐGiveBackPrograms(ctx context.Context, v interface{}) (*model.GiveBackPrograms, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.GiveBackPrograms)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOGiveBackPrograms2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐGiveBackPrograms(ctx context.Context, sel ast.SelectionSet, v *model.GiveBackPrograms) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
-}
-
-func (ec *executionContext) unmarshalOMaterialsAndIngredients2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐMaterialsAndIngredients(ctx context.Context, v interface{}) (*model.MaterialsAndIngredients, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.MaterialsAndIngredients)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOMaterialsAndIngredients2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐMaterialsAndIngredients(ctx context.Context, sel ast.SelectionSet, v *model.MaterialsAndIngredients) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
-}
-
-func (ec *executionContext) unmarshalOOwnersAndFounders2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐOwnersAndFounders(ctx context.Context, v interface{}) (*model.OwnersAndFounders, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var res = new(model.OwnersAndFounders)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOOwnersAndFounders2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐOwnersAndFounders(ctx context.Context, sel ast.SelectionSet, v *model.OwnersAndFounders) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return v
 }
 
 func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx context.Context, sel ast.SelectionSet, v []*model.PurchaseInfo) graphql.Marshaler {

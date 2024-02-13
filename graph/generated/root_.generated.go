@@ -86,6 +86,7 @@ type ComplexityRoot struct {
 	Favourite struct {
 		ID      func(childComplexity int) int
 		Product func(childComplexity int) int
+		User    func(childComplexity int) int
 	}
 
 	Image struct {
@@ -403,7 +404,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Company.User(childComplexity), true
 
-	case "Favourite._id":
+	case "Favourite.id":
 		if e.complexity.Favourite.ID == nil {
 			break
 		}
@@ -416,6 +417,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Favourite.Product(childComplexity), true
+
+	case "Favourite.user":
+		if e.complexity.Favourite.User == nil {
+			break
+		}
+
+		return e.complexity.Favourite.User(childComplexity), true
 
 	case "Image._id":
 		if e.complexity.Image.ID == nil {
@@ -802,7 +810,6 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddCompany,
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddUserFav,
-		ec.unmarshalInputAllCertificationsInput,
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputPurchaseInfoInput,
@@ -1010,13 +1017,14 @@ input AddCompany {
 }
 
 type Favourite {
-_id: String!
-product: Product!
+    id: ID!
+    user: User!
+    product: Product!
 }
 
 input AddUserFav {
-userId: String!
-productId: String!
+    userId: String!
+    productId: String!
 }
 `, BuiltIn: false},
 	{Name: "../prodCategorization.graphqls", Input: `
@@ -1100,7 +1108,7 @@ input AddProductRequest {
     Title: String!
     Description: String!
     Categorization: CategorizationInput!
-    Certifications: AllCertificationsInput!
+    Certifications: [Int]
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
 }
@@ -1109,21 +1117,11 @@ input PurchaseInfoInput {
     Price: String!
     Link: String!
     Rating: String
-    Company: CompanyEnum
+    Company: String
     IfOtherCompany: String
 }
 
-input AllCertificationsInput {
-    ProductCertifications: [String]
-    CompanyCertifications: CompanyCertifications
-    IfCompanyIsOther: String
-    MaterialsAndIngredients: MaterialsAndIngredients
-    IfMaterialsAndIngredientsIsOther: String
-    GiveBackPrograms: GiveBackPrograms
-    IfGiveBackProgramsIsOther: String
-    OwnersAndFounders: OwnersAndFounders
-    IfOwnersAndFoundersIsOther: String
-}
+
 
 input CategorizationInput {
     Section: String
@@ -1133,35 +1131,6 @@ input CategorizationInput {
     SubCategory:String
     Type: String
     Style: String
-}
-
-enum CompanyEnum {
-    Amazon, Etsy, Woocommerce, Ebay, Shopify, Other
-}
-#
-#enum SectionEnum {
-#    ShopsRestaurantsAndServices, HomeAndGarden, GroceryAndHouseholdItems, ApparelAndBeauty, KidsPetsAndBaby, BooksGamesAndEntertainment,ElectronicsAndAccessories,ArtAndHobby
-#}
-
-
-enum CompanyCertifications {
-    Bcorp, PlasticBankPartner, rePurposeGlobalPartner, ClimateNeutral
-    CrueltyFree, LeapingBunny, FairTradeCertified, SafeAndFairLabor, Other
-}
-
-enum MaterialsAndIngredients {
-    LowImpactDyesOrInks, OEKOTEX, ParabenFree, PhthalateFree, SulfateFree
-    OrganicContent, USDACertifiedOrganic, GOTSCertified, RecycledPETFabric
-    RecycledPlastic, RecycledContent, SustainablyHarvestedRubber,
-    SustainablyHarvestedWood, PlasticFree, Vegan, Organic, MadeInAmerica, Handmade, OTHER
-}
-
-enum GiveBackPrograms {
-    GetOneGiveOne, PlantsATree, Charitable, OnePercentForThePlanet, OTHER
-}
-
-enum OwnersAndFounders {
-    WomanOwned, MomOwned, BlackOwned, IndigenousOwned, AsianPacificIslanderOwned, LGBTQPlusOwned, OTHER
 }
 
 type Product {

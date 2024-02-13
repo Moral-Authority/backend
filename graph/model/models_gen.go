@@ -45,29 +45,17 @@ type AddCompany struct {
 }
 
 type AddProductRequest struct {
-	Title          string                  `json:"Title"`
-	Description    string                  `json:"Description"`
-	Categorization *CategorizationInput    `json:"Categorization"`
-	Certifications *AllCertificationsInput `json:"Certifications"`
-	PurchaseInfo   *PurchaseInfoInput      `json:"PurchaseInfo"`
-	ImageLinks     []*string               `json:"ImageLinks,omitempty"`
+	Title          string               `json:"Title"`
+	Description    string               `json:"Description"`
+	Categorization *CategorizationInput `json:"Categorization"`
+	Certifications []*int               `json:"Certifications,omitempty"`
+	PurchaseInfo   *PurchaseInfoInput   `json:"PurchaseInfo"`
+	ImageLinks     []*string            `json:"ImageLinks,omitempty"`
 }
 
 type AddUserFav struct {
 	UserID    string `json:"userId"`
 	ProductID string `json:"productId"`
-}
-
-type AllCertificationsInput struct {
-	ProductCertifications            []*string                `json:"ProductCertifications,omitempty"`
-	CompanyCertifications            *CompanyCertifications   `json:"CompanyCertifications,omitempty"`
-	IfCompanyIsOther                 *string                  `json:"IfCompanyIsOther,omitempty"`
-	MaterialsAndIngredients          *MaterialsAndIngredients `json:"MaterialsAndIngredients,omitempty"`
-	IfMaterialsAndIngredientsIsOther *string                  `json:"IfMaterialsAndIngredientsIsOther,omitempty"`
-	GiveBackPrograms                 *GiveBackPrograms        `json:"GiveBackPrograms,omitempty"`
-	IfGiveBackProgramsIsOther        *string                  `json:"IfGiveBackProgramsIsOther,omitempty"`
-	OwnersAndFounders                *OwnersAndFounders       `json:"OwnersAndFounders,omitempty"`
-	IfOwnersAndFoundersIsOther       *string                  `json:"IfOwnersAndFoundersIsOther,omitempty"`
 }
 
 type CategorizationInput struct {
@@ -123,7 +111,8 @@ type Company struct {
 }
 
 type Favourite struct {
-	ID      string   `json:"_id"`
+	ID      string   `json:"id"`
+	User    *User    `json:"user"`
 	Product *Product `json:"product"`
 }
 
@@ -173,11 +162,11 @@ type PurchaseInfo struct {
 }
 
 type PurchaseInfoInput struct {
-	Price          string       `json:"Price"`
-	Link           string       `json:"Link"`
-	Rating         *string      `json:"Rating,omitempty"`
-	Company        *CompanyEnum `json:"Company,omitempty"`
-	IfOtherCompany *string      `json:"IfOtherCompany,omitempty"`
+	Price          string  `json:"Price"`
+	Link           string  `json:"Link"`
+	Rating         *string `json:"Rating,omitempty"`
+	Company        *string `json:"Company,omitempty"`
+	IfOtherCompany *string `json:"IfOtherCompany,omitempty"`
 }
 
 type Query struct {
@@ -265,282 +254,5 @@ func (e *CategoryEnum) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CategoryEnum) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type CompanyCertifications string
-
-const (
-	CompanyCertificationsBcorp                  CompanyCertifications = "Bcorp"
-	CompanyCertificationsPlasticBankPartner     CompanyCertifications = "PlasticBankPartner"
-	CompanyCertificationsRePurposeGlobalPartner CompanyCertifications = "rePurposeGlobalPartner"
-	CompanyCertificationsClimateNeutral         CompanyCertifications = "ClimateNeutral"
-	CompanyCertificationsCrueltyFree            CompanyCertifications = "CrueltyFree"
-	CompanyCertificationsLeapingBunny           CompanyCertifications = "LeapingBunny"
-	CompanyCertificationsFairTradeCertified     CompanyCertifications = "FairTradeCertified"
-	CompanyCertificationsSafeAndFairLabor       CompanyCertifications = "SafeAndFairLabor"
-	CompanyCertificationsOther                  CompanyCertifications = "Other"
-)
-
-var AllCompanyCertifications = []CompanyCertifications{
-	CompanyCertificationsBcorp,
-	CompanyCertificationsPlasticBankPartner,
-	CompanyCertificationsRePurposeGlobalPartner,
-	CompanyCertificationsClimateNeutral,
-	CompanyCertificationsCrueltyFree,
-	CompanyCertificationsLeapingBunny,
-	CompanyCertificationsFairTradeCertified,
-	CompanyCertificationsSafeAndFairLabor,
-	CompanyCertificationsOther,
-}
-
-func (e CompanyCertifications) IsValid() bool {
-	switch e {
-	case CompanyCertificationsBcorp, CompanyCertificationsPlasticBankPartner, CompanyCertificationsRePurposeGlobalPartner, CompanyCertificationsClimateNeutral, CompanyCertificationsCrueltyFree, CompanyCertificationsLeapingBunny, CompanyCertificationsFairTradeCertified, CompanyCertificationsSafeAndFairLabor, CompanyCertificationsOther:
-		return true
-	}
-	return false
-}
-
-func (e CompanyCertifications) String() string {
-	return string(e)
-}
-
-func (e *CompanyCertifications) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CompanyCertifications(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CompanyCertifications", str)
-	}
-	return nil
-}
-
-func (e CompanyCertifications) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type CompanyEnum string
-
-const (
-	CompanyEnumAmazon      CompanyEnum = "Amazon"
-	CompanyEnumEtsy        CompanyEnum = "Etsy"
-	CompanyEnumWoocommerce CompanyEnum = "Woocommerce"
-	CompanyEnumEbay        CompanyEnum = "Ebay"
-	CompanyEnumShopify     CompanyEnum = "Shopify"
-	CompanyEnumOther       CompanyEnum = "Other"
-)
-
-var AllCompanyEnum = []CompanyEnum{
-	CompanyEnumAmazon,
-	CompanyEnumEtsy,
-	CompanyEnumWoocommerce,
-	CompanyEnumEbay,
-	CompanyEnumShopify,
-	CompanyEnumOther,
-}
-
-func (e CompanyEnum) IsValid() bool {
-	switch e {
-	case CompanyEnumAmazon, CompanyEnumEtsy, CompanyEnumWoocommerce, CompanyEnumEbay, CompanyEnumShopify, CompanyEnumOther:
-		return true
-	}
-	return false
-}
-
-func (e CompanyEnum) String() string {
-	return string(e)
-}
-
-func (e *CompanyEnum) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CompanyEnum(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CompanyEnum", str)
-	}
-	return nil
-}
-
-func (e CompanyEnum) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type GiveBackPrograms string
-
-const (
-	GiveBackProgramsGetOneGiveOne          GiveBackPrograms = "GetOneGiveOne"
-	GiveBackProgramsPlantsATree            GiveBackPrograms = "PlantsATree"
-	GiveBackProgramsCharitable             GiveBackPrograms = "Charitable"
-	GiveBackProgramsOnePercentForThePlanet GiveBackPrograms = "OnePercentForThePlanet"
-	GiveBackProgramsOther                  GiveBackPrograms = "OTHER"
-)
-
-var AllGiveBackPrograms = []GiveBackPrograms{
-	GiveBackProgramsGetOneGiveOne,
-	GiveBackProgramsPlantsATree,
-	GiveBackProgramsCharitable,
-	GiveBackProgramsOnePercentForThePlanet,
-	GiveBackProgramsOther,
-}
-
-func (e GiveBackPrograms) IsValid() bool {
-	switch e {
-	case GiveBackProgramsGetOneGiveOne, GiveBackProgramsPlantsATree, GiveBackProgramsCharitable, GiveBackProgramsOnePercentForThePlanet, GiveBackProgramsOther:
-		return true
-	}
-	return false
-}
-
-func (e GiveBackPrograms) String() string {
-	return string(e)
-}
-
-func (e *GiveBackPrograms) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = GiveBackPrograms(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid GiveBackPrograms", str)
-	}
-	return nil
-}
-
-func (e GiveBackPrograms) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type MaterialsAndIngredients string
-
-const (
-	MaterialsAndIngredientsLowImpactDyesOrInks        MaterialsAndIngredients = "LowImpactDyesOrInks"
-	MaterialsAndIngredientsOekotex                    MaterialsAndIngredients = "OEKOTEX"
-	MaterialsAndIngredientsParabenFree                MaterialsAndIngredients = "ParabenFree"
-	MaterialsAndIngredientsPhthalateFree              MaterialsAndIngredients = "PhthalateFree"
-	MaterialsAndIngredientsSulfateFree                MaterialsAndIngredients = "SulfateFree"
-	MaterialsAndIngredientsOrganicContent             MaterialsAndIngredients = "OrganicContent"
-	MaterialsAndIngredientsUSDACertifiedOrganic       MaterialsAndIngredients = "USDACertifiedOrganic"
-	MaterialsAndIngredientsGOTSCertified              MaterialsAndIngredients = "GOTSCertified"
-	MaterialsAndIngredientsRecycledPETFabric          MaterialsAndIngredients = "RecycledPETFabric"
-	MaterialsAndIngredientsRecycledPlastic            MaterialsAndIngredients = "RecycledPlastic"
-	MaterialsAndIngredientsRecycledContent            MaterialsAndIngredients = "RecycledContent"
-	MaterialsAndIngredientsSustainablyHarvestedRubber MaterialsAndIngredients = "SustainablyHarvestedRubber"
-	MaterialsAndIngredientsSustainablyHarvestedWood   MaterialsAndIngredients = "SustainablyHarvestedWood"
-	MaterialsAndIngredientsPlasticFree                MaterialsAndIngredients = "PlasticFree"
-	MaterialsAndIngredientsVegan                      MaterialsAndIngredients = "Vegan"
-	MaterialsAndIngredientsOrganic                    MaterialsAndIngredients = "Organic"
-	MaterialsAndIngredientsMadeInAmerica              MaterialsAndIngredients = "MadeInAmerica"
-	MaterialsAndIngredientsHandmade                   MaterialsAndIngredients = "Handmade"
-	MaterialsAndIngredientsOther                      MaterialsAndIngredients = "OTHER"
-)
-
-var AllMaterialsAndIngredients = []MaterialsAndIngredients{
-	MaterialsAndIngredientsLowImpactDyesOrInks,
-	MaterialsAndIngredientsOekotex,
-	MaterialsAndIngredientsParabenFree,
-	MaterialsAndIngredientsPhthalateFree,
-	MaterialsAndIngredientsSulfateFree,
-	MaterialsAndIngredientsOrganicContent,
-	MaterialsAndIngredientsUSDACertifiedOrganic,
-	MaterialsAndIngredientsGOTSCertified,
-	MaterialsAndIngredientsRecycledPETFabric,
-	MaterialsAndIngredientsRecycledPlastic,
-	MaterialsAndIngredientsRecycledContent,
-	MaterialsAndIngredientsSustainablyHarvestedRubber,
-	MaterialsAndIngredientsSustainablyHarvestedWood,
-	MaterialsAndIngredientsPlasticFree,
-	MaterialsAndIngredientsVegan,
-	MaterialsAndIngredientsOrganic,
-	MaterialsAndIngredientsMadeInAmerica,
-	MaterialsAndIngredientsHandmade,
-	MaterialsAndIngredientsOther,
-}
-
-func (e MaterialsAndIngredients) IsValid() bool {
-	switch e {
-	case MaterialsAndIngredientsLowImpactDyesOrInks, MaterialsAndIngredientsOekotex, MaterialsAndIngredientsParabenFree, MaterialsAndIngredientsPhthalateFree, MaterialsAndIngredientsSulfateFree, MaterialsAndIngredientsOrganicContent, MaterialsAndIngredientsUSDACertifiedOrganic, MaterialsAndIngredientsGOTSCertified, MaterialsAndIngredientsRecycledPETFabric, MaterialsAndIngredientsRecycledPlastic, MaterialsAndIngredientsRecycledContent, MaterialsAndIngredientsSustainablyHarvestedRubber, MaterialsAndIngredientsSustainablyHarvestedWood, MaterialsAndIngredientsPlasticFree, MaterialsAndIngredientsVegan, MaterialsAndIngredientsOrganic, MaterialsAndIngredientsMadeInAmerica, MaterialsAndIngredientsHandmade, MaterialsAndIngredientsOther:
-		return true
-	}
-	return false
-}
-
-func (e MaterialsAndIngredients) String() string {
-	return string(e)
-}
-
-func (e *MaterialsAndIngredients) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = MaterialsAndIngredients(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid MaterialsAndIngredients", str)
-	}
-	return nil
-}
-
-func (e MaterialsAndIngredients) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type OwnersAndFounders string
-
-const (
-	OwnersAndFoundersWomanOwned                OwnersAndFounders = "WomanOwned"
-	OwnersAndFoundersMomOwned                  OwnersAndFounders = "MomOwned"
-	OwnersAndFoundersBlackOwned                OwnersAndFounders = "BlackOwned"
-	OwnersAndFoundersIndigenousOwned           OwnersAndFounders = "IndigenousOwned"
-	OwnersAndFoundersAsianPacificIslanderOwned OwnersAndFounders = "AsianPacificIslanderOwned"
-	OwnersAndFoundersLGBTQPlusOwned            OwnersAndFounders = "LGBTQPlusOwned"
-	OwnersAndFoundersOther                     OwnersAndFounders = "OTHER"
-)
-
-var AllOwnersAndFounders = []OwnersAndFounders{
-	OwnersAndFoundersWomanOwned,
-	OwnersAndFoundersMomOwned,
-	OwnersAndFoundersBlackOwned,
-	OwnersAndFoundersIndigenousOwned,
-	OwnersAndFoundersAsianPacificIslanderOwned,
-	OwnersAndFoundersLGBTQPlusOwned,
-	OwnersAndFoundersOther,
-}
-
-func (e OwnersAndFounders) IsValid() bool {
-	switch e {
-	case OwnersAndFoundersWomanOwned, OwnersAndFoundersMomOwned, OwnersAndFoundersBlackOwned, OwnersAndFoundersIndigenousOwned, OwnersAndFoundersAsianPacificIslanderOwned, OwnersAndFoundersLGBTQPlusOwned, OwnersAndFoundersOther:
-		return true
-	}
-	return false
-}
-
-func (e OwnersAndFounders) String() string {
-	return string(e)
-}
-
-func (e *OwnersAndFounders) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = OwnersAndFounders(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid OwnersAndFounders", str)
-	}
-	return nil
-}
-
-func (e OwnersAndFounders) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }

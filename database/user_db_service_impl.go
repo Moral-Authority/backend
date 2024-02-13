@@ -1,88 +1,91 @@
 package database
 
 import (
+	"strconv"
+
+	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
 )
 
 type UserDbServiceImpl struct{}
-
-//func (s UserDbServiceImpl) AddNewUser(newUser models.User) *models.User {
-//	result := GetDbConn().Create(&newUser)
-//	if result.Error != nil {
-//		logrus.Errorf("Unable to save user, %s", result.Error)
-//		return nil
-//	}
-//	return s.GetUser(strconv.Itoa(int(newUser.ID)))
-//}
-
-//func (s UserDbServiceImpl) GetUser(userId string) *models.User {
-//	var user models.User
-//	result := GetDbConn().First(&user, "id = ?", userId)
-//	if result.Error != nil {
-//		logrus.Errorf("Unable to get user, %s", result.Error)
-//		return nil
-//	}
-//	var favs []models.Favourite
-//	results := GetDbConn().Model(&user).Association("Favourites").Find(&favs)
-//	if results != nil {
-//		logrus.Errorf("Unable to get categories, %s", results)
-//		return nil
-//	}
-//	user.Favourites = favs
-//	return &user
-//}
-
-func (s UserDbServiceImpl) GetAllUsers() []models.User {
-	var users []models.User
-	result := GetDbConn().Find(&users)
-	if result.Error != nil {
-		logrus.Errorf("Unable to get all user, %s", result.Error)
-		return nil
-	}
-	return users
+func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error) {
+    result := GetDbConn().Create(&newUser)
+    if result.Error != nil {
+        logrus.Errorf("Unable to save user, %s", result.Error)
+        return nil, result.Error
+    }
+    user, err := s.GetUser(strconv.Itoa(int(newUser.ID)))
+    return user, err
 }
 
-//func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) *models.User {
-//// 1: get the user first
-//user := s.GetUser(userId)
-//if user == nil {
-//	logrus.Errorf("unable to get user")
-//	return nil
-//}
-//// 2: update user
-//result := GetDbConn().Model(&user).Updates(models.User{
-//	FirstName: *request.FirstName,
-//	LastName:  *request.LastName,
-//})
-//if result.Error != nil {
-//	logrus.Errorf("Unable to update user, %s", result.Error)
-//	return nil
-//}
-//// 3: return updated user
-//return s.GetUser(userId)
-//}
+func (s UserDbServiceImpl) GetUser(userId string) (*models.User, error) {
+    var user models.User
+    result := GetDbConn().First(&user, "id = ?", userId)
+    if result.Error != nil {
+        logrus.Errorf("Unable to get user, %s", result.Error)
+        return nil, result.Error
+    }
+    var favs []models.Favourite
+    results := GetDbConn().Model(&user).Association("Favourites").Find(&favs)
+    if results != nil {
+        logrus.Errorf("Unable to get categories, %s", results)
+        return nil, results
+    }
+    user.Favourites = favs
+    return &user, nil
+}
 
-//func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) []models.Favourite {
-//	// 1: get the user first
-//	id, err := StringToUint(request.UserID)
-//	if err == nil {
-//		logrus.Errorf("Unable to convert id, %s", request.UserID)
-//		return nil
-//	}
-//	user := s.GetUser(strconv.Itoa(int(id)))
-//	if user == nil {
-//		logrus.Errorf("unable to get user")
-//		return nil
-//	}
-//	err = GetDbConn().Model(&user).Association("Favourites").Append(models.Favourite{
-//		UserRefer: id,
-//		Product:   product,
-//	})
-//	if err != nil {
-//		logrus.Errorf("unable to append fav")
-//		return nil
-//	}
-//	updatedUser := s.GetUser(strconv.Itoa(int(id)))
-//	return updatedUser.Favourites
-//}
+func (s UserDbServiceImpl) GetAllUsers() ([]*models.User, error) {
+    var users []*models.User
+    result := GetDbConn().Find(&users)
+    if result.Error != nil {
+        logrus.Errorf("Unable to get all user, %s", result.Error)
+        return nil, result.Error
+    }
+    return users, nil
+}
+
+func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) (*models.User, error) {
+    user, err := s.GetUser(userId)
+    if err != nil {
+        logrus.Errorf("unable to get user")
+        return nil, err
+    }
+    result := GetDbConn().Model(&user).Updates(models.User{
+        FirstName: *request.FirstName,
+        LastName:  *request.LastName,
+    })
+    if result.Error != nil {
+        logrus.Errorf("Unable to update user, %s", result.Error)
+        return nil, result.Error
+    }
+    updatedUser, err := s.GetUser(userId)
+    return updatedUser, err
+}
+
+func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) ([]models.Favourite, error) {
+    id, err := StringToUint(request.UserID)
+    if err != nil {
+        logrus.Errorf("Unable to convert id, %s", request.UserID)
+        return nil, err
+    }
+    user, err := s.GetUser(strconv.Itoa(int(id)))
+    if err != nil {
+        logrus.Errorf("unable to get user")
+        return nil, err
+    }
+    err = GetDbConn().Model(&user).Association("Favourites").Append(models.Favourite{
+        UserRefer: id,
+        Product:   product,
+    })
+    if err != nil {
+        logrus.Errorf("unable to append fav")
+        return nil, err
+    }
+    updatedUser, err := s.GetUser(strconv.Itoa(int(id)))
+    if err != nil {
+        return nil, err
+    }
+    return updatedUser.Favourites, nil
+}

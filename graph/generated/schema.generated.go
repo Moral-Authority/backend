@@ -555,8 +555,10 @@ func (ec *executionContext) fieldContext_Mutation_addFav(ctx context.Context, fi
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "_id":
-				return ec.fieldContext_Favourite__id(ctx, field)
+			case "id":
+				return ec.fieldContext_Favourite_id(ctx, field)
+			case "user":
+				return ec.fieldContext_Favourite_user(ctx, field)
 			case "product":
 				return ec.fieldContext_Favourite_product(ctx, field)
 			}

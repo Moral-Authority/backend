@@ -26,8 +26,8 @@ func (s ProductService) AddCategory(request model.AddCategory, dbService databas
 		ParentID: parentID,
 	}
 
-	addedCategory := dbService.AddCategory(category)
-	if addedCategory == nil {
+	addedCategory, err := dbService.AddCategory(category)
+	if err != nil || addedCategory == nil {
 		return nil, errors.New("unable to save category to db with error %s")
 	}
 
@@ -42,8 +42,8 @@ func (s ProductService) AddCategory(request model.AddCategory, dbService databas
 }
 
 func (s ProductService) GetAllCategories(dbService database.ProductDbService) ([]*model.Category, error) {
-	categories := dbService.GetAllCategories()
-	if categories == nil {
+	categories, err := dbService.GetAllCategories()
+	if  err != nil || categories == nil {
 		return nil, errors.New("unable to get categories from db")
 	}
 
