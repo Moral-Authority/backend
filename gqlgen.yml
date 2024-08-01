@@ -14,6 +14,7 @@ exec:
 #  package: generated
 
 # Where should any generated models go?
+
 model:
   filename: graph/model/models_gen.go
   package: model
@@ -22,7 +23,7 @@ model:
 resolver:
   layout: follow-schema
   dir: graph/resolvers
-  package: graph
+  package: resolvers
   filename_template: "{name}.resolvers.go"
 
 # Optional: turn on use ` + "`" + `gqlgen:"fieldName"` + "`" + ` tags in your models
@@ -55,9 +56,6 @@ models:
   ID:
     model:
       - github.com/99designs/gqlgen/graphql.ID
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
   Int:
     model:
       - github.com/99designs/gqlgen/graphql.Int

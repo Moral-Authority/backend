@@ -18,7 +18,7 @@ import (
 // region    ************************** generated!.gotpl **************************
 
 type MutationResolver interface {
-	BaseMutation(ctx context.Context) (interface{}, error)
+	BaseMutation(ctx context.Context) (any, error)
 	AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error)
 	UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error)
@@ -29,7 +29,7 @@ type MutationResolver interface {
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
 }
 type QueryResolver interface {
-	BaseQuery(ctx context.Context) (interface{}, error)
+	BaseQuery(ctx context.Context) (any, error)
 	GetAllCertifications(ctx context.Context) ([]*model.Certification, error)
 	GetCompany(ctx context.Context, id string) (*model.Company, error)
 	GetAllCompanies(ctx context.Context) ([]*model.Company, error)
@@ -238,12 +238,12 @@ func (ec *executionContext) _Mutation_BaseMutation(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(interface{})
+	res := resTmp.(any)
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_BaseMutation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_BaseMutation(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -896,12 +896,12 @@ func (ec *executionContext) _Query_BaseQuery(ctx context.Context, field graphql.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(interface{})
+	res := resTmp.(any)
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_BaseQuery(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_BaseQuery(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -945,7 +945,7 @@ func (ec *executionContext) _Query_getAllCertifications(ctx context.Context, fie
 	return ec.marshalNCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_getAllCertifications(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getAllCertifications(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1101,7 +1101,7 @@ func (ec *executionContext) _Query_getAllCompanies(ctx context.Context, field gr
 	return ec.marshalOCompany2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_getAllCompanies(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getAllCompanies(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1167,7 +1167,7 @@ func (ec *executionContext) _Query_getAllCategories(ctx context.Context, field g
 	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_getAllCategories(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getAllCategories(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1288,7 +1288,7 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_users(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_users(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1413,7 +1413,7 @@ func (ec *executionContext) _Query___schema(ctx context.Context, field graphql.C
 	return ec.marshalO__Schema2ᚖgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐSchema(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1573,7 +1573,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		case "BaseQuery":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
@@ -1636,7 +1636,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		case "getAllCompanies":
 			field := field
 
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
 				defer func() {
 					if r := recover(); r != nil {
 						ec.Error(ctx, ec.Recover(ctx, r))
@@ -1753,7 +1753,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (interface{}, error) {
+func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v interface{}) (any, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -1761,7 +1761,7 @@ func (ec *executionContext) unmarshalOAny2interface(ctx context.Context, v inter
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOAny2interface(ctx context.Context, sel ast.SelectionSet, v interface{}) graphql.Marshaler {
+func (ec *executionContext) marshalOAny2interface(ctx context.Context, sel ast.SelectionSet, v any) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

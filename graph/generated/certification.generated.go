@@ -59,7 +59,7 @@ func (ec *executionContext) _Certification__id(ctx context.Context, field graphq
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification__id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -103,7 +103,7 @@ func (ec *executionContext) _Certification_Name(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -144,7 +144,7 @@ func (ec *executionContext) _Certification_Logo(ctx context.Context, field graph
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Logo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Logo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -185,7 +185,7 @@ func (ec *executionContext) _Certification_Website(ctx context.Context, field gr
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Website(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Website(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -226,7 +226,7 @@ func (ec *executionContext) _Certification_Description(ctx context.Context, fiel
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -267,7 +267,7 @@ func (ec *executionContext) _Certification_CertifiesCompany(ctx context.Context,
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertifiesCompany(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_CertifiesCompany(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -308,7 +308,7 @@ func (ec *executionContext) _Certification_CertifiesProduct(ctx context.Context,
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertifiesProduct(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_CertifiesProduct(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -349,7 +349,7 @@ func (ec *executionContext) _Certification_CertifiesProcess(ctx context.Context,
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertifiesProcess(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_CertifiesProcess(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -390,7 +390,7 @@ func (ec *executionContext) _Certification_CertifierContactID(ctx context.Contex
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CertifierContactID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_CertifierContactID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -431,7 +431,7 @@ func (ec *executionContext) _Certification_Industry(ctx context.Context, field g
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Industry(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Industry(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -472,7 +472,7 @@ func (ec *executionContext) _Certification_Certifier(ctx context.Context, field 
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Certifier(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Certifier(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -513,7 +513,7 @@ func (ec *executionContext) _Certification_Audited(ctx context.Context, field gr
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Audited(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Audited(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -554,7 +554,7 @@ func (ec *executionContext) _Certification_Auditor(ctx context.Context, field gr
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Auditor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Auditor(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -595,7 +595,7 @@ func (ec *executionContext) _Certification_Region(ctx context.Context, field gra
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Region(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Region(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -636,7 +636,7 @@ func (ec *executionContext) _Certification_Qualifiers(ctx context.Context, field
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Qualifiers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Qualifiers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -677,7 +677,7 @@ func (ec *executionContext) _Certification_Sources(ctx context.Context, field gr
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_Sources(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_Sources(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -718,7 +718,7 @@ func (ec *executionContext) _Certification_CreatedAt(ctx context.Context, field 
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_CreatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_CreatedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,
@@ -759,7 +759,7 @@ func (ec *executionContext) _Certification_UpdatedAt(ctx context.Context, field 
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Certification_UpdatedAt(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Certification_UpdatedAt(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Certification",
 		Field:      field,

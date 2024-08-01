@@ -60,7 +60,7 @@ func (ec *executionContext) _Category__id(ctx context.Context, field graphql.Col
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category__id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category__id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -101,7 +101,7 @@ func (ec *executionContext) _Category_ParentID(ctx context.Context, field graphq
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_ParentID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_ParentID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -142,7 +142,7 @@ func (ec *executionContext) _Category_Type(ctx context.Context, field graphql.Co
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_Type(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_Type(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -186,7 +186,7 @@ func (ec *executionContext) _Category_Name(ctx context.Context, field graphql.Co
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_Name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_Name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -227,7 +227,7 @@ func (ec *executionContext) _Category_Children(ctx context.Context, field graphq
 	return ec.marshalOCategory2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCategory(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_Children(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_Children(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
