@@ -13,15 +13,16 @@ tasks:
     cmds:
       - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose --profile dev up --build
 
-  # seed_local:
-  #   desc: "Seed the local database"
-  #   cmds:
-  #     - DATABASE_URL=${LOCAL_DATABASE_URL} docker-compose run --rm db_seeder
+  seed_local:
+    desc: "Seed the local database"
+    cmds:
+      - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${LOCAL_DATABASE_URL} docker-compose run --rm db_seeder
 
-  # seed_dev:
-  #   desc: "Seed the development database"
-  #   cmds:
-  #     - DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
+  seed_dev:
+    desc: "Seed the development database"
+    cmds:
+      - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
+
 
   clean:
     desc: "Clean up Docker containers"
@@ -33,13 +34,13 @@ tasks:
     cmds:
       - go build -o seed_db cmd/seed/seed.go
 
-  # run_seeder:
-  #   desc: "Run the seed binary"
-  #   cmds:
-  #     - SEED_DB=true ./seed_db
+  run_seeder:
+    desc: "Run the seed binary"
+    cmds:
+      - SEED_DB=true ./seed_db
 
-  # seed:
-  #   desc: "Build and run the seeder"
-  #   cmds:
-  #     - task: build_seeder
-  #     - task: run_seeder
+  seed:
+    desc: "Build and run the seeder"
+    cmds:
+      - task: build_seeder
+      - task: run_seeder

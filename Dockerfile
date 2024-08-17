@@ -1,8 +1,8 @@
-# Start from golang:1.19-alpine base image
-FROM golang:1.20-alpine
+# Base Stage for building Go binaries
+FROM golang:1.23-alpine AS base
 
-# The latest alpine images don't have some tools like (`git` and `bash`).
-# Adding git, bash, and openssh to the image
+
+# Adding necessary tools like git, bash, and openssh
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
@@ -14,20 +14,41 @@ COPY go.mod go.sum ./
 
 ENV CGO_ENABLED=0
 
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+# Download all dependencies
 RUN go mod download
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
 
-# Optionally, run gqlgen generate here if you want to ensure graphql code generation is part of the build
+# Optionally, run gqlgen generate here
 RUN go run github.com/99designs/gqlgen generate
 
-# Build the Go app
+# Build the Main Go app
 RUN go build -o main .
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Run the executable
+# Run the main application
 CMD ["./main"]
+
+# Seeder Stage
+FROM golang:1.23-alpine AS seeder
+
+# Set the Current Working Directory inside the container
+WORKDIR /app
+
+# Copy go mod and sum files
+COPY go.mod go.sum ./
+
+# Download all dependencies
+RUN go mod download
+
+# Copy the source code from the current directory to the Working Directory inside the container
+COPY . .
+
+# Build the seed_db binary inside the container
+RUN go build -o seed_db cmd/seed/seed.go
+
+# Command to run the seeding script
+CMD ["./seed_db"]

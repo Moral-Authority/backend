@@ -1,8 +1,8 @@
 version: '3'
-
+      # - DATABASE_URL=${DATABASE_URL}
 # Define services
 services:
-  postgres:   # database
+  postgres:
     image: postgres
     hostname: postgres
     container_name: postgres
@@ -16,28 +16,31 @@ services:
     expose:
       - 5432:5432
 
-  backend_service:  #backend
+  backend_service:
     env_file:
       - .env
     hostname: backend_service
     container_name: backend_service
     build:
-      context: . # Use an image built from the specified dockerfile in the current directory.
+      context: . 
       dockerfile: Dockerfile
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
       - SERVER_PORT=${SERVER_PORT}
       - SERVER_NAME=${SERVER_NAME}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USERNAME=${DATABASE_USERNAME}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_URL=postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_CONNECTION_URL}/${DATABASE_NAME}?sslmode=require
-      - DATABASE_CONNECTION_URL=${DATABASE_CONNECTION_URL}
-      # - DATABASE_URL=${DATABASE_URL}
-      - DATABASE_CONNECTION_PORT=${DATABASE_CONNECTION_PORT}
     ports:
       - "8080:8080"
     restart: unless-stopped
     command: ["sh", "-c", "env && sleep 3600"]
 
-
+  # db_seeder:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: seeder
+  #   environment:
+  #     - DATABASE_URL=${DATABASE_URL}
+  #   depends_on:
+  #     - postgres
+  #   command: ./seed_db
