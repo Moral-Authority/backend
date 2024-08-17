@@ -1,5 +1,3 @@
-version: '3'
-
 tasks:
   local:
     desc: "Run Docker Compose with the local database"
@@ -13,16 +11,16 @@ tasks:
     cmds:
       - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose --profile dev up --build
 
+  # Seed tasks that should only be run manually
   seed_local:
     desc: "Seed the local database"
     cmds:
-      - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${LOCAL_DATABASE_URL} docker-compose run --rm db_seeder
+      - DATABASE_URL={{.LOCAL_DATABASE_URL}} docker-compose run --rm db_seeder
 
   seed_dev:
     desc: "Seed the development database"
     cmds:
-      - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
-
+      - DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
 
   clean:
     desc: "Clean up Docker containers"
