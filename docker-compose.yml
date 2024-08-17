@@ -34,13 +34,13 @@ services:
     restart: unless-stopped
     command: ["sh", "-c", "env && sleep 3600"]
 
-  # db_seeder:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     target: seeder
-  #   environment:
-  #     - DATABASE_URL=${DATABASE_URL}
-  #   depends_on:
-  #     - postgres
-  #   command: ./seed_db
+  db_seeder:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: seeder
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - postgres
+    command: ./seed_db
