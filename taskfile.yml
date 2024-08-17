@@ -1,0 +1,45 @@
+version: '3'
+
+tasks:
+  local:
+    desc: "Run Docker Compose with the local database"
+    vars:
+      LOCAL_DATABASE_URL: "postgres://postgres:postgres@postgres:5432/postgres"
+    cmds:
+      - export $(grep -v '^#' .env | xargs) && DATABASE_URL={{.LOCAL_DATABASE_URL}} docker-compose --profile local up --build
+
+  dev:
+    desc: "Run Docker Compose with the Heroku database"
+    cmds:
+      - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose --profile dev up --build
+
+  # seed_local:
+  #   desc: "Seed the local database"
+  #   cmds:
+  #     - DATABASE_URL=${LOCAL_DATABASE_URL} docker-compose run --rm db_seeder
+
+  # seed_dev:
+  #   desc: "Seed the development database"
+  #   cmds:
+  #     - DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
+
+  clean:
+    desc: "Clean up Docker containers"
+    cmds:
+      - docker-compose down
+
+  build_seeder:
+    desc: "Build the seed binary"
+    cmds:
+      - go build -o seed_db cmd/seed/seed.go
+
+  # run_seeder:
+  #   desc: "Run the seed binary"
+  #   cmds:
+  #     - SEED_DB=true ./seed_db
+
+  # seed:
+  #   desc: "Build and run the seeder"
+  #   cmds:
+  #     - task: build_seeder
+  #     - task: run_seeder
