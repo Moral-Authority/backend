@@ -9,13 +9,11 @@ import (
 
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
-	"github.com/Moral-Authority/backend/database"
 )
 
 // AddCertification is the resolver for the addCertification field.
 func (r *mutationResolver) AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error) {
-	dbService := &database.CertificationDbServiceImpl{} 
-	cert, err := handlers.CertificationService{}.AddNewCertification(input, dbService)
+	cert, err := handlers.CertificationService{}.AddNewCertification(input, nil)
 	if err != nil {
 		return cert, err
 	}
@@ -23,11 +21,9 @@ func (r *mutationResolver) AddCertification(ctx context.Context, input model.Add
 	return cert, nil
 }
 
-
 // UpdateCertification is the resolver for the updateCertification field.
 func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
-	dbService := &database.CertificationDbServiceImpl{} 
-	certs, err := handlers.CertificationService{}.UpdateCertification(input, dbService)
+	certs, err := handlers.CertificationService{}.UpdateCertification(input, nil)
 	if err != nil {
 		return certs, err
 	}
@@ -35,12 +31,12 @@ func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.
 	return nil, nil
 }
 
+// GetCertifications is the resolver for the getCertifications field.
 func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
-    dbService := &database.CertificationDbServiceImpl{} 
-    certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
-    if err != nil {
-        return certs, err
-    }
+	certs, err := handlers.CertificationService{}.GetAllCertifications(nil)
+	if err != nil {
+		return certs, err
+	}
 
-    return certs, nil
+	return certs, nil
 }
