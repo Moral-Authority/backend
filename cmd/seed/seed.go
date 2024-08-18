@@ -50,7 +50,7 @@ func seedCertifications(db *gorm.DB) {
 	fmt.Println("Current working directory:", dir)
 		
 	// Use the directory to open files
-	filePath := fmt.Sprintf("%s/seed/Certifications_Amazon.csv", dir)
+	filePath := fmt.Sprintf("%s/cmd/seed/Certifications_Amazon.csv", dir)
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -118,7 +118,7 @@ func seedCompanies(db *gorm.DB) {
 	fmt.Println("Current working directory:", dir)
 		
 	// Use the directory to open files
-	filePath := fmt.Sprintf("%s/seed/all-bcorps.csv", dir)
+	filePath := fmt.Sprintf("%s/cmd/seed/all-bcorps.csv", dir)
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
