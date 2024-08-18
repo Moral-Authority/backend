@@ -14,7 +14,6 @@ import (
 
 // AddCompany is the resolver for the addCompany field.
 func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddCompany) (*model.Company, error) {
-	// TODO figure out err for companydbserviceimpl
 	company, err := handlers.CompanyService{}.AddCompany(request, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
@@ -26,7 +25,8 @@ func (r *mutationResolver) AddCompany(ctx context.Context, request model.AddComp
 // GetCompany is the resolver for the getCompany field.
 func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Company, error) {
 	// TODO figure out err for companydbserviceimpl
-	company, err := handlers.CompanyService{}.GetCompanyById(id, nil)
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.CompanyService{}.GetCompanyById(id, dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -35,8 +35,8 @@ func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Compa
 
 // GetAllCompanies is the resolver for the getAllCompanies field.
 func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, error) {
-	// TODO figure out err for companydbserviceimpl
-	company, err := handlers.CompanyService{}.GetAllCompanies(nil)
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.CompanyService{}.GetAllCompanies(dbService)
 	if err != nil {
 		return nil, err
 	}

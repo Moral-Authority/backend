@@ -1,17 +1,18 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
 	"log"
 	"os"
-	"encoding/csv"
 	"strconv"
-    "strings"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	"strings"
+
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -35,8 +36,8 @@ func main() {
 
 	log.Println("Seeding the database...")
 	seedCertifications(db)
-    // log.Println("Seeding the companies...")
-    seedCompanies(db)
+	// log.Println("Seeding the companies...")
+	seedCompanies(db)
 	log.Println("Database seeding complete.")
 }
 
@@ -48,7 +49,7 @@ func seedCertifications(db *gorm.DB) {
 		log.Fatal(err)
 	}
 	fmt.Println("Current working directory:", dir)
-		
+
 	// Use the directory to open files
 	filePath := fmt.Sprintf("%s/cmd/seed/Certifications_Amazon.csv", dir)
 	file, err := os.Open(filePath)
@@ -75,7 +76,7 @@ func seedCertifications(db *gorm.DB) {
 
 	// Iterate over the records
 	for _, record := range records {
-        // log.Println("records", record)
+		// log.Println("records", record)
 		certifiesCompany, err := strconv.ParseBool(strings.TrimSpace(record[4]))
 		if err != nil {
 			logrus.Fatal(err)
@@ -98,7 +99,7 @@ func seedCertifications(db *gorm.DB) {
 		// Insert the certification into the database
 		result := db.Create(&cert)
 		if result.Error != nil {
-            log.Println("records", record)
+			log.Println("records", record)
 			logrus.Error("cert", cert)
 			logrus.Error(result.Error)
 		}
@@ -106,7 +107,6 @@ func seedCertifications(db *gorm.DB) {
 
 	logrus.Println("Certifications seeded into database.")
 }
-
 
 func seedCompanies(db *gorm.DB) {
 
@@ -116,7 +116,7 @@ func seedCompanies(db *gorm.DB) {
 		log.Fatal(err)
 	}
 	fmt.Println("Current working directory:", dir)
-		
+
 	// Use the directory to open files
 	filePath := fmt.Sprintf("%s/cmd/seed/all-bcorps.csv", dir)
 	file, err := os.Open(filePath)
@@ -149,7 +149,7 @@ func seedCompanies(db *gorm.DB) {
 			Url:         null.StringFrom(row[9]),
 			Description: null.NewString("", false),
 			UserId:      null.Int64From(0),
-			IsVerified:  null.Bool{Valid: false},
+			IsVerified:   null.Bool{Valid: false},
 			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
 		}
 
