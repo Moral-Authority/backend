@@ -34,9 +34,9 @@ func main() {
 	}
 
 	log.Println("Seeding the database...")
-	seedCertifications(db)
+	// seedCertifications(db)
     // log.Println("Seeding the companies...")
-    // seedCompanies(db)
+    seedCompanies(db)
 	log.Println("Database seeding complete.")
 }
 
