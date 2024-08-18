@@ -141,19 +141,15 @@ func seedCompanies(db *gorm.DB) {
 			break
 		}
 
-		// Parse data from CSV row into appropriate types
-		userId, _ := strconv.ParseInt(row[9], 10, 64)
-		isVerified, _ := strconv.ParseBool(row[10])
-
 		company := models.Company{
 			Name:        row[0],
-			City:        null.StringFrom(row[1]),
-			State:       null.StringFrom(row[2]),
-			Country:     null.StringFrom(row[3]),
-			Url:         null.StringFrom(row[4]),
-			Description: null.StringFrom(row[5]),
-			UserId:      null.Int64From(userId),
-			IsVerified:  null.BoolFrom(isVerified),
+			Country:     null.StringFrom(row[4]),
+			State:       null.StringFrom(row[5]),
+			City:        null.StringFrom(row[6]),
+			Url:         null.StringFrom(row[9]),
+			Description: null.NewString("", false),
+			UserId:      null.Int64From(0),
+			IsVerified:  null.Bool{Valid: false},
 			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
 		}
 
