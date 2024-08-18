@@ -41,3 +41,8 @@ docker-compose up
       - DATABASE_CONNECTION_PORT: db port
 
 Note : you can check to my documentation CRUD but you better use [Insomnia](https://insomnia.rest/), it was in this root directory with json format
+
+
+### Seed Db
+
+`heroku run go run cmd/seed/seed.go --app moral-authority-backend `

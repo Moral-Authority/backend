@@ -41,10 +41,19 @@ func main() {
 }
 
 func seedCertifications(db *gorm.DB) {
-	// Open the CSV file
-	file, err := os.Open("./seed/Certifications_Amazon.csv")
+
+	// Get the current working directory
+	dir, err := os.Getwd()
 	if err != nil {
-		logrus.Fatal(err)
+		log.Fatal(err)
+	}
+	fmt.Println("Current working directory:", dir)
+		
+	// Use the directory to open files
+	filePath := fmt.Sprintf("%s/seed/Certifications_Amazon.csv", dir)
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
 	}
 	defer file.Close()
 
@@ -100,8 +109,17 @@ func seedCertifications(db *gorm.DB) {
 
 
 func seedCompanies(db *gorm.DB) {
-	// Open the CSV file
-	file, err := os.Open("./seed/all-bcorps.csv")
+
+	// Get the current working directory
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Current working directory:", dir)
+		
+	// Use the directory to open files
+	filePath := fmt.Sprintf("%s/seed/all-bcorps.csv", dir)
+	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
 	}
