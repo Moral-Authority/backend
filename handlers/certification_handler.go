@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
@@ -32,7 +31,7 @@ func (s CertificationService) AddNewCertification(request model.AddCertification
 
 	addedCert, err := dbService.AddNewCertification(cert)
 	if err != nil || addedCert == nil {
-		return nil, errors.New(fmt.Sprintf("unable to add cert to db, ERROR: %s", err))
+		return nil, fmt.Errorf(fmt.Sprintf("unable to add cert to db, ERROR: %s", err))
 	}
 
 	return toCertificationResponse(*addedCert), nil
@@ -41,7 +40,7 @@ func (s CertificationService) AddNewCertification(request model.AddCertification
 func (s CertificationService) GetAllCertifications(dbService database.CertificationDbService) ([]*model.Certification, error) {
 	certs, err := dbService.GetAllCertifications()
 	if err != nil {
-		return nil, errors.New(fmt.Sprintf("unable to get certs from db, ERROR: %s", err))
+		return nil, fmt.Errorf(fmt.Sprintf("unable to get certs from db, ERROR: %s", err))
 	}
 
 	var response []*model.Certification
@@ -55,7 +54,7 @@ func (s CertificationService) GetAllCertifications(dbService database.Certificat
 func (s CertificationService) GetCertificationById(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
 	cert, err := dbService.GetCertificationById(certId)
 	if err != nil || cert == nil {
-		return nil, errors.New(fmt.Sprintf("unable to get cert from db, ERROR: %s", err))
+		return nil, fmt.Errorf("unable to get cert from db, ERROR: %s", err)
 	}
 
 	return toCertificationResponse(*cert), nil
@@ -65,7 +64,7 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 	// Retrieve the existing certification
 	cert, err := dbService.GetCertificationById(request.ID)
 	if err != nil || cert == nil {
-		return nil, errors.New(fmt.Sprintf("unable to get cert from db, ERROR: %s", err))
+		return nil, fmt.Errorf(fmt.Sprintf("unable to get cert from db, ERROR: %s", err))
 	}
 
 	// Update the fields

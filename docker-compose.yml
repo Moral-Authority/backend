@@ -13,7 +13,8 @@ services:
     ports:
       - "5432:5432"
     expose:
-      - 5432:5432
+      - "5432:5432"
+    
 
   backend_service:
     env_file:

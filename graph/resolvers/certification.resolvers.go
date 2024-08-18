@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
+	"github.com/Moral-Authority/backend/database"
 )
 
 // AddCertification is the resolver for the addCertification field.
@@ -31,12 +32,12 @@ func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.
 	return nil, nil
 }
 
-// GetCertifications is the resolver for the getCertifications field.
 func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
-	certs, err := handlers.CertificationService{}.GetAllCertifications(nil)
-	if err != nil {
-		return certs, fmt.Errorf("failed to retrieve certifications in resolver: %w", err.Error)
-	}
+    dbService := database.CertificationDbServiceImpl{}
+    certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
+    if err != nil {
+        return nil, fmt.Errorf("failed to retrieve certifications in resolver: %w", err)
+    }
 
-	return certs, nil
+    return certs, nil
 }

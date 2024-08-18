@@ -1,3 +1,5 @@
+version: '3'
+
 tasks:
   local:
     desc: "Run Docker Compose with the local database"
@@ -11,34 +13,47 @@ tasks:
     cmds:
       - export $(grep -v '^#' .env | xargs) && DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose --profile dev up --build
 
-  # Seed tasks that should only be run manually
-  seed_local:
-    desc: "Seed the local database"
-    cmds:
-      - DATABASE_URL={{.LOCAL_DATABASE_URL}} docker-compose run --rm db_seeder
+# tasks:
+#   init-db-docker:
+#     desc: Initialize PostgreSQL Docker image and volume
+#     cmds:
+#       - "[ -d postgres_data ] || mkdir postgres_data"
+#       - docker run --name=postgres -p 5432:5432 -e POSTGRES_PASSWORD=root -e PGDATA=/var/lib/postgresql/data/pgdata --volume=`pwd`/postgres_data:/var/lib/postgresql/data -d postgres:13
 
-  seed_dev:
-    desc: "Seed the development database"
-    cmds:
-      - DATABASE_URL=${HEROKU_DATABASE_URL} docker-compose run --rm db_seeder
+#   create-db:
+#     desc: Create empty local DB
+#     cmds:
+#       - sql-migrate up -config=db/create-database/empty.yml -env="local-postgres"
 
-  clean:
-    desc: "Clean up Docker containers"
-    cmds:
-      - docker-compose down
+#   create-schema:
+#     desc: Create schema for local DB
+#     cmds:
+#       - sql-migrate up -config=db/create-schema/dray.yml -env="local-postgres"
 
-  build_seeder:
-    desc: "Build the seed binary"
-    cmds:
-      - go build -o seed_db cmd/seed/seed.go
+#   db-dump:
+#     desc: dumps the dray schema to a SQL file, appends migration commands
+#     cmds:
+#       # Explanation of flags:
+#       # -s schema only
+#       # -O, no owner, don't assign tables, etc to a user/role
+#       # -T gorp_migrations, exclude this table from the dump
+#       - pg_dump -U postgres -d dray -h db -s -O -T  > db/dump.sql
 
-  run_seeder:
-    desc: "Run the seed binary"
-    cmds:
-      - SEED_DB=true ./seed_db
+#   drop-db:
+#     desc: Drop local DB
+#     cmds:
+#       # At this time there is no ability to prompt before performing a command,
+#       # but I brought this up in an issue to the project maintainer.
+#       - sql-migrate down -config=db/create-database/empty.yml -env="local-postgres"
 
-  seed:
-    desc: "Build and run the seeder"
-    cmds:
-      - task: build_seeder
-      - task: run_seeder
+#   start-db:
+#     desc: Start local DB container
+#     cmds:
+#       - docker start postgres
+
+#   stop-db:
+#     desc: Stop local DB container
+#     cmds:
+#       - docker stop postgres
+
+

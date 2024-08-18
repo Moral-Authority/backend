@@ -34,24 +34,3 @@ EXPOSE 8080
 
 # Run the main application
 CMD ["./main"]
-
-# # Seeder Stage
-# FROM golang:1.23-alpine AS seeder
-
-# # Set the Current Working Directory inside the container
-# WORKDIR /app
-
-# # Copy go mod and sum files
-# COPY go.mod go.sum ./
-
-# # Download all dependencies
-# RUN go mod download
-
-# # Copy the source code from the current directory to the Working Directory inside the container
-# COPY . .
-
-# # Build the seed_db binary inside the container
-# RUN go build -o seed_db cmd/seed/seed.go
-
-# # Command to run the seeding script
-# CMD ["./seed_db"]
