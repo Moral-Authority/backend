@@ -1,8 +1,7 @@
 version: '3'
-      # - DATABASE_URL=${DATABASE_URL}
-# Define services
+
 services:
-  postgres:
+  local:
     image: postgres
     hostname: postgres
     container_name: postgres
@@ -28,19 +27,8 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
       - SERVER_PORT=${SERVER_PORT}
       - SERVER_NAME=${SERVER_NAME}
-      - DATABASE_URL=postgres://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_CONNECTION_URL}/${DATABASE_NAME}?sslmode=require
+      - DATABASE_URL=${HEROKU_DATABASE_CONNECTION_URL}
     ports:
       - "8080:8080"
     restart: unless-stopped
     command: ["sh", "-c", "env && sleep 3600"]
-
-  db_seeder:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: seeder
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-    depends_on:
-      - postgres
-    command: ./seed_db

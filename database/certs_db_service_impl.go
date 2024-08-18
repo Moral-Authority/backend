@@ -3,6 +3,7 @@ package database
 import (
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
+	"fmt"
 )
 
 type CertificationDbServiceImpl struct{}
@@ -27,7 +28,7 @@ func (s CertificationDbServiceImpl) GetAllCertifications() ([]models.Certificati
 	result := GetDbConn().Find(&certs)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all certification, %s", result.Error)
-		return nil, result.Error
+		return nil, fmt.Errorf("failed to retrieve certifications: %w", result.Error)
 	}
 	return certs, nil
 }

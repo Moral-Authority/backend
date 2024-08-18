@@ -6,7 +6,7 @@ package resolvers
 
 import (
 	"context"
-
+	"fmt"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
 )
@@ -35,7 +35,7 @@ func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.
 func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
 	certs, err := handlers.CertificationService{}.GetAllCertifications(nil)
 	if err != nil {
-		return certs, err
+		return certs, fmt.Errorf("failed to retrieve certifications in resolver: %w", err.Error)
 	}
 
 	return certs, nil
