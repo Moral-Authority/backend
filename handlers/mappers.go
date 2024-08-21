@@ -114,8 +114,8 @@ func toCompanyResponse(company *models.Company) *model.Company {
 	}
 
 	return &model.Company{
-		ID:      UintPtrToStringPtr(&company.ID),
-		Name:    &company.Name,
+		ID:      *UintPtrToStringPtr(&company.ID),
+		Name:    company.Name,
 		City:    City,
 		State:   State,
 		Country: Country,

@@ -71,16 +71,34 @@ type ComplexityRoot struct {
 	}
 
 	Company struct {
-		City        func(childComplexity int) int
-		Country     func(childComplexity int) int
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		IsVerified  func(childComplexity int) int
-		Logo        func(childComplexity int) int
-		Name        func(childComplexity int) int
-		State       func(childComplexity int) int
-		URL         func(childComplexity int) int
-		User        func(childComplexity int) int
+		City                  func(childComplexity int) int
+		CompanyCertifications func(childComplexity int) int
+		CompanyProducts       func(childComplexity int) int
+		Country               func(childComplexity int) int
+		Description           func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		IsVerified            func(childComplexity int) int
+		Logo                  func(childComplexity int) int
+		Name                  func(childComplexity int) int
+		State                 func(childComplexity int) int
+		URL                   func(childComplexity int) int
+		User                  func(childComplexity int) int
+	}
+
+	CompanyCertification struct {
+		Certification  func(childComplexity int) int
+		CertifiedAt    func(childComplexity int) int
+		Company        func(childComplexity int) int
+		ExpirationDate func(childComplexity int) int
+		OtherDetails   func(childComplexity int) int
+	}
+
+	CompanyProduct struct {
+		Company        func(childComplexity int) int
+		DiscontinuedAt func(childComplexity int) int
+		LaunchedAt     func(childComplexity int) int
+		OtherDetails   func(childComplexity int) int
+		Product        func(childComplexity int) int
 	}
 
 	Favourite struct {
@@ -97,19 +115,20 @@ type ComplexityRoot struct {
 	Mutation struct {
 		AddCategory         func(childComplexity int, input model.AddCategory) int
 		AddCertification    func(childComplexity int, input model.AddCertification) int
-		AddCompany          func(childComplexity int, request model.AddCompany) int
+		AddCompany          func(childComplexity int, input model.AddCompany) int
 		AddFav              func(childComplexity int, request model.AddUserFav) int
-		AddProduct          func(childComplexity int, request model.AddProductRequest) int
+		AddProduct          func(childComplexity int, input model.AddProductRequest) int
 		AddUser             func(childComplexity int, input model.NewUser) int
 		BaseMutation        func(childComplexity int) int
 		UpdateCertification func(childComplexity int, input model.UpdateCertification) int
+		UpdateCompany       func(childComplexity int, input model.UpdateCompany) int
+		UpdateProduct       func(childComplexity int, input model.UpdateProductRequest) int
 		UpdateUser          func(childComplexity int, input model.UpdateUser) int
 	}
 
 	Product struct {
 		Category                func(childComplexity int) int
-		Certification           func(childComplexity int) int
-		CompanyCertifications   func(childComplexity int) int
+		Company                 func(childComplexity int) int
 		Department              func(childComplexity int) int
 		Description             func(childComplexity int) int
 		GiveBackPrograms        func(childComplexity int) int
@@ -129,6 +148,14 @@ type ComplexityRoot struct {
 		VerifiedBy              func(childComplexity int) int
 	}
 
+	ProductCertification struct {
+		Certification  func(childComplexity int) int
+		CertifiedAt    func(childComplexity int) int
+		ExpirationDate func(childComplexity int) int
+		OtherDetails   func(childComplexity int) int
+		Product        func(childComplexity int) int
+	}
+
 	PurchaseInfo struct {
 		Company func(childComplexity int) int
 		Link    func(childComplexity int) int
@@ -141,7 +168,9 @@ type ComplexityRoot struct {
 		GetAllCategories     func(childComplexity int) int
 		GetAllCertifications func(childComplexity int) int
 		GetAllCompanies      func(childComplexity int) int
+		GetAllProducts       func(childComplexity int) int
 		GetCompany           func(childComplexity int, id string) int
+		GetProduct           func(childComplexity int, id string) int
 		User                 func(childComplexity int, id string) int
 		Users                func(childComplexity int) int
 	}
@@ -341,6 +370,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Company.City(childComplexity), true
 
+	case "Company.companyCertifications":
+		if e.complexity.Company.CompanyCertifications == nil {
+			break
+		}
+
+		return e.complexity.Company.CompanyCertifications(childComplexity), true
+
+	case "Company.companyProducts":
+		if e.complexity.Company.CompanyProducts == nil {
+			break
+		}
+
+		return e.complexity.Company.CompanyProducts(childComplexity), true
+
 	case "Company.country":
 		if e.complexity.Company.Country == nil {
 			break
@@ -403,6 +446,76 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Company.User(childComplexity), true
+
+	case "CompanyCertification.certification":
+		if e.complexity.CompanyCertification.Certification == nil {
+			break
+		}
+
+		return e.complexity.CompanyCertification.Certification(childComplexity), true
+
+	case "CompanyCertification.certifiedAt":
+		if e.complexity.CompanyCertification.CertifiedAt == nil {
+			break
+		}
+
+		return e.complexity.CompanyCertification.CertifiedAt(childComplexity), true
+
+	case "CompanyCertification.company":
+		if e.complexity.CompanyCertification.Company == nil {
+			break
+		}
+
+		return e.complexity.CompanyCertification.Company(childComplexity), true
+
+	case "CompanyCertification.expirationDate":
+		if e.complexity.CompanyCertification.ExpirationDate == nil {
+			break
+		}
+
+		return e.complexity.CompanyCertification.ExpirationDate(childComplexity), true
+
+	case "CompanyCertification.otherDetails":
+		if e.complexity.CompanyCertification.OtherDetails == nil {
+			break
+		}
+
+		return e.complexity.CompanyCertification.OtherDetails(childComplexity), true
+
+	case "CompanyProduct.company":
+		if e.complexity.CompanyProduct.Company == nil {
+			break
+		}
+
+		return e.complexity.CompanyProduct.Company(childComplexity), true
+
+	case "CompanyProduct.discontinuedAt":
+		if e.complexity.CompanyProduct.DiscontinuedAt == nil {
+			break
+		}
+
+		return e.complexity.CompanyProduct.DiscontinuedAt(childComplexity), true
+
+	case "CompanyProduct.launchedAt":
+		if e.complexity.CompanyProduct.LaunchedAt == nil {
+			break
+		}
+
+		return e.complexity.CompanyProduct.LaunchedAt(childComplexity), true
+
+	case "CompanyProduct.otherDetails":
+		if e.complexity.CompanyProduct.OtherDetails == nil {
+			break
+		}
+
+		return e.complexity.CompanyProduct.OtherDetails(childComplexity), true
+
+	case "CompanyProduct.product":
+		if e.complexity.CompanyProduct.Product == nil {
+			break
+		}
+
+		return e.complexity.CompanyProduct.Product(childComplexity), true
 
 	case "Favourite.id":
 		if e.complexity.Favourite.ID == nil {
@@ -473,7 +586,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddCompany(childComplexity, args["request"].(model.AddCompany)), true
+		return e.complexity.Mutation.AddCompany(childComplexity, args["input"].(model.AddCompany)), true
 
 	case "Mutation.addFav":
 		if e.complexity.Mutation.AddFav == nil {
@@ -497,7 +610,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddProduct(childComplexity, args["request"].(model.AddProductRequest)), true
+		return e.complexity.Mutation.AddProduct(childComplexity, args["input"].(model.AddProductRequest)), true
 
 	case "Mutation.addUser":
 		if e.complexity.Mutation.AddUser == nil {
@@ -530,6 +643,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateCertification(childComplexity, args["input"].(model.UpdateCertification)), true
 
+	case "Mutation.updateCompany":
+		if e.complexity.Mutation.UpdateCompany == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateCompany_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateCompany(childComplexity, args["input"].(model.UpdateCompany)), true
+
+	case "Mutation.updateProduct":
+		if e.complexity.Mutation.UpdateProduct == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateProduct_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateProduct(childComplexity, args["input"].(model.UpdateProductRequest)), true
+
 	case "Mutation.updateUser":
 		if e.complexity.Mutation.UpdateUser == nil {
 			break
@@ -549,19 +686,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.Category(childComplexity), true
 
-	case "Product.Certification":
-		if e.complexity.Product.Certification == nil {
+	case "Product.company":
+		if e.complexity.Product.Company == nil {
 			break
 		}
 
-		return e.complexity.Product.Certification(childComplexity), true
-
-	case "Product.CompanyCertifications":
-		if e.complexity.Product.CompanyCertifications == nil {
-			break
-		}
-
-		return e.complexity.Product.CompanyCertifications(childComplexity), true
+		return e.complexity.Product.Company(childComplexity), true
 
 	case "Product.Department":
 		if e.complexity.Product.Department == nil {
@@ -612,7 +742,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.OwnersAndFounders(childComplexity), true
 
-	case "Product.ProductCertifications":
+	case "Product.productCertifications":
 		if e.complexity.Product.ProductCertifications == nil {
 			break
 		}
@@ -682,6 +812,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.VerifiedBy(childComplexity), true
 
+	case "ProductCertification.certification":
+		if e.complexity.ProductCertification.Certification == nil {
+			break
+		}
+
+		return e.complexity.ProductCertification.Certification(childComplexity), true
+
+	case "ProductCertification.certifiedAt":
+		if e.complexity.ProductCertification.CertifiedAt == nil {
+			break
+		}
+
+		return e.complexity.ProductCertification.CertifiedAt(childComplexity), true
+
+	case "ProductCertification.expirationDate":
+		if e.complexity.ProductCertification.ExpirationDate == nil {
+			break
+		}
+
+		return e.complexity.ProductCertification.ExpirationDate(childComplexity), true
+
+	case "ProductCertification.otherDetails":
+		if e.complexity.ProductCertification.OtherDetails == nil {
+			break
+		}
+
+		return e.complexity.ProductCertification.OtherDetails(childComplexity), true
+
+	case "ProductCertification.product":
+		if e.complexity.ProductCertification.Product == nil {
+			break
+		}
+
+		return e.complexity.ProductCertification.Product(childComplexity), true
+
 	case "PurchaseInfo.Company":
 		if e.complexity.PurchaseInfo.Company == nil {
 			break
@@ -738,6 +903,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllCompanies(childComplexity), true
 
+	case "Query.getAllProducts":
+		if e.complexity.Query.GetAllProducts == nil {
+			break
+		}
+
+		return e.complexity.Query.GetAllProducts(childComplexity), true
+
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
 			break
@@ -749,6 +921,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.GetCompany(childComplexity, args["id"].(string)), true
+
+	case "Query.getProduct":
+		if e.complexity.Query.GetProduct == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getProduct_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetProduct(childComplexity, args["id"].(string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -811,9 +995,14 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputCategorizationInput,
+		ec.unmarshalInputCompanyCertificationInput,
+		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputNewUser,
+		ec.unmarshalInputProductCertificationInput,
 		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputUpdateCertification,
+		ec.unmarshalInputUpdateCompany,
+		ec.unmarshalInputUpdateProductRequest,
 		ec.unmarshalInputUpdateUser,
 	)
 	first := true
@@ -978,9 +1167,9 @@ type Certification {
     CreatedAt: String
     UpdatedAt: String
 }`, BuiltIn: false},
-	{Name: "../company.graphqls", Input: `
-extend type Mutation {
-    addCompany(request: AddCompany!): Company!
+	{Name: "../company.graphqls", Input: `extend type Mutation {
+    addCompany(input: AddCompany!): Company!
+    updateCompany(input: UpdateCompany!): Company!
 }
 
 extend type Query {
@@ -989,8 +1178,8 @@ extend type Query {
 }
 
 type Company {
-    _id: String
-    name: String
+    _id: String!
+    name: String!
     url: String
     description: String
     city: String
@@ -999,9 +1188,25 @@ type Company {
     user: User
     isVerified: Boolean
     logo: String
+    companyCertifications: [CompanyCertification!] # Relationship with CompanyCertification
+    companyProducts: [CompanyProduct!] # Relationship with CompanyProduct
 }
 
 input AddCompany {
+    name: String!
+    url: String
+    description: String
+    city: String
+    state: String
+    country: String
+    isVerified: Boolean
+    logo: String
+    certifications: [CompanyCertificationInput!] # Input for relational table
+    products: [CompanyProductInput!] # Input for relational table
+}
+
+input UpdateCompany {
+    ID: String!
     name: String
     url: String
     description: String
@@ -1010,8 +1215,43 @@ input AddCompany {
     country: String
     isVerified: Boolean
     logo: String
-    certifications: [AddCertification]
-}`, BuiltIn: false},
+    certifications: [CompanyCertificationInput!] # Input for relational table
+    products: [CompanyProductInput!] # Input for relational table
+}
+`, BuiltIn: false},
+	{Name: "../companyCertification.graphqls", Input: `# Relational table to manage company certifications
+
+type CompanyCertification {
+    company: Company!
+    certification: Certification!
+    certifiedAt: String # Date when the certification was granted
+    expirationDate: String # Expiration date of the certification if applicable
+    otherDetails: String # Any other details specific to the company-certification relationship
+}
+
+input CompanyCertificationInput {
+    certificationID: String!
+    certifiedAt: String
+    expirationDate: String
+    otherDetails: String
+}
+`, BuiltIn: false},
+	{Name: "../companyProducts.graphqls", Input: `# Relational table to manage company products
+type CompanyProduct {
+    company: Company!
+    product: Product!
+    launchedAt: String # Date when the product was launched by the company
+    discontinuedAt: String # Date when the product was discontinued if applicable
+    otherDetails: String # Any other details specific to the company-product relationship
+}
+
+input CompanyProductInput {
+    productID: String!
+    launchedAt: String
+    discontinuedAt: String
+    otherDetails: String
+}
+`, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
     addFav(request: AddUserFav!): [Favourite]
 }
@@ -1101,45 +1341,42 @@ type Category {
 
 `, BuiltIn: false},
 	{Name: "../product.graphqls", Input: `extend type Mutation {
-    addProduct(request: AddProductRequest!): Product!
+    addProduct(input: AddProductRequest!): Product!
+    updateProduct(input: UpdateProductRequest!): Product!
+}
+
+extend type Query {
+    getProduct(id: String!): Product!
+    getAllProducts: [Product!]
 }
 
 input AddProductRequest {
     Title: String!
     Description: String!
     Categorization: CategorizationInput!
-    Certifications: [Int]
+    Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
+    CompanyID: String! # Reference to the Company ID
 }
 
-input PurchaseInfoInput {
-    Price: String!
-    Link: String!
-    Rating: String
-    Company: String
-    IfOtherCompany: String
-}
-
-
-
-input CategorizationInput {
-    Section: String
-    SubSection: String
-    Department: String
-    Category: String
-    SubCategory:String
-    Type: String
-    Style: String
+input UpdateProductRequest {
+    ID: String!
+    Title: String
+    Description: String
+    Categorization: CategorizationInput
+    Certifications: [ProductCertificationInput!] # Input for relational table
+    PurchaseInfo: PurchaseInfoInput
+    ImageLinks: [String]
+    CompanyID: String
 }
 
 type Product {
     _id: String!
     Title: String!
     Description: String!
-    Certification: Certification!
-    ProductCertifications: [String]
-    CompanyCertifications:[String]
+    productCertifications: [ProductCertification!] # Relationship with ProductCertification
+    company: Company! # Reference to the Company
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
@@ -1156,12 +1393,47 @@ type Product {
     VerifiedBy: [String]
 }
 
+input PurchaseInfoInput {
+    Price: String!
+    Link: String!
+    Rating: String
+    Company: String
+    IfOtherCompany: String
+}
+
+input CategorizationInput {
+    Section: String
+    SubSection: String
+    Department: String
+    Category: String
+    SubCategory: String
+    Type: String
+    Style: String
+}
+
 type PurchaseInfo {
     Price: String
     Link: String
     Company: String
     Rating: String
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
+	{Name: "../productCertification.graphqls", Input: `# Relational table to manage product certifications
+type ProductCertification {
+    product: Product!
+    certification: Certification!
+    certifiedAt: String # Date when the certification was granted
+    expirationDate: String # Expiration date of the certification if applicable
+    otherDetails: String # Any other details specific to the product-certification relationship
+}
+
+input ProductCertificationInput {
+    certificationID: String!
+    certifiedAt: String
+    expirationDate: String
+    otherDetails: String
+}
+`, BuiltIn: false},
 	{Name: "../schema.graphqls", Input: `
 schema {
   query: Query

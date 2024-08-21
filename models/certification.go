@@ -22,4 +22,6 @@ type Certification struct {
 	Region             null.String `json:"region"`
 	Qualifiers         null.String `json:"qualifiers"`
 	Sources            null.String `json:"sources"`
+	CompanyCertifications []CompanyCertification `gorm:"foreignKey:CertificationID"`
+	ProductCertifications []ProductCertification `gorm:"foreignKey:CertificationID"`
 }

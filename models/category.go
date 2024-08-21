@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type ProductCategories struct {
 	gorm.Model
-	CategoryId uint `gorm:"foreignKey:CategoryRefer"`
-	ProductId  uint `gorm:"foreignKey:ProductRefer"`
+	CategoryID uint `gorm:"foreignKey:CategoryRefer"`
+	ProductID  uint `gorm:"foreignKey:ProductRefer"`
 }
 
 type Category struct {
@@ -13,4 +13,5 @@ type Category struct {
 	Name     string
 	Type     string
 	ParentID *uint `gorm:"foreignKey:CategoryRefer"`
+	Products []Product `gorm:"many2many:product_categories;"` // Many-to-many relationship with Product
 }

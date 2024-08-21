@@ -17,34 +17,34 @@ func (s CompanyService) AddCompany(request model.AddCompany, dbService database.
     // }
 
 	company := models.Company{
-		Name: *request.Name,
+		Name: request.Name,
 	}
 
-	if &request.Logo != nil {
+	if  request.Logo != nil {
 		company.Image = null.StringFrom(*request.Logo)
 	}
 
-	if &request.URL != nil {
+	if  request.URL != nil {
 		company.Url = null.StringFrom(*request.URL)
 
 	}
 
-	if &request.Description != nil {
+	if  request.Description != nil {
 		company.Description = null.StringFrom(*request.Description)
 
 	}
 
-	if &request.City != nil {
+	if  request.City != nil {
 		company.City = null.StringFrom(*request.City)
 
 	}
 
-	if &request.State != nil {
+	if  request.State != nil {
 		company.State = null.StringFrom(*request.State)
 
 	}
 
-	if &request.Country != nil {
+	if  request.Country != nil {
 		company.Country = null.StringFrom(*request.Country)
 
 	}

@@ -54,6 +54,10 @@ func performMigrations(db *gorm.DB) {
 		&models.LoginCredentials{},
 		&models.Product{},
 		&models.User{},
+		&models.CompanyCertification{}, 
+		&models.ProductCertification{},
+		&models.CompanyProduct{},
+		&models.ProductCategories{},
 	)
 	if err != nil {
 		panic("unable to perform migrations...")

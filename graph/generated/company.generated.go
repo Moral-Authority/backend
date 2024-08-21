@@ -50,11 +50,14 @@ func (ec *executionContext) _Company__id(ctx context.Context, field graphql.Coll
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Company__id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -91,11 +94,14 @@ func (ec *executionContext) _Company_name(ctx context.Context, field graphql.Col
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Company_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -449,6 +455,112 @@ func (ec *executionContext) fieldContext_Company_logo(_ context.Context, field g
 	return fc, nil
 }
 
+func (ec *executionContext) _Company_companyCertifications(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_companyCertifications(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CompanyCertifications, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.CompanyCertification)
+	fc.Result = res
+	return ec.marshalOCompanyCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertificationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_companyCertifications(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "company":
+				return ec.fieldContext_CompanyCertification_company(ctx, field)
+			case "certification":
+				return ec.fieldContext_CompanyCertification_certification(ctx, field)
+			case "certifiedAt":
+				return ec.fieldContext_CompanyCertification_certifiedAt(ctx, field)
+			case "expirationDate":
+				return ec.fieldContext_CompanyCertification_expirationDate(ctx, field)
+			case "otherDetails":
+				return ec.fieldContext_CompanyCertification_otherDetails(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type CompanyCertification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Company_companyProducts(ctx context.Context, field graphql.CollectedField, obj *model.Company) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Company_companyProducts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CompanyProducts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.CompanyProduct)
+	fc.Result = res
+	return ec.marshalOCompanyProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyProductᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Company",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "company":
+				return ec.fieldContext_CompanyProduct_company(ctx, field)
+			case "product":
+				return ec.fieldContext_CompanyProduct_product(ctx, field)
+			case "launchedAt":
+				return ec.fieldContext_CompanyProduct_launchedAt(ctx, field)
+			case "discontinuedAt":
+				return ec.fieldContext_CompanyProduct_discontinuedAt(ctx, field)
+			case "otherDetails":
+				return ec.fieldContext_CompanyProduct_otherDetails(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type CompanyProduct", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -460,13 +572,110 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"name", "url", "description", "city", "state", "country", "isVerified", "logo", "certifications"}
+	fieldsInOrder := [...]string{"name", "url", "description", "city", "state", "country", "isVerified", "logo", "certifications", "products"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
+		case "name":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "url":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.URL = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "city":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("city"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.City = data
+		case "state":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("state"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.State = data
+		case "country":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("country"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Country = data
+		case "isVerified":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isVerified"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IsVerified = data
+		case "logo":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("logo"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Logo = data
+		case "certifications":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifications"))
+			data, err := ec.unmarshalOCompanyCertificationInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertificationInputᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Certifications = data
+		case "products":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("products"))
+			data, err := ec.unmarshalOCompanyProductInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyProductInputᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Products = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputUpdateCompany(ctx context.Context, obj interface{}) (model.UpdateCompany, error) {
+	var it model.UpdateCompany
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"ID", "name", "url", "description", "city", "state", "country", "isVerified", "logo", "certifications", "products"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "ID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ID"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
 		case "name":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -525,11 +734,18 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 			it.Logo = data
 		case "certifications":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifications"))
-			data, err := ec.unmarshalOAddCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddCertification(ctx, v)
+			data, err := ec.unmarshalOCompanyCertificationInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertificationInputᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.Certifications = data
+		case "products":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("products"))
+			data, err := ec.unmarshalOCompanyProductInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyProductInputᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Products = data
 		}
 	}
 
@@ -557,8 +773,14 @@ func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = graphql.MarshalString("Company")
 		case "_id":
 			out.Values[i] = ec._Company__id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "name":
 			out.Values[i] = ec._Company_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "url":
 			out.Values[i] = ec._Company_url(ctx, field, obj)
 		case "description":
@@ -575,6 +797,10 @@ func (ec *executionContext) _Company(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Company_isVerified(ctx, field, obj)
 		case "logo":
 			out.Values[i] = ec._Company_logo(ctx, field, obj)
+		case "companyCertifications":
+			out.Values[i] = ec._Company_companyCertifications(ctx, field, obj)
+		case "companyProducts":
+			out.Values[i] = ec._Company_companyProducts(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -619,6 +845,11 @@ func (ec *executionContext) marshalNCompany2ᚖgithubᚗcomᚋMoralᚑAuthority�
 		return graphql.Null
 	}
 	return ec._Company(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNUpdateCompany2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUpdateCompany(ctx context.Context, v interface{}) (model.UpdateCompany, error) {
+	res, err := ec.unmarshalInputUpdateCompany(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Company) graphql.Marshaler {

@@ -8,12 +8,23 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddProduct is the resolver for the addProduct field.
 func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: AddProduct - addProduct"))
+	product, err := handlers.ProductService{}.AddNewProduct(
+		request,
+		database.ProductDbServiceImpl{},
+		database.ImageDbServiceImpl{},
+	)
+	if err == nil {
+		return product, nil
+	} else {
+		return nil, err
+	}
 }
 
 // UpdateProduct is the resolver for the updateProduct field.

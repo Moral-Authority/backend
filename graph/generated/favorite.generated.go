@@ -172,12 +172,10 @@ func (ec *executionContext) fieldContext_Favourite_product(_ context.Context, fi
 				return ec.fieldContext_Product_Title(ctx, field)
 			case "Description":
 				return ec.fieldContext_Product_Description(ctx, field)
-			case "Certification":
-				return ec.fieldContext_Product_Certification(ctx, field)
-			case "ProductCertifications":
-				return ec.fieldContext_Product_ProductCertifications(ctx, field)
-			case "CompanyCertifications":
-				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
+			case "productCertifications":
+				return ec.fieldContext_Product_productCertifications(ctx, field)
+			case "company":
+				return ec.fieldContext_Product_company(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":

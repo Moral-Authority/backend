@@ -2,10 +2,11 @@ package models
 
 import "gorm.io/gorm"
 
-
 type Product struct {
 	gorm.Model
-	Url         string
-	Description string
-	Title       string
+	Title                 string
+	Description           string
+	Url                   string
+	ProductCertifications []ProductCertification `gorm:"foreignKey:ProductID"`
+	CompanyProducts       []CompanyProduct       `gorm:"foreignKey:ProductID"`
 }
