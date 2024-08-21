@@ -1,6 +1,6 @@
-
 extend type Mutation {
-    addCompany(request: AddCompany!): Company!
+    addCompany(input: AddCompany!): Company!
+    updateCompany(input: UpdateCompany!): Company!
 }
 
 extend type Query {
@@ -9,8 +9,8 @@ extend type Query {
 }
 
 type Company {
-    _id: String
-    name: String
+    _id: String!
+    name: String!
     url: String
     description: String
     city: String
@@ -19,9 +19,25 @@ type Company {
     user: User
     isVerified: Boolean
     logo: String
+    companyCertifications: [CompanyCertification!] # Relationship with CompanyCertification
+    companyProducts: [CompanyProduct!] # Relationship with CompanyProduct
 }
 
 input AddCompany {
+    name: String!
+    url: String
+    description: String
+    city: String
+    state: String
+    country: String
+    isVerified: Boolean
+    logo: String
+    certifications: [CompanyCertificationInput!] # Input for relational table
+    products: [CompanyProductInput!] # Input for relational table
+}
+
+input UpdateCompany {
+    ID: String!
     name: String
     url: String
     description: String
@@ -30,5 +46,6 @@ input AddCompany {
     country: String
     isVerified: Boolean
     logo: String
-    certifications: [AddCertification]
+    certifications: [CompanyCertificationInput!] # Input for relational table
+    products: [CompanyProductInput!] # Input for relational table
 }

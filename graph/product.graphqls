@@ -1,43 +1,40 @@
 extend type Mutation {
-    addProduct(request: AddProductRequest!): Product!
+    addProduct(input: AddProductRequest!): Product!
+    updateProduct(input: UpdateProductRequest!): Product!
+}
+
+extend type Query {
+    getProduct(id: String!): Product!
+    getAllProducts: [Product!]
 }
 
 input AddProductRequest {
     Title: String!
     Description: String!
     Categorization: CategorizationInput!
-    Certifications: [Int]
+    Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
+    CompanyID: String! # Reference to the Company ID
 }
 
-input PurchaseInfoInput {
-    Price: String!
-    Link: String!
-    Rating: String
-    Company: String
-    IfOtherCompany: String
-}
-
-
-
-input CategorizationInput {
-    Section: String
-    SubSection: String
-    Department: String
-    Category: String
-    SubCategory:String
-    Type: String
-    Style: String
+input UpdateProductRequest {
+    ID: String!
+    Title: String
+    Description: String
+    Categorization: CategorizationInput
+    Certifications: [ProductCertificationInput!] # Input for relational table
+    PurchaseInfo: PurchaseInfoInput
+    ImageLinks: [String]
+    CompanyID: String
 }
 
 type Product {
     _id: String!
     Title: String!
     Description: String!
-    Certification: Certification!
-    ProductCertifications: [String]
-    CompanyCertifications:[String]
+    productCertifications: [ProductCertification!] # Relationship with ProductCertification
+    company: Company! # Reference to the Company
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
@@ -52,6 +49,24 @@ type Product {
     PurchaseInfo: [PurchaseInfo]
     Verified: Boolean
     VerifiedBy: [String]
+}
+
+input PurchaseInfoInput {
+    Price: String!
+    Link: String!
+    Rating: String
+    Company: String
+    IfOtherCompany: String
+}
+
+input CategorizationInput {
+    Section: String
+    SubSection: String
+    Department: String
+    Category: String
+    SubCategory: String
+    Type: String
+    Style: String
 }
 
 type PurchaseInfo {

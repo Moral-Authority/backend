@@ -1,0 +1,16 @@
+# Relational table to manage company certifications
+
+type CompanyCertification {
+    company: Company!
+    certification: Certification!
+    certifiedAt: String # Date when the certification was granted
+    expirationDate: String # Expiration date of the certification if applicable
+    otherDetails: String # Any other details specific to the company-certification relationship
+}
+
+input CompanyCertificationInput {
+    certificationID: String!
+    certifiedAt: String
+    expirationDate: String
+    otherDetails: String
+}

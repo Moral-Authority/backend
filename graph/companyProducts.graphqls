@@ -1,0 +1,15 @@
+# Relational table to manage company products
+type CompanyProduct {
+    company: Company!
+    product: Product!
+    launchedAt: String # Date when the product was launched by the company
+    discontinuedAt: String # Date when the product was discontinued if applicable
+    otherDetails: String # Any other details specific to the company-product relationship
+}
+
+input CompanyProductInput {
+    productID: String!
+    launchedAt: String
+    discontinuedAt: String
+    otherDetails: String
+}

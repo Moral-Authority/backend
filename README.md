@@ -43,6 +43,9 @@ docker-compose up
 Note : you can check to my documentation CRUD but you better use [Insomnia](https://insomnia.rest/), it was in this root directory with json format
 
 
-### Seed Db
+### Seed DB
 
 `heroku run go run cmd/seed/seed.go --app moral-authority-backend `
+
+
+### Dump DB

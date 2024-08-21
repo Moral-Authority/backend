@@ -1,0 +1,15 @@
+# Relational table to manage product certifications
+type ProductCertification {
+    product: Product!
+    certification: Certification!
+    certifiedAt: String # Date when the certification was granted
+    expirationDate: String # Expiration date of the certification if applicable
+    otherDetails: String # Any other details specific to the product-certification relationship
+}
+
+input ProductCertificationInput {
+    certificationID: String!
+    certifiedAt: String
+    expirationDate: String
+    otherDetails: String
+}
