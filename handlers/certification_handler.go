@@ -92,20 +92,16 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 }
 
 
+func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, dbService database.CertificationDbService) ([]*model.Certification, error) {
+	certs, err := dbService.GetCertificationsByFilter(filters)
+	if err != nil {
+		return nil, err
+	}
 
-func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error) {
-    var certs []models.Certification
-    query := s.db
+	var result []*model.Certification
+	for _, cert := range certs {
+		result = append(result, toCertificationResponse(cert))
+	}
 
-    // Apply filters
-    for key, value := range filters {
-        if value != "" && value != nil {
-            query = query.Where(key+" = ?", value)
-        }
-    }
-
-    if err := query.Find(&certs).Error; err != nil {
-        return nil, err
-    }
-    return certs, nil
+	return result, nil
 }
