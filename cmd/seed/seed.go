@@ -76,18 +76,23 @@ func seedCertifications(db *gorm.DB) {
 
 	// Iterate over the records
 	for _, record := range records {
-		// log.Println("records", record)
-		certifiesCompany, err := strconv.ParseBool(strings.TrimSpace(record[5]))
-		if err != nil {
-			logrus.Fatal(err)
-		}
 
-		certifiesProduct, err := strconv.ParseBool(strings.TrimSpace(record[6]))
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		
+		var certifiesCompany, certifiesProduct bool
+		var err error
 
+		if record[5] != "" {
+			certifiesCompany, err = strconv.ParseBool(strings.TrimSpace(record[5]))
+			if err != nil {
+				logrus.Fatal(err)
+			}
+		}
+	
+		if record[6] != "" {
+			certifiesProduct, err = strconv.ParseBool(strings.TrimSpace(record[6]))
+			if err != nil {
+				logrus.Fatal(err)
+			}
+		}
 												
 		cert := models.Certification{
 			Name:             null.StringFrom(record[0]), 

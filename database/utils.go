@@ -1,9 +1,9 @@
 package database
 
 import (
+	"fmt"
 	"strconv"
-	"strings"
-
+	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -15,11 +15,32 @@ func StringToUint(s string) (uint, error) {
 
 // ApplyFilters applies the provided filters to the GORM query builder.
 func ApplyFilters(query *gorm.DB, filters map[string]interface{}) *gorm.DB {
-	for key, value := range filters {
-		if value != nil && value != "" {
-			query = query.Where(strings.ToLower(key)+" ILIKE ?", "%"+value.(string)+"%")
-		}
-	}
-	return query
-}
+    if query == nil {
+        logrus.Error("Query is nil")
+        return query
+    }
 
+    for key, value := range filters {
+        if value != nil {
+            switch v := value.(type) {
+            case string:
+                if v != "" {
+                    query = query.Where(fmt.Sprintf("%s ILIKE ?", key), "%"+v+"%")
+                }
+            case bool:
+                query = query.Where(fmt.Sprintf("%s = ?", key), v)
+            case *string:
+                if v != nil && *v != "" {
+                    query = query.Where(fmt.Sprintf("%s ILIKE ?", key), "%"+*v+"%")
+                }
+            case *bool:
+                if v != nil {
+                    query = query.Where(fmt.Sprintf("%s = ?", key), *v)
+                }
+            default:
+                logrus.Warnf("Unsupported filter type for key %s: %T", key, value)
+            }
+        }
+    }
+    return query
+}

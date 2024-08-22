@@ -18,6 +18,7 @@ func (s CertificationService) GetCertificationsByFilter(filters map[string]inter
 		return nil, err
 	}
 
+	fmt.Sprintf("certs in HANDLER %d", len(certs))
 	var result []*model.Certification
 	for _, cert := range certs {
 		result = append(result, toCertificationResponse(cert))

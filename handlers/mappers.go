@@ -137,7 +137,7 @@ func toCompaniesResponse(companies []*models.Company) []*model.Company {
 }
 
 func toCertificationResponse(cert models.Certification) *model.Certification {
-	var industry, certifier, logo, certifierContactID, auditor, region, qualifiers, sources *string
+	var industry, certifier, logo, certifierContactID, auditor, region, qualifiers, sources, website *string
 	var certifiesCompany, certifiesProduct, certifiesProcess, audited *bool
 
 	if cert.Industry.Valid {
@@ -173,13 +173,20 @@ func toCertificationResponse(cert models.Certification) *model.Certification {
 	if cert.CertifiesProcess.Valid {
 		certifiesProcess = &cert.CertifiesProcess.Bool
 	}
+
 	if cert.Audited.Valid {
 		audited = &cert.Audited.Bool
 	}
 
+	if cert.Website.Valid {
+		website = &cert.Website.String
+	}
+
+
 	return &model.Certification{
 		ID:                 strconv.Itoa(int(cert.ID)),
 		Name:               cert.Name.String,
+		Website:            website,
 		Logo:               logo,
 		Industry:           industry,
 		Certifier:          certifier,
