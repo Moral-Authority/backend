@@ -90,3 +90,22 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 
 	return toCertificationResponse(*updatedCert), nil
 }
+
+
+
+func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error) {
+    var certs []models.Certification
+    query := s.db
+
+    // Apply filters
+    for key, value := range filters {
+        if value != "" && value != nil {
+            query = query.Where(key+" = ?", value)
+        }
+    }
+
+    if err := query.Find(&certs).Error; err != nil {
+        return nil, err
+    }
+    return certs, nil
+}

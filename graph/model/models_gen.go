@@ -150,6 +150,24 @@ type Favourite struct {
 	Product *Product `json:"product"`
 }
 
+type FilterCertificationsInput struct {
+	Name               *string `json:"name,omitempty"`
+	Website            *string `json:"website,omitempty"`
+	Logo               *string `json:"logo,omitempty"`
+	Description        *string `json:"description,omitempty"`
+	Industry           *string `json:"industry,omitempty"`
+	Certifier          *string `json:"certifier,omitempty"`
+	CertifiesCompany   *bool   `json:"certifiesCompany,omitempty"`
+	CertifiesProduct   *bool   `json:"certifiesProduct,omitempty"`
+	CertifiesProcess   *bool   `json:"certifiesProcess,omitempty"`
+	CertifierContactID *string `json:"certifierContactID,omitempty"`
+	Audited            *bool   `json:"audited,omitempty"`
+	Auditor            *string `json:"auditor,omitempty"`
+	Region             *string `json:"region,omitempty"`
+	Qualifiers         *string `json:"qualifiers,omitempty"`
+	Sources            *string `json:"sources,omitempty"`
+}
+
 type Image struct {
 	ID       string `json:"_id"`
 	Location string `json:"Location"`

@@ -356,6 +356,131 @@ func (ec *executionContext) unmarshalInputCompanyCertificationInput(ctx context.
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputFilterCertificationsInput(ctx context.Context, obj interface{}) (model.FilterCertificationsInput, error) {
+	var it model.FilterCertificationsInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"name", "website", "logo", "description", "industry", "certifier", "certifiesCompany", "certifiesProduct", "certifiesProcess", "certifierContactID", "audited", "auditor", "region", "qualifiers", "sources"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "name":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("name"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Name = data
+		case "website":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("website"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Website = data
+		case "logo":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("logo"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Logo = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "industry":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("industry"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Industry = data
+		case "certifier":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifier"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Certifier = data
+		case "certifiesCompany":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifiesCompany"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertifiesCompany = data
+		case "certifiesProduct":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifiesProduct"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertifiesProduct = data
+		case "certifiesProcess":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifiesProcess"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertifiesProcess = data
+		case "certifierContactID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certifierContactID"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertifierContactID = data
+		case "audited":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("audited"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Audited = data
+		case "auditor":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("auditor"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Auditor = data
+		case "region":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("region"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Region = data
+		case "qualifiers":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("qualifiers"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Qualifiers = data
+		case "sources":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sources"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Sources = data
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************

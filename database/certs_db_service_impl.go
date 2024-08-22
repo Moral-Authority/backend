@@ -60,3 +60,25 @@ func (s CertificationDbServiceImpl) UpdateCertification(cert models.Certificatio
 
     return &existingCert, nil
 }
+
+
+
+func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error) {
+    var certs []models.Certification
+    db := GetDbConn() // Get the DB connection instance
+
+    // Apply filters
+    query := db
+    for key, value := range filters {
+        if value != nil {
+            query = query.Where(key+" = ?", value)
+        }
+    }
+
+    if err := query.Find(&certs).Error; err != nil {
+        logrus.Errorf("Unable to get certifications by filter, %s", err)
+        return nil, err
+    }
+
+    return certs, nil
+}

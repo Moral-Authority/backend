@@ -997,6 +997,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputCompanyCertificationInput,
 		ec.unmarshalInputCompanyProductInput,
+		ec.unmarshalInputFilterCertificationsInput,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputProductCertificationInput,
 		ec.unmarshalInputPurchaseInfoInput,
@@ -1234,6 +1235,25 @@ input CompanyCertificationInput {
     certifiedAt: String
     expirationDate: String
     otherDetails: String
+}
+
+
+input FilterCertificationsInput {
+    name: String
+    website: String
+    logo: String
+    description: String
+    industry: String
+    certifier: String
+    certifiesCompany: Boolean
+    certifiesProduct: Boolean
+    certifiesProcess: Boolean
+    certifierContactID: String
+    audited: Boolean
+    auditor: String
+    region: String
+    qualifiers: String
+    sources: String
 }
 `, BuiltIn: false},
 	{Name: "../companyProducts.graphqls", Input: `# Relational table to manage company products

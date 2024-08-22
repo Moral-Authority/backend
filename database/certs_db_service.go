@@ -7,4 +7,5 @@ type CertificationDbService interface {
 	GetAllCertifications() ([]models.Certification, error)
 	UpdateCertification(cert models.Certification) (*models.Certification, error)
     GetCertificationById(id string) (*models.Certification, error)
+	GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error)
 }

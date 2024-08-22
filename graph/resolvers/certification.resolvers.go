@@ -15,7 +15,7 @@ import (
 
 // AddCertification is the resolver for the addCertification field.
 func (r *mutationResolver) AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error) {
-	dbService := database.CertificationDbServiceImpl{}
+	dbService := &database.CertificationDbServiceImpl{}
 	cert, err := handlers.CertificationService{}.AddNewCertification(input, dbService)
 	if err != nil {
 		return cert, err
@@ -26,7 +26,7 @@ func (r *mutationResolver) AddCertification(ctx context.Context, input model.Add
 
 // UpdateCertification is the resolver for the updateCertification field.
 func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
-	dbService := database.CertificationDbServiceImpl{}
+	dbService := &database.CertificationDbServiceImpl{}
 	certs, err := handlers.CertificationService{}.UpdateCertification(input, dbService)
 	if err != nil {
 		return certs, err
@@ -37,11 +37,61 @@ func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.
 
 // GetAllCertifications is the resolver for the getAllCertifications field.
 func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
-	dbService := database.CertificationDbServiceImpl{}
+	dbService := &database.CertificationDbServiceImpl{}
 	certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve certifications in resolver: %w", err)
 	}
 
 	return certs, nil
+}
+
+func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error) {
+	dbService := &database.CertificationDbServiceImpl{}
+	filters := map[string]interface{}{
+		"name":                 input.Name,
+		"website":              input.Website,
+		"logo":                 input.Logo,
+		"description":          input.Description,
+		"industry":             input.Industry,
+		"certifier":            input.Certifier,
+		"certifies_company":    input.CertifiesCompany,
+		"certifies_product":    input.CertifiesProduct,
+		"certifies_process":    input.CertifiesProcess,
+		"certifier_contact_id": input.CertifierContactID,
+		"audited":              input.Audited,
+		"auditor":              input.Auditor,
+		"region":               input.Region,
+		"qualifiers":           input.Qualifiers,
+		"sources":              input.Sources,
+	}
+
+	certs, err := dbService.GetCertificationsByFilter(filters)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*model.Certification
+	for _, cert := range certs {
+		result = append(result, &model.Certification{
+			ID:                 *handlers.UintPtrToStringPtr(&cert.ID),
+			Name:               cert.Name.String,
+			Website:            &cert.Website.String,
+			Logo:               &cert.Logo.String,
+			Description:        &cert.Description.String,
+			Industry:           &cert.Industry.String,
+			Certifier:          &cert.Certifier.String,
+			CertifiesCompany:   &cert.CertifiesCompany.Bool,
+			CertifiesProduct:   &cert.CertifiesProduct.Bool,
+			CertifiesProcess:   &cert.CertifiesProcess.Bool,
+			CertifierContactID: &cert.CertifierContactID.String,
+			Audited:            &cert.Audited.Bool,
+			Auditor:            &cert.Auditor.String,
+			Region:             &cert.Region.String,
+			Qualifiers:         &cert.Qualifiers.String,
+			Sources:            &cert.Sources.String,
+		})
+	}
+
+	return result, nil
 }
