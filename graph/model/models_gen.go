@@ -151,21 +151,21 @@ type Favourite struct {
 }
 
 type FilterCertificationsInput struct {
-	Name               *string `json:"name,omitempty"`
-	Website            *string `json:"website,omitempty"`
-	Logo               *string `json:"logo,omitempty"`
-	Description        *string `json:"description,omitempty"`
-	Industry           *string `json:"industry,omitempty"`
-	Certifier          *string `json:"certifier,omitempty"`
-	CertifiesCompany   *bool   `json:"certifiesCompany,omitempty"`
-	CertifiesProduct   *bool   `json:"certifiesProduct,omitempty"`
-	CertifiesProcess   *bool   `json:"certifiesProcess,omitempty"`
-	CertifierContactID *string `json:"certifierContactID,omitempty"`
-	Audited            *bool   `json:"audited,omitempty"`
-	Auditor            *string `json:"auditor,omitempty"`
-	Region             *string `json:"region,omitempty"`
-	Qualifiers         *string `json:"qualifiers,omitempty"`
-	Sources            *string `json:"sources,omitempty"`
+	Name               *string `json:"Name,omitempty"`
+	Website            *string `json:"Website,omitempty"`
+	Logo               *string `json:"Logo,omitempty"`
+	Description        *string `json:"Description,omitempty"`
+	Industry           *string `json:"Industry,omitempty"`
+	Certifier          *string `json:"Certifier,omitempty"`
+	CertifiesCompany   *bool   `json:"CertifiesCompany,omitempty"`
+	CertifiesProduct   *bool   `json:"CertifiesProduct,omitempty"`
+	CertifiesProcess   *bool   `json:"CertifiesProcess,omitempty"`
+	CertifierContactID *string `json:"CertifierContactID,omitempty"`
+	Audited            *bool   `json:"Audited,omitempty"`
+	Auditor            *string `json:"Auditor,omitempty"`
+	Region             *string `json:"Region,omitempty"`
+	Qualifiers         *string `json:"Qualifiers,omitempty"`
+	Sources            *string `json:"Sources,omitempty"`
 }
 
 type Image struct {

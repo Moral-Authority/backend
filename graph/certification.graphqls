@@ -5,10 +5,9 @@ extend type Mutation {
 
 extend type Query {
     getAllCertifications: [Certification]!
-    GetCertificationById(id string) (*models.Certification, error)
-    GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error)
+    getCertificationById(id: String!): Certification
+    getCertificationsByFilter(input: FilterCertificationsInput!): [Certification]!
 }
-
 
 input UpdateCertification {
     ID: String!
@@ -40,6 +39,24 @@ input AddCertification {
     CertifierContactID: String
     Industry: String
     Certifier: String
+    Audited: Boolean
+    Auditor: String
+    Region: String
+    Qualifiers: String
+    Sources: String
+}
+
+input FilterCertificationsInput {
+    Name: String
+    Website: String
+    Logo: String
+    Description: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContactID: String
     Audited: Boolean
     Auditor: String
     Region: String

@@ -164,15 +164,17 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		BaseQuery            func(childComplexity int) int
-		GetAllCategories     func(childComplexity int) int
-		GetAllCertifications func(childComplexity int) int
-		GetAllCompanies      func(childComplexity int) int
-		GetAllProducts       func(childComplexity int) int
-		GetCompany           func(childComplexity int, id string) int
-		GetProduct           func(childComplexity int, id string) int
-		User                 func(childComplexity int, id string) int
-		Users                func(childComplexity int) int
+		BaseQuery                 func(childComplexity int) int
+		GetAllCategories          func(childComplexity int) int
+		GetAllCertifications      func(childComplexity int) int
+		GetAllCompanies           func(childComplexity int) int
+		GetAllProducts            func(childComplexity int) int
+		GetCertificationByID      func(childComplexity int, id string) int
+		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
+		GetCompany                func(childComplexity int, id string) int
+		GetProduct                func(childComplexity int, id string) int
+		User                      func(childComplexity int, id string) int
+		Users                     func(childComplexity int) int
 	}
 
 	User struct {
@@ -910,6 +912,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllProducts(childComplexity), true
 
+	case "Query.getCertificationById":
+		if e.complexity.Query.GetCertificationByID == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getCertificationById_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetCertificationByID(childComplexity, args["id"].(string)), true
+
+	case "Query.getCertificationsByFilter":
+		if e.complexity.Query.GetCertificationsByFilter == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getCertificationsByFilter_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetCertificationsByFilter(childComplexity, args["input"].(model.FilterCertificationsInput)), true
+
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
 			break
@@ -1109,6 +1135,8 @@ var sources = []*ast.Source{
 
 extend type Query {
     getAllCertifications: [Certification]!
+    getCertificationById(id: String!): Certification
+    getCertificationsByFilter(input: FilterCertificationsInput!): [Certification]!
 }
 
 input UpdateCertification {
@@ -1148,6 +1176,24 @@ input AddCertification {
     Sources: String
 }
 
+input FilterCertificationsInput {
+    Name: String
+    Website: String
+    Logo: String
+    Description: String
+    Industry: String
+    Certifier: String
+    CertifiesCompany: Boolean
+    CertifiesProduct: Boolean
+    CertifiesProcess: Boolean
+    CertifierContactID: String
+    Audited: Boolean
+    Auditor: String
+    Region: String
+    Qualifiers: String
+    Sources: String
+}
+
 type Certification {
     _id: String!
     Name: String!
@@ -1167,7 +1213,8 @@ type Certification {
     Sources: String
     CreatedAt: String
     UpdatedAt: String
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `extend type Mutation {
     addCompany(input: AddCompany!): Company!
     updateCompany(input: UpdateCompany!): Company!
@@ -1235,27 +1282,7 @@ input CompanyCertificationInput {
     certifiedAt: String
     expirationDate: String
     otherDetails: String
-}
-
-
-input FilterCertificationsInput {
-    name: String
-    website: String
-    logo: String
-    description: String
-    industry: String
-    certifier: String
-    certifiesCompany: Boolean
-    certifiesProduct: Boolean
-    certifiesProcess: Boolean
-    certifierContactID: String
-    audited: Boolean
-    auditor: String
-    region: String
-    qualifiers: String
-    sources: String
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../companyProducts.graphqls", Input: `# Relational table to manage company products
 type CompanyProduct {
     company: Company!

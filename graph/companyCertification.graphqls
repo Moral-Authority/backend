@@ -14,22 +14,3 @@ input CompanyCertificationInput {
     expirationDate: String
     otherDetails: String
 }
-
-
-input FilterCertificationsInput {
-    name: String
-    website: String
-    logo: String
-    description: String
-    industry: String
-    certifier: String
-    certifiesCompany: Boolean
-    certifiesProduct: Boolean
-    certifiesProcess: Boolean
-    certifierContactID: String
-    audited: Boolean
-    auditor: String
-    region: String
-    qualifiers: String
-    sources: String
-}

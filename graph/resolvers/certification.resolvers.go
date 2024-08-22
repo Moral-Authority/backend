@@ -46,6 +46,12 @@ func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Cert
 	return certs, nil
 }
 
+// GetCertificationByID is the resolver for the getCertificationById field.
+func (r *queryResolver) GetCertificationByID(ctx context.Context, id string) (*model.Certification, error) {
+	panic(fmt.Errorf("not implemented: GetCertificationByID - getCertificationById"))
+}
+
+// GetCertificationsByFilter is the resolver for the getCertificationsByFilter field.
 func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
 	filters := map[string]interface{}{

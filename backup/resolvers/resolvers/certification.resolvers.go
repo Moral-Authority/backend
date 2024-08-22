@@ -46,54 +46,52 @@ func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Cert
 	return certs, nil
 }
 
-
-
 func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
-    filters := map[string]interface{}{
-        "name":               input.Name,
-        "website":            input.Website,
-        "logo":               input.Logo,
-        "description":        input.Description,
-        "industry":           input.Industry,
-        "certifier":          input.Certifier,
-        "certifies_company":  input.CertifiesCompany,
-        "certifies_product":  input.CertifiesProduct,
-        "certifies_process":  input.CertifiesProcess,
-        "certifier_contact_id": input.CertifierContactID,
-        "audited":            input.Audited,
-        "auditor":            input.Auditor,
-        "region":             input.Region,
-        "qualifiers":         input.Qualifiers,
-        "sources":            input.Sources,
-    }
+	filters := map[string]interface{}{
+		"name":                 input.Name,
+		"website":              input.Website,
+		"logo":                 input.Logo,
+		"description":          input.Description,
+		"industry":             input.Industry,
+		"certifier":            input.Certifier,
+		"certifies_company":    input.CertifiesCompany,
+		"certifies_product":    input.CertifiesProduct,
+		"certifies_process":    input.CertifiesProcess,
+		"certifier_contact_id": input.CertifierContactID,
+		"audited":              input.Audited,
+		"auditor":              input.Auditor,
+		"region":               input.Region,
+		"qualifiers":           input.Qualifiers,
+		"sources":              input.Sources,
+	}
 
-    certs, err := dbService.GetCertificationsByFilter(filters)
-    if err != nil {
-        return nil, err
-    }
+	certs, err := dbService.GetCertificationsByFilter(filters)
+	if err != nil {
+		return nil, err
+	}
 
-    var result []*model.Certification
-    for _, cert := range certs {
-        result = append(result, &model.Certification{
-            ID:               cert.ID.String(),
-            Name:             cert.Name.String,
-            Website:          &cert.Website.String,
-            Logo:             &cert.Logo.String,
-            Description:      &cert.Description.String,
-            Industry:         &cert.Industry.String,
-            Certifier:        &cert.Certifier.String,
-            CertifiesCompany: &cert.CertifiesCompany.Bool,
-            CertifiesProduct: &cert.CertifiesProduct.Bool,
-            CertifiesProcess: &cert.CertifiesProcess.Bool,
-            CertifierContactID: &cert.CertifierContactID.String,
-            Audited:          &cert.Audited.Bool,
-            Auditor:          &cert.Auditor.String,
-            Region:           &cert.Region.String,
-            Qualifiers:       &cert.Qualifiers.String,
-            Sources:          &cert.Sources.String,
-        })
-    }
+	var result []*model.Certification
+	for _, cert := range certs {
+		result = append(result, &model.Certification{
+			ID:                 *handlers.UintPtrToStringPtr(&cert.ID),
+			Name:               cert.Name.String,
+			Website:            &cert.Website.String,
+			Logo:               &cert.Logo.String,
+			Description:        &cert.Description.String,
+			Industry:           &cert.Industry.String,
+			Certifier:          &cert.Certifier.String,
+			CertifiesCompany:   &cert.CertifiesCompany.Bool,
+			CertifiesProduct:   &cert.CertifiesProduct.Bool,
+			CertifiesProcess:   &cert.CertifiesProcess.Bool,
+			CertifierContactID: &cert.CertifierContactID.String,
+			Audited:            &cert.Audited.Bool,
+			Auditor:            &cert.Auditor.String,
+			Region:             &cert.Region.String,
+			Qualifiers:         &cert.Qualifiers.String,
+			Sources:            &cert.Sources.String,
+		})
+	}
 
-    return result, nil
+	return result, nil
 }
