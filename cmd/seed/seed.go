@@ -37,7 +37,7 @@ func main() {
 	log.Println("Seeding the database...")
 	seedCertifications(db)
 	// log.Println("Seeding the companies...")
-	seedCompanies(db)
+	// seedCompanies(db)
 	log.Println("Database seeding complete.")
 }
 
@@ -51,7 +51,7 @@ func seedCertifications(db *gorm.DB) {
 	fmt.Println("Current working directory:", dir)
 
 	// Use the directory to open files
-	filePath := fmt.Sprintf("%s/cmd/seed/Certifications_Amazon.csv", dir)
+	filePath := fmt.Sprintf("%s/cmd/seed/certifications/final_import.csv", dir)
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -77,23 +77,27 @@ func seedCertifications(db *gorm.DB) {
 	// Iterate over the records
 	for _, record := range records {
 		// log.Println("records", record)
-		certifiesCompany, err := strconv.ParseBool(strings.TrimSpace(record[4]))
+		certifiesCompany, err := strconv.ParseBool(strings.TrimSpace(record[5]))
 		if err != nil {
 			logrus.Fatal(err)
 		}
 
-		certifiesProduct, err := strconv.ParseBool(strings.TrimSpace(record[5]))
+		certifiesProduct, err := strconv.ParseBool(strings.TrimSpace(record[6]))
 		if err != nil {
 			logrus.Fatal(err)
 		}
+		
 
+												
 		cert := models.Certification{
-			Name:             null.StringFrom(record[0]),
-			Logo:             null.StringFrom(record[1]),
-			Website:          null.StringFrom(record[2]),
-			Description:      null.StringFrom(record[3]),
-			CertifiesCompany: null.BoolFrom(certifiesCompany),
-			CertifiesProduct: null.BoolFrom(certifiesProduct),
+			Name:             null.StringFrom(record[0]), 
+			Logo:             null.StringFrom(record[2]), 
+			Website:          null.StringFrom(record[3]), 
+			Description:      null.StringFrom(record[4]), 
+			CertifiesCompany: null.BoolFrom(certifiesCompany), 	
+			CertifiesProduct: null.BoolFrom(certifiesProduct), 
+			Certifier:        null.StringFrom(record[8]),
+			Industry: 	   null.StringFrom(record[9]),
 		}
 
 		// Insert the certification into the database
