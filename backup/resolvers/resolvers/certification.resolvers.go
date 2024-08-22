@@ -13,39 +13,6 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 )
 
-// AddCertification is the resolver for the addCertification field.
-func (r *mutationResolver) AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error) {
-	dbService := &database.CertificationDbServiceImpl{}
-	cert, err := handlers.CertificationService{}.AddNewCertification(input, dbService)
-	if err != nil {
-		return cert, err
-	}
-
-	return cert, nil
-}
-
-// UpdateCertification is the resolver for the updateCertification field.
-func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
-	dbService := &database.CertificationDbServiceImpl{}
-	certs, err := handlers.CertificationService{}.UpdateCertification(input, dbService)
-	if err != nil {
-		return certs, err
-	}
-
-	return nil, nil
-}
-
-// GetAllCertifications is the resolver for the getAllCertifications field.
-func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
-	dbService := &database.CertificationDbServiceImpl{}
-	certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
-	if err != nil {
-		return nil, fmt.Errorf("failed to retrieve certifications in resolver: %w", err)
-	}
-
-	return certs, nil
-}
-
 func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
 	filters := map[string]interface{}{
@@ -94,4 +61,38 @@ func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input mod
 	}
 
 	return result, nil
+}
+
+
+// AddCertification is the resolver for the addCertification field.
+func (r *mutationResolver) AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error) {
+	dbService := &database.CertificationDbServiceImpl{}
+	cert, err := handlers.CertificationService{}.AddNewCertification(input, dbService)
+	if err != nil {
+		return cert, err
+	}
+
+	return cert, nil
+}
+
+// UpdateCertification is the resolver for the updateCertification field.
+func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
+	dbService := &database.CertificationDbServiceImpl{}
+	certs, err := handlers.CertificationService{}.UpdateCertification(input, dbService)
+	if err != nil {
+		return certs, err
+	}
+
+	return nil, nil
+}
+
+// GetAllCertifications is the resolver for the getAllCertifications field.
+func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
+	dbService := &database.CertificationDbServiceImpl{}
+	certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
+	if err != nil {
+		return nil, fmt.Errorf("failed to retrieve certifications in resolver: %w", err)
+	}
+
+	return certs, nil
 }

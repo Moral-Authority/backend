@@ -11,6 +11,22 @@ import (
 
 type CertificationService struct{}
 
+
+func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, dbService database.CertificationDbService) ([]*model.Certification, error) {
+	certs, err := dbService.GetCertificationsByFilter(filters)
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*model.Certification
+	for _, cert := range certs {
+		result = append(result, toCertificationResponse(cert))
+	}
+
+	return result, nil
+}
+
+
 func (s CertificationService) AddNewCertification(request model.AddCertification, dbService database.CertificationDbService) (*model.Certification, error) {
 
 	cert := models.Certification{
@@ -89,19 +105,4 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 	}
 
 	return toCertificationResponse(*updatedCert), nil
-}
-
-
-func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, dbService database.CertificationDbService) ([]*model.Certification, error) {
-	certs, err := dbService.GetCertificationsByFilter(filters)
-	if err != nil {
-		return nil, err
-	}
-
-	var result []*model.Certification
-	for _, cert := range certs {
-		result = append(result, toCertificationResponse(cert))
-	}
-
-	return result, nil
 }
