@@ -1236,8 +1236,8 @@ type Company {
     user: User
     isVerified: Boolean
     logo: String
-    companyCertifications: [CompanyCertification!] # Relationship with CompanyCertification
-    companyProducts: [CompanyProduct!] # Relationship with CompanyProduct
+    companyCertifications: [Certification!] # Relationship with CompanyCertification
+    companyProducts: [Product!] # Relationship with CompanyProduct
 }
 
 input AddCompany {

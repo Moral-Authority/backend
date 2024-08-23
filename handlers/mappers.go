@@ -98,32 +98,55 @@ func toProductResponse(product models.Product) *model.Product {
 }
 
 func toCompanyResponse(company *models.Company) *model.Company {
-
-	var City, State, Country *string
+	var city, state, country *string
 
 	if company.City.Valid {
-		City = &company.City.String
+		city = &company.City.String
 	}
 
 	if company.State.Valid {
-		State = &company.State.String
+		state = &company.State.String
 	}
 
 	if company.Country.Valid {
-		Country = &company.Country.String
+		country = &company.Country.String
+	}
+
+
+	var certs []*model.Certification
+	for _, c := range company.CompanyCertifications {
+		cert := &model.Certification{
+			ID:                 strconv.Itoa(int(c.Certification.ID)),
+			Name:               c.Certification.Name.String,
+			Website:            &c.Certification.Website.String,
+			Logo:               &c.Certification.Logo.String,
+			Description:        &c.Certification.Description.String,
+			Industry:           &c.Certification.Industry.String,
+			Certifier:          &c.Certification.Certifier.String,
+			CertifiesCompany:   &c.Certification.CertifiesCompany.Bool,
+			CertifiesProduct:   &c.Certification.CertifiesProduct.Bool,
+			CertifiesProcess:   &c.Certification.CertifiesProcess.Bool,
+			CertifierContactID: &c.Certification.CertifierContactID.String,
+			Audited:            &c.Certification.Audited.Bool,
+			Auditor:            &c.Certification.Auditor.String,
+			Region:             &c.Certification.Region.String,
+			Qualifiers:         &c.Certification.Qualifiers.String,
+			Sources:            &c.Certification.Sources.String,
+		}
+		certs = append(certs, cert)
 	}
 
 	return &model.Company{
-		ID:      *UintPtrToStringPtr(&company.ID),
-		Name:    company.Name,
-		City:    City,
-		State:   State,
-		Country: Country,
-		// User: &model.User{}
-		URL:         &company.Url.String,
-		Description: &company.Description.String,
-		IsVerified:  &company.IsVerified.Bool,
-		Logo:        &company.Image.String,
+		ID:                    strconv.Itoa(int(company.ID)),
+		Name:                  company.Name,
+		City:                  city,
+		State:                 state,
+		Country:               country,
+		URL:                   &company.Url.String,
+		Description:           &company.Description.String,
+		IsVerified:            &company.IsVerified.Bool,
+		Logo:                  &company.Image.String,
+		CompanyCertifications: certs,
 	}
 }
 
@@ -181,7 +204,6 @@ func toCertificationResponse(cert models.Certification) *model.Certification {
 	if cert.Website.Valid {
 		website = &cert.Website.String
 	}
-
 
 	return &model.Certification{
 		ID:                 strconv.Itoa(int(cert.ID)),

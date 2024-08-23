@@ -35,6 +35,17 @@ func (s CompanyDbServiceImpl) GetCompanyById(companyId string) (*models.Company,
 
 func (s CompanyDbServiceImpl) GetAllCompanies() ([]*models.Company, error) {
     var companies []*models.Company
+    result := GetDbConn().Preload("CompanyCertifications.Certification").Find(&companies)
+    if result.Error != nil {
+        logrus.Errorf("Unable to get companies, %s", result.Error)
+        return nil, result.Error
+    }
+    return companies, nil
+}
+
+
+func (s CompanyDbServiceImpl) UpdateCompany() ([]*models.Company, error) {
+    var companies []*models.Company
     result := GetDbConn().Find(&companies)
     if result.Error != nil {
         logrus.Errorf("Unable to get companies, %s", result.Error)

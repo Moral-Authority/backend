@@ -478,9 +478,9 @@ func (ec *executionContext) _Company_companyCertifications(ctx context.Context, 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.CompanyCertification)
+	res := resTmp.([]*model.Certification)
 	fc.Result = res
-	return ec.marshalOCompanyCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyCertificationᚄ(ctx, field.Selections, res)
+	return ec.marshalOCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertificationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Company_companyCertifications(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -491,18 +491,44 @@ func (ec *executionContext) fieldContext_Company_companyCertifications(_ context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "company":
-				return ec.fieldContext_CompanyCertification_company(ctx, field)
-			case "certification":
-				return ec.fieldContext_CompanyCertification_certification(ctx, field)
-			case "certifiedAt":
-				return ec.fieldContext_CompanyCertification_certifiedAt(ctx, field)
-			case "expirationDate":
-				return ec.fieldContext_CompanyCertification_expirationDate(ctx, field)
-			case "otherDetails":
-				return ec.fieldContext_CompanyCertification_otherDetails(ctx, field)
+			case "_id":
+				return ec.fieldContext_Certification__id(ctx, field)
+			case "Name":
+				return ec.fieldContext_Certification_Name(ctx, field)
+			case "Logo":
+				return ec.fieldContext_Certification_Logo(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
+			case "CertifiesCompany":
+				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
+			case "CertifiesProduct":
+				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
+			case "CertifiesProcess":
+				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Audited":
+				return ec.fieldContext_Certification_Audited(ctx, field)
+			case "Auditor":
+				return ec.fieldContext_Certification_Auditor(ctx, field)
+			case "Region":
+				return ec.fieldContext_Certification_Region(ctx, field)
+			case "Qualifiers":
+				return ec.fieldContext_Certification_Qualifiers(ctx, field)
+			case "Sources":
+				return ec.fieldContext_Certification_Sources(ctx, field)
+			case "CreatedAt":
+				return ec.fieldContext_Certification_CreatedAt(ctx, field)
+			case "UpdatedAt":
+				return ec.fieldContext_Certification_UpdatedAt(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CompanyCertification", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
 		},
 	}
 	return fc, nil
@@ -531,9 +557,9 @@ func (ec *executionContext) _Company_companyProducts(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.CompanyProduct)
+	res := resTmp.([]*model.Product)
 	fc.Result = res
-	return ec.marshalOCompanyProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyProductᚄ(ctx, field.Selections, res)
+	return ec.marshalOProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -544,18 +570,46 @@ func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Conte
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Product__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Product_Title(ctx, field)
+			case "Description":
+				return ec.fieldContext_Product_Description(ctx, field)
+			case "productCertifications":
+				return ec.fieldContext_Product_productCertifications(ctx, field)
 			case "company":
-				return ec.fieldContext_CompanyProduct_company(ctx, field)
-			case "product":
-				return ec.fieldContext_CompanyProduct_product(ctx, field)
-			case "launchedAt":
-				return ec.fieldContext_CompanyProduct_launchedAt(ctx, field)
-			case "discontinuedAt":
-				return ec.fieldContext_CompanyProduct_discontinuedAt(ctx, field)
-			case "otherDetails":
-				return ec.fieldContext_CompanyProduct_otherDetails(ctx, field)
+				return ec.fieldContext_Product_company(ctx, field)
+			case "MaterialsAndIngredients":
+				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
+			case "GiveBackPrograms":
+				return ec.fieldContext_Product_GiveBackPrograms(ctx, field)
+			case "OwnersAndFounders":
+				return ec.fieldContext_Product_OwnersAndFounders(ctx, field)
+			case "Section":
+				return ec.fieldContext_Product_Section(ctx, field)
+			case "Subsection":
+				return ec.fieldContext_Product_Subsection(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
+			case "Category":
+				return ec.fieldContext_Product_Category(ctx, field)
+			case "SubCategory":
+				return ec.fieldContext_Product_SubCategory(ctx, field)
+			case "Type":
+				return ec.fieldContext_Product_Type(ctx, field)
+			case "Style":
+				return ec.fieldContext_Product_Style(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "Verified":
+				return ec.fieldContext_Product_Verified(ctx, field)
+			case "VerifiedBy":
+				return ec.fieldContext_Product_VerifiedBy(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CompanyProduct", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
 		},
 	}
 	return fc, nil

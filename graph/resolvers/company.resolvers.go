@@ -6,27 +6,48 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
+	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddCompany is the resolver for the addCompany field.
 func (r *mutationResolver) AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error) {
-	panic(fmt.Errorf("not implemented: AddCompany - addCompany"))
+	company, err := handlers.CompanyService{}.AddCompany(input, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return company, nil
 }
 
 // UpdateCompany is the resolver for the updateCompany field.
 func (r *mutationResolver) UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error) {
-	panic(fmt.Errorf("not implemented: UpdateCompany - updateCompany"))
+	// dbService := database.CompanyDbServiceImpl{}
+	// company, err := handlers.CompanyService{}.UpdateCompany(dbService)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	return nil, nil
 }
 
 // GetCompany is the resolver for the getCompany field.
 func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Company, error) {
-	panic(fmt.Errorf("not implemented: GetCompany - getCompany"))
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.CompanyService{}.GetCompanyById(id, dbService)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }
 
 // GetAllCompanies is the resolver for the getAllCompanies field.
 func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, error) {
-	panic(fmt.Errorf("not implemented: GetAllCompanies - getAllCompanies"))
+	dbService := database.CompanyDbServiceImpl{}
+	companies, err := handlers.CompanyService{}.GetAllCompanies(dbService)
+	if err != nil {
+		return nil, err
+	}
+	return companies, nil
 }

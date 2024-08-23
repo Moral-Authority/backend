@@ -100,18 +100,18 @@ type Certification struct {
 }
 
 type Company struct {
-	ID                    string                  `json:"_id"`
-	Name                  string                  `json:"name"`
-	URL                   *string                 `json:"url,omitempty"`
-	Description           *string                 `json:"description,omitempty"`
-	City                  *string                 `json:"city,omitempty"`
-	State                 *string                 `json:"state,omitempty"`
-	Country               *string                 `json:"country,omitempty"`
-	User                  *User                   `json:"user,omitempty"`
-	IsVerified            *bool                   `json:"isVerified,omitempty"`
-	Logo                  *string                 `json:"logo,omitempty"`
-	CompanyCertifications []*CompanyCertification `json:"companyCertifications,omitempty"`
-	CompanyProducts       []*CompanyProduct       `json:"companyProducts,omitempty"`
+	ID                    string           `json:"_id"`
+	Name                  string           `json:"name"`
+	URL                   *string          `json:"url,omitempty"`
+	Description           *string          `json:"description,omitempty"`
+	City                  *string          `json:"city,omitempty"`
+	State                 *string          `json:"state,omitempty"`
+	Country               *string          `json:"country,omitempty"`
+	User                  *User            `json:"user,omitempty"`
+	IsVerified            *bool            `json:"isVerified,omitempty"`
+	Logo                  *string          `json:"logo,omitempty"`
+	CompanyCertifications []*Certification `json:"companyCertifications,omitempty"`
+	CompanyProducts       []*Product       `json:"companyProducts,omitempty"`
 }
 
 type CompanyCertification struct {

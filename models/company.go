@@ -7,7 +7,7 @@ import (
 
 type Company struct {
 	gorm.Model
-	Name                  string                 `gorm:"column:name json:name"`
+	Name                  string                 `gorm:"column:name" json:"name"`
 	Url                   null.String            `gorm:"column:url" json:"url"`
 	Description           null.String            `gorm:"column:description" json:"description"`
 	UserId                null.Int64             `gorm:"column:user_id" json:"user_id"`
@@ -18,5 +18,5 @@ type Company struct {
 	ImageId               null.Int64             `gorm:"column:image_id" json:"image_id"`
 	Image                 null.String            `gorm:"foreignKey:ImageId"`
 	CompanyCertifications []CompanyCertification `gorm:"foreignKey:CompanyID"`
-	CompanyProducts       []CompanyProduct       `gorm:"foreignKey:CompanyID"`
+	CompanyProducts       []CompanyProduct       `gorm:"foreignKey:CompanyID"` // Corrected the foreign key tag
 }

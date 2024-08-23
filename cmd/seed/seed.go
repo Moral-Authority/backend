@@ -1,10 +1,12 @@
 package main
 
 import (
-	"encoding/csv"
-	"fmt"
 	"log"
 	"os"
+	"time"
+
+	"encoding/csv"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -17,7 +19,7 @@ import (
 
 func main() {
 	// Read the database URL from the environment variable
-	dsn := os.Getenv("HEROKU_DATABASE_URL")
+	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
@@ -28,6 +30,9 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// Wipe all tables in the database
+	wipeDatabase(db)
+
 	// Ensure the certifications table exists by migrating the schema
 	err = db.AutoMigrate(&models.Certification{})
 	if err != nil {
@@ -36,9 +41,32 @@ func main() {
 
 	log.Println("Seeding the database...")
 	seedCertifications(db)
-	// log.Println("Seeding the companies...")
-	// seedCompanies(db)
+	log.Println("Seeding BCorps...")
+	// Seed BCorp companies
+	seedCompaniesFromCSV(db, "all-bcorps.csv", "BCorp Certified")
+	log.Println("Seeding Made Safe...")
+	// Seed Made Safe companies
+	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
 	log.Println("Database seeding complete.")
+}
+
+func wipeDatabase(db *gorm.DB) {
+	// Get the list of all tables in the database
+	var tables []string
+	err := db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Scan(&tables).Error
+	if err != nil {
+		log.Fatal("Failed to get table names:", err)
+	}
+
+	// Truncate each table
+	for _, table := range tables {
+		err := db.Exec("TRUNCATE TABLE " + table + " RESTART IDENTITY CASCADE").Error
+		if err != nil {
+			log.Fatal("Failed to truncate table", table, ":", err)
+		}
+	}
+
+	log.Println("All tables wiped.")
 }
 
 func seedCertifications(db *gorm.DB) {
@@ -86,23 +114,25 @@ func seedCertifications(db *gorm.DB) {
 				logrus.Fatal(err)
 			}
 		}
-	
+
 		if record[6] != "" {
 			certifiesProduct, err = strconv.ParseBool(strings.TrimSpace(record[6]))
 			if err != nil {
 				logrus.Fatal(err)
 			}
 		}
-												
+
+		name := null.StringFrom(strings.TrimSpace(record[0]))
+
 		cert := models.Certification{
-			Name:             null.StringFrom(record[0]), 
-			Logo:             null.StringFrom(record[2]), 
-			Website:          null.StringFrom(record[3]), 
-			Description:      null.StringFrom(record[4]), 
-			CertifiesCompany: null.BoolFrom(certifiesCompany), 	
-			CertifiesProduct: null.BoolFrom(certifiesProduct), 
+			Name:             name,
+			Logo:             null.StringFrom(record[2]),
+			Website:          null.StringFrom(record[3]),
+			Description:      null.StringFrom(record[4]),
+			CertifiesCompany: null.BoolFrom(certifiesCompany),
+			CertifiesProduct: null.BoolFrom(certifiesProduct),
 			Certifier:        null.StringFrom(record[8]),
-			Industry: 	   null.StringFrom(record[9]),
+			Industry:         null.StringFrom(record[9]),
 		}
 
 		// Insert the certification into the database
@@ -117,8 +147,7 @@ func seedCertifications(db *gorm.DB) {
 	logrus.Println("Certifications seeded into database.")
 }
 
-func seedCompanies(db *gorm.DB) {
-
+func seedCompaniesFromCSV(db *gorm.DB, fileName, certificationName string) {
 	// Get the current working directory
 	dir, err := os.Getwd()
 	if err != nil {
@@ -127,7 +156,7 @@ func seedCompanies(db *gorm.DB) {
 	fmt.Println("Current working directory:", dir)
 
 	// Use the directory to open files
-	filePath := fmt.Sprintf("%s/cmd/seed/all-bcorps.csv", dir)
+	filePath := fmt.Sprintf("%s/cmd/seed/companies/%s", dir, fileName)
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal(err)
@@ -143,6 +172,7 @@ func seedCompanies(db *gorm.DB) {
 		log.Fatal(err)
 	}
 
+	certificationID := findCertificationID(db, certificationName)
 	// Read each row of the CSV file and insert it into the database
 	for {
 		row, err := reader.Read()
@@ -150,7 +180,25 @@ func seedCompanies(db *gorm.DB) {
 			break
 		}
 
-		company := models.Company{
+		company := formatCompanyFromRow(filePath, row)
+
+		// Insert the company into the database
+		result := db.Create(&company)
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		}
+
+		dateCertified := extractDateCertified(filePath, row)
+		createCompanyCertification(db, company.ID, certificationID, dateCertified)
+	}
+
+	fmt.Println("Companies seeded into database.")
+}
+
+func formatCompanyFromRow(filePath string, row []string) models.Company {
+	switch filePath {
+	case "cmd/seed/companies/all-bcorps.csv":
+		return models.Company{
 			Name:        row[0],
 			Country:     null.StringFrom(row[4]),
 			State:       null.StringFrom(row[5]),
@@ -158,16 +206,74 @@ func seedCompanies(db *gorm.DB) {
 			Url:         null.StringFrom(row[9]),
 			Description: null.NewString("", false),
 			UserId:      null.Int64From(0),
-			IsVerified:   null.Bool{Valid: false},
+			IsVerified:  null.Bool{Valid: false},
+			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
+		}
+	case "cmd/seed/companies/made_safe_companies.csv":
+		return models.Company{
+			Name:        row[0],
+			Country:     null.NewString("", false),
+			State:       null.NewString("", false),
+			City:        null.NewString("", false),
+			Url:         null.StringFrom(row[2]),
+			Description: null.NewString("", false),
+			UserId:      null.Int64From(0),
+			IsVerified:  null.Bool{Valid: false},
 			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
 		}
 
-		// Insert the company into the database
-		result := db.Create(&company)
-		if result.Error != nil {
-			fmt.Println(result.Error)
+	default:
+		return models.Company{
+			Name:        row[0],
+			Description: null.NewString("", false),
+			UserId:      null.Int64From(0),
+			IsVerified:  null.Bool{Valid: false},
+			ImageId:     null.Int64From(0), // Default values
 		}
 	}
+}
 
-	fmt.Println("Companies seeded into database.")
+func extractDateCertified(filePath string, row []string) null.Time {
+	
+	switch filePath {
+	case "cmd/seed/companies/all-bcorps.csv":
+		timeCertified, err := time.Parse("2006-01-02 15:04:05", row[1])
+		if err != nil {
+			fmt.Println("Error parsing time:", err)
+			timeCertified = time.Time{} // Use zero value if parsing fails
+		}
+	
+		return null.TimeFrom(timeCertified)
+	default:
+		return null.Time{Valid: false}
+	}
+}
+
+func createCompanyCertification(db *gorm.DB, companyID uint, certificationID uint, dateCertified null.Time) error {
+
+	// Create the CompanyCertification relationship
+	companyCert := models.CompanyCertification{
+		CompanyID:       companyID,
+		CertificationID: certificationID,
+		CertifiedAt:     dateCertified,
+		ExpirationDate:  null.NewTime(time.Time{}, false),
+		OtherDetails:    null.NewString("Additional details about the certification", true),
+	}
+
+	if err := db.Create(&companyCert).Error; err != nil {
+		return fmt.Errorf("failed to insert company certification: %v", err)
+	}
+	
+	return nil
+}
+
+func findCertificationID(db *gorm.DB, certificationName string) uint {
+	// Find the Certification ID based on the certification name
+	var certification models.Certification
+	if err := db.Where("name = ?", certificationName).First(&certification).Error; err != nil {
+		log.Printf("failed to find certification: %v", err)
+		return 0
+	}
+
+	return certification.ID
 }

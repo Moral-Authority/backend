@@ -79,5 +79,14 @@ func (s CompanyService) GetAllCompanies(dbService database.CompanyDbService) ([]
     if err != nil || companies == nil {
         return nil, errors.New("unable to get companies from db")
     }
+	
     return toCompaniesResponse(companies), nil
+}
+
+func (s CompanyService) UpdateCompany(companyId string, dbService database.CompanyDbService) (*model.Company, error) {
+    company, err := dbService.GetCompanyById(companyId)
+    if err != nil || company == nil {
+        return nil, errors.New("unable to get company from db")
+    }
+    return toCompanyResponse(company), nil
 }
