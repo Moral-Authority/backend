@@ -65,7 +65,7 @@ func (s UserService) AddUserFav(request model.AddUserFav, userDbService database
     return toFavsResponse(addedFav), nil
 }
 
-func (s UserService) RemoveUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
+func (s UserService) RemoveUserFav(request model.RemoveUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
     product, err := productDbService.GetProductByID(request.ProductID)
     if err != nil {
         return nil, err
