@@ -5,7 +5,7 @@ import (
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
-	"github.com/Moral-Authority/backend/models" // Assuming this is the correct import path for your models
+	"github.com/Moral-Authority/backend/models" 
 )
 
 type ProductService struct{}
@@ -18,7 +18,7 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	// }
 
 	product := models.Product{
-		Url:         request.PurchaseInfo.Link, // Assuming Url is in PurchaseInfo
+		Url:         request.PurchaseInfo.Link, 
 		Description: request.Description,
 		Title:       request.Title,
 	}
@@ -40,9 +40,21 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 		}
 	}
 
-	// TODO for each image to product_images table
 
-	// TODO for each certificate id search db for cert and add to product_certs relational table
+	for _, c := range request.Certifications {
+
+		cert := models.Certification{
+			Url: *i,
+		}
+
+		foundCert, _ := certificationService.GetCertificationsByFilter(map[string]interface{}{"name": c.Name})
+		if foundCert == nil {
+			addedImage, err := certificationService.AddNewCertification(c)
+			if err != nil || addedImage == nil {
+				return nil, errors.New("unable to save product certification to db")
+			}
+		}
+	}
 
 	return toProductResponse(addedProduct), nil
 }

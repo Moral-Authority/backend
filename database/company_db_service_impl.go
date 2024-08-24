@@ -69,14 +69,9 @@ func (s CompanyDbServiceImpl) GetCompaniesByFilter(filters map[string]interface{
     query := ApplyFilters(db, filters)
 
     if err := query.Find(&companies).Error; err != nil {
-        logrus.Errorf("Unable to get certifications by filter, %s", err)
+        logrus.Errorf("Unable to get companies by filter, %s", err)
         return nil, err
     }
 
-    // result := db.Preload("CompanyCertifications.Certification").Find(&companies)
-    // if result.Error != nil {
-    //     logrus.Errorf("Unable to get companies, %s", result.Error)
-    //     return nil, result.Error
-    // }
     return companies, nil
 }
