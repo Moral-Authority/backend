@@ -108,8 +108,9 @@ type ComplexityRoot struct {
 	}
 
 	Image struct {
-		ID       func(childComplexity int) int
-		Location func(childComplexity int) int
+		ID        func(childComplexity int) int
+		ProductID func(childComplexity int) int
+		URL       func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -117,11 +118,13 @@ type ComplexityRoot struct {
 		AddCertification    func(childComplexity int, input model.AddCertification) int
 		AddCompany          func(childComplexity int, input model.AddCompany) int
 		AddFav              func(childComplexity int, request model.AddUserFav) int
+		AddImage            func(childComplexity int, request model.AddImage) int
 		AddProduct          func(childComplexity int, input model.AddProductRequest) int
 		AddUser             func(childComplexity int, input model.NewUser) int
 		BaseMutation        func(childComplexity int) int
 		UpdateCertification func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany       func(childComplexity int, input model.UpdateCompany) int
+		UpdateImage         func(childComplexity int, request model.UpdateImage) int
 		UpdateProduct       func(childComplexity int, input model.UpdateProductRequest) int
 		UpdateUser          func(childComplexity int, input model.UpdateUser) int
 	}
@@ -540,19 +543,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Favourite.User(childComplexity), true
 
-	case "Image._id":
+	case "Image.id":
 		if e.complexity.Image.ID == nil {
 			break
 		}
 
 		return e.complexity.Image.ID(childComplexity), true
 
-	case "Image.Location":
-		if e.complexity.Image.Location == nil {
+	case "Image.productID":
+		if e.complexity.Image.ProductID == nil {
 			break
 		}
 
-		return e.complexity.Image.Location(childComplexity), true
+		return e.complexity.Image.ProductID(childComplexity), true
+
+	case "Image.url":
+		if e.complexity.Image.URL == nil {
+			break
+		}
+
+		return e.complexity.Image.URL(childComplexity), true
 
 	case "Mutation.addCategory":
 		if e.complexity.Mutation.AddCategory == nil {
@@ -601,6 +611,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.AddFav(childComplexity, args["request"].(model.AddUserFav)), true
+
+	case "Mutation.addImage":
+		if e.complexity.Mutation.AddImage == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addImage_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddImage(childComplexity, args["request"].(model.AddImage)), true
 
 	case "Mutation.addProduct":
 		if e.complexity.Mutation.AddProduct == nil {
@@ -656,6 +678,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateCompany(childComplexity, args["input"].(model.UpdateCompany)), true
+
+	case "Mutation.UpdateImage":
+		if e.complexity.Mutation.UpdateImage == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_UpdateImage_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateImage(childComplexity, args["request"].(model.UpdateImage)), true
 
 	case "Mutation.updateProduct":
 		if e.complexity.Mutation.UpdateProduct == nil {
@@ -1018,17 +1052,20 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddCategory,
 		ec.unmarshalInputAddCertification,
 		ec.unmarshalInputAddCompany,
+		ec.unmarshalInputAddImage,
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputCompanyCertificationInput,
 		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputFilterCertificationsInput,
+		ec.unmarshalInputFilterCompanyInput,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputProductCertificationInput,
 		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputUpdateCertification,
 		ec.unmarshalInputUpdateCompany,
+		ec.unmarshalInputUpdateImage,
 		ec.unmarshalInputUpdateProductRequest,
 		ec.unmarshalInputUpdateUser,
 	)
@@ -1266,6 +1303,14 @@ input UpdateCompany {
     certifications: [CompanyCertificationInput!] # Input for relational table
     products: [CompanyProductInput!] # Input for relational table
 }
+
+input FilterCompanyInput {
+    name: String
+    city: String
+    state: String
+    country: String
+    isVerified: Boolean
+}
 `, BuiltIn: false},
 	{Name: "../companyCertification.graphqls", Input: `# Relational table to manage company certifications
 
@@ -1314,6 +1359,27 @@ input AddUserFav {
     productId: String!
 }
 `, BuiltIn: false},
+	{Name: "../image.graphqls", Input: `extend type Mutation {
+    addImage(request: AddImage!): Image!
+	UpdateImage(request: UpdateImage!): Image!
+}
+
+type Image {
+    id: String!
+    productID: String!
+    url: String!
+}
+
+input AddImage {
+    productID: String
+    url: String!
+}
+
+input UpdateImage {
+    id: String!
+    productID: String
+    url: String!
+}`, BuiltIn: false},
 	{Name: "../prodCategorization.graphqls", Input: `
 
 extend type Mutation {
@@ -1504,11 +1570,6 @@ scalar Any`, BuiltIn: false},
 extend type Mutation {
     addUser(input: NewUser!): User!
     updateUser(input: UpdateUser!): User!
-}
-
-type Image {
-    _id: String!
-    Location: String!
 }
 
 type User {

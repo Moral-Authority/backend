@@ -4,5 +4,6 @@ import "gorm.io/gorm"
 
 type Image struct {
 	gorm.Model
-	ImageLocation string
+	Url string
+	ProductID  uint `gorm:"foreignKey:ProductRefer"`
 }

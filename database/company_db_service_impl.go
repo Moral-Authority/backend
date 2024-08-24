@@ -44,12 +44,39 @@ func (s CompanyDbServiceImpl) GetAllCompanies() ([]*models.Company, error) {
 }
 
 
-func (s CompanyDbServiceImpl) UpdateCompany() ([]*models.Company, error) {
-    var companies []*models.Company
-    result := GetDbConn().Find(&companies)
+func (s CompanyDbServiceImpl) UpdateCompany(input models.Company) (*models.Company, error) {
+    var currentCompany *models.Company
+    result := GetDbConn().First(&currentCompany, "id = ?", input.ID)
     if result.Error != nil {
-        logrus.Errorf("Unable to get companies, %s", result.Error)
+        logrus.Errorf("Unable to find image, %s", result.Error)
         return nil, result.Error
     }
+
+    // Update the existing certification with the new data
+    result = GetDbConn().Model(&currentCompany).Updates(input)
+    if result.Error != nil {
+        logrus.Errorf("Unable to update certification, %s", result.Error)
+        return nil, result.Error
+    }
+
+    return currentCompany, nil
+}
+
+func (s CompanyDbServiceImpl) GetCompaniesByFilter(filters map[string]interface{}) ([]models.Company, error) {
+    var companies []models.Company
+    db := GetDbConn()
+
+    query := ApplyFilters(db, filters)
+
+    if err := query.Find(&companies).Error; err != nil {
+        logrus.Errorf("Unable to get certifications by filter, %s", err)
+        return nil, err
+    }
+
+    // result := db.Preload("CompanyCertifications.Certification").Find(&companies)
+    // if result.Error != nil {
+    //     logrus.Errorf("Unable to get companies, %s", result.Error)
+    //     return nil, result.Error
+    // }
     return companies, nil
 }

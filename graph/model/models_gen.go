@@ -45,6 +45,11 @@ type AddCompany struct {
 	Products       []*CompanyProductInput       `json:"products,omitempty"`
 }
 
+type AddImage struct {
+	ProductID *string `json:"productID,omitempty"`
+	URL       string  `json:"url"`
+}
+
 type AddProductRequest struct {
 	Title          string                       `json:"Title"`
 	Description    string                       `json:"Description"`
@@ -56,6 +61,11 @@ type AddProductRequest struct {
 }
 
 type AddUserFav struct {
+	UserID    string `json:"userId"`
+	ProductID string `json:"productId"`
+}
+
+type RemoveUserFav struct {
 	UserID    string `json:"userId"`
 	ProductID string `json:"productId"`
 }
@@ -168,9 +178,18 @@ type FilterCertificationsInput struct {
 	Sources            *string `json:"Sources,omitempty"`
 }
 
+type FilterCompanyInput struct {
+	Name       *string `json:"name,omitempty"`
+	City       *string `json:"city,omitempty"`
+	State      *string `json:"state,omitempty"`
+	Country    *string `json:"country,omitempty"`
+	IsVerified *bool   `json:"isVerified,omitempty"`
+}
+
 type Image struct {
-	ID       string `json:"_id"`
-	Location string `json:"Location"`
+	ID        string `json:"id"`
+	ProductID string `json:"productID"`
+	URL       string `json:"url"`
 }
 
 type Mutation struct {
@@ -269,6 +288,12 @@ type UpdateCompany struct {
 	Logo           *string                      `json:"logo,omitempty"`
 	Certifications []*CompanyCertificationInput `json:"certifications,omitempty"`
 	Products       []*CompanyProductInput       `json:"products,omitempty"`
+}
+
+type UpdateImage struct {
+	ID        string  `json:"id"`
+	ProductID *string `json:"productID,omitempty"`
+	URL       string  `json:"url"`
 }
 
 type UpdateProductRequest struct {

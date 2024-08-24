@@ -10,7 +10,7 @@ import (
 
 type ProductService struct{}
 
-func (s ProductService) AddNewProduct(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService,) (*model.Product, error) {
+func (s ProductService) AddNewProduct(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
 
 	// _, err := database.StringToUint(request.UserID)
 	// if err != nil {
@@ -32,11 +32,11 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	for _, i := range request.ImageLinks {
 
 		image := models.Image{
-			ImageLocation: *i, // Assuming ImageLocation is a string
+			Url: *i, 
 		}
 
-		addedImage := imageDbService.AddImage(image)
-		if addedImage == nil {
+		addedImage, err := imageDbService.AddImage(image)
+		if err != nil || addedImage == nil {
 			return nil, errors.New("unable to save image to db")
 		}
 	}
@@ -46,4 +46,45 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	// TODO for each certificate id search db for cert and add to product_certs relational table
 
 	return toProductResponse(*addedProduct), nil
+}
+
+
+func (s ProductService) UpdateProduct(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
+	dbService := database.ProductDbServiceImpl{}
+
+	product, err := dbService.UpdateProduct(filters)
+	if err != nil {
+		return nil, err
+	}
+
+	return toProductResponse(product), nil
+}
+
+
+func (s ProductService) GetProductByID(request model.AddProductRequest, productDbService database.ProductDbService) (*model.Product, error) {
+	dbService := database.ProductDbServiceImpl{}
+
+	product, err := dbService.GetProductByID(filters)
+	if err != nil {
+		return nil, err
+	}
+
+	return toProductResponse(product), nil
+}
+
+
+func (s ProductService) GetAllProducts(request model.AddProductRequest, productDbService database.ProductDbService) ([]*model.Product, error) {
+	dbService := database.ProductDbServiceImpl{}
+	var result []*model.Product
+
+	products, err := dbService.GetAllProducts(filters)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, p := range products {
+		result = append(result,  toProductResponse(p))
+	}
+
+	return result, nil
 }

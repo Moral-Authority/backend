@@ -1,14 +1,17 @@
 package database
 
 import (
+	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 )
 
 type ProductDbService interface {
-	GetProduct(productId string) (*models.Product, error)
+	GetProductByID(productId string) (*models.Product, error)
 	GetAllProducts() ([]*models.Product, error)
 	AddProduct(product models.Product) (*models.Product, error)
 	DeleteProduct(productId string) error
+	UpdateProduct(product model.UpdateProductRequest) (*models.Product, error)
+	GetProductsByFilter(filters map[string]interface{}) ([]models.Certification, error)
 	AddCategory(category models.Category) (*models.Category, error)
 	GetAllCategories() ([]*models.Category, error)
 }

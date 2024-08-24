@@ -18,7 +18,6 @@ func (s CertificationService) GetCertificationsByFilter(filters map[string]inter
 		return nil, err
 	}
 
-	fmt.Sprintf("certs in HANDLER %d", len(certs))
 	var result []*model.Certification
 	for _, cert := range certs {
 		result = append(result, toCertificationResponse(cert))
@@ -85,19 +84,57 @@ func (s CertificationService) UpdateCertification(request model.UpdateCertificat
 	}
 
 	// Update the fields
-	cert.Name = null.StringFrom(*request.Name)
-	cert.Logo = null.StringFrom(*request.Logo)
-	cert.Industry = null.StringFrom(*request.Industry)
-	cert.Certifier = null.StringFrom(*request.Certifier)
-	cert.CertifiesCompany = null.BoolFrom(*request.CertifiesCompany)
-	cert.CertifiesProduct = null.BoolFrom(*request.CertifiesProduct)
-	// cert.CertifiesProcess = null.BoolFrom(*request.CertifiesProcess)
-	cert.CertifierContactID = null.StringFrom(*request.CertifierContactID)
-	cert.Audited = null.BoolFrom(*request.Audited)
-	cert.Auditor = null.StringFrom(*request.Auditor)
-	cert.Region = null.StringFrom(*request.Region)
-	cert.Qualifiers = null.StringFrom(*request.Qualifiers)
-	cert.Sources = null.StringFrom(*request.Sources)
+	if request.Name != nil {
+		cert.Name = null.StringFrom(*request.Name)
+	}
+
+	if request.Logo != nil {
+		cert.Logo = null.StringFrom(*request.Logo)
+	}
+
+	if request.Industry != nil {
+		cert.Industry = null.StringFrom(*request.Industry)
+	}
+
+	if request.Certifier != nil {
+		cert.Certifier = null.StringFrom(*request.Certifier)
+	}
+
+	if request.CertifiesCompany != nil {
+		cert.CertifiesCompany = null.BoolFrom(*request.CertifiesCompany)	
+	}
+
+	if request.CertifiesProduct != nil {
+		cert.CertifiesProduct = null.BoolFrom(*request.CertifiesProduct)
+	}
+
+	// if request.CertifiesProcess != nil {
+	// 	cert.CertifiesProcess = null.BoolFrom(*request.CertifiesProcess)
+	// }
+
+	if request.CertifierContactID != nil {
+		cert.CertifierContactID = null.StringFrom(*request.CertifierContactID)
+	}
+
+	if request.Audited != nil {
+		cert.Audited = null.BoolFrom(*request.Audited)
+	}
+
+	if request.Auditor != nil {
+		cert.Auditor = null.StringFrom(*request.Auditor)
+	}
+
+	if request.Region != nil {		
+		cert.Region = null.StringFrom(*request.Region)
+	}
+
+	if request.Qualifiers != nil {
+		cert.Qualifiers = null.StringFrom(*request.Qualifiers)
+	}
+
+	if request.Sources != nil {
+		cert.Sources = null.StringFrom(*request.Sources)
+	}	
 
 	// Save the updated certification
 	updatedCert,err := dbService.UpdateCertification(*cert)

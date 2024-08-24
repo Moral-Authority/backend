@@ -48,14 +48,32 @@ func (s UserService) UpdateUser(request model.UpdateUser, dbService database.Use
 }
 
 func (s UserService) AddUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
-    product, err := productDbService.GetProduct(request.ProductID)
+    product, err := productDbService.GetProductByID(request.ProductID)
+    if err != nil {
+        return nil, err
+    }
+
+    if product == nil {
+        return nil, errors.New("unable to get product")
+    }
+
+    addedFav,err := userDbService.AddUserFav(request, *product)
+    if err != nil {
+        return nil, err
+    }
+    
+    return toFavsResponse(addedFav), nil
+}
+
+func (s UserService) RemoveUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
+    product, err := productDbService.GetProductByID(request.ProductID)
     if err != nil {
         return nil, err
     }
     if product == nil {
         return nil, errors.New("unable to get product")
     }
-    addedFav,err := userDbService.AddUserFav(request, *product)
+    addedFav,err := userDbService.RemoveUserFav(request, *product)
     if err != nil {
         return nil, err
     }

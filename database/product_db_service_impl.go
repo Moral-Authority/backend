@@ -7,7 +7,7 @@ import (
 
 type ProductDbServiceImpl struct{}
 
-func (s ProductDbServiceImpl) GetProduct(productId string) (*models.Product, error) {
+func (s ProductDbServiceImpl) GetProductByID(productId string) (*models.Product, error) {
 	var product models.Product
 	result := GetDbConn().First(&product, "id = ?", productId)
 	if result.Error != nil {
@@ -25,6 +25,20 @@ func (s ProductDbServiceImpl) GetAllProducts() ([]*models.Product, error) {
 		return nil, result.Error
 	}
 	return products, nil
+}
+
+func (s ProductDbServiceImpl) GetProductsByFilter(filters map[string]interface{}) ([]models.Product, error) {
+    var products []models.Product
+    db := GetDbConn()
+
+	query := ApplyFilters(db, filters)
+	
+    if err := query.Find(&products).Error; err != nil {
+        logrus.Errorf("Unable to get certifications by filter, %s", err)
+        return nil, err
+    }
+
+    return products, nil
 }
 
 func (s ProductDbServiceImpl) AddProduct(product models.Product) (*models.Product, error) {

@@ -1,0 +1,21 @@
+extend type Mutation {
+    addImage(request: AddImage!): Image!
+	UpdateImage(request: UpdateImage!): Image!
+}
+
+type Image {
+    id: String!
+    productID: String!
+    url: String!
+}
+
+input AddImage {
+    productID: String
+    url: String!
+}
+
+input UpdateImage {
+    id: String!
+    productID: String
+    url: String!
+}

@@ -24,12 +24,12 @@ func (r *mutationResolver) AddCompany(ctx context.Context, input model.AddCompan
 
 // UpdateCompany is the resolver for the updateCompany field.
 func (r *mutationResolver) UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error) {
-	// dbService := database.CompanyDbServiceImpl{}
-	// company, err := handlers.CompanyService{}.UpdateCompany(dbService)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	return nil, nil
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.CompanyService{}.UpdateCompany(dbService, input)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }
 
 // GetCompany is the resolver for the getCompany field.
@@ -46,6 +46,30 @@ func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Compa
 func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
 	companies, err := handlers.CompanyService{}.GetAllCompanies(dbService)
+	if err != nil {
+		return nil, err
+	}
+	return companies, nil
+}
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//     it when you're done.
+//   - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) GetCompaniesByFilter(ctx context.Context, input model.FilterCompanyInput) ([]*model.Company, error) {
+	dbService := database.CompanyDbServiceImpl{}
+
+	filters := map[string]interface{}{
+		"name":        input.Name,
+		"city":        input.City,
+		"state":       input.State,
+		"country":     input.Country,
+		"is_verified": input.IsVerified,
+	}
+
+	companies, err := handlers.CompanyService{}.GetCompaniesByFilter(dbService, filters)
 	if err != nil {
 		return nil, err
 	}

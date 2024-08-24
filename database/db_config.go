@@ -49,7 +49,7 @@ func performMigrations(db *gorm.DB) {
 		&models.Category{},
 		&models.Certification{},
 		&models.Company{},
-		&models.Favourite{},
+		&models.Favorite{},
 		&models.Image{},
 		&models.LoginCredentials{},
 		&models.Product{},

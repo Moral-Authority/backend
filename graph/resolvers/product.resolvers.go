@@ -8,25 +8,47 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddProduct is the resolver for the addProduct field.
 func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: AddProduct - addProduct"))
+	company, err := handlers.ProductService{}.AddNewProduct(input, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return company, nil
 }
 
 // UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: UpdateProduct - updateProduct"))
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.ProductService{}.UpdateProduct(dbService, input)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }
 
 // GetProduct is the resolver for the getProduct field.
-func (r *queryResolver) GetProduct(ctx context.Context, id string) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: GetProduct - getProduct"))
+func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
+	dbService := database.CompanyDbServiceImpl{}
+	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.
 func (r *queryResolver) GetAllProducts(ctx context.Context) ([]*model.Product, error) {
-	panic(fmt.Errorf("not implemented: GetAllProducts - getAllProducts"))
+	dbService := database.CompanyDbServiceImpl{}
+	companies, err := handlers.ProductService{}.GetAllProducts(dbService)
+	if err != nil {
+		return nil, err
+	}
+	return companies, nil
 }

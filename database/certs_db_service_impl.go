@@ -10,12 +10,9 @@ type CertificationDbServiceImpl struct{}
 
 func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error) {
     var certs []models.Certification
-    db := GetDbConn() // Get the DB connection instance
-	logrus.Infof("Applying filters: %v", filters)
-    // Apply filters
-	query := ApplyFilters(db, filters)
+    db := GetDbConn()
 
-	logrus.Infof("Initial query state: %v", query)
+	query := ApplyFilters(db, filters)
 	
     if err := query.Find(&certs).Error; err != nil {
         logrus.Errorf("Unable to get certifications by filter, %s", err)

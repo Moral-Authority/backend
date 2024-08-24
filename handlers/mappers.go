@@ -34,8 +34,8 @@ func toFavResponse(fav models.Favourite) *model.Favourite {
 
 func toImageResponse(image models.Image) *model.Image {
 	return &model.Image{
-		ID:       strconv.Itoa(int(image.ID)),
-		Location: image.ImageLocation,
+		ID:  strconv.Itoa(int(image.ID)),
+		URL: image.Url,
 	}
 }
 
@@ -111,7 +111,6 @@ func toCompanyResponse(company *models.Company) *model.Company {
 	if company.Country.Valid {
 		country = &company.Country.String
 	}
-
 
 	var certs []*model.Certification
 	for _, c := range company.CompanyCertifications {

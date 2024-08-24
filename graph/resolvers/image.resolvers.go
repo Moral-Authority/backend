@@ -12,9 +12,10 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 )
 
-// AddFav is the resolver for the addFav field.
-func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favourite, error) {
-	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+// AddImage is the resolver for the addImage field.
+func (r *mutationResolver) AddImage(ctx context.Context, input model.AddImage) (*model.Image, error) {
+	dbService := database.ImageDbServiceImpl{}
+	image, err := handlers.ImageDbService{}.AddImage(dbService, input)
 	if err != nil {
 		return nil, err
 	}
@@ -22,12 +23,12 @@ func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFa
 	return image, nil
 }
 
-
-func (r *mutationResolver) RemoveUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favourite, error) {
-	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+// UpdateImage is the resolver for the UpdateImage field.
+func (r *mutationResolver) UpdateImage(ctx context.Context, input model.UpdateImage) (*model.Image, error) {
+	dbService := database.ImageDbServiceImpl{}
+	image, err := handlers.ImageDbService{}.UpdateImage(dbService, input)
 	if err != nil {
 		return nil, err
 	}
-
 	return image, nil
 }

@@ -8,11 +8,6 @@ extend type Mutation {
     updateUser(input: UpdateUser!): User!
 }
 
-type Image {
-    _id: String!
-    Location: String!
-}
-
 type User {
     _id: String!
     firstName: String!
