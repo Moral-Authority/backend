@@ -16,7 +16,7 @@ func toUserResponse(user models.User) *model.User {
 	}
 }
 
-func toFavsResponse(favs []models.Favourite) []*model.Favorite {
+func toFavsResponse(favs []models.Favorite) []*model.Favorite {
 	var response []*model.Favorite
 	for _, e := range favs {
 		fav := toFavResponse(e)
@@ -25,7 +25,7 @@ func toFavsResponse(favs []models.Favourite) []*model.Favorite {
 	return response
 }
 
-func toFavResponse(fav models.Favourite) *model.Favorite {
+func toFavResponse(fav models.Favorite) *model.Favorite {
 	return &model.Favorite{
 		ID: strconv.Itoa(int(fav.ID)),
 		//Product: toProductResponse(fav.Product),
@@ -74,7 +74,7 @@ func toCategoryResponse(category *models.Category) *model.Category {
 //	return model.Filter{}
 //}
 
-func toProductsResponse(products []models.Product) []*model.Product {
+func toProductsResponse(products []*models.Product) []*model.Product {
 	var response []*model.Product
 	for _, e := range products {
 		product := toProductResponse(e)
@@ -83,7 +83,7 @@ func toProductsResponse(products []models.Product) []*model.Product {
 	return response
 }
 
-func toProductResponse(product models.Product) *model.Product {
+func toProductResponse(product *models.Product) *model.Product {
 
 	return &model.Product{
 		ID: strconv.Itoa(int(product.ID)),

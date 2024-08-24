@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -25,17 +24,21 @@ func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProduc
 
 // UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error) {
-	dbService := database.CompanyDbServiceImpl{}
-	company, err := handlers.ProductService{}.UpdateProduct(input, dbService, database.ImageDbServiceImpl{})
+	company, err := handlers.ProductService{}.UpdateProduct(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
 	return company, nil
 }
 
-// GetProduct is the resolver for the getProduct field.
-func (r *queryResolver) GetProduct(ctx context.Context, id string) (*model.Product, error) {
-	panic(fmt.Errorf("not implemented: GetProduct - getProduct"))
+// GetProductByID is the resolver for the getProductByID field.
+func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
+	dbService := database.ProductDbServiceImpl{}
+	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.
@@ -46,14 +49,4 @@ func (r *queryResolver) GetAllProducts(ctx context.Context) ([]*model.Product, e
 		return nil, err
 	}
 	return companies, nil
-}
-
-
-func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
-	dbService := database.ProductDbServiceImpl{}
-	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
-	if err != nil {
-		return nil, err
-	}
-	return company, nil
 }

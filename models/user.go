@@ -8,7 +8,7 @@ type User struct {
 	LastName           string `json:"last_name"`
 	LoginCredentialsId uint
 	LoginCredentials   LoginCredentials `gorm:"foreignKey:LoginCredentialsId"`
-	Favourites         []Favourite      `gorm:"foreignKey:UserRefer"`
+	Favorites         []Favorite      `gorm:"foreignKey:UserRefer"`
 }
 
 type LoginCredentials struct {

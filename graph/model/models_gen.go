@@ -134,6 +134,11 @@ type CompanyCertificationInput struct {
 	OtherDetails    *string `json:"otherDetails,omitempty"`
 }
 
+type CompanyFilter struct {
+	Key   *string `json:"key,omitempty"`
+	Value *string `json:"value,omitempty"`
+}
+
 type CompanyProduct struct {
 	Company        *Company `json:"company"`
 	Product        *Product `json:"product"`
@@ -250,6 +255,11 @@ type PurchaseInfoInput struct {
 }
 
 type Query struct {
+}
+
+type RemoveUserFav struct {
+	UserID    string `json:"userId"`
+	ProductID string `json:"productId"`
 }
 
 type UpdateCertification struct {

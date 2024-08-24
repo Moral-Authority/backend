@@ -117,11 +117,12 @@ type ComplexityRoot struct {
 		AddCategory         func(childComplexity int, input model.AddCategory) int
 		AddCertification    func(childComplexity int, input model.AddCertification) int
 		AddCompany          func(childComplexity int, input model.AddCompany) int
-		AddFav              func(childComplexity int, request model.AddUserFav) int
 		AddImage            func(childComplexity int, request model.AddImage) int
 		AddProduct          func(childComplexity int, input model.AddProductRequest) int
 		AddUser             func(childComplexity int, input model.NewUser) int
+		AddUserFav          func(childComplexity int, request model.AddUserFav) int
 		BaseMutation        func(childComplexity int) int
+		RemoveUserFav       func(childComplexity int, request model.RemoveUserFav) int
 		UpdateCertification func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany       func(childComplexity int, input model.UpdateCompany) int
 		UpdateImage         func(childComplexity int, request model.UpdateImage) int
@@ -174,8 +175,9 @@ type ComplexityRoot struct {
 		GetAllProducts            func(childComplexity int) int
 		GetCertificationByID      func(childComplexity int, id string) int
 		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
+		GetCompaniesByFilter      func(childComplexity int, filter *model.CompanyFilter) int
 		GetCompany                func(childComplexity int, id string) int
-		GetProduct                func(childComplexity int, id string) int
+		GetProductByID            func(childComplexity int, id string) int
 		User                      func(childComplexity int, id string) int
 		Users                     func(childComplexity int) int
 	}
@@ -600,18 +602,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddCompany(childComplexity, args["input"].(model.AddCompany)), true
 
-	case "Mutation.addFav":
-		if e.complexity.Mutation.AddFav == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addFav_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddFav(childComplexity, args["request"].(model.AddUserFav)), true
-
 	case "Mutation.addImage":
 		if e.complexity.Mutation.AddImage == nil {
 			break
@@ -648,12 +638,36 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddUser(childComplexity, args["input"].(model.NewUser)), true
 
+	case "Mutation.addUserFav":
+		if e.complexity.Mutation.AddUserFav == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addUserFav_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddUserFav(childComplexity, args["request"].(model.AddUserFav)), true
+
 	case "Mutation.BaseMutation":
 		if e.complexity.Mutation.BaseMutation == nil {
 			break
 		}
 
 		return e.complexity.Mutation.BaseMutation(childComplexity), true
+
+	case "Mutation.removeUserFav":
+		if e.complexity.Mutation.RemoveUserFav == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_removeUserFav_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.RemoveUserFav(childComplexity, args["request"].(model.RemoveUserFav)), true
 
 	case "Mutation.updateCertification":
 		if e.complexity.Mutation.UpdateCertification == nil {
@@ -970,6 +984,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetCertificationsByFilter(childComplexity, args["input"].(model.FilterCertificationsInput)), true
 
+	case "Query.getCompaniesByFilter":
+		if e.complexity.Query.GetCompaniesByFilter == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getCompaniesByFilter_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetCompaniesByFilter(childComplexity, args["filter"].(*model.CompanyFilter)), true
+
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
 			break
@@ -982,17 +1008,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetCompany(childComplexity, args["id"].(string)), true
 
-	case "Query.getProduct":
-		if e.complexity.Query.GetProduct == nil {
+	case "Query.getProductByID":
+		if e.complexity.Query.GetProductByID == nil {
 			break
 		}
 
-		args, err := ec.field_Query_getProduct_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_getProductByID_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Query.GetProduct(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -1057,12 +1083,14 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputCompanyCertificationInput,
+		ec.unmarshalInputCompanyFilter,
 		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputFilterCertificationsInput,
 		ec.unmarshalInputFilterCompanyInput,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputProductCertificationInput,
 		ec.unmarshalInputPurchaseInfoInput,
+		ec.unmarshalInputRemoveUserFav,
 		ec.unmarshalInputUpdateCertification,
 		ec.unmarshalInputUpdateCompany,
 		ec.unmarshalInputUpdateImage,
@@ -1260,6 +1288,12 @@ type Certification {
 extend type Query {
     getCompany(id: String!): Company!
     getAllCompanies: [Company!]
+    getCompaniesByFilter(filter: CompanyFilter): [Company!]
+}
+
+input CompanyFilter {
+    key: String
+    value: String
 }
 
 type Company {
@@ -1345,7 +1379,8 @@ input CompanyProductInput {
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
-    addFav(request: AddUserFav!): [Favorite]
+    addUserFav(request: AddUserFav!): [Favorite]
+    removeUserFav(request: RemoveUserFav!): [Favorite]
 }
 
 type Favorite {
@@ -1355,6 +1390,11 @@ type Favorite {
 }
 
 input AddUserFav {
+    userId: String!
+    productId: String!
+}
+
+input RemoveUserFav {
     userId: String!
     productId: String!
 }
@@ -1459,7 +1499,7 @@ type Category {
 }
 
 extend type Query {
-    getProduct(id: String!): Product!
+    getProductByID(id: String!): Product!
     getAllProducts: [Product!]
 }
 

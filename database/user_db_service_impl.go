@@ -27,12 +27,12 @@ func (s UserDbServiceImpl) GetUser(userId string) (*models.User, error) {
         return nil, result.Error
     }
     var favs []models.Favorite
-    results := GetDbConn().Model(&user).Association("Favourites").Find(&favs)
+    results := GetDbConn().Model(&user).Association("Favorites").Find(&favs)
     if results != nil {
         logrus.Errorf("Unable to get categories, %s", results)
         return nil, results
     }
-    user.Favourites = favs
+    user.Favorites = favs
     return &user, nil
 }
 
@@ -64,7 +64,7 @@ func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) (
     return updatedUser, err
 }
 
-func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) ([]models.Favourite, error) {
+func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) ([]models.Favorite, error) {
     id, err := StringToUint(request.UserID)
     if err != nil {
         logrus.Errorf("Unable to convert id, %s", request.UserID)
@@ -75,7 +75,7 @@ func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.P
         logrus.Errorf("unable to get user")
         return nil, err
     }
-    err = GetDbConn().Model(&user).Association("Favourites").Append(models.Favourite{
+    err = GetDbConn().Model(&user).Association("Favorites").Append(models.Favorite{
         UserRefer: id,
         Product:   product,
     })
@@ -87,7 +87,7 @@ func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.P
     if err != nil {
         return nil, err
     }
-    return updatedUser.Favourites, nil
+    return updatedUser.Favorites, nil
 }
 
 func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product models.Product) ([]models.Favorite, error) {
@@ -103,15 +103,15 @@ func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product mo
     }
 
     // Find the favorite to be removed
-    var favourite models.Favourite
-    err = GetDbConn().Model(&user).Association("Favourites").Find(&favourite, "product_id = ?", product.ID)
+    var favorite models.Favorite
+    err = GetDbConn().Model(&user).Association("Favorites").Find(&favorite, "product_id = ?", product.ID)
     if err != nil {
         logrus.Errorf("unable to find fav")
         return nil, err
     }
 
     // Remove the favorite
-    err = GetDbConn().Model(&user).Association("Favourites").Delete(&favourite)
+    err = GetDbConn().Model(&user).Association("Favorites").Delete(&favorite)
     if err != nil {
         logrus.Errorf("unable to delete fav")
         return nil, err
@@ -121,5 +121,5 @@ func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product mo
     if err != nil {
         return nil, err
     }
-    return updatedUser.Favourites, nil
+    return updatedUser.Favorites, nil
 }

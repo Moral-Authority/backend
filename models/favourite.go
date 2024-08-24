@@ -2,7 +2,7 @@ package models
 
 import "gorm.io/gorm"
 
-type Favourite struct {
+type Favorite struct {
 	gorm.Model
 	UserRefer uint
 	User      User   `gorm:"foreignKey:UserRefer"`

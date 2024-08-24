@@ -6,24 +6,25 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
 )
 
-
-func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favorite, error) {
-	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+// AddUserFav is the resolver for the addUserFav field.
+func (r *mutationResolver) AddUserFav(ctx context.Context, request model.AddUserFav) ([]*model.Favorite, error) {
+	image, err := handlers.UserService{}.AddUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
 
 	return image, nil
 }
-func (r *mutationResolver) RemoveUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favorite, error) {
-	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+
+// RemoveUserFav is the resolver for the removeUserFav field.
+func (r *mutationResolver) RemoveUserFav(ctx context.Context, request model.RemoveUserFav) ([]*model.Favorite, error) {
+	image, err := handlers.UserService{}.RemoveUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}

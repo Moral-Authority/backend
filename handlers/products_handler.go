@@ -44,7 +44,7 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 
 	// TODO for each certificate id search db for cert and add to product_certs relational table
 
-	return toProductResponse(*addedProduct), nil
+	return toProductResponse(addedProduct), nil
 }
 
 func (s ProductService) UpdateProduct(request model.UpdateProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {

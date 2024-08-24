@@ -22,7 +22,7 @@ func (s UserService) AddNewUser(request model.NewUser, dbService database.UserDb
         FirstName:        request.FirstName,
         LastName:         request.LastName,
         LoginCredentials: credentials,
-        Favourites:       []models.Favourite{},
+        Favorites:       []models.Favorite{},
     }
     savedUser, err := dbService.AddNewUser(user)
     if err != nil {
@@ -47,7 +47,7 @@ func (s UserService) UpdateUser(request model.UpdateUser, dbService database.Use
     return toUserResponse(*updatedUser), nil
 }
 
-func (s UserService) AddUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
+func (s UserService) AddUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
     product, err := productDbService.GetProductByID(request.ProductID)
     if err != nil {
         return nil, err
@@ -65,7 +65,7 @@ func (s UserService) AddUserFav(request model.AddUserFav, userDbService database
     return toFavsResponse(addedFav), nil
 }
 
-func (s UserService) RemoveUserFav(request model.RemoveUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favourite, error) {
+func (s UserService) RemoveUserFav(request model.RemoveUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
     product, err := productDbService.GetProductByID(request.ProductID)
     if err != nil {
         return nil, err

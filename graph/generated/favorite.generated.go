@@ -249,6 +249,40 @@ func (ec *executionContext) unmarshalInputAddUserFav(ctx context.Context, obj in
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputRemoveUserFav(ctx context.Context, obj interface{}) (model.RemoveUserFav, error) {
+	var it model.RemoveUserFav
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"userId", "productId"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "userId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("userId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UserID = data
+		case "productId":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("productId"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ProductID = data
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -312,6 +346,11 @@ func (ec *executionContext) _Favorite(ctx context.Context, sel ast.SelectionSet,
 
 func (ec *executionContext) unmarshalNAddUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddUserFav(ctx context.Context, v interface{}) (model.AddUserFav, error) {
 	res, err := ec.unmarshalInputAddUserFav(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNRemoveUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐRemoveUserFav(ctx context.Context, v interface{}) (model.RemoveUserFav, error) {
+	res, err := ec.unmarshalInputRemoveUserFav(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
