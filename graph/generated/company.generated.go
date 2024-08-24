@@ -709,40 +709,6 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputCompanyFilter(ctx context.Context, obj interface{}) (model.CompanyFilter, error) {
-	var it model.CompanyFilter
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"key", "value"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "key":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("key"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Key = data
-		case "value":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("value"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			it.Value = data
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputFilterCompanyInput(ctx context.Context, obj interface{}) (model.FilterCompanyInput, error) {
 	var it model.FilterCompanyInput
 	asMap := map[string]interface{}{}
@@ -1042,11 +1008,11 @@ func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋMoralᚑAuthori
 	return ret
 }
 
-func (ec *executionContext) unmarshalOCompanyFilter2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyFilter(ctx context.Context, v interface{}) (*model.CompanyFilter, error) {
+func (ec *executionContext) unmarshalOFilterCompanyInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFilterCompanyInput(ctx context.Context, v interface{}) (*model.FilterCompanyInput, error) {
 	if v == nil {
 		return nil, nil
 	}
-	res, err := ec.unmarshalInputCompanyFilter(ctx, v)
+	res, err := ec.unmarshalInputFilterCompanyInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 

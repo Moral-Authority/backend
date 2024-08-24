@@ -40,7 +40,7 @@ type QueryResolver interface {
 	GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error)
 	GetCompany(ctx context.Context, id string) (*model.Company, error)
 	GetAllCompanies(ctx context.Context) ([]*model.Company, error)
-	GetCompaniesByFilter(ctx context.Context, filter *model.CompanyFilter) ([]*model.Company, error)
+	GetCompaniesByFilter(ctx context.Context, filter *model.FilterCompanyInput) ([]*model.Company, error)
 	GetAllCategories(ctx context.Context) ([]*model.Category, error)
 	GetProductByID(ctx context.Context, id string) (*model.Product, error)
 	GetAllProducts(ctx context.Context) ([]*model.Product, error)
@@ -295,10 +295,10 @@ func (ec *executionContext) field_Query_getCertificationsByFilter_args(ctx conte
 func (ec *executionContext) field_Query_getCompaniesByFilter_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 *model.CompanyFilter
+	var arg0 *model.FilterCompanyInput
 	if tmp, ok := rawArgs["filter"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
-		arg0, err = ec.unmarshalOCompanyFilter2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyFilter(ctx, tmp)
+		arg0, err = ec.unmarshalOFilterCompanyInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFilterCompanyInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1850,7 +1850,7 @@ func (ec *executionContext) _Query_getCompaniesByFilter(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetCompaniesByFilter(rctx, fc.Args["filter"].(*model.CompanyFilter))
+		return ec.resolvers.Query().GetCompaniesByFilter(rctx, fc.Args["filter"].(*model.FilterCompanyInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

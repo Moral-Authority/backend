@@ -134,14 +134,6 @@ type CompanyCertificationInput struct {
 	OtherDetails    *string `json:"otherDetails,omitempty"`
 }
 
-type CompanyFilter struct {
-	Name       *string `json:"name,omitempty"`
-	City       *string `json:"city,omitempty"`
-	State      *string `json:"state,omitempty"`
-	Country    *string `json:"country,omitempty"`
-	IsVerified *bool   `json:"isVerified,omitempty"`
-}
-
 type CompanyProduct struct {
 	Company        *Company `json:"company"`
 	Product        *Product `json:"product"`

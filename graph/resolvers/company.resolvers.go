@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -54,25 +53,15 @@ func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, 
 }
 
 // GetCompaniesByFilter is the resolver for the getCompaniesByFilter field.
-func (r *queryResolver) GetCompaniesByFilter(ctx context.Context, filter *model.CompanyFilter) ([]*model.Company, error) {
-	panic(fmt.Errorf("not implemented: GetCompaniesByFilter - getCompaniesByFilter"))
-}
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//   - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//     it when you're done.
-//   - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *mutationResolver) GetCompaniesByFilter(ctx context.Context, input model.FilterCompanyInput) ([]*model.Company, error) {
+func (r *queryResolver) GetCompaniesByFilter(ctx context.Context, filter *model.FilterCompanyInput) ([]*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
 
 	filters := map[string]interface{}{
-		"name":        input.Name,
-		"city":        input.City,
-		"state":       input.State,
-		"country":     input.Country,
-		"is_verified": input.IsVerified,
+		"name":        filter.Name,
+		"city":        filter.City,
+		"state":       filter.State,
+		"country":     filter.Country,
+		"is_verified": filter.IsVerified,
 	}
 
 	companies, err := handlers.CompanyService{}.GetCompaniesByFilter(dbService, filters)

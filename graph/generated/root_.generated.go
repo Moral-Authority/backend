@@ -175,7 +175,7 @@ type ComplexityRoot struct {
 		GetAllProducts            func(childComplexity int) int
 		GetCertificationByID      func(childComplexity int, id string) int
 		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
-		GetCompaniesByFilter      func(childComplexity int, filter *model.CompanyFilter) int
+		GetCompaniesByFilter      func(childComplexity int, filter *model.FilterCompanyInput) int
 		GetCompany                func(childComplexity int, id string) int
 		GetProductByID            func(childComplexity int, id string) int
 		User                      func(childComplexity int, id string) int
@@ -994,7 +994,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.GetCompaniesByFilter(childComplexity, args["filter"].(*model.CompanyFilter)), true
+		return e.complexity.Query.GetCompaniesByFilter(childComplexity, args["filter"].(*model.FilterCompanyInput)), true
 
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
@@ -1083,7 +1083,6 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputCompanyCertificationInput,
-		ec.unmarshalInputCompanyFilter,
 		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputFilterCertificationsInput,
 		ec.unmarshalInputFilterCompanyInput,
@@ -1288,12 +1287,7 @@ type Certification {
 extend type Query {
     getCompany(id: String!): Company!
     getAllCompanies: [Company!]
-    getCompaniesByFilter(filter: CompanyFilter): [Company!]
-}
-
-input CompanyFilter {
-    key: String
-    value: String
+    getCompaniesByFilter(filter: FilterCompanyInput): [Company!]
 }
 
 type Company {
