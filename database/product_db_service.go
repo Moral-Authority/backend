@@ -11,7 +11,7 @@ type ProductDbService interface {
 	AddProduct(product models.Product) (*models.Product, error)
 	DeleteProduct(productId string) error
 	UpdateProduct(product model.UpdateProductRequest) (*models.Product, error)
-	GetProductsByFilter(filters map[string]interface{}) ([]models.Certification, error)
+	GetProductsByFilter(filters map[string]interface{}) ([]models.Product, error)
 	AddCategory(category models.Category) (*models.Category, error)
 	GetAllCategories() ([]*models.Category, error)
 }

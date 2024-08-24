@@ -6,14 +6,15 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
 )
 
-// AddFav is the resolver for the addFav field.
-func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favourite, error) {
+
+func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favorite, error) {
 	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
@@ -21,9 +22,7 @@ func (r *mutationResolver) AddUserFav(ctx context.Context, input model.AddUserFa
 
 	return image, nil
 }
-
-
-func (r *mutationResolver) RemoveUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favourite, error) {
+func (r *mutationResolver) RemoveUserFav(ctx context.Context, input model.AddUserFav) ([]*model.Favorite, error) {
 	image, err := handlers.UserService{}.AddUserFav(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err

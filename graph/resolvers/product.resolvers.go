@@ -15,7 +15,7 @@ import (
 
 // AddProduct is the resolver for the addProduct field.
 func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error) {
-	company, err := handlers.ProductService{}.AddNewProduct(input, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	company, err := handlers.ProductService{}.AddNewProduct(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +26,7 @@ func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProduc
 // UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error) {
 	dbService := database.CompanyDbServiceImpl{}
-	company, err := handlers.ProductService{}.UpdateProduct(dbService, input)
+	company, err := handlers.ProductService{}.UpdateProduct(input, dbService, database.ImageDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -34,21 +34,26 @@ func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.Update
 }
 
 // GetProduct is the resolver for the getProduct field.
-func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
-	dbService := database.CompanyDbServiceImpl{}
-	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
-	if err != nil {
-		return nil, err
-	}
-	return company, nil
+func (r *queryResolver) GetProduct(ctx context.Context, id string) (*model.Product, error) {
+	panic(fmt.Errorf("not implemented: GetProduct - getProduct"))
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.
 func (r *queryResolver) GetAllProducts(ctx context.Context) ([]*model.Product, error) {
-	dbService := database.CompanyDbServiceImpl{}
+	dbService := database.ProductDbServiceImpl{}
 	companies, err := handlers.ProductService{}.GetAllProducts(dbService)
 	if err != nil {
 		return nil, err
 	}
 	return companies, nil
+}
+
+
+func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
+	dbService := database.ProductDbServiceImpl{}
+	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
+	if err != nil {
+		return nil, err
+	}
+	return company, nil
 }

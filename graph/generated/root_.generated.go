@@ -101,7 +101,7 @@ type ComplexityRoot struct {
 		Product        func(childComplexity int) int
 	}
 
-	Favourite struct {
+	Favorite struct {
 		ID      func(childComplexity int) int
 		Product func(childComplexity int) int
 		User    func(childComplexity int) int
@@ -522,26 +522,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CompanyProduct.Product(childComplexity), true
 
-	case "Favourite.id":
-		if e.complexity.Favourite.ID == nil {
+	case "Favorite.id":
+		if e.complexity.Favorite.ID == nil {
 			break
 		}
 
-		return e.complexity.Favourite.ID(childComplexity), true
+		return e.complexity.Favorite.ID(childComplexity), true
 
-	case "Favourite.product":
-		if e.complexity.Favourite.Product == nil {
+	case "Favorite.product":
+		if e.complexity.Favorite.Product == nil {
 			break
 		}
 
-		return e.complexity.Favourite.Product(childComplexity), true
+		return e.complexity.Favorite.Product(childComplexity), true
 
-	case "Favourite.user":
-		if e.complexity.Favourite.User == nil {
+	case "Favorite.user":
+		if e.complexity.Favorite.User == nil {
 			break
 		}
 
-		return e.complexity.Favourite.User(childComplexity), true
+		return e.complexity.Favorite.User(childComplexity), true
 
 	case "Image.id":
 		if e.complexity.Image.ID == nil {
@@ -1345,10 +1345,10 @@ input CompanyProductInput {
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
-    addFav(request: AddUserFav!): [Favourite]
+    addFav(request: AddUserFav!): [Favorite]
 }
 
-type Favourite {
+type Favorite {
     id: ID!
     user: User!
     product: Product!

@@ -23,7 +23,7 @@ type MutationResolver interface {
 	UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error)
 	UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error)
-	AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favourite, error)
+	AddFav(ctx context.Context, request model.AddUserFav) ([]*model.Favorite, error)
 	AddImage(ctx context.Context, request model.AddImage) (*model.Image, error)
 	UpdateImage(ctx context.Context, request model.UpdateImage) (*model.Image, error)
 	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
@@ -740,9 +740,9 @@ func (ec *executionContext) _Mutation_addFav(ctx context.Context, field graphql.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Favourite)
+	res := resTmp.([]*model.Favorite)
 	fc.Result = res
-	return ec.marshalOFavourite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, field.Selections, res)
+	return ec.marshalOFavorite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_addFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -754,13 +754,13 @@ func (ec *executionContext) fieldContext_Mutation_addFav(ctx context.Context, fi
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_Favourite_id(ctx, field)
+				return ec.fieldContext_Favorite_id(ctx, field)
 			case "user":
-				return ec.fieldContext_Favourite_user(ctx, field)
+				return ec.fieldContext_Favorite_user(ctx, field)
 			case "product":
-				return ec.fieldContext_Favourite_product(ctx, field)
+				return ec.fieldContext_Favorite_product(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Favourite", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Favorite", field.Name)
 		},
 	}
 	defer func() {

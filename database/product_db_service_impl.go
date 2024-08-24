@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
 )
@@ -28,17 +29,17 @@ func (s ProductDbServiceImpl) GetAllProducts() ([]*models.Product, error) {
 }
 
 func (s ProductDbServiceImpl) GetProductsByFilter(filters map[string]interface{}) ([]models.Product, error) {
-    var products []models.Product
-    db := GetDbConn()
+	var products []models.Product
+	db := GetDbConn()
 
 	query := ApplyFilters(db, filters)
-	
-    if err := query.Find(&products).Error; err != nil {
-        logrus.Errorf("Unable to get certifications by filter, %s", err)
-        return nil, err
-    }
 
-    return products, nil
+	if err := query.Find(&products).Error; err != nil {
+		logrus.Errorf("Unable to get certifications by filter, %s", err)
+		return nil, err
+	}
+
+	return products, nil
 }
 
 func (s ProductDbServiceImpl) AddProduct(product models.Product) (*models.Product, error) {
@@ -54,6 +55,11 @@ func (s ProductDbServiceImpl) AddProduct(product models.Product) (*models.Produc
 		return nil, result.Error
 	}
 	return &addedProduct, nil
+}
+
+func (s ProductDbServiceImpl) UpdateProduct(product model.UpdateProductRequest) (*models.Product, error) {
+
+	return nil, nil
 }
 
 func (s ProductDbServiceImpl) DeleteProduct(productId string) error {

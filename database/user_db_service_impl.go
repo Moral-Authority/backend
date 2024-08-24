@@ -90,7 +90,7 @@ func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.P
     return updatedUser.Favourites, nil
 }
 
-func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product models.Product) ([]models.Favourite, error) {
+func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product models.Product) ([]models.Favorite, error) {
     id, err := StringToUint(request.UserID)
     if err != nil {
         logrus.Errorf("Unable to convert id, %s", request.UserID)

@@ -65,11 +65,6 @@ type AddUserFav struct {
 	ProductID string `json:"productId"`
 }
 
-type RemoveUserFav struct {
-	UserID    string `json:"userId"`
-	ProductID string `json:"productId"`
-}
-
 type CategorizationInput struct {
 	Section     *string `json:"Section,omitempty"`
 	SubSection  *string `json:"SubSection,omitempty"`
@@ -154,7 +149,7 @@ type CompanyProductInput struct {
 	OtherDetails   *string `json:"otherDetails,omitempty"`
 }
 
-type Favourite struct {
+type Favorite struct {
 	ID      string   `json:"id"`
 	User    *User    `json:"user"`
 	Product *Product `json:"product"`

@@ -29,8 +29,8 @@ import (
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Favourite_id(ctx context.Context, field graphql.CollectedField, obj *model.Favourite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Favourite_id(ctx, field)
+func (ec *executionContext) _Favorite_id(ctx context.Context, field graphql.CollectedField, obj *model.Favorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Favorite_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -60,9 +60,9 @@ func (ec *executionContext) _Favourite_id(ctx context.Context, field graphql.Col
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Favourite_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Favorite_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Favourite",
+		Object:     "Favorite",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -73,8 +73,8 @@ func (ec *executionContext) fieldContext_Favourite_id(_ context.Context, field g
 	return fc, nil
 }
 
-func (ec *executionContext) _Favourite_user(ctx context.Context, field graphql.CollectedField, obj *model.Favourite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Favourite_user(ctx, field)
+func (ec *executionContext) _Favorite_user(ctx context.Context, field graphql.CollectedField, obj *model.Favorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Favorite_user(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -104,9 +104,9 @@ func (ec *executionContext) _Favourite_user(ctx context.Context, field graphql.C
 	return ec.marshalNUser2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Favourite_user(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Favorite_user(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Favourite",
+		Object:     "Favorite",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -127,8 +127,8 @@ func (ec *executionContext) fieldContext_Favourite_user(_ context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Favourite_product(ctx context.Context, field graphql.CollectedField, obj *model.Favourite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Favourite_product(ctx, field)
+func (ec *executionContext) _Favorite_product(ctx context.Context, field graphql.CollectedField, obj *model.Favorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Favorite_product(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -158,9 +158,9 @@ func (ec *executionContext) _Favourite_product(ctx context.Context, field graphq
 	return ec.marshalNProduct2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Favourite_product(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Favorite_product(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Favourite",
+		Object:     "Favorite",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -257,29 +257,29 @@ func (ec *executionContext) unmarshalInputAddUserFav(ctx context.Context, obj in
 
 // region    **************************** object.gotpl ****************************
 
-var favouriteImplementors = []string{"Favourite"}
+var favoriteImplementors = []string{"Favorite"}
 
-func (ec *executionContext) _Favourite(ctx context.Context, sel ast.SelectionSet, obj *model.Favourite) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, favouriteImplementors)
+func (ec *executionContext) _Favorite(ctx context.Context, sel ast.SelectionSet, obj *model.Favorite) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, favoriteImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Favourite")
+			out.Values[i] = graphql.MarshalString("Favorite")
 		case "id":
-			out.Values[i] = ec._Favourite_id(ctx, field, obj)
+			out.Values[i] = ec._Favorite_id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "user":
-			out.Values[i] = ec._Favourite_user(ctx, field, obj)
+			out.Values[i] = ec._Favorite_user(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
 		case "product":
-			out.Values[i] = ec._Favourite_product(ctx, field, obj)
+			out.Values[i] = ec._Favorite_product(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -315,7 +315,7 @@ func (ec *executionContext) unmarshalNAddUserFav2githubᚗcomᚋMoralᚑAuthorit
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v []*model.Favourite) graphql.Marshaler {
+func (ec *executionContext) marshalOFavorite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx context.Context, sel ast.SelectionSet, v []*model.Favorite) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -342,7 +342,7 @@ func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋMoralᚑAutho
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOFavourite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx, sel, v[i])
+			ret[i] = ec.marshalOFavorite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -356,11 +356,11 @@ func (ec *executionContext) marshalOFavourite2ᚕᚖgithubᚗcomᚋMoralᚑAutho
 	return ret
 }
 
-func (ec *executionContext) marshalOFavourite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavourite(ctx context.Context, sel ast.SelectionSet, v *model.Favourite) graphql.Marshaler {
+func (ec *executionContext) marshalOFavorite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx context.Context, sel ast.SelectionSet, v *model.Favorite) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return ec._Favourite(ctx, sel, v)
+	return ec._Favorite(ctx, sel, v)
 }
 
 // endregion ***************************** type.gotpl *****************************
