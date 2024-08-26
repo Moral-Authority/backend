@@ -50,6 +50,14 @@ func main() {
 		AllowCredentials: true,                                   // If using cookies or other credentials
 	})
 
+	//  LOCAL TESTING CONFIG
+	// c := cors.New(cors.Options{
+	// 	AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
+	// 	AllowCredentials: true,
+	// 	AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
+	// 	AllowedHeaders:   []string{"Authorization", "Content-Type"},
+	// })
+
 	database.Connect(cfg.DatabaseConfig)
 
 	// Setup GraphQL server
