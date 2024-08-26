@@ -57,11 +57,11 @@ func (r *queryResolver) GetCompaniesByFilter(ctx context.Context, filter *model.
 	dbService := database.CompanyDbServiceImpl{}
 
 	filters := map[string]interface{}{
-		"name":        filter.Name,
-		"city":        filter.City,
-		"state":       filter.State,
-		"country":     filter.Country,
-		"is_verified": filter.IsVerified,
+		"name":        filter.CompanyFilters.Name,
+		"city":        filter.CompanyFilters.City,
+		"state":       filter.CompanyFilters.State,
+		"country":     filter.CompanyFilters.Country,
+		"is_verified": filter.CompanyFilters.IsVerified,
 	}
 
 	companies, err := handlers.CompanyService{}.GetCompaniesByFilter(dbService, filters)

@@ -709,8 +709,8 @@ func (ec *executionContext) unmarshalInputAddCompany(ctx context.Context, obj in
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputFilterCompanyInput(ctx context.Context, obj interface{}) (model.FilterCompanyInput, error) {
-	var it model.FilterCompanyInput
+func (ec *executionContext) unmarshalInputCompanyFiltersInput(ctx context.Context, obj interface{}) (model.CompanyFiltersInput, error) {
+	var it model.CompanyFiltersInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -758,6 +758,47 @@ func (ec *executionContext) unmarshalInputFilterCompanyInput(ctx context.Context
 				return it, err
 			}
 			it.IsVerified = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputFilterCompanyInput(ctx context.Context, obj interface{}) (model.FilterCompanyInput, error) {
+	var it model.FilterCompanyInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"CompanyFilters", "SortBy", "Pagination"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "CompanyFilters":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CompanyFilters"))
+			data, err := ec.unmarshalOCompanyFiltersInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyFiltersInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CompanyFilters = data
+		case "SortBy":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SortBy"))
+			data, err := ec.unmarshalOSortByInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐSortByInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.SortBy = data
+		case "Pagination":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Pagination"))
+			data, err := ec.unmarshalOPaginationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPaginationInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Pagination = data
 		}
 	}
 
@@ -1006,6 +1047,14 @@ func (ec *executionContext) marshalOCompany2ᚕᚖgithubᚗcomᚋMoralᚑAuthori
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOCompanyFiltersInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCompanyFiltersInput(ctx context.Context, v interface{}) (*model.CompanyFiltersInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCompanyFiltersInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOFilterCompanyInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFilterCompanyInput(ctx context.Context, v interface{}) (*model.FilterCompanyInput, error) {

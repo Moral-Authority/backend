@@ -7,6 +7,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -52,33 +53,30 @@ func (r *queryResolver) GetCertificationByID(ctx context.Context, id string) (*m
 }
 
 // GetCertificationsByFilter is the resolver for the getCertificationsByFilter field.
-func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error) {
+func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) (*model.PaginatedCertifications, error) {
 	dbService := &database.CertificationDbServiceImpl{}
+
 	filters := map[string]interface{}{
-		"name":                 input.Name,
-		"website":              input.Website,
-		"logo":                 input.Logo,
-		"description":          input.Description,
-		"industry":             input.Industry,
-		"certifier":            input.Certifier,
-		"certifies_company":    input.CertifiesCompany,
-		"certifies_product":    input.CertifiesProduct,
-		"certifies_process":    input.CertifiesProcess,
-		"certifier_contact_id": input.CertifierContactID,
-		"audited":              input.Audited,
-		"auditor":              input.Auditor,
-		"region":               input.Region,
-		"qualifiers":           input.Qualifiers,
-		"sources":              input.Sources,
+		"name":                 input.CertificationFilters.Name,
+		"industry":             input.CertificationFilters.Industry,
+		"certifier":            input.CertificationFilters.Certifier,
+		"certifies_company":    input.CertificationFilters.CertifiesCompany,
+		"certifies_product":    input.CertificationFilters.CertifiesProduct,
+		"certifies_process":    input.CertificationFilters.CertifiesProcess,
+		"certifier_contact_id": input.CertificationFilters.CertifierContactID,
+		"audited":              input.CertificationFilters.Audited,
+		"auditor":              input.CertificationFilters.Auditor,
+		"region":               input.CertificationFilters.Region,
+		"qualifiers":           input.CertificationFilters.Qualifiers,
 	}
 
-	certs, err := dbService.GetCertificationsByFilter(filters)
+	certifications, total, err := dbService.GetCertificationsByFilter(filters, input)
 	if err != nil {
 		return nil, err
 	}
 
 	var result []*model.Certification
-	for _, cert := range certs {
+	for _, cert := range certifications {
 		result = append(result, &model.Certification{
 			ID:                 *handlers.UintPtrToStringPtr(&cert.ID),
 			Name:               cert.Name.String,
@@ -99,5 +97,15 @@ func (r *queryResolver) GetCertificationsByFilter(ctx context.Context, input mod
 		})
 	}
 
-	return result, nil
+	pagination := input.Pagination
+	itemsPerPage := strconv.Itoa(*pagination.Items)
+	currentPage := strconv.Itoa(int(*pagination.Page))
+
+	return &model.PaginatedCertifications{
+		Certifications: result,
+		TotalItems:     strconv.Itoa(int(total)),
+		ItemsPerPage:   &itemsPerPage,
+		CurrentPage:    &currentPage,
+		// TotalPages:     (total + int(pagination.Items) - 1) / int(pagination.Items), // Calculate total pages
+	}, nil
 }

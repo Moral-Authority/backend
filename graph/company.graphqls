@@ -51,10 +51,16 @@ input UpdateCompany {
     products: [CompanyProductInput!] # Input for relational table
 }
 
-input FilterCompanyInput {
+input CompanyFiltersInput {
     name: String
     city: String
     state: String
     country: String
     isVerified: Boolean
+}
+
+input FilterCompanyInput {
+    CompanyFilters: CompanyFiltersInput
+    SortBy: SortByInput
+    Pagination: PaginationInput
 }

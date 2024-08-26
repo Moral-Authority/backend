@@ -338,7 +338,7 @@ func (ec *executionContext) unmarshalInputProductCertificationInput(ctx context.
 		switch k {
 		case "certificationID":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificationID"))
-			data, err := ec.unmarshalNString2string(ctx, v)
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -432,6 +432,10 @@ func (ec *executionContext) _ProductCertification(ctx context.Context, sel ast.S
 
 // region    ***************************** type.gotpl *****************************
 
+func (ec *executionContext) marshalNProductCertification2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertification(ctx context.Context, sel ast.SelectionSet, v model.ProductCertification) graphql.Marshaler {
+	return ec._ProductCertification(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNProductCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertification(ctx context.Context, sel ast.SelectionSet, v *model.ProductCertification) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -440,6 +444,11 @@ func (ec *executionContext) marshalNProductCertification2ᚖgithubᚗcomᚋMoral
 		return graphql.Null
 	}
 	return ec._ProductCertification(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNProductCertificationInput2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInput(ctx context.Context, v interface{}) (model.ProductCertificationInput, error) {
+	res, err := ec.unmarshalInputProductCertificationInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNProductCertificationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInput(ctx context.Context, v interface{}) (*model.ProductCertificationInput, error) {

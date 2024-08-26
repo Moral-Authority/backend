@@ -314,13 +314,20 @@ func (ec *executionContext) unmarshalInputCompanyCertificationInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"certificationID", "certifiedAt", "expirationDate", "otherDetails"}
+	fieldsInOrder := [...]string{"companyID", "certificationID", "certifiedAt", "expirationDate", "otherDetails"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
+		case "companyID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("companyID"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CompanyID = data
 		case "certificationID":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("certificationID"))
 			data, err := ec.unmarshalNString2string(ctx, v)

@@ -11,21 +11,19 @@ import (
 
 type CertificationService struct{}
 
+func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, input model.FilterCertificationsInput, dbService database.CertificationDbService) ([]*model.Certification, int64, error) {
+    certs, total, err := dbService.GetCertificationsByFilter(filters, input)
+    if err != nil {
+        return nil, 0, err
+    }
 
-func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, dbService database.CertificationDbService) ([]*model.Certification, error) {
-	certs, err := dbService.GetCertificationsByFilter(filters)
-	if err != nil {
-		return nil, err
-	}
+    var result []*model.Certification
+    for _, cert := range certs {
+        result = append(result, toCertificationResponse(cert))
+    }
 
-	var result []*model.Certification
-	for _, cert := range certs {
-		result = append(result, toCertificationResponse(cert))
-	}
-
-	return result, nil
+    return result, total, nil
 }
-
 
 func (s CertificationService) AddNewCertification(request model.AddCertification, dbService database.CertificationDbService) (*model.Certification, error) {
 

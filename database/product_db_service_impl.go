@@ -57,6 +57,21 @@ func (s ProductDbServiceImpl) AddProduct(product models.Product) (*models.Produc
 	return &addedProduct, nil
 }
 
+func (s ProductDbServiceImpl) AddProductCertification(pc models.ProductCertification) (*models.ProductCertification, error) {
+	result := GetDbConn().Create(&pc)
+	if result.Error != nil {
+		logrus.Errorf("Unable to save product, %s", result.Error)
+		return nil, result.Error
+	}
+	var added models.ProductCertification
+	result = GetDbConn().First(&added, "id = ?", pc.ID)
+	if result.Error != nil {
+		logrus.Errorf("Unable to get product, %s", result.Error)
+		return nil, result.Error
+	}
+	return &added, nil
+}
+
 func (s ProductDbServiceImpl) UpdateProduct(product model.UpdateProductRequest) (*models.Product, error) {
 
 	return nil, nil

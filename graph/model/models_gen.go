@@ -104,6 +104,24 @@ type Certification struct {
 	UpdatedAt          *string `json:"UpdatedAt,omitempty"`
 }
 
+type CertificationFiltersInput struct {
+	Name               *string `json:"Name,omitempty"`
+	Website            *string `json:"Website,omitempty"`
+	Logo               *string `json:"Logo,omitempty"`
+	Description        *string `json:"Description,omitempty"`
+	Industry           *string `json:"Industry,omitempty"`
+	Certifier          *string `json:"Certifier,omitempty"`
+	CertifiesCompany   *bool   `json:"CertifiesCompany,omitempty"`
+	CertifiesProduct   *bool   `json:"CertifiesProduct,omitempty"`
+	CertifiesProcess   *bool   `json:"CertifiesProcess,omitempty"`
+	CertifierContactID *string `json:"CertifierContactID,omitempty"`
+	Audited            *bool   `json:"Audited,omitempty"`
+	Auditor            *string `json:"Auditor,omitempty"`
+	Region             *string `json:"Region,omitempty"`
+	Qualifiers         *string `json:"Qualifiers,omitempty"`
+	Sources            *string `json:"Sources,omitempty"`
+}
+
 type Company struct {
 	ID                    string           `json:"_id"`
 	Name                  string           `json:"name"`
@@ -128,10 +146,19 @@ type CompanyCertification struct {
 }
 
 type CompanyCertificationInput struct {
+	CompanyID       string  `json:"companyID"`
 	CertificationID string  `json:"certificationID"`
 	CertifiedAt     *string `json:"certifiedAt,omitempty"`
 	ExpirationDate  *string `json:"expirationDate,omitempty"`
 	OtherDetails    *string `json:"otherDetails,omitempty"`
+}
+
+type CompanyFiltersInput struct {
+	Name       *string `json:"name,omitempty"`
+	City       *string `json:"city,omitempty"`
+	State      *string `json:"state,omitempty"`
+	Country    *string `json:"country,omitempty"`
+	IsVerified *bool   `json:"isVerified,omitempty"`
 }
 
 type CompanyProduct struct {
@@ -156,29 +183,15 @@ type Favorite struct {
 }
 
 type FilterCertificationsInput struct {
-	Name               *string `json:"Name,omitempty"`
-	Website            *string `json:"Website,omitempty"`
-	Logo               *string `json:"Logo,omitempty"`
-	Description        *string `json:"Description,omitempty"`
-	Industry           *string `json:"Industry,omitempty"`
-	Certifier          *string `json:"Certifier,omitempty"`
-	CertifiesCompany   *bool   `json:"CertifiesCompany,omitempty"`
-	CertifiesProduct   *bool   `json:"CertifiesProduct,omitempty"`
-	CertifiesProcess   *bool   `json:"CertifiesProcess,omitempty"`
-	CertifierContactID *string `json:"CertifierContactID,omitempty"`
-	Audited            *bool   `json:"Audited,omitempty"`
-	Auditor            *string `json:"Auditor,omitempty"`
-	Region             *string `json:"Region,omitempty"`
-	Qualifiers         *string `json:"Qualifiers,omitempty"`
-	Sources            *string `json:"Sources,omitempty"`
+	CertificationFilters *CertificationFiltersInput `json:"CertificationFilters,omitempty"`
+	SortBy               *SortByInput               `json:"SortBy,omitempty"`
+	Pagination           *PaginationInput           `json:"Pagination,omitempty"`
 }
 
 type FilterCompanyInput struct {
-	Name       *string `json:"name,omitempty"`
-	City       *string `json:"city,omitempty"`
-	State      *string `json:"state,omitempty"`
-	Country    *string `json:"country,omitempty"`
-	IsVerified *bool   `json:"isVerified,omitempty"`
+	CompanyFilters *CompanyFiltersInput `json:"CompanyFilters,omitempty"`
+	SortBy         *SortByInput         `json:"SortBy,omitempty"`
+	Pagination     *PaginationInput     `json:"Pagination,omitempty"`
 }
 
 type Image struct {
@@ -195,6 +208,20 @@ type NewUser struct {
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
+}
+
+type PaginatedCertifications struct {
+	Certifications []*Certification `json:"Certifications,omitempty"`
+	TotalItems     string           `json:"TotalItems"`
+	ItemsPerPage   *string          `json:"ItemsPerPage,omitempty"`
+	CurrentPage    *string          `json:"CurrentPage,omitempty"`
+	Description    *string          `json:"Description,omitempty"`
+	TotalPages     *string          `json:"TotalPages,omitempty"`
+}
+
+type PaginationInput struct {
+	Items *int `json:"Items,omitempty"`
+	Page  *int `json:"Page,omitempty"`
 }
 
 type Product struct {
@@ -228,7 +255,7 @@ type ProductCertification struct {
 }
 
 type ProductCertificationInput struct {
-	CertificationID string  `json:"certificationID"`
+	CertificationID *string `json:"certificationID,omitempty"`
 	CertifiedAt     *string `json:"certifiedAt,omitempty"`
 	ExpirationDate  *string `json:"expirationDate,omitempty"`
 	OtherDetails    *string `json:"otherDetails,omitempty"`
@@ -255,6 +282,11 @@ type Query struct {
 type RemoveUserFav struct {
 	UserID    string `json:"userId"`
 	ProductID string `json:"productId"`
+}
+
+type SortByInput struct {
+	SortBy    *string `json:"SortBy,omitempty"`
+	SortOrder *string `json:"SortOrder,omitempty"`
 }
 
 type UpdateCertification struct {

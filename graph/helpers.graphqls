@@ -1,0 +1,10 @@
+input PaginationInput {
+    Items: Int
+    Page: Int
+}
+
+
+input SortByInput {
+	SortBy: String
+	SortOrder: String
+}

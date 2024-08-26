@@ -75,3 +75,19 @@ func (s CompanyDbServiceImpl) GetCompaniesByFilter(filters map[string]interface{
 
     return companies, nil
 }
+
+func (s CompanyDbServiceImpl) AddCompanyCertification(companyCertification models.CompanyCertification) (*models.CompanyCertification, error) {
+    result := GetDbConn().Create(&companyCertification)
+    if result.Error != nil {
+        logrus.Errorf("Unable to save company, %s", result.Error)
+        return nil, result.Error
+    }
+
+    var addedCompanyCertification models.CompanyCertification
+    result = GetDbConn().First(&addedCompanyCertification, "id = ?", addedCompanyCertification.ID)
+    if result.Error != nil {
+        logrus.Errorf("Unable to get company, %s", result.Error)
+        return nil, result.Error
+    }
+    return &addedCompanyCertification, nil
+}

@@ -1,4 +1,9 @@
 # Relational table to manage product certifications
+extend type Mutation {
+    addProductCertification(input: ProductCertificationInput!): ProductCertification!
+}
+
+
 type ProductCertification {
     product: Product!
     certification: Certification!
@@ -8,7 +13,7 @@ type ProductCertification {
 }
 
 input ProductCertificationInput {
-    certificationID: String!
+    certificationID: String
     certifiedAt: String
     expirationDate: String
     otherDetails: String

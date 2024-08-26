@@ -6,9 +6,18 @@ extend type Mutation {
 extend type Query {
     getAllCertifications: [Certification]!
     getCertificationById(id: String!): Certification
-    getCertificationsByFilter(input: FilterCertificationsInput!): [Certification]!
+    getCertificationsByFilter(input: FilterCertificationsInput!): PaginatedCertifications!
 }
 
+type PaginatedCertifications {
+    Certifications: [Certification]
+    TotalItems: String!
+    ItemsPerPage: String
+    CurrentPage: String
+    Description: String
+    TotalPages: String
+}
+ 
 input UpdateCertification {
     ID: String!
     Name: String
@@ -46,7 +55,7 @@ input AddCertification {
     Sources: String
 }
 
-input FilterCertificationsInput {
+input CertificationFiltersInput {
     Name: String
     Website: String
     Logo: String
@@ -83,4 +92,11 @@ type Certification {
     Sources: String
     CreatedAt: String
     UpdatedAt: String
+}
+
+
+input FilterCertificationsInput {
+    CertificationFilters: CertificationFiltersInput
+    SortBy: SortByInput
+    Pagination: PaginationInput
 }

@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
-	"github.com/Moral-Authority/backend/models" 
+	"github.com/Moral-Authority/backend/models"
 )
 
 type ProductService struct{}
@@ -18,7 +19,7 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	// }
 
 	product := models.Product{
-		Url:         request.PurchaseInfo.Link, 
+		Url:         request.PurchaseInfo.Link,
 		Description: request.Description,
 		Title:       request.Title,
 	}
@@ -40,19 +41,21 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 		}
 	}
 
-
 	for _, c := range request.Certifications {
 
-		cert := models.Certification{
-			Url: *i,
+		foundCert, err := certificationService.GetCertificationById(*c.CertificationID)
+		if err != nil  {
+			return nil, fmt.Errorf("unable to find certification number %d", c.CertificationID)
 		}
 
-		foundCert, _ := certificationService.GetCertificationsByFilter(map[string]interface{}{"name": c.Name})
-		if foundCert == nil {
-			addedImage, err := certificationService.AddNewCertification(c)
-			if err != nil || addedImage == nil {
-				return nil, errors.New("unable to save product certification to db")
-			}
+		cert := models.ProductCertification{
+			ProductID:	   addedProduct.ID,
+			CertificationID: foundCert.ID,
+		}
+
+		addedProductCert, err := productDbService.AddProductCertification(cert)
+		if err != nil || addedProductCert == nil {
+			return nil, errors.New("unable to save product certification to db")
 		}
 	}
 

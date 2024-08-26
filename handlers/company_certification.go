@@ -8,36 +8,27 @@ import (
 	"github.com/Moral-Authority/backend/models"
 )
 
+func (s CompanyService) AddCompanyCertification(companyService database.CompanyDbService, certService database.CertificationDbService, request model.CompanyCertificationInput) (*models.CompanyCertification, error) {
 
-
-type CompanyCertificationDbService struct{}
-
-func (s ImageDbService) AddCompanyCertification(dbService database.ImageDbService, request model.AddImage) (*model.Image, error) {
-
-	    // _, err := database.StringToUint(request.UserID)
-    // if err != nil {
-    //     return nil, err
-    // }
-
-	image := models.Image{
-		Url: request.URL,
+	
+	company, err := companyService.GetCompanyById(request.CompanyID)
+	if err != nil {
+		return nil, errors.New("unable to get company from db")
 	}
 
-	if  request.ProductID != nil {
-		// validate product id 
+	cert, err := certService.GetCertificationById(request.CertificationID)
+	if err != nil {
+		return nil, errors.New("unable to get certification from db")
 	}
 
-    savedImage, err := dbService.AddImage(image)
-    if err != nil || savedImage == nil {
-        return nil, errors.New("unable to save company in db")
-    }
-	return toImageResponse(*savedImage), nil
-}
+	cc := models.CompanyCertification{}
+	cc.Company.ID = company.ID
+	cc.Certification.ID = cert.ID
 
-func (s ImageDbService) UpdateImage(dbService database.ImageDbService, request model.UpdateImage) (*model.Image, error) {
-    image, err := dbService.GetImageById(request.ID)
-    if err != nil || image == nil {
-        return nil, errors.New("unable to get image from db")
-    }
-    return toImageResponse(*image), nil
+	addedCert, err := companyService.AddCompanyCertification(cc)
+	if err != nil {
+		return nil, errors.New("unable to save company certification in db")
+	}
+
+	return addedCert, nil
 }

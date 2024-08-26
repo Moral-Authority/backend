@@ -9,6 +9,7 @@ type CompanyCertification {
 }
 
 input CompanyCertificationInput {
+    companyID: String!
     certificationID: String!
     certifiedAt: String
     expirationDate: String

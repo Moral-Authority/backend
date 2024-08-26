@@ -1,27 +1,45 @@
 package database
 
 import (
+	"fmt"
+
+	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
-	"fmt"
 )
 
 type CertificationDbServiceImpl struct{}
 
-func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}) ([]models.Certification, error) {
-    var certs []models.Certification
-    db := GetDbConn()
 
+func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}, input model.FilterCertificationsInput) ([]models.Certification, int64, error) {
+	var certs []models.Certification
+	db := GetDbConn()
+
+	// Apply filters to the query
 	query := ApplyFilters(db, filters)
-	
-    if err := query.Find(&certs).Error; err != nil {
-        logrus.Errorf("Unable to get certifications by filter, %s", err)
-        return nil, err
-    }
 
-    return certs, nil
+	// If pagination is provided, apply limit and offset
+	if input.Pagination != nil {
+		p := *input.Pagination
+		offset := models.CalculateOffset(p)
+		query = query.Limit(*input.Pagination.Items).Offset(offset)
+	}
+
+	// Execute the query and retrieve results
+	if err := query.Find(&certs).Error; err != nil {
+		logrus.Errorf("Unable to get certifications by filter, %s", err)
+		return nil, 0, err
+	}
+
+	// Count the total number of records without pagination for metadata
+	var total int64
+	if err := db.Model(&models.Certification{}).Where(filters).Count(&total).Error; err != nil {
+		logrus.Errorf("Unable to count certifications, %s", err)
+		return nil, 0, err
+	}
+
+	return certs, total, nil
 }
-
 
 func (s CertificationDbServiceImpl) AddNewCertification(cert models.Certification) (*models.Certification, error) {
 	result := GetDbConn().Create(&cert)

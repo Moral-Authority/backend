@@ -114,20 +114,30 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCategory         func(childComplexity int, input model.AddCategory) int
-		AddCertification    func(childComplexity int, input model.AddCertification) int
-		AddCompany          func(childComplexity int, input model.AddCompany) int
-		AddImage            func(childComplexity int, request model.AddImage) int
-		AddProduct          func(childComplexity int, input model.AddProductRequest) int
-		AddUser             func(childComplexity int, input model.NewUser) int
-		AddUserFav          func(childComplexity int, request model.AddUserFav) int
-		BaseMutation        func(childComplexity int) int
-		RemoveUserFav       func(childComplexity int, request model.RemoveUserFav) int
-		UpdateCertification func(childComplexity int, input model.UpdateCertification) int
-		UpdateCompany       func(childComplexity int, input model.UpdateCompany) int
-		UpdateImage         func(childComplexity int, request model.UpdateImage) int
-		UpdateProduct       func(childComplexity int, input model.UpdateProductRequest) int
-		UpdateUser          func(childComplexity int, input model.UpdateUser) int
+		AddCategory             func(childComplexity int, input model.AddCategory) int
+		AddCertification        func(childComplexity int, input model.AddCertification) int
+		AddCompany              func(childComplexity int, input model.AddCompany) int
+		AddImage                func(childComplexity int, request model.AddImage) int
+		AddProduct              func(childComplexity int, input model.AddProductRequest) int
+		AddProductCertification func(childComplexity int, input model.ProductCertificationInput) int
+		AddUser                 func(childComplexity int, input model.NewUser) int
+		AddUserFav              func(childComplexity int, request model.AddUserFav) int
+		BaseMutation            func(childComplexity int) int
+		RemoveUserFav           func(childComplexity int, request model.RemoveUserFav) int
+		UpdateCertification     func(childComplexity int, input model.UpdateCertification) int
+		UpdateCompany           func(childComplexity int, input model.UpdateCompany) int
+		UpdateImage             func(childComplexity int, request model.UpdateImage) int
+		UpdateProduct           func(childComplexity int, input model.UpdateProductRequest) int
+		UpdateUser              func(childComplexity int, input model.UpdateUser) int
+	}
+
+	PaginatedCertifications struct {
+		Certifications func(childComplexity int) int
+		CurrentPage    func(childComplexity int) int
+		Description    func(childComplexity int) int
+		ItemsPerPage   func(childComplexity int) int
+		TotalItems     func(childComplexity int) int
+		TotalPages     func(childComplexity int) int
 	}
 
 	Product struct {
@@ -626,6 +636,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddProduct(childComplexity, args["input"].(model.AddProductRequest)), true
 
+	case "Mutation.addProductCertification":
+		if e.complexity.Mutation.AddProductCertification == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_addProductCertification_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.AddProductCertification(childComplexity, args["input"].(model.ProductCertificationInput)), true
+
 	case "Mutation.addUser":
 		if e.complexity.Mutation.AddUser == nil {
 			break
@@ -728,6 +750,48 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateUser(childComplexity, args["input"].(model.UpdateUser)), true
+
+	case "PaginatedCertifications.Certifications":
+		if e.complexity.PaginatedCertifications.Certifications == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.Certifications(childComplexity), true
+
+	case "PaginatedCertifications.CurrentPage":
+		if e.complexity.PaginatedCertifications.CurrentPage == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.CurrentPage(childComplexity), true
+
+	case "PaginatedCertifications.Description":
+		if e.complexity.PaginatedCertifications.Description == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.Description(childComplexity), true
+
+	case "PaginatedCertifications.ItemsPerPage":
+		if e.complexity.PaginatedCertifications.ItemsPerPage == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.ItemsPerPage(childComplexity), true
+
+	case "PaginatedCertifications.TotalItems":
+		if e.complexity.PaginatedCertifications.TotalItems == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.TotalItems(childComplexity), true
+
+	case "PaginatedCertifications.TotalPages":
+		if e.complexity.PaginatedCertifications.TotalPages == nil {
+			break
+		}
+
+		return e.complexity.PaginatedCertifications.TotalPages(childComplexity), true
 
 	case "Product.Category":
 		if e.complexity.Product.Category == nil {
@@ -1082,14 +1146,18 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddUserFav,
 		ec.unmarshalInputCategorizationInput,
+		ec.unmarshalInputCertificationFiltersInput,
 		ec.unmarshalInputCompanyCertificationInput,
+		ec.unmarshalInputCompanyFiltersInput,
 		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputFilterCertificationsInput,
 		ec.unmarshalInputFilterCompanyInput,
 		ec.unmarshalInputNewUser,
+		ec.unmarshalInputPaginationInput,
 		ec.unmarshalInputProductCertificationInput,
 		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputRemoveUserFav,
+		ec.unmarshalInputSortByInput,
 		ec.unmarshalInputUpdateCertification,
 		ec.unmarshalInputUpdateCompany,
 		ec.unmarshalInputUpdateImage,
@@ -1200,9 +1268,18 @@ var sources = []*ast.Source{
 extend type Query {
     getAllCertifications: [Certification]!
     getCertificationById(id: String!): Certification
-    getCertificationsByFilter(input: FilterCertificationsInput!): [Certification]!
+    getCertificationsByFilter(input: FilterCertificationsInput!): PaginatedCertifications!
 }
 
+type PaginatedCertifications {
+    Certifications: [Certification]
+    TotalItems: String!
+    ItemsPerPage: String
+    CurrentPage: String
+    Description: String
+    TotalPages: String
+}
+ 
 input UpdateCertification {
     ID: String!
     Name: String
@@ -1240,7 +1317,7 @@ input AddCertification {
     Sources: String
 }
 
-input FilterCertificationsInput {
+input CertificationFiltersInput {
     Name: String
     Website: String
     Logo: String
@@ -1277,6 +1354,13 @@ type Certification {
     Sources: String
     CreatedAt: String
     UpdatedAt: String
+}
+
+
+input FilterCertificationsInput {
+    CertificationFilters: CertificationFiltersInput
+    SortBy: SortByInput
+    Pagination: PaginationInput
 }
 `, BuiltIn: false},
 	{Name: "../company.graphqls", Input: `extend type Mutation {
@@ -1332,12 +1416,18 @@ input UpdateCompany {
     products: [CompanyProductInput!] # Input for relational table
 }
 
-input FilterCompanyInput {
+input CompanyFiltersInput {
     name: String
     city: String
     state: String
     country: String
     isVerified: Boolean
+}
+
+input FilterCompanyInput {
+    CompanyFilters: CompanyFiltersInput
+    SortBy: SortByInput
+    Pagination: PaginationInput
 }
 `, BuiltIn: false},
 	{Name: "../companyCertification.graphqls", Input: `# Relational table to manage company certifications
@@ -1351,6 +1441,7 @@ type CompanyCertification {
 }
 
 input CompanyCertificationInput {
+    companyID: String!
     certificationID: String!
     certifiedAt: String
     expirationDate: String
@@ -1393,6 +1484,16 @@ input RemoveUserFav {
     productId: String!
 }
 `, BuiltIn: false},
+	{Name: "../helpers.graphqls", Input: `input PaginationInput {
+    Items: Int
+    Page: Int
+}
+
+
+input SortByInput {
+	SortBy: String
+	SortOrder: String
+}`, BuiltIn: false},
 	{Name: "../image.graphqls", Input: `extend type Mutation {
     addImage(request: AddImage!): Image!
 	UpdateImage(request: UpdateImage!): Image!
@@ -1566,6 +1667,11 @@ type PurchaseInfo {
 }
 `, BuiltIn: false},
 	{Name: "../productCertification.graphqls", Input: `# Relational table to manage product certifications
+extend type Mutation {
+    addProductCertification(input: ProductCertificationInput!): ProductCertification!
+}
+
+
 type ProductCertification {
     product: Product!
     certification: Certification!
@@ -1575,7 +1681,7 @@ type ProductCertification {
 }
 
 input ProductCertificationInput {
-    certificationID: String!
+    certificationID: String
     certifiedAt: String
     expirationDate: String
     otherDetails: String

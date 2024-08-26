@@ -5,6 +5,7 @@ package generated
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -772,6 +773,293 @@ func (ec *executionContext) fieldContext_Certification_UpdatedAt(_ context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _PaginatedCertifications_Certifications(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_Certifications(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Certifications, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Certification)
+	fc.Result = res
+	return ec.marshalOCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_Certifications(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Certification__id(ctx, field)
+			case "Name":
+				return ec.fieldContext_Certification_Name(ctx, field)
+			case "Logo":
+				return ec.fieldContext_Certification_Logo(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
+			case "CertifiesCompany":
+				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
+			case "CertifiesProduct":
+				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
+			case "CertifiesProcess":
+				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Audited":
+				return ec.fieldContext_Certification_Audited(ctx, field)
+			case "Auditor":
+				return ec.fieldContext_Certification_Auditor(ctx, field)
+			case "Region":
+				return ec.fieldContext_Certification_Region(ctx, field)
+			case "Qualifiers":
+				return ec.fieldContext_Certification_Qualifiers(ctx, field)
+			case "Sources":
+				return ec.fieldContext_Certification_Sources(ctx, field)
+			case "CreatedAt":
+				return ec.fieldContext_Certification_CreatedAt(ctx, field)
+			case "UpdatedAt":
+				return ec.fieldContext_Certification_UpdatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PaginatedCertifications_TotalItems(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_TotalItems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalItems, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_TotalItems(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PaginatedCertifications_ItemsPerPage(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_ItemsPerPage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ItemsPerPage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_ItemsPerPage(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PaginatedCertifications_CurrentPage(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_CurrentPage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CurrentPage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_CurrentPage(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PaginatedCertifications_Description(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_Description(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_Description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PaginatedCertifications_TotalPages(ctx context.Context, field graphql.CollectedField, obj *model.PaginatedCertifications) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PaginatedCertifications_TotalPages(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TotalPages, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PaginatedCertifications_TotalPages(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PaginatedCertifications",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -901,8 +1189,8 @@ func (ec *executionContext) unmarshalInputAddCertification(ctx context.Context, 
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputFilterCertificationsInput(ctx context.Context, obj interface{}) (model.FilterCertificationsInput, error) {
-	var it model.FilterCertificationsInput
+func (ec *executionContext) unmarshalInputCertificationFiltersInput(ctx context.Context, obj interface{}) (model.CertificationFiltersInput, error) {
+	var it model.CertificationFiltersInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -1020,6 +1308,47 @@ func (ec *executionContext) unmarshalInputFilterCertificationsInput(ctx context.
 				return it, err
 			}
 			it.Sources = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputFilterCertificationsInput(ctx context.Context, obj interface{}) (model.FilterCertificationsInput, error) {
+	var it model.FilterCertificationsInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"CertificationFilters", "SortBy", "Pagination"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "CertificationFilters":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CertificationFilters"))
+			data, err := ec.unmarshalOCertificationFiltersInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertificationFiltersInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CertificationFilters = data
+		case "SortBy":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("SortBy"))
+			data, err := ec.unmarshalOSortByInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐSortByInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.SortBy = data
+		case "Pagination":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Pagination"))
+			data, err := ec.unmarshalOPaginationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPaginationInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Pagination = data
 		}
 	}
 
@@ -1242,6 +1571,55 @@ func (ec *executionContext) _Certification(ctx context.Context, sel ast.Selectio
 	return out
 }
 
+var paginatedCertificationsImplementors = []string{"PaginatedCertifications"}
+
+func (ec *executionContext) _PaginatedCertifications(ctx context.Context, sel ast.SelectionSet, obj *model.PaginatedCertifications) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, paginatedCertificationsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PaginatedCertifications")
+		case "Certifications":
+			out.Values[i] = ec._PaginatedCertifications_Certifications(ctx, field, obj)
+		case "TotalItems":
+			out.Values[i] = ec._PaginatedCertifications_TotalItems(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "ItemsPerPage":
+			out.Values[i] = ec._PaginatedCertifications_ItemsPerPage(ctx, field, obj)
+		case "CurrentPage":
+			out.Values[i] = ec._PaginatedCertifications_CurrentPage(ctx, field, obj)
+		case "Description":
+			out.Values[i] = ec._PaginatedCertifications_Description(ctx, field, obj)
+		case "TotalPages":
+			out.Values[i] = ec._PaginatedCertifications_TotalPages(ctx, field, obj)
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
@@ -1308,9 +1686,64 @@ func (ec *executionContext) unmarshalNFilterCertificationsInput2githubᚗcomᚋM
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNPaginatedCertifications2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPaginatedCertifications(ctx context.Context, sel ast.SelectionSet, v model.PaginatedCertifications) graphql.Marshaler {
+	return ec._PaginatedCertifications(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPaginatedCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPaginatedCertifications(ctx context.Context, sel ast.SelectionSet, v *model.PaginatedCertifications) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PaginatedCertifications(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNUpdateCertification2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUpdateCertification(ctx context.Context, v interface{}) (model.UpdateCertification, error) {
 	res, err := ec.unmarshalInputUpdateCertification(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx context.Context, sel ast.SelectionSet, v []*model.Certification) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	return ret
 }
 
 func (ec *executionContext) marshalOCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Certification) graphql.Marshaler {
@@ -1365,6 +1798,14 @@ func (ec *executionContext) marshalOCertification2ᚖgithubᚗcomᚋMoralᚑAuth
 		return graphql.Null
 	}
 	return ec._Certification(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOCertificationFiltersInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertificationFiltersInput(ctx context.Context, v interface{}) (*model.CertificationFiltersInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCertificationFiltersInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 // endregion ***************************** type.gotpl *****************************

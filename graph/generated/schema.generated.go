@@ -30,6 +30,7 @@ type MutationResolver interface {
 	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
 	AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error)
 	UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error)
+	AddProductCertification(ctx context.Context, input model.ProductCertificationInput) (*model.ProductCertification, error)
 	AddUser(ctx context.Context, input model.NewUser) (*model.User, error)
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
 }
@@ -37,7 +38,7 @@ type QueryResolver interface {
 	BaseQuery(ctx context.Context) (any, error)
 	GetAllCertifications(ctx context.Context) ([]*model.Certification, error)
 	GetCertificationByID(ctx context.Context, id string) (*model.Certification, error)
-	GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) ([]*model.Certification, error)
+	GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) (*model.PaginatedCertifications, error)
 	GetCompany(ctx context.Context, id string) (*model.Company, error)
 	GetAllCompanies(ctx context.Context) ([]*model.Company, error)
 	GetCompaniesByFilter(ctx context.Context, filter *model.FilterCompanyInput) ([]*model.Company, error)
@@ -124,6 +125,21 @@ func (ec *executionContext) field_Mutation_addImage_args(ctx context.Context, ra
 		}
 	}
 	args["request"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_addProductCertification_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.ProductCertificationInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNProductCertificationInput2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -1252,6 +1268,73 @@ func (ec *executionContext) fieldContext_Mutation_updateProduct(ctx context.Cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_addProductCertification(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addProductCertification(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().AddProductCertification(rctx, fc.Args["input"].(model.ProductCertificationInput))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.ProductCertification)
+	fc.Result = res
+	return ec.marshalNProductCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertification(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_addProductCertification(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "product":
+				return ec.fieldContext_ProductCertification_product(ctx, field)
+			case "certification":
+				return ec.fieldContext_ProductCertification_certification(ctx, field)
+			case "certifiedAt":
+				return ec.fieldContext_ProductCertification_certifiedAt(ctx, field)
+			case "expirationDate":
+				return ec.fieldContext_ProductCertification_expirationDate(ctx, field)
+			case "otherDetails":
+				return ec.fieldContext_ProductCertification_otherDetails(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ProductCertification", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addProductCertification_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_addUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_addUser(ctx, field)
 	if err != nil {
@@ -1621,9 +1704,9 @@ func (ec *executionContext) _Query_getCertificationsByFilter(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Certification)
+	res := resTmp.(*model.PaginatedCertifications)
 	fc.Result = res
-	return ec.marshalNCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertification(ctx, field.Selections, res)
+	return ec.marshalNPaginatedCertifications2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPaginatedCertifications(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getCertificationsByFilter(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1634,44 +1717,20 @@ func (ec *executionContext) fieldContext_Query_getCertificationsByFilter(ctx con
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "_id":
-				return ec.fieldContext_Certification__id(ctx, field)
-			case "Name":
-				return ec.fieldContext_Certification_Name(ctx, field)
-			case "Logo":
-				return ec.fieldContext_Certification_Logo(ctx, field)
-			case "Website":
-				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Certifications":
+				return ec.fieldContext_PaginatedCertifications_Certifications(ctx, field)
+			case "TotalItems":
+				return ec.fieldContext_PaginatedCertifications_TotalItems(ctx, field)
+			case "ItemsPerPage":
+				return ec.fieldContext_PaginatedCertifications_ItemsPerPage(ctx, field)
+			case "CurrentPage":
+				return ec.fieldContext_PaginatedCertifications_CurrentPage(ctx, field)
 			case "Description":
-				return ec.fieldContext_Certification_Description(ctx, field)
-			case "CertifiesCompany":
-				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
-			case "CertifiesProduct":
-				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
-			case "CertifiesProcess":
-				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
-			case "CertifierContactID":
-				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
-			case "Industry":
-				return ec.fieldContext_Certification_Industry(ctx, field)
-			case "Certifier":
-				return ec.fieldContext_Certification_Certifier(ctx, field)
-			case "Audited":
-				return ec.fieldContext_Certification_Audited(ctx, field)
-			case "Auditor":
-				return ec.fieldContext_Certification_Auditor(ctx, field)
-			case "Region":
-				return ec.fieldContext_Certification_Region(ctx, field)
-			case "Qualifiers":
-				return ec.fieldContext_Certification_Qualifiers(ctx, field)
-			case "Sources":
-				return ec.fieldContext_Certification_Sources(ctx, field)
-			case "CreatedAt":
-				return ec.fieldContext_Certification_CreatedAt(ctx, field)
-			case "UpdatedAt":
-				return ec.fieldContext_Certification_UpdatedAt(ctx, field)
+				return ec.fieldContext_PaginatedCertifications_Description(ctx, field)
+			case "TotalPages":
+				return ec.fieldContext_PaginatedCertifications_TotalPages(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PaginatedCertifications", field.Name)
 		},
 	}
 	defer func() {
@@ -2496,6 +2555,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateProduct":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateProduct(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "addProductCertification":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addProductCertification(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

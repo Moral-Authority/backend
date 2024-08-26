@@ -14,4 +14,6 @@ type ProductDbService interface {
 	GetProductsByFilter(filters map[string]interface{}) ([]models.Product, error)
 	AddCategory(category models.Category) (*models.Category, error)
 	GetAllCategories() ([]*models.Category, error)
+	AddProductCertification(productCert models.ProductCertification) (*models.ProductCertification, error)
+	
 }
