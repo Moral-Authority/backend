@@ -19,8 +19,6 @@ func (s UserService) AddNewUser(request model.NewUser, dbService database.UserDb
     }
     // 2: save user
     user := models.User{
-        FirstName:        request.FirstName,
-        LastName:         request.LastName,
         LoginCredentials: credentials,
         Favorites:       []models.Favorite{},
     }

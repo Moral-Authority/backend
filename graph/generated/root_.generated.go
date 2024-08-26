@@ -193,10 +193,9 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		Email     func(childComplexity int) int
-		FirstName func(childComplexity int) int
-		ID        func(childComplexity int) int
-		LastName  func(childComplexity int) int
+		Email    func(childComplexity int) int
+		ID       func(childComplexity int) int
+		Password func(childComplexity int) int
 	}
 }
 
@@ -1110,13 +1109,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Email(childComplexity), true
 
-	case "User.firstName":
-		if e.complexity.User.FirstName == nil {
-			break
-		}
-
-		return e.complexity.User.FirstName(childComplexity), true
-
 	case "User._id":
 		if e.complexity.User.ID == nil {
 			break
@@ -1124,12 +1116,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.ID(childComplexity), true
 
-	case "User.lastName":
-		if e.complexity.User.LastName == nil {
+	case "User.password":
+		if e.complexity.User.Password == nil {
 			break
 		}
 
-		return e.complexity.User.LastName(childComplexity), true
+		return e.complexity.User.Password(childComplexity), true
 
 	}
 	return 0, false
@@ -1714,22 +1706,17 @@ extend type Mutation {
 
 type User {
     _id: String!
-    firstName: String!
-    lastName: String!
     email: String!
+    password: String
 }
 
 input NewUser {
-    firstName: String!
-    lastName: String!
     email: String!
     password: String!
 }
 
 input UpdateUser {
     userId: String!
-    firstName: String
-    lastName: String
     email: String
     password: String
 }`, BuiltIn: false},

@@ -10,9 +10,8 @@ import (
 
 func toUserResponse(user models.User) *model.User {
 	return &model.User{
-		ID:        strconv.Itoa(int(user.ID)),
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
+		ID:    strconv.Itoa(int(user.ID)),
+		Email: user.LoginCredentials.Email,
 	}
 }
 

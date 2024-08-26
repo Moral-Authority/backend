@@ -360,12 +360,10 @@ func (ec *executionContext) fieldContext_Company_user(_ context.Context, field g
 			switch field.Name {
 			case "_id":
 				return ec.fieldContext_User__id(ctx, field)
-			case "firstName":
-				return ec.fieldContext_User_firstName(ctx, field)
-			case "lastName":
-				return ec.fieldContext_User_lastName(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
 		},

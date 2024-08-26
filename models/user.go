@@ -4,8 +4,6 @@ import "gorm.io/gorm"
 
 type User struct {
 	gorm.Model
-	FirstName          string `json:"first_name"`
-	LastName           string `json:"last_name"`
 	LoginCredentialsId uint
 	LoginCredentials   LoginCredentials `gorm:"foreignKey:LoginCredentialsId"`
 	Favorites         []Favorite      `gorm:"foreignKey:UserRefer"`

@@ -204,10 +204,8 @@ type Mutation struct {
 }
 
 type NewUser struct {
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type PaginatedCertifications struct {
@@ -340,18 +338,15 @@ type UpdateProductRequest struct {
 }
 
 type UpdateUser struct {
-	UserID    string  `json:"userId"`
-	FirstName *string `json:"firstName,omitempty"`
-	LastName  *string `json:"lastName,omitempty"`
-	Email     *string `json:"email,omitempty"`
-	Password  *string `json:"password,omitempty"`
+	UserID   string  `json:"userId"`
+	Email    *string `json:"email,omitempty"`
+	Password *string `json:"password,omitempty"`
 }
 
 type User struct {
-	ID        string `json:"_id"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
+	ID       string  `json:"_id"`
+	Email    string  `json:"email"`
+	Password *string `json:"password,omitempty"`
 }
 
 type CategoryEnum string
