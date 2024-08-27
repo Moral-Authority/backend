@@ -1,7 +1,12 @@
 extend type Mutation {
-    addUserFav(request: AddUserFav!): [Favorite]
-    removeUserFav(request: RemoveUserFav!): [Favorite]
+    toggleUserFav(request: ToggleUserFav!): Favorite
 }
+
+input ToggleUserFav {
+    userId: String!
+    productId: String!
+}
+
 
 type Favorite {
     id: ID!

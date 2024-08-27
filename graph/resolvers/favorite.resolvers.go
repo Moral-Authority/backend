@@ -13,21 +13,11 @@ import (
 )
 
 // AddUserFav is the resolver for the addUserFav field.
-func (r *mutationResolver) AddUserFav(ctx context.Context, request model.AddUserFav) ([]*model.Favorite, error) {
-	image, err := handlers.UserService{}.AddUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+func (r *mutationResolver) ToggleUserFav(ctx context.Context, request model.ToggleUserFav) (*model.Favorite, error) {
+	fav, err := handlers.UserService{}.ToggleUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
 
-	return image, nil
-}
-
-// RemoveUserFav is the resolver for the removeUserFav field.
-func (r *mutationResolver) RemoveUserFav(ctx context.Context, request model.RemoveUserFav) ([]*model.Favorite, error) {
-	image, err := handlers.UserService{}.RemoveUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
-	if err != nil {
-		return nil, err
-	}
-
-	return image, nil
+	return fav, nil
 }

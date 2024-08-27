@@ -74,39 +74,6 @@ func (s UserService) UpdateUser(request model.UpdateUser, dbService database.Use
 	return toUserResponse(*updatedUser), nil
 }
 
-func (s UserService) AddUserFav(request model.AddUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
-	product, err := productDbService.GetProductByID(request.ProductID)
-	if err != nil {
-		return nil, err
-	}
-
-	if product == nil {
-		return nil, errors.New("unable to get product")
-	}
-
-	addedFav, err := userDbService.AddUserFav(request, *product)
-	if err != nil {
-		return nil, err
-	}
-
-	return toFavsResponse(addedFav), nil
-}
-
-func (s UserService) RemoveUserFav(request model.RemoveUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
-	product, err := productDbService.GetProductByID(request.ProductID)
-	if err != nil {
-		return nil, err
-	}
-	if product == nil {
-		return nil, errors.New("unable to get product")
-	}
-	addedFav, err := userDbService.RemoveUserFav(request, *product)
-	if err != nil {
-		return nil, err
-	}
-	return toFavsResponse(addedFav), nil
-}
-
 func (s UserService) GetUserById(userId string, dbService database.UserDbService) (*model.User, error) {
 	user, err := dbService.GetUser(userId)
 	if err != nil || user == nil {
@@ -127,4 +94,42 @@ func (s UserService) GetUsers(dbService database.UserDbService) ([]*model.User, 
 		response = append(response, user)
 	}
 	return response, nil
+}
+
+func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) (*model.Favorite, error) {
+
+	// validate user
+	user, err := userDbService.GetUser(request.UserID)
+	if err != nil || user == nil {
+		return nil, errors.New(fmt.Sprintf("unable to get user from db %s", err))
+	}
+
+	// validate product
+	product, err := productDbService.GetProductByID(request.ProductID)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf("unable to get product from db %s", err))
+	}
+
+	// check if favorite exists
+	userFav, err := userDbService.GetUserFav(user.ID, product.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	if userFav == nil {
+		// add favorite
+		addedFav, err := userDbService.AddUserFav(request)
+		if err != nil {
+			return nil, err
+		}
+		return toFavResponse(addedFav), nil
+	} else {
+		// remove favorite
+		err := userDbService.RemoveUserFav(request)
+		if err != nil {
+			return nil, err
+		}
+		return nil, nil
+	}
+
 }

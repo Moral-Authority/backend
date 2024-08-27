@@ -6,6 +6,7 @@ import (
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type UserDbServiceImpl struct{}
@@ -75,62 +76,63 @@ func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) (
 	return updatedUser, err
 }
 
-func (s UserDbServiceImpl) AddUserFav(request model.AddUserFav, product models.Product) ([]models.Favorite, error) {
-	id, err := StringToUint(request.UserID)
+func (s UserDbServiceImpl) AddUserFav(request model.ToggleUserFav) (*models.Favorite, error) {
+
+	userID, err := StringToUint(request.UserID)
 	if err != nil {
-		logrus.Errorf("Unable to convert id, %s", request.UserID)
+		logrus.Errorf("Unable to convert user id string to uint, %s", request.UserID)
 		return nil, err
 	}
-	user, err := s.GetUser(strconv.Itoa(int(id)))
+
+	productID, err := StringToUint(request.ProductID)
 	if err != nil {
-		logrus.Errorf("unable to get user")
+		logrus.Errorf("Unable to convert product id string to uint, %s", request.UserID)
 		return nil, err
 	}
-	err = GetDbConn().Model(&user).Association("Favorites").Append(models.Favorite{
-		UserRefer: id,
-		Product:   product,
-	})
-	if err != nil {
-		logrus.Errorf("unable to append fav")
-		return nil, err
+
+
+	var fav models.Favorite
+	fav.UserRefer = userID
+	fav.ProductId = productID
+	
+	result := GetDbConn().Create(&fav)
+	if result.Error != nil {
+		logrus.Errorf("Unable to save user, %s", result.Error)
+		return nil, result.Error
 	}
-	updatedUser, err := s.GetUser(strconv.Itoa(int(id)))
-	if err != nil {
-		return nil, err
-	}
-	return updatedUser.Favorites, nil
+
+	return &fav, nil
 }
 
-func (s UserDbServiceImpl) RemoveUserFav(request model.RemoveUserFav, product models.Product) ([]models.Favorite, error) {
-	id, err := StringToUint(request.UserID)
-	if err != nil {
-		logrus.Errorf("Unable to convert id, %s", request.UserID)
-		return nil, err
-	}
-	user, err := s.GetUser(strconv.Itoa(int(id)))
-	if err != nil {
-		logrus.Errorf("unable to get user")
-		return nil, err
-	}
-
-	// Find the favorite to be removed
+func (s UserDbServiceImpl) RemoveUserFav(request model.ToggleUserFav) error {
+	
 	var favorite models.Favorite
-	err = GetDbConn().Model(&user).Association("Favorites").Find(&favorite, "product_id = ?", product.ID)
-	if err != nil {
-		logrus.Errorf("unable to find fav")
+	result := GetDbConn().Where("user_id = ? AND product_id = ?", request.UserID, request.ProductID).First(&favorite)
+	if result.Error != nil {
+		logrus.Errorf("Error finding favorite: %v", result.Error)
+		return result.Error
+	}
+
+	result = GetDbConn().Delete(&favorite)
+	if result.Error != nil {
+		logrus.Errorf("Unable to delete favorite, %s", result.Error)
+		return result.Error
+	}
+	return nil
+}
+
+
+func (s UserDbServiceImpl) GetUserFav(userID uint, productID uint) (*models.Favorite, error) {
+
+	var favorite models.Favorite
+	err := GetDbConn().Where("user_id = ? AND product_id = ?", userID, productID).First(&favorite).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, nil
+	} else if err != nil {
+		logrus.Errorf("Error finding favorite: %v", err)
 		return nil, err
 	}
 
-	// Remove the favorite
-	err = GetDbConn().Model(&user).Association("Favorites").Delete(&favorite)
-	if err != nil {
-		logrus.Errorf("unable to delete fav")
-		return nil, err
-	}
 
-	updatedUser, err := s.GetUser(strconv.Itoa(int(id)))
-	if err != nil {
-		return nil, err
-	}
-	return updatedUser.Favorites, nil
+	return &favorite, nil 
 }

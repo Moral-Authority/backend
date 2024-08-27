@@ -23,8 +23,7 @@ type MutationResolver interface {
 	UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error)
 	UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error)
-	AddUserFav(ctx context.Context, request model.AddUserFav) ([]*model.Favorite, error)
-	RemoveUserFav(ctx context.Context, request model.RemoveUserFav) ([]*model.Favorite, error)
+	ToggleUserFav(ctx context.Context, request model.ToggleUserFav) (*model.Favorite, error)
 	AddImage(ctx context.Context, request model.AddImage) (*model.Image, error)
 	UpdateImage(ctx context.Context, request model.UpdateImage) (*model.Image, error)
 	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
@@ -159,21 +158,6 @@ func (ec *executionContext) field_Mutation_addProduct_args(ctx context.Context, 
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_addUserFav_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.AddUserFav
-	if tmp, ok := rawArgs["request"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
-		arg0, err = ec.unmarshalNAddUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddUserFav(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["request"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_addUser_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -204,13 +188,13 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_removeUserFav_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_toggleUserFav_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.RemoveUserFav
+	var arg0 model.ToggleUserFav
 	if tmp, ok := rawArgs["request"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
-		arg0, err = ec.unmarshalNRemoveUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐRemoveUserFav(ctx, tmp)
+		arg0, err = ec.unmarshalNToggleUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐToggleUserFav(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -781,8 +765,8 @@ func (ec *executionContext) fieldContext_Mutation_updateCompany(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_addUserFav(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addUserFav(ctx, field)
+func (ec *executionContext) _Mutation_toggleUserFav(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_toggleUserFav(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -795,7 +779,7 @@ func (ec *executionContext) _Mutation_addUserFav(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().AddUserFav(rctx, fc.Args["request"].(model.AddUserFav))
+		return ec.resolvers.Mutation().ToggleUserFav(rctx, fc.Args["request"].(model.ToggleUserFav))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -804,12 +788,12 @@ func (ec *executionContext) _Mutation_addUserFav(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Favorite)
+	res := resTmp.(*model.Favorite)
 	fc.Result = res
-	return ec.marshalOFavorite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
+	return ec.marshalOFavorite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_addUserFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_toggleUserFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -834,67 +818,7 @@ func (ec *executionContext) fieldContext_Mutation_addUserFav(ctx context.Context
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addUserFav_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_removeUserFav(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_removeUserFav(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().RemoveUserFav(rctx, fc.Args["request"].(model.RemoveUserFav))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.Favorite)
-	fc.Result = res
-	return ec.marshalOFavorite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_removeUserFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_Favorite_id(ctx, field)
-			case "user":
-				return ec.fieldContext_Favorite_user(ctx, field)
-			case "product":
-				return ec.fieldContext_Favorite_product(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type Favorite", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_removeUserFav_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_toggleUserFav_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -2593,13 +2517,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "addUserFav":
+		case "toggleUserFav":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addUserFav(ctx, field)
-			})
-		case "removeUserFav":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_removeUserFav(ctx, field)
+				return ec._Mutation_toggleUserFav(ctx, field)
 			})
 		case "addImage":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {

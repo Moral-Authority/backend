@@ -298,6 +298,11 @@ type SortByInput struct {
 	SortOrder *string `json:"SortOrder,omitempty"`
 }
 
+type ToggleUserFav struct {
+	UserID    string `json:"userId"`
+	ProductID string `json:"productId"`
+}
+
 type UpdateCertification struct {
 	ID                 string  `json:"ID"`
 	Name               *string `json:"Name,omitempty"`

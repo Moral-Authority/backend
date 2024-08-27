@@ -126,10 +126,9 @@ type ComplexityRoot struct {
 		AddProduct              func(childComplexity int, input model.AddProductRequest) int
 		AddProductCertification func(childComplexity int, input model.ProductCertificationInput) int
 		AddUser                 func(childComplexity int, input model.NewUser) int
-		AddUserFav              func(childComplexity int, request model.AddUserFav) int
 		BaseMutation            func(childComplexity int) int
 		Login                   func(childComplexity int, input model.LoginUser) int
-		RemoveUserFav           func(childComplexity int, request model.RemoveUserFav) int
+		ToggleUserFav           func(childComplexity int, request model.ToggleUserFav) int
 		UpdateCertification     func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany           func(childComplexity int, input model.UpdateCompany) int
 		UpdateImage             func(childComplexity int, request model.UpdateImage) int
@@ -680,18 +679,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AddUser(childComplexity, args["input"].(model.NewUser)), true
 
-	case "Mutation.addUserFav":
-		if e.complexity.Mutation.AddUserFav == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addUserFav_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddUserFav(childComplexity, args["request"].(model.AddUserFav)), true
-
 	case "Mutation.BaseMutation":
 		if e.complexity.Mutation.BaseMutation == nil {
 			break
@@ -711,17 +698,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Login(childComplexity, args["input"].(model.LoginUser)), true
 
-	case "Mutation.removeUserFav":
-		if e.complexity.Mutation.RemoveUserFav == nil {
+	case "Mutation.toggleUserFav":
+		if e.complexity.Mutation.ToggleUserFav == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_removeUserFav_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_toggleUserFav_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.RemoveUserFav(childComplexity, args["request"].(model.RemoveUserFav)), true
+		return e.complexity.Mutation.ToggleUserFav(childComplexity, args["request"].(model.ToggleUserFav)), true
 
 	case "Mutation.updateCertification":
 		if e.complexity.Mutation.UpdateCertification == nil {
@@ -1191,6 +1178,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputRemoveUserFav,
 		ec.unmarshalInputSortByInput,
+		ec.unmarshalInputToggleUserFav,
 		ec.unmarshalInputUpdateCertification,
 		ec.unmarshalInputUpdateCompany,
 		ec.unmarshalInputUpdateImage,
@@ -1497,9 +1485,14 @@ input CompanyProductInput {
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
-    addUserFav(request: AddUserFav!): [Favorite]
-    removeUserFav(request: RemoveUserFav!): [Favorite]
+    toggleUserFav(request: ToggleUserFav!): Favorite
 }
+
+input ToggleUserFav {
+    userId: String!
+    productId: String!
+}
+
 
 type Favorite {
     id: ID!
@@ -1515,8 +1508,7 @@ input AddUserFav {
 input RemoveUserFav {
     userId: String!
     productId: String!
-}
-`, BuiltIn: false},
+}`, BuiltIn: false},
 	{Name: "../helpers.graphqls", Input: `input PaginationInput {
     Items: Int
     Page: Int
