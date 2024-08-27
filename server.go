@@ -44,18 +44,12 @@ func main() {
 
 	// Initialize CORS with custom settings
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://moralauthority.co", "https://moral-authority-fe-1bd5c971d1d7.herokuapp.com"},
+		AllowedOrigins:   []string{"*"},
+		// AllowedOrigins:   []string{"https://moralauthority.co", "https://moral-authority-fe-1bd5c971d1d7.herokuapp.com", "http://localhost:3000", "https://*.moralauthority.co"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
 		AllowCredentials: true,                                 
 	})
 
-	//  LOCAL TESTING CONFIG
-	// c := cors.New(cors.Options{
-	// 	AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
-	// 	AllowCredentials: true,
-	// 	AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
-	// 	AllowedHeaders:   []string{"Authorization", "Content-Type"},
-	// })
 
 	// Connect to the database
 	database.Connect(cfg.DatabaseConfig)
