@@ -44,10 +44,9 @@ func main() {
 
 	// Initialize CORS with custom settings
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://moralauthority.co"}, // Allow only your frontend domain
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},    // Adjust methods as needed
+		AllowedOrigins:   []string{"https://moralauthority.co", "https://moral-authority-fe-1bd5c971d1d7.herokuapp.com"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
-		AllowCredentials: true,                                   // If using cookies or other credentials
+		AllowCredentials: true,                                 
 	})
 
 	//  LOCAL TESTING CONFIG
