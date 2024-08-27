@@ -34,11 +34,12 @@ func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.Update
 // GetProductByID is the resolver for the getProductByID field.
 func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	company, err := handlers.ProductService{}.GetProductByID(id, dbService)
+	product, err := handlers.ProductService{}.GetProductByID(id, dbService)
 	if err != nil {
 		return nil, err
 	}
-	return company, nil
+
+	return product, nil
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.

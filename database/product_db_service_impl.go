@@ -10,11 +10,13 @@ type ProductDbServiceImpl struct{}
 
 func (s ProductDbServiceImpl) GetProductByID(productId string) (*models.Product, error) {
 	var product models.Product
+
 	result := GetDbConn().First(&product, "id = ?", productId)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get product, %s", result.Error)
 		return nil, result.Error
 	}
+
 	return &product, nil
 }
 

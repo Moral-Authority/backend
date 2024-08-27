@@ -44,12 +44,12 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	for _, c := range request.Certifications {
 
 		foundCert, err := certificationService.GetCertificationById(*c.CertificationID)
-		if err != nil  {
+		if err != nil {
 			return nil, fmt.Errorf("unable to find certification number %d", c.CertificationID)
 		}
 
 		cert := models.ProductCertification{
-			ProductID:	   addedProduct.ID,
+			ProductID:       addedProduct.ID,
 			CertificationID: foundCert.ID,
 		}
 
@@ -75,7 +75,6 @@ func (s ProductService) UpdateProduct(request model.UpdateProductRequest, produc
 
 func (s ProductService) GetProductByID(productId string, productDbService database.ProductDbService) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-
 	product, err := dbService.GetProductByID(productId)
 	if err != nil {
 		return nil, err

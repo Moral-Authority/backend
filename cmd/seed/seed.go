@@ -47,6 +47,8 @@ func main() {
 	log.Println("Seeding Made Safe...")
 	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
+	log.Println("Seeding Products.")
+	seedProductsFromCSV(db, "affiliate_products_blueland_products.csv")
 	log.Println("Database seeding complete.")
 }
 
@@ -234,7 +236,7 @@ func formatCompanyFromRow(filePath string, row []string) models.Company {
 }
 
 func extractDateCertified(filePath string, row []string) null.Time {
-	
+
 	switch filePath {
 	case "cmd/seed/companies/all-bcorps.csv":
 		timeCertified, err := time.Parse("2006-01-02 15:04:05", row[1])
@@ -242,7 +244,7 @@ func extractDateCertified(filePath string, row []string) null.Time {
 			fmt.Println("Error parsing time:", err)
 			timeCertified = time.Time{} // Use zero value if parsing fails
 		}
-	
+
 		return null.TimeFrom(timeCertified)
 	default:
 		return null.Time{Valid: false}
@@ -263,7 +265,7 @@ func createCompanyCertification(db *gorm.DB, companyID uint, certificationID uin
 	if err := db.Create(&companyCert).Error; err != nil {
 		return fmt.Errorf("failed to insert company certification: %v", err)
 	}
-	
+
 	return nil
 }
 
@@ -276,4 +278,51 @@ func findCertificationID(db *gorm.DB, certificationName string) uint {
 	}
 
 	return certification.ID
+}
+
+func seedProductsFromCSV(db *gorm.DB, fileName string) {
+	// Get the current working directory
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Current working directory:", dir)
+
+	// Construct the file path
+	filePath := fmt.Sprintf("%s/cmd/seed/products/%s", dir, fileName)
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	// Create a CSV reader
+	reader := csv.NewReader(file)
+
+	// Skip the header row
+	_, err = reader.Read()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Read each row of the CSV file and insert it into the database
+	for {
+		row, err := reader.Read()
+		if err != nil {
+			break
+		}
+
+		product := models.Product{
+			Title: row[3],
+			Url:   row[5],
+		}
+
+		// Insert the product into the database
+		result := db.Create(&product)
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		}
+	}
+
+	fmt.Println("Products seeded into database.")
 }

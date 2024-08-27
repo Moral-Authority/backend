@@ -43,20 +43,20 @@ func main() {
 	}
 
 	// Initialize CORS with custom settings
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://moralauthority.co"}, // Allow only your frontend domain
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},    // Adjust methods as needed
-		AllowedHeaders:   []string{"Authorization", "Content-Type"},
-		AllowCredentials: true,                                   // If using cookies or other credentials
-	})
+	// c := cors.New(cors.Options{
+	// 	AllowedOrigins:   []string{"https://moralauthority.co"}, // Allow only your frontend domain
+	// 	AllowedMethods:   []string{"GET", "POST", "OPTIONS"},    // Adjust methods as needed
+	// 	AllowedHeaders:   []string{"Authorization", "Content-Type"},
+	// 	AllowCredentials: true,                                   // If using cookies or other credentials
+	// })
 
 	//  LOCAL TESTING CONFIG
-	// c := cors.New(cors.Options{
-	// 	AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
-	// 	AllowCredentials: true,
-	// 	AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
-	// 	AllowedHeaders:   []string{"Authorization", "Content-Type"},
-	// })
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
+		AllowCredentials: true,
+		AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+	})
 
 	// Connect to the database
 	database.Connect(cfg.DatabaseConfig)
