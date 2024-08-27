@@ -6,12 +6,14 @@ require (
 	github.com/99designs/gqlgen v0.17.49
 	github.com/alexflint/go-arg v1.5.1
 	github.com/cloudinary/cloudinary-go/v2 v2.8.0
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gorilla/websocket v1.5.3
 	github.com/rs/cors v1.11.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.16
 	github.com/volatiletech/null/v8 v8.1.2
+	golang.org/x/crypto v0.25.0
 	gorm.io/driver/postgres v1.5.9
 	gorm.io/gorm v1.25.11
 )
@@ -45,7 +47,6 @@ require (
 	github.com/volatiletech/randomize v0.0.1 // indirect
 	github.com/volatiletech/strmangle v0.0.6 // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	golang.org/x/crypto v0.25.0 // indirect
 	golang.org/x/mod v0.19.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.22.0 // indirect

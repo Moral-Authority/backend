@@ -33,6 +33,7 @@ type MutationResolver interface {
 	AddProductCertification(ctx context.Context, input model.ProductCertificationInput) (*model.ProductCertification, error)
 	AddUser(ctx context.Context, input model.NewUser) (*model.User, error)
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
+	Login(ctx context.Context, input model.LoginUser) (*model.LoginResponse, error)
 }
 type QueryResolver interface {
 	BaseQuery(ctx context.Context) (any, error)
@@ -180,6 +181,21 @@ func (ec *executionContext) field_Mutation_addUser_args(ctx context.Context, raw
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNNewUser2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐNewUser(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.LoginUser
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNLoginUser2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐLoginUser(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1378,6 +1394,8 @@ func (ec *executionContext) fieldContext_Mutation_addUser(ctx context.Context, f
 				return ec.fieldContext_User__id(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
 			}
@@ -1441,6 +1459,8 @@ func (ec *executionContext) fieldContext_Mutation_updateUser(ctx context.Context
 				return ec.fieldContext_User__id(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
 			}
@@ -1455,6 +1475,67 @@ func (ec *executionContext) fieldContext_Mutation_updateUser(ctx context.Context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateUser_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_login(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().Login(rctx, fc.Args["input"].(model.LoginUser))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.LoginResponse)
+	fc.Result = res
+	return ec.marshalNLoginResponse2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐLoginResponse(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_login(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "token":
+				return ec.fieldContext_LoginResponse_token(ctx, field)
+			case "user":
+				return ec.fieldContext_LoginResponse_user(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type LoginResponse", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_login_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -2244,6 +2325,8 @@ func (ec *executionContext) fieldContext_Query_user(ctx context.Context, field g
 				return ec.fieldContext_User__id(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
 			}
@@ -2307,6 +2390,8 @@ func (ec *executionContext) fieldContext_Query_users(_ context.Context, field gr
 				return ec.fieldContext_User__id(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
 			}
@@ -2568,6 +2653,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateUser":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateUser(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "login":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_login(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

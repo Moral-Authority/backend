@@ -200,12 +200,23 @@ type Image struct {
 	URL       string `json:"url"`
 }
 
+type LoginResponse struct {
+	Token string `json:"token"`
+	User  *User  `json:"user"`
+}
+
+type LoginUser struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type Mutation struct {
 }
 
 type NewUser struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string  `json:"email"`
+	Phone    *string `json:"phone,omitempty"`
+	Password string  `json:"password"`
 }
 
 type PaginatedCertifications struct {
@@ -340,12 +351,14 @@ type UpdateProductRequest struct {
 type UpdateUser struct {
 	UserID   string  `json:"userId"`
 	Email    *string `json:"email,omitempty"`
+	Phone    *string `json:"phone,omitempty"`
 	Password *string `json:"password,omitempty"`
 }
 
 type User struct {
 	ID       string  `json:"_id"`
 	Email    string  `json:"email"`
+	Phone    *string `json:"phone,omitempty"`
 	Password *string `json:"password,omitempty"`
 }
 

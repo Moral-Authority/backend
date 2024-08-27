@@ -1,6 +1,7 @@
 package database
 
 import (
+	"log"
 	"sync"
 
 	"github.com/Moral-Authority/backend/cmd"
@@ -31,7 +32,6 @@ func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
 			panic("failed to connect database")
 		}
 		instance = &DbConn{conn: db}
-		performMigrations(instance.conn)
 	}
 	return instance
 }
@@ -43,7 +43,8 @@ func GetDbConn() *gorm.DB {
 	return instance.conn
 }
 
-func performMigrations(db *gorm.DB) {
+func PerformMigrations() {
+	db := GetDbConn()
 	// Migrate the schema
 	err := db.AutoMigrate(
 		&models.Category{},
@@ -51,10 +52,9 @@ func performMigrations(db *gorm.DB) {
 		&models.Company{},
 		&models.Favorite{},
 		&models.Image{},
-		&models.LoginCredentials{},
 		&models.Product{},
 		&models.User{},
-		&models.CompanyCertification{}, 
+		&models.CompanyCertification{},
 		&models.ProductCertification{},
 		&models.CompanyProduct{},
 		&models.ProductCategories{},
@@ -62,4 +62,13 @@ func performMigrations(db *gorm.DB) {
 	if err != nil {
 		panic("unable to perform migrations...")
 	}
+}
+
+func DropDatabase() {
+	db := GetDbConn()
+	err := db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").Error
+	if err != nil {
+		log.Fatal("Failed to drop the database:", err)
+	}
+	log.Println("Database schema dropped and recreated.")
 }

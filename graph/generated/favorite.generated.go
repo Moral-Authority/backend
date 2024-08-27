@@ -116,6 +116,8 @@ func (ec *executionContext) fieldContext_Favorite_user(_ context.Context, field 
 				return ec.fieldContext_User__id(ctx, field)
 			case "email":
 				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
 			}

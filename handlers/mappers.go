@@ -11,7 +11,8 @@ import (
 func toUserResponse(user models.User) *model.User {
 	return &model.User{
 		ID:    strconv.Itoa(int(user.ID)),
-		Email: user.LoginCredentials.Email,
+		Email: user.Email,
+		Phone: user.Phone,
 	}
 }
 

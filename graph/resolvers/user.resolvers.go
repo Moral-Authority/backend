@@ -15,7 +15,7 @@ import (
 
 // AddUser is the resolver for the addUser field.
 func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{}) // create an instance and pass it
+	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to add user: %w", err)
 	}
@@ -29,6 +29,20 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 		return nil, fmt.Errorf("failed to update user: %w", err)
 	}
 	return user, nil
+}
+
+// Login is the resolver for the login field.
+func (r *mutationResolver) Login(ctx context.Context, input model.LoginUser) (*model.LoginResponse, error) {
+	userService := handlers.UserService{}
+	token, user, err := userService.Login(input, database.UserDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.LoginResponse{
+		Token: token,
+		User:  user,
+	}, nil
 }
 
 // User is the resolver for the user field.

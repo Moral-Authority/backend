@@ -10,6 +10,15 @@ import (
 
 type UserDbServiceImpl struct{}
 
+func (s UserDbServiceImpl) GetUserByEmail(email string) (*models.User, error) {
+    var user models.User
+    result := GetDbConn().Where("email = ?", email).First(&user)
+    if result.Error != nil {
+        return nil, result.Error
+    }
+    return &user, nil
+}
+
 func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error) {
 	result := GetDbConn().Create(&newUser)
 	if result.Error != nil {
@@ -19,6 +28,7 @@ func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error)
 	user, err := s.GetUser(strconv.Itoa(int(newUser.ID)))
 	return user, err
 }
+
 
 func (s UserDbServiceImpl) GetUser(userId string) (*models.User, error) {
 	var user models.User
@@ -54,10 +64,8 @@ func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) (
 		return nil, err
 	}
 	result := GetDbConn().Model(&user).Updates(models.User{
-		LoginCredentials: models.LoginCredentials{
             Email: *request.Email,
 			PasswordHash: *request.Password,
-        },
 	})
 	if result.Error != nil {
 		logrus.Errorf("Unable to update user, %s", result.Error)

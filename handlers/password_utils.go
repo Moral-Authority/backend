@@ -4,6 +4,10 @@ import (
 	"crypto/sha512"
 	"encoding/base64"
 	"math/rand"
+	"time"
+
+	"github.com/Moral-Authority/backend/models"
+	jwt "github.com/dgrijalva/jwt-go"
 )
 
 func generateRandomSalt(saltSize int) string {
@@ -29,4 +33,20 @@ func hashPassword(password string, salt string) string {
 	// Convert the hashed password to a base64 encoded string
 	var base64EncodedPasswordHash = base64.URLEncoding.EncodeToString(hashedPasswordBytes)
 	return base64EncodedPasswordHash
+}
+
+// Function to generate a JWT token
+func generateJWTToken(user *models.User) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"user_id": user.ID,
+		"email":   user.Email,
+		"exp":     time.Now().Add(time.Hour * 72).Unix(), // Token expires in 72 hours
+	})
+
+	tokenString, err := token.SignedString(jwtSecret)
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }

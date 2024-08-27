@@ -12,4 +12,5 @@ type UserDbService interface {
 	UpdateUser(string, model.UpdateUser) (*models.User, error)
 	AddUserFav(model.AddUserFav, models.Product) ([]models.Favorite, error)
     RemoveUserFav(model.RemoveUserFav, models.Product) ([]models.Favorite, error)
+	GetUserByEmail(email string) (*models.User, error)
 }

@@ -43,22 +43,29 @@ func main() {
 	}
 
 	// Initialize CORS with custom settings
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://moralauthority.co"}, // Allow only your frontend domain
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},    // Adjust methods as needed
-		AllowedHeaders:   []string{"Authorization", "Content-Type"},
-		AllowCredentials: true,                                   // If using cookies or other credentials
-	})
-
-	//  LOCAL TESTING CONFIG
 	// c := cors.New(cors.Options{
-	// 	AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
-	// 	AllowCredentials: true,
-	// 	AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
+	// 	AllowedOrigins:   []string{"https://moralauthority.co"}, // Allow only your frontend domain
+	// 	AllowedMethods:   []string{"GET", "POST", "OPTIONS"},    // Adjust methods as needed
 	// 	AllowedHeaders:   []string{"Authorization", "Content-Type"},
+	// 	AllowCredentials: true,                                   // If using cookies or other credentials
 	// })
 
+	//  LOCAL TESTING CONFIG
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"}, // Allow requests from your frontend
+		AllowCredentials: true,
+		AllowedMethods:   []string{"POST", "GET", "OPTIONS"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+	})
+
+	// Connect to the database
 	database.Connect(cfg.DatabaseConfig)
+
+	// Drop and recreate the database schema
+	// database.DropDatabase()
+
+	// Perform migrations after dropping the database
+	database.PerformMigrations()
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{}}))
@@ -74,8 +81,8 @@ func main() {
 	srv.Use(extension.Introspection{})
 
 	// HTTP handlers
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", c.Handler(srv))
+	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
+	http.Handle("/graphql", c.Handler(srv))
 
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Printf("Using port: %s", port)

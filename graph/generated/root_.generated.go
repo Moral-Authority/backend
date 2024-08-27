@@ -113,6 +113,11 @@ type ComplexityRoot struct {
 		URL       func(childComplexity int) int
 	}
 
+	LoginResponse struct {
+		Token func(childComplexity int) int
+		User  func(childComplexity int) int
+	}
+
 	Mutation struct {
 		AddCategory             func(childComplexity int, input model.AddCategory) int
 		AddCertification        func(childComplexity int, input model.AddCertification) int
@@ -123,6 +128,7 @@ type ComplexityRoot struct {
 		AddUser                 func(childComplexity int, input model.NewUser) int
 		AddUserFav              func(childComplexity int, request model.AddUserFav) int
 		BaseMutation            func(childComplexity int) int
+		Login                   func(childComplexity int, input model.LoginUser) int
 		RemoveUserFav           func(childComplexity int, request model.RemoveUserFav) int
 		UpdateCertification     func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany           func(childComplexity int, input model.UpdateCompany) int
@@ -196,6 +202,7 @@ type ComplexityRoot struct {
 		Email    func(childComplexity int) int
 		ID       func(childComplexity int) int
 		Password func(childComplexity int) int
+		Phone    func(childComplexity int) int
 	}
 }
 
@@ -575,6 +582,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Image.URL(childComplexity), true
 
+	case "LoginResponse.token":
+		if e.complexity.LoginResponse.Token == nil {
+			break
+		}
+
+		return e.complexity.LoginResponse.Token(childComplexity), true
+
+	case "LoginResponse.user":
+		if e.complexity.LoginResponse.User == nil {
+			break
+		}
+
+		return e.complexity.LoginResponse.User(childComplexity), true
+
 	case "Mutation.addCategory":
 		if e.complexity.Mutation.AddCategory == nil {
 			break
@@ -677,6 +698,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.BaseMutation(childComplexity), true
+
+	case "Mutation.login":
+		if e.complexity.Mutation.Login == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_login_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.Login(childComplexity, args["input"].(model.LoginUser)), true
 
 	case "Mutation.removeUserFav":
 		if e.complexity.Mutation.RemoveUserFav == nil {
@@ -1123,6 +1156,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Password(childComplexity), true
 
+	case "User.phone":
+		if e.complexity.User.Phone == nil {
+			break
+		}
+
+		return e.complexity.User.Phone(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -1144,6 +1184,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCompanyProductInput,
 		ec.unmarshalInputFilterCertificationsInput,
 		ec.unmarshalInputFilterCompanyInput,
+		ec.unmarshalInputLoginUser,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputPaginationInput,
 		ec.unmarshalInputProductCertificationInput,
@@ -1702,23 +1743,38 @@ scalar Any`, BuiltIn: false},
 extend type Mutation {
     addUser(input: NewUser!): User!
     updateUser(input: UpdateUser!): User!
+    login(input: LoginUser!): LoginResponse!
 }
 
 type User {
     _id: String!
     email: String!
+    phone: String
     password: String
 }
 
 input NewUser {
     email: String!
+    phone: String
     password: String!
 }
 
 input UpdateUser {
     userId: String!
     email: String
+    phone: String
     password: String
-}`, BuiltIn: false},
+}
+
+input LoginUser {
+    email: String!
+    password: String!
+}
+
+type LoginResponse {
+    token: String!
+    user: User!
+}
+`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
