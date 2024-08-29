@@ -188,6 +188,7 @@ type ComplexityRoot struct {
 		GetAllCertifications      func(childComplexity int) int
 		GetAllCompanies           func(childComplexity int) int
 		GetAllProducts            func(childComplexity int) int
+		GetAllUserFavs            func(childComplexity int, id string) int
 		GetCertificationByID      func(childComplexity int, id string) int
 		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
 		GetCompaniesByFilter      func(childComplexity int, filter *model.FilterCompanyInput) int
@@ -1043,6 +1044,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllProducts(childComplexity), true
 
+	case "Query.getAllUserFavs":
+		if e.complexity.Query.GetAllUserFavs == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getAllUserFavs_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetAllUserFavs(childComplexity, args["id"].(string)), true
+
 	case "Query.getCertificationById":
 		if e.complexity.Query.GetCertificationByID == nil {
 			break
@@ -1486,6 +1499,10 @@ input CompanyProductInput {
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
     toggleUserFav(request: ToggleUserFav!): [Favorite]
+}
+
+extend type Query {
+    getAllUserFavs(id: String!): [Favorite]
 }
 
 input ToggleUserFav {

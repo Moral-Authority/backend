@@ -2,6 +2,10 @@ extend type Mutation {
     toggleUserFav(request: ToggleUserFav!): [Favorite]
 }
 
+extend type Query {
+    getAllUserFavs(id: String!): [Favorite]
+}
+
 input ToggleUserFav {
     userId: String!
     productId: String!

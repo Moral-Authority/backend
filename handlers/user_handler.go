@@ -139,3 +139,19 @@ func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService da
 
 	return toFavsResponse(favs), nil
 }
+
+
+func (s UserService) GetAllUserFavs(userID string, userDbService database.UserDbService) ([]*model.Favorite, error) {
+
+	userId, err := database.StringToUint(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	favs, err := userDbService.GetAllUserFavs(userId)
+	if err != nil {
+		return nil, err
+	}
+
+    return toFavsResponse(favs), nil
+}

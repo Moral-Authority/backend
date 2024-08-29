@@ -107,7 +107,7 @@ func (s UserDbServiceImpl) AddUserFav(request model.ToggleUserFav) (*models.Favo
 func (s UserDbServiceImpl) RemoveUserFav(request model.ToggleUserFav) error {
 	
 	var favorite models.Favorite
-	result := GetDbConn().Where("user_id = ? AND product_id = ?", request.UserID, request.ProductID).First(&favorite)
+	result := GetDbConn().Where("user_refer = ? AND product_id = ?", request.UserID, request.ProductID).First(&favorite)
 	if result.Error != nil {
 		logrus.Errorf("Error finding favorite: %v", result.Error)
 		return result.Error
@@ -125,7 +125,7 @@ func (s UserDbServiceImpl) RemoveUserFav(request model.ToggleUserFav) error {
 func (s UserDbServiceImpl) GetUserFav(userID uint, productID uint) (*models.Favorite, error) {
 
 	var favorite models.Favorite
-	err := GetDbConn().Where("user_id = ? AND product_id = ?", userID, productID).First(&favorite).Error
+	err := GetDbConn().Where("user_refer = ? AND product_id = ?", userID, productID).First(&favorite).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, nil
 	} else if err != nil {
