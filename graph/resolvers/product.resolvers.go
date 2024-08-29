@@ -14,7 +14,7 @@ import (
 
 // AddProduct is the resolver for the addProduct field.
 func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error) {
-	company, err := handlers.ProductService{}.AddNewProduct(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	company, err := handlers.ProductService{}.AddNewProductHandler(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProduc
 
 // UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error) {
-	company, err := handlers.ProductService{}.UpdateProduct(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	company, err := handlers.ProductService{}.UpdateProductHandler(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.Update
 // GetProductByID is the resolver for the getProductByID field.
 func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	product, err := handlers.ProductService{}.GetProductByID(id, dbService)
+	product, err := handlers.ProductService{}.GetProductByIDHandler(id, dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.P
 // GetAllProducts is the resolver for the getAllProducts field.
 func (r *queryResolver) GetAllProducts(ctx context.Context) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	companies, err := handlers.ProductService{}.GetAllProducts(dbService)
+	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService)
 	if err != nil {
 		return nil, err
 	}

@@ -16,7 +16,7 @@ type UserService struct{}
 // Secret key for signing the JWT token
 var jwtSecret = []byte(os.Getenv("JWT_SECRET"))
 
-func (s UserService) AddNewUser(request model.NewUser, dbService database.UserDbService) (*model.User, error) {
+func (s UserService) AddNewUserHandler(request model.NewUser, dbService database.UserDbService) (*model.User, error) {
 	// 1: Hash the password with bcrypt
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(request.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -40,7 +40,7 @@ func (s UserService) AddNewUser(request model.NewUser, dbService database.UserDb
 	return toUserResponse(*savedUser), nil
 }
 
-func (s UserService) Login(request model.LoginUser, dbService database.UserDbService) (string, *model.User, error) {
+func (s UserService) LoginHandler(request model.LoginUser, dbService database.UserDbService) (string, *model.User, error) {
 	// 1. Fetch the user from the database by email
 	user, err := dbService.GetUserByEmail(request.Email)
 	if err != nil {
@@ -63,7 +63,18 @@ func (s UserService) Login(request model.LoginUser, dbService database.UserDbSer
 	return tokenString, toUserResponse(*user), nil
 }
 
-func (s UserService) UpdateUser(request model.UpdateUser, dbService database.UserDbService) (*model.User, error) {
+func (s UserService) LogoutHandler(userID string, userDbService database.UserDbService) (*model.User, error) {
+
+	// validate user
+	user, err := userDbService.GetUser(userID)
+	if err != nil || user == nil {
+		return nil, errors.New(fmt.Sprintf("unable to get user from db %s", err))
+	}
+
+	return nil, nil
+}
+
+func (s UserService) UpdateUserHandler(request model.UpdateUser, dbService database.UserDbService) (*model.User, error) {
 	updatedUser, err := dbService.UpdateUser(request.UserID, request)
 	if err != nil {
 		return nil, err
@@ -74,7 +85,7 @@ func (s UserService) UpdateUser(request model.UpdateUser, dbService database.Use
 	return toUserResponse(*updatedUser), nil
 }
 
-func (s UserService) GetUserById(userId string, dbService database.UserDbService) (*model.User, error) {
+func (s UserService) GetUserByIdHandler(userId string, dbService database.UserDbService) (*model.User, error) {
 	user, err := dbService.GetUser(userId)
 	if err != nil || user == nil {
 		return nil, errors.New(fmt.Sprintf("unable to get user from db %s", err))
@@ -96,7 +107,7 @@ func (s UserService) GetUsers(dbService database.UserDbService) ([]*model.User, 
 	return response, nil
 }
 
-func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
+func (s UserService) ToggleUserFavHandler(request model.ToggleUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
 
 	// validate user
 	user, err := userDbService.GetUser(request.UserID)
@@ -141,7 +152,7 @@ func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService da
 }
 
 
-func (s UserService) GetAllUserFavs(userID string, userDbService database.UserDbService) ([]*model.Favorite, error) {
+func (s UserService) GetAllUserFavsHandler(userID string, userDbService database.UserDbService) ([]*model.Favorite, error) {
 
 	userId, err := database.StringToUint(userID)
 	if err != nil {

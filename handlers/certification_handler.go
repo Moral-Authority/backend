@@ -11,7 +11,7 @@ import (
 
 type CertificationService struct{}
 
-func (s CertificationService) GetCertificationsByFilter(filters map[string]interface{}, input model.FilterCertificationsInput, dbService database.CertificationDbService) ([]*model.Certification, int64, error) {
+func (s CertificationService) GetCertificationsByFilterHandler(filters map[string]interface{}, input model.FilterCertificationsInput, dbService database.CertificationDbService) ([]*model.Certification, int64, error) {
     certs, total, err := dbService.GetCertificationsByFilter(filters, input)
     if err != nil {
         return nil, 0, err
@@ -25,7 +25,7 @@ func (s CertificationService) GetCertificationsByFilter(filters map[string]inter
     return result, total, nil
 }
 
-func (s CertificationService) AddNewCertification(request model.AddCertification, dbService database.CertificationDbService) (*model.Certification, error) {
+func (s CertificationService) AddNewCertificationHandler(request model.AddCertification, dbService database.CertificationDbService) (*model.Certification, error) {
 
 	cert := models.Certification{
 		Name:               null.StringFrom(*request.Name),
@@ -51,7 +51,7 @@ func (s CertificationService) AddNewCertification(request model.AddCertification
 	return toCertificationResponse(*addedCert), nil
 }
 
-func (s CertificationService) GetAllCertifications(dbService database.CertificationDbService) ([]*model.Certification, error) {
+func (s CertificationService) GetAllCertificationsHandler(dbService database.CertificationDbService) ([]*model.Certification, error) {
 	certs, err := dbService.GetAllCertifications()
 	if err != nil {
 		return nil, fmt.Errorf(fmt.Sprintf("unable to get certs from db, ERROR: %s", err))
@@ -65,7 +65,7 @@ func (s CertificationService) GetAllCertifications(dbService database.Certificat
 	return response, nil
 }
 
-func (s CertificationService) GetCertificationById(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
+func (s CertificationService) GetCertificationByIdHandler(certId string, dbService database.CertificationDbService) (*model.Certification, error) {
 	cert, err := dbService.GetCertificationById(certId)
 	if err != nil || cert == nil {
 		return nil, fmt.Errorf("unable to get cert from db, ERROR: %s", err)
@@ -74,7 +74,7 @@ func (s CertificationService) GetCertificationById(certId string, dbService data
 	return toCertificationResponse(*cert), nil
 }
 
-func (s CertificationService) UpdateCertification(request model.UpdateCertification, dbService database.CertificationDbService) (*model.Certification, error) {
+func (s CertificationService) UpdateCertificationHandler(request model.UpdateCertification, dbService database.CertificationDbService) (*model.Certification, error) {
 	// Retrieve the existing certification
 	cert, err := dbService.GetCertificationById(request.ID)
 	if err != nil || cert == nil {

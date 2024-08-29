@@ -122,16 +122,17 @@ type ComplexityRoot struct {
 		AddCategory             func(childComplexity int, input model.AddCategory) int
 		AddCertification        func(childComplexity int, input model.AddCertification) int
 		AddCompany              func(childComplexity int, input model.AddCompany) int
-		AddImage                func(childComplexity int, request model.AddImage) int
+		AddImage                func(childComplexity int, input model.AddImage) int
 		AddProduct              func(childComplexity int, input model.AddProductRequest) int
 		AddProductCertification func(childComplexity int, input model.ProductCertificationInput) int
 		AddUser                 func(childComplexity int, input model.NewUser) int
 		BaseMutation            func(childComplexity int) int
 		Login                   func(childComplexity int, input model.LoginUser) int
-		ToggleUserFav           func(childComplexity int, request model.ToggleUserFav) int
+		Logout                  func(childComplexity int, id string) int
+		ToggleUserFav           func(childComplexity int, input model.ToggleUserFav) int
 		UpdateCertification     func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany           func(childComplexity int, input model.UpdateCompany) int
-		UpdateImage             func(childComplexity int, request model.UpdateImage) int
+		UpdateImage             func(childComplexity int, input model.UpdateImage) int
 		UpdateProduct           func(childComplexity int, input model.UpdateProductRequest) int
 		UpdateUser              func(childComplexity int, input model.UpdateUser) int
 	}
@@ -191,7 +192,7 @@ type ComplexityRoot struct {
 		GetAllUserFavs            func(childComplexity int, id string) int
 		GetCertificationByID      func(childComplexity int, id string) int
 		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
-		GetCompaniesByFilter      func(childComplexity int, filter *model.FilterCompanyInput) int
+		GetCompaniesByFilter      func(childComplexity int, input *model.FilterCompanyInput) int
 		GetCompany                func(childComplexity int, id string) int
 		GetProductByID            func(childComplexity int, id string) int
 		User                      func(childComplexity int, id string) int
@@ -642,7 +643,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddImage(childComplexity, args["request"].(model.AddImage)), true
+		return e.complexity.Mutation.AddImage(childComplexity, args["input"].(model.AddImage)), true
 
 	case "Mutation.addProduct":
 		if e.complexity.Mutation.AddProduct == nil {
@@ -699,6 +700,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Login(childComplexity, args["input"].(model.LoginUser)), true
 
+	case "Mutation.logout":
+		if e.complexity.Mutation.Logout == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_logout_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.Logout(childComplexity, args["_id"].(string)), true
+
 	case "Mutation.toggleUserFav":
 		if e.complexity.Mutation.ToggleUserFav == nil {
 			break
@@ -709,7 +722,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.ToggleUserFav(childComplexity, args["request"].(model.ToggleUserFav)), true
+		return e.complexity.Mutation.ToggleUserFav(childComplexity, args["input"].(model.ToggleUserFav)), true
 
 	case "Mutation.updateCertification":
 		if e.complexity.Mutation.UpdateCertification == nil {
@@ -745,7 +758,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateImage(childComplexity, args["request"].(model.UpdateImage)), true
+		return e.complexity.Mutation.UpdateImage(childComplexity, args["input"].(model.UpdateImage)), true
 
 	case "Mutation.updateProduct":
 		if e.complexity.Mutation.UpdateProduct == nil {
@@ -1090,7 +1103,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.GetCompaniesByFilter(childComplexity, args["filter"].(*model.FilterCompanyInput)), true
+		return e.complexity.Query.GetCompaniesByFilter(childComplexity, args["input"].(*model.FilterCompanyInput)), true
 
 	case "Query.getCompany":
 		if e.complexity.Query.GetCompany == nil {
@@ -1405,7 +1418,7 @@ input FilterCertificationsInput {
 extend type Query {
     getCompany(id: String!): Company!
     getAllCompanies: [Company!]
-    getCompaniesByFilter(filter: FilterCompanyInput): [Company!]
+    getCompaniesByFilter(input: FilterCompanyInput): [Company!]
 }
 
 type Company {
@@ -1498,7 +1511,7 @@ input CompanyProductInput {
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
-    toggleUserFav(request: ToggleUserFav!): [Favorite]
+    toggleUserFav(input: ToggleUserFav!): [Favorite]
 }
 
 extend type Query {
@@ -1537,8 +1550,8 @@ input SortByInput {
 	SortOrder: String
 }`, BuiltIn: false},
 	{Name: "../image.graphqls", Input: `extend type Mutation {
-    addImage(request: AddImage!): Image!
-	UpdateImage(request: UpdateImage!): Image!
+    addImage(input: AddImage!): Image!
+	UpdateImage(input: UpdateImage!): Image!
 }
 
 type Image {
@@ -1753,6 +1766,7 @@ extend type Mutation {
     addUser(input: NewUser!): User!
     updateUser(input: UpdateUser!): User!
     login(input: LoginUser!): LoginResponse!
+    logout(_id: String!): User
 }
 
 type User {

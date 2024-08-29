@@ -13,8 +13,8 @@ import (
 )
 
 // AddUserFav is the resolver for the addUserFav field.
-func (r *mutationResolver) ToggleUserFav(ctx context.Context, request model.ToggleUserFav) ([]*model.Favorite, error) {
-	fav, err := handlers.UserService{}.ToggleUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
+func (r *mutationResolver) ToggleUserFav(ctx context.Context, input model.ToggleUserFav) ([]*model.Favorite, error) {
+	fav, err := handlers.UserService{}.ToggleUserFavHandler(input, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (r *mutationResolver) ToggleUserFav(ctx context.Context, request model.Togg
 
 // GetAllUserFavs is the resolver for the getAllUserFavs field.
 func (r *queryResolver) GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error) {
-	favs, err := handlers.UserService{}.GetAllUserFavs(id, database.UserDbServiceImpl{})
+	favs, err := handlers.UserService{}.GetAllUserFavsHandler(id, database.UserDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}

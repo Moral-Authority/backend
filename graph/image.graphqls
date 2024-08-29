@@ -1,6 +1,6 @@
 extend type Mutation {
-    addImage(request: AddImage!): Image!
-	UpdateImage(request: UpdateImage!): Image!
+    addImage(input: AddImage!): Image!
+	UpdateImage(input: UpdateImage!): Image!
 }
 
 type Image {

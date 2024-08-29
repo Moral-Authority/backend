@@ -14,7 +14,7 @@ import (
 
 // AddProductCertification is the resolver for the addProductCertification field.
 func (r *mutationResolver) AddProductCertification(ctx context.Context, input model.ProductCertificationInput) (*model.ProductCertification, error) {
-	result, err := handlers.ProductService{}.AddProductCertification(database.ProductDbServiceImpl{}, input)
+	result, err := handlers.ProductService{}.AddProductCertificationHandler(database.ProductDbServiceImpl{}, input)
 	if err != nil {
 		return nil, err
 	}

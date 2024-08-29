@@ -6,7 +6,7 @@ extend type Mutation {
 extend type Query {
     getCompany(id: String!): Company!
     getAllCompanies: [Company!]
-    getCompaniesByFilter(filter: FilterCompanyInput): [Company!]
+    getCompaniesByFilter(input: FilterCompanyInput): [Company!]
 }
 
 type Company {

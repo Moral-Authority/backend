@@ -8,7 +8,7 @@ import (
 	"github.com/Moral-Authority/backend/models"
 )
 
-func (s CompanyService) AddCompanyCertification(companyService database.CompanyDbService, certService database.CertificationDbService, request model.CompanyCertificationInput) (*models.CompanyCertification, error) {
+func (s CompanyService) AddCompanyCertificationHandler(companyService database.CompanyDbService, certService database.CertificationDbService, request model.CompanyCertificationInput) (*models.CompanyCertification, error) {
 
 	
 	company, err := companyService.GetCompanyById(request.CompanyID)

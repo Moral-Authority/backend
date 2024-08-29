@@ -14,7 +14,7 @@ import (
 
 // AddCategory is the resolver for the addCategory field.
 func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error) {
-	cat, err := handlers.ProductService{}.AddCategory(input, database.ProductDbServiceImpl{})
+	cat, err := handlers.ProductService{}.AddCategoryHandler(input, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func (r *mutationResolver) AddCategory(ctx context.Context, input model.AddCateg
 
 // GetAllCategories is the resolver for the getAllCategories field.
 func (r *queryResolver) GetAllCategories(ctx context.Context) ([]*model.Category, error) {
-	categories, err := handlers.ProductService{}.GetAllCategories(database.ProductDbServiceImpl{})
+	categories, err := handlers.ProductService{}.GetAllCategoriesHandler(database.ProductDbServiceImpl{})
 	if err != nil {
 		return categories, nil
 	}

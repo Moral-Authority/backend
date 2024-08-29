@@ -13,9 +13,9 @@ import (
 )
 
 // AddImage is the resolver for the addImage field.
-func (r *mutationResolver) AddImage(ctx context.Context, request model.AddImage) (*model.Image, error) {
+func (r *mutationResolver) AddImage(ctx context.Context, input model.AddImage) (*model.Image, error) {
 	dbService := database.ImageDbServiceImpl{}
-	image, err := handlers.ImageDbService{}.AddImage(dbService, request)
+	image, err := handlers.ImageDbService{}.AddImageHandler(dbService, input)
 	if err != nil {
 		return nil, err
 	}
@@ -24,9 +24,9 @@ func (r *mutationResolver) AddImage(ctx context.Context, request model.AddImage)
 }
 
 // UpdateImage is the resolver for the UpdateImage field.
-func (r *mutationResolver) UpdateImage(ctx context.Context, request model.UpdateImage) (*model.Image, error) {
+func (r *mutationResolver) UpdateImage(ctx context.Context, input model.UpdateImage) (*model.Image, error) {
 	dbService := database.ImageDbServiceImpl{}
-	image, err := handlers.ImageDbService{}.UpdateImage(dbService, request)
+	image, err := handlers.ImageDbService{}.UpdateImageHandler(dbService, input)
 	if err != nil {
 		return nil, err
 	}

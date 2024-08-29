@@ -1,5 +1,5 @@
 extend type Mutation {
-    toggleUserFav(request: ToggleUserFav!): [Favorite]
+    toggleUserFav(input: ToggleUserFav!): [Favorite]
 }
 
 extend type Query {

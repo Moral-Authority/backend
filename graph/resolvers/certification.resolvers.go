@@ -17,7 +17,7 @@ import (
 // AddCertification is the resolver for the addCertification field.
 func (r *mutationResolver) AddCertification(ctx context.Context, input model.AddCertification) (*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
-	cert, err := handlers.CertificationService{}.AddNewCertification(input, dbService)
+	cert, err := handlers.CertificationService{}.AddNewCertificationHandler(input, dbService)
 	if err != nil {
 		return cert, err
 	}
@@ -28,7 +28,7 @@ func (r *mutationResolver) AddCertification(ctx context.Context, input model.Add
 // UpdateCertification is the resolver for the updateCertification field.
 func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
-	certs, err := handlers.CertificationService{}.UpdateCertification(input, dbService)
+	certs, err := handlers.CertificationService{}.UpdateCertificationHandler(input, dbService)
 	if err != nil {
 		return certs, err
 	}
@@ -39,7 +39,7 @@ func (r *mutationResolver) UpdateCertification(ctx context.Context, input model.
 // GetAllCertifications is the resolver for the getAllCertifications field.
 func (r *queryResolver) GetAllCertifications(ctx context.Context) ([]*model.Certification, error) {
 	dbService := &database.CertificationDbServiceImpl{}
-	certs, err := handlers.CertificationService{}.GetAllCertifications(dbService)
+	certs, err := handlers.CertificationService{}.GetAllCertificationsHandler(dbService)
 	if err != nil {
 		return nil, fmt.Errorf("failed to retrieve certifications in resolver: %w", err)
 	}

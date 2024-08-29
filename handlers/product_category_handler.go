@@ -11,7 +11,7 @@ import (
 
 type ProductCategorizationService struct{}
 
-func (s ProductService) AddCategory(request model.AddCategory, dbService database.ProductDbService) (*model.Category, error) {
+func (s ProductService) AddCategoryHandler(request model.AddCategory, dbService database.ProductDbService) (*model.Category, error) {
 	var parentID *uint
 	if request.ParentID != nil && *request.ParentID != "" {
 		id, err := database.StringToUint(*request.ParentID)
@@ -41,7 +41,7 @@ func (s ProductService) AddCategory(request model.AddCategory, dbService databas
 	return categoryResponse, nil
 }
 
-func (s ProductService) GetAllCategories(dbService database.ProductDbService) ([]*model.Category, error) {
+func (s ProductService) GetAllCategoriesHandler(dbService database.ProductDbService) ([]*model.Category, error) {
 	categories, err := dbService.GetAllCategories()
 	if  err != nil || categories == nil {
 		return nil, errors.New("unable to get categories from db")

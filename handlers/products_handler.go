@@ -11,7 +11,7 @@ import (
 
 type ProductService struct{}
 
-func (s ProductService) AddNewProduct(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
+func (s ProductService) AddNewProductHandler(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
 
 	// _, err := database.StringToUint(request.UserID)
 	// if err != nil {
@@ -62,7 +62,7 @@ func (s ProductService) AddNewProduct(request model.AddProductRequest, productDb
 	return toProductResponse(addedProduct), nil
 }
 
-func (s ProductService) UpdateProduct(request model.UpdateProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
+func (s ProductService) UpdateProductHandler(request model.UpdateProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 
 	product, err := dbService.UpdateProduct(request)
@@ -73,7 +73,7 @@ func (s ProductService) UpdateProduct(request model.UpdateProductRequest, produc
 	return toProductResponse(product), nil
 }
 
-func (s ProductService) GetProductByID(productId string, productDbService database.ProductDbService) (*model.Product, error) {
+func (s ProductService) GetProductByIDHandler(productId string, productDbService database.ProductDbService) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 	product, err := dbService.GetProductByID(productId)
 	if err != nil {
@@ -83,7 +83,7 @@ func (s ProductService) GetProductByID(productId string, productDbService databa
 	return toProductResponse(product), nil
 }
 
-func (s ProductService) GetAllProducts(productDbService database.ProductDbService) ([]*model.Product, error) {
+func (s ProductService) GetAllProductsHandler(productDbService database.ProductDbService) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 	var result []*model.Product
 
@@ -99,7 +99,7 @@ func (s ProductService) GetAllProducts(productDbService database.ProductDbServic
 	return result, nil
 }
 
-func (s ProductService) GetProductsByFilter(filters map[string]interface{}, productDbService database.ProductDbService) ([]*model.Product, error) {
+func (s ProductService) GetProductsByFilterHandler(filters map[string]interface{}, productDbService database.ProductDbService) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 	var result []*model.Product
 

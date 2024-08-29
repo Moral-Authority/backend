@@ -15,7 +15,7 @@ import (
 
 // AddUser is the resolver for the addUser field.
 func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	user, err := handlers.UserService{}.AddNewUser(input, database.UserDbServiceImpl{})
+	user, err := handlers.UserService{}.AddNewUserHandler(input, database.UserDbServiceImpl{})
 	if err != nil {
 		return nil, fmt.Errorf("failed to add user: %w", err)
 	}
@@ -24,7 +24,7 @@ func (r *mutationResolver) AddUser(ctx context.Context, input model.NewUser) (*m
 
 // UpdateUser is the resolver for the updateUser field.
 func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error) {
-	user, err := handlers.UserService{}.UpdateUser(input, database.UserDbServiceImpl{}) // create an instance and pass it
+	user, err := handlers.UserService{}.UpdateUserHandler(input, database.UserDbServiceImpl{}) // create an instance and pass it
 	if err != nil {
 		return nil, fmt.Errorf("failed to update user: %w", err)
 	}
@@ -34,7 +34,7 @@ func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UpdateUse
 // Login is the resolver for the login field.
 func (r *mutationResolver) Login(ctx context.Context, input model.LoginUser) (*model.LoginResponse, error) {
 	userService := handlers.UserService{}
-	token, user, err := userService.Login(input, database.UserDbServiceImpl{})
+	token, user, err := userService.LoginHandler(input, database.UserDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -45,9 +45,20 @@ func (r *mutationResolver) Login(ctx context.Context, input model.LoginUser) (*m
 	}, nil
 }
 
+// Logout is the resolver for the logout field.
+func (r *mutationResolver) Logout(ctx context.Context, id string) (*model.User, error) {
+	userService := handlers.UserService{}
+	_, err := userService.LogoutHandler(id, database.UserDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, nil
+}
+
 // User is the resolver for the user field.
 func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	user, err := handlers.UserService{}.GetUserById(id, database.UserDbServiceImpl{}) // create an instance and pass it
+	user, err := handlers.UserService{}.GetUserByIdHandler(id, database.UserDbServiceImpl{}) // create an instance and pass it
 	if err != nil {
 		return nil, fmt.Errorf("failed to get user: %w", err)
 	}

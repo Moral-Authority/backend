@@ -12,7 +12,7 @@ import (
 
 type CompanyService struct{}
 
-func (s CompanyService) GetCompaniesByFilter(dbService database.CompanyDbService, filters map[string]interface{}) ([]*model.Company, error) {
+func (s CompanyService) GetCompaniesByFilterHandler(dbService database.CompanyDbService, filters map[string]interface{}) ([]*model.Company, error) {
 	companies, err := dbService.GetCompaniesByFilter(filters)
 	if err != nil {
 		return nil, err
@@ -26,7 +26,7 @@ func (s CompanyService) GetCompaniesByFilter(dbService database.CompanyDbService
 	return result, nil
 }
 
-func (s CompanyService) AddCompany(request model.AddCompany, dbService database.CompanyDbService, imageDbService database.ImageDbService, certDbService database.CertificationDbService) (*model.Company, error) {
+func (s CompanyService) AddCompanyHandler(request model.AddCompany, dbService database.CompanyDbService, imageDbService database.ImageDbService, certDbService database.CertificationDbService) (*model.Company, error) {
 	// _, err := database.StringToUint(request.UserID)
 	// if err != nil {
 	//     return nil, err
@@ -82,7 +82,7 @@ func (s CompanyService) AddCompany(request model.AddCompany, dbService database.
 	return toCompanyResponse(savedCompany), nil
 }
 
-func (s CompanyService) GetCompanyById(companyId string, dbService database.CompanyDbService) (*model.Company, error) {
+func (s CompanyService) GetCompanyByIdHandler(companyId string, dbService database.CompanyDbService) (*model.Company, error) {
 	company, err := dbService.GetCompanyById(companyId)
 	if err != nil || company == nil {
 		return nil, errors.New("unable to get company from db")
@@ -90,7 +90,7 @@ func (s CompanyService) GetCompanyById(companyId string, dbService database.Comp
 	return toCompanyResponse(company), nil
 }
 
-func (s CompanyService) GetAllCompanies(dbService database.CompanyDbService) ([]*model.Company, error) {
+func (s CompanyService) GetAllCompaniesHandler(dbService database.CompanyDbService) ([]*model.Company, error) {
 	companies, err := dbService.GetAllCompanies()
 	if err != nil || companies == nil {
 		return nil, errors.New("unable to get companies from db")
@@ -99,7 +99,7 @@ func (s CompanyService) GetAllCompanies(dbService database.CompanyDbService) ([]
 	return toCompaniesResponse(companies), nil
 }
 
-func (s CompanyService) UpdateCompany(dbService database.CompanyDbService, input model.UpdateCompany) (*model.Company, error) {
+func (s CompanyService) UpdateCompanyHandler(dbService database.CompanyDbService, input model.UpdateCompany) (*model.Company, error) {
 	// Retrieve the existing certification
 	currentCompany, err := dbService.GetCompanyById(input.ID)
 	if err != nil || currentCompany == nil {

@@ -23,9 +23,9 @@ type MutationResolver interface {
 	UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error)
 	UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error)
-	ToggleUserFav(ctx context.Context, request model.ToggleUserFav) ([]*model.Favorite, error)
-	AddImage(ctx context.Context, request model.AddImage) (*model.Image, error)
-	UpdateImage(ctx context.Context, request model.UpdateImage) (*model.Image, error)
+	ToggleUserFav(ctx context.Context, input model.ToggleUserFav) ([]*model.Favorite, error)
+	AddImage(ctx context.Context, input model.AddImage) (*model.Image, error)
+	UpdateImage(ctx context.Context, input model.UpdateImage) (*model.Image, error)
 	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
 	AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error)
 	UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error)
@@ -33,6 +33,7 @@ type MutationResolver interface {
 	AddUser(ctx context.Context, input model.NewUser) (*model.User, error)
 	UpdateUser(ctx context.Context, input model.UpdateUser) (*model.User, error)
 	Login(ctx context.Context, input model.LoginUser) (*model.LoginResponse, error)
+	Logout(ctx context.Context, id string) (*model.User, error)
 }
 type QueryResolver interface {
 	BaseQuery(ctx context.Context) (any, error)
@@ -41,7 +42,7 @@ type QueryResolver interface {
 	GetCertificationsByFilter(ctx context.Context, input model.FilterCertificationsInput) (*model.PaginatedCertifications, error)
 	GetCompany(ctx context.Context, id string) (*model.Company, error)
 	GetAllCompanies(ctx context.Context) ([]*model.Company, error)
-	GetCompaniesByFilter(ctx context.Context, filter *model.FilterCompanyInput) ([]*model.Company, error)
+	GetCompaniesByFilter(ctx context.Context, input *model.FilterCompanyInput) ([]*model.Company, error)
 	GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error)
 	GetAllCategories(ctx context.Context) ([]*model.Category, error)
 	GetProductByID(ctx context.Context, id string) (*model.Product, error)
@@ -58,14 +59,14 @@ func (ec *executionContext) field_Mutation_UpdateImage_args(ctx context.Context,
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.UpdateImage
-	if tmp, ok := rawArgs["request"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNUpdateImage2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUpdateImage(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["request"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -118,14 +119,14 @@ func (ec *executionContext) field_Mutation_addImage_args(ctx context.Context, ra
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.AddImage
-	if tmp, ok := rawArgs["request"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNAddImage2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐAddImage(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["request"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -189,18 +190,33 @@ func (ec *executionContext) field_Mutation_login_args(ctx context.Context, rawAr
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_logout_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["_id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("_id"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["_id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_toggleUserFav_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 model.ToggleUserFav
-	if tmp, ok := rawArgs["request"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("request"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNToggleUserFav2githubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐToggleUserFav(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["request"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -328,14 +344,14 @@ func (ec *executionContext) field_Query_getCompaniesByFilter_args(ctx context.Co
 	var err error
 	args := map[string]interface{}{}
 	var arg0 *model.FilterCompanyInput
-	if tmp, ok := rawArgs["filter"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalOFilterCompanyInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFilterCompanyInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["filter"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -795,7 +811,7 @@ func (ec *executionContext) _Mutation_toggleUserFav(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().ToggleUserFav(rctx, fc.Args["request"].(model.ToggleUserFav))
+		return ec.resolvers.Mutation().ToggleUserFav(rctx, fc.Args["input"].(model.ToggleUserFav))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -855,7 +871,7 @@ func (ec *executionContext) _Mutation_addImage(ctx context.Context, field graphq
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().AddImage(rctx, fc.Args["request"].(model.AddImage))
+		return ec.resolvers.Mutation().AddImage(rctx, fc.Args["input"].(model.AddImage))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -918,7 +934,7 @@ func (ec *executionContext) _Mutation_UpdateImage(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().UpdateImage(rctx, fc.Args["request"].(model.UpdateImage))
+		return ec.resolvers.Mutation().UpdateImage(rctx, fc.Args["input"].(model.UpdateImage))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1482,6 +1498,68 @@ func (ec *executionContext) fieldContext_Mutation_login(ctx context.Context, fie
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_logout(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_logout(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().Logout(rctx, fc.Args["_id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.User)
+	fc.Result = res
+	return ec.marshalOUser2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐUser(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_logout(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_User__id(ctx, field)
+			case "email":
+				return ec.fieldContext_User_email(ctx, field)
+			case "phone":
+				return ec.fieldContext_User_phone(ctx, field)
+			case "password":
+				return ec.fieldContext_User_password(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_logout_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_BaseQuery(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_BaseQuery(ctx, field)
 	if err != nil {
@@ -1926,7 +2004,7 @@ func (ec *executionContext) _Query_getCompaniesByFilter(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetCompaniesByFilter(rctx, fc.Args["filter"].(*model.FilterCompanyInput))
+		return ec.resolvers.Query().GetCompaniesByFilter(rctx, fc.Args["input"].(*model.FilterCompanyInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2660,6 +2738,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "logout":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_logout(ctx, field)
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

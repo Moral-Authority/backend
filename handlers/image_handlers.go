@@ -12,7 +12,7 @@ import (
 
 type ImageDbService struct{}
 
-func (s ImageDbService) AddImage(dbService database.ImageDbService, request model.AddImage) (*model.Image, error) {
+func (s ImageDbService) AddImageHandler(dbService database.ImageDbService, request model.AddImage) (*model.Image, error) {
 
 	    // _, err := database.StringToUint(request.UserID)
     // if err != nil {
@@ -34,7 +34,7 @@ func (s ImageDbService) AddImage(dbService database.ImageDbService, request mode
 	return toImageResponse(*savedImage), nil
 }
 
-func (s ImageDbService) UpdateImage(dbService database.ImageDbService, request model.UpdateImage) (*model.Image, error) {
+func (s ImageDbService) UpdateImageHandler(dbService database.ImageDbService, request model.UpdateImage) (*model.Image, error) {
     image, err := dbService.GetImageById(request.ID)
     if err != nil || image == nil {
         return nil, errors.New("unable to get image from db")

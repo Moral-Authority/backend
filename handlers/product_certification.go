@@ -5,7 +5,7 @@ import (
 	"github.com/Moral-Authority/backend/graph/model"
 )
 
-func (s ProductService) AddProductCertification(dbService database.ProductDbService, input model.ProductCertificationInput) (*model.ProductCertification, error) {
+func (s ProductService) AddProductCertificationHandler(dbService database.ProductDbService, input model.ProductCertificationInput) (*model.ProductCertification, error) {
 
 	// _, err := database.StringToUint(request.UserID)
 	// if err != nil {

@@ -14,7 +14,7 @@ import (
 
 // AddCompany is the resolver for the addCompany field.
 func (r *mutationResolver) AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error) {
-	company, err := handlers.CompanyService{}.AddCompany(input, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
+	company, err := handlers.CompanyService{}.AddCompanyHandler(input, database.CompanyDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +25,7 @@ func (r *mutationResolver) AddCompany(ctx context.Context, input model.AddCompan
 // UpdateCompany is the resolver for the updateCompany field.
 func (r *mutationResolver) UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
-	company, err := handlers.CompanyService{}.UpdateCompany(dbService, input)
+	company, err := handlers.CompanyService{}.UpdateCompanyHandler(dbService, input)
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func (r *mutationResolver) UpdateCompany(ctx context.Context, input model.Update
 // GetCompany is the resolver for the getCompany field.
 func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
-	company, err := handlers.CompanyService{}.GetCompanyById(id, dbService)
+	company, err := handlers.CompanyService{}.GetCompanyByIdHandler(id, dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (r *queryResolver) GetCompany(ctx context.Context, id string) (*model.Compa
 // GetAllCompanies is the resolver for the getAllCompanies field.
 func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
-	companies, err := handlers.CompanyService{}.GetAllCompanies(dbService)
+	companies, err := handlers.CompanyService{}.GetAllCompaniesHandler(dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -53,18 +53,18 @@ func (r *queryResolver) GetAllCompanies(ctx context.Context) ([]*model.Company, 
 }
 
 // GetCompaniesByFilter is the resolver for the getCompaniesByFilter field.
-func (r *queryResolver) GetCompaniesByFilter(ctx context.Context, filter *model.FilterCompanyInput) ([]*model.Company, error) {
+func (r *queryResolver) GetCompaniesByFilter(ctx context.Context, input *model.FilterCompanyInput) ([]*model.Company, error) {
 	dbService := database.CompanyDbServiceImpl{}
 
 	filters := map[string]interface{}{
-		"name":        filter.CompanyFilters.Name,
-		"city":        filter.CompanyFilters.City,
-		"state":       filter.CompanyFilters.State,
-		"country":     filter.CompanyFilters.Country,
-		"is_verified": filter.CompanyFilters.IsVerified,
+		"name":        input.CompanyFilters.Name,
+		"city":        input.CompanyFilters.City,
+		"state":       input.CompanyFilters.State,
+		"country":     input.CompanyFilters.Country,
+		"is_verified": input.CompanyFilters.IsVerified,
 	}
 
-	companies, err := handlers.CompanyService{}.GetCompaniesByFilter(dbService, filters)
+	companies, err := handlers.CompanyService{}.GetCompaniesByFilterHandler(dbService, filters)
 	if err != nil {
 		return nil, err
 	}
