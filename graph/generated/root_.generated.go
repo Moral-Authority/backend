@@ -1485,7 +1485,7 @@ input CompanyProductInput {
 }
 `, BuiltIn: false},
 	{Name: "../favorite.graphqls", Input: `extend type Mutation {
-    toggleUserFav(request: ToggleUserFav!): Favorite
+    toggleUserFav(request: ToggleUserFav!): [Favorite]
 }
 
 input ToggleUserFav {

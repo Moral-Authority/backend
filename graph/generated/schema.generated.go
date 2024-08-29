@@ -23,7 +23,7 @@ type MutationResolver interface {
 	UpdateCertification(ctx context.Context, input model.UpdateCertification) (*model.Certification, error)
 	AddCompany(ctx context.Context, input model.AddCompany) (*model.Company, error)
 	UpdateCompany(ctx context.Context, input model.UpdateCompany) (*model.Company, error)
-	ToggleUserFav(ctx context.Context, request model.ToggleUserFav) (*model.Favorite, error)
+	ToggleUserFav(ctx context.Context, request model.ToggleUserFav) ([]*model.Favorite, error)
 	AddImage(ctx context.Context, request model.AddImage) (*model.Image, error)
 	UpdateImage(ctx context.Context, request model.UpdateImage) (*model.Image, error)
 	AddCategory(ctx context.Context, input model.AddCategory) (*model.Category, error)
@@ -788,9 +788,9 @@ func (ec *executionContext) _Mutation_toggleUserFav(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.Favorite)
+	res := resTmp.([]*model.Favorite)
 	fc.Result = res
-	return ec.marshalOFavorite2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
+	return ec.marshalOFavorite2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐFavorite(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_toggleUserFav(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {

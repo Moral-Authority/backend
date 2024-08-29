@@ -1,5 +1,5 @@
 extend type Mutation {
-    toggleUserFav(request: ToggleUserFav!): Favorite
+    toggleUserFav(request: ToggleUserFav!): [Favorite]
 }
 
 input ToggleUserFav {

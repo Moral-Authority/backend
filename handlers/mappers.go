@@ -16,21 +16,22 @@ func toUserResponse(user models.User) *model.User {
 	}
 }
 
-func toFavsResponse(favs []models.Favorite) []*model.Favorite {
+func toFavsResponse(favs []*models.Favorite) []*model.Favorite {
 	var response []*model.Favorite
-	for _, e := range favs {
-		fav := toFavResponse(&e)
-		response = append(response, fav)
+	for _, fav := range favs {
+		response = append(response, toFavResponse(fav))
 	}
 	return response
 }
 
+
 func toFavResponse(fav *models.Favorite) *model.Favorite {
 	return &model.Favorite{
-		ID: strconv.Itoa(int(fav.ID)),
-		//Product: toProductResponse(fav.Product),
+		ID:      strconv.Itoa(int(fav.ID)),
+		Product: toProductResponse(&fav.Product), 
 	}
 }
+
 
 func toImageResponse(image models.Image) *model.Image {
 	return &model.Image{

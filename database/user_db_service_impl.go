@@ -136,3 +136,19 @@ func (s UserDbServiceImpl) GetUserFav(userID uint, productID uint) (*models.Favo
 
 	return &favorite, nil 
 }
+
+func (s UserDbServiceImpl) GetAllUserFavs(userID uint) ([]*models.Favorite, error) {
+    var favs []*models.Favorite
+
+    err := GetDbConn().Where("user_refer = ?", userID).
+        Preload("Product").Find(&favs).Error
+    if err != nil {
+        if err == gorm.ErrRecordNotFound {
+            return nil, nil
+        }
+        logrus.Errorf("Error finding favorites: %v", err)
+        return nil, err
+    }
+
+    return favs, nil
+}

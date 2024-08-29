@@ -96,7 +96,7 @@ func (s UserService) GetUsers(dbService database.UserDbService) ([]*model.User, 
 	return response, nil
 }
 
-func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) (*model.Favorite, error) {
+func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
 
 	// validate user
 	user, err := userDbService.GetUser(request.UserID)
@@ -118,18 +118,24 @@ func (s UserService) ToggleUserFav(request model.ToggleUserFav, userDbService da
 
 	if userFav == nil {
 		// add favorite
-		addedFav, err := userDbService.AddUserFav(request)
+		_, err := userDbService.AddUserFav(request)
 		if err != nil {
 			return nil, err
 		}
-		return toFavResponse(addedFav), nil
+
 	} else {
 		// remove favorite
 		err := userDbService.RemoveUserFav(request)
 		if err != nil {
 			return nil, err
 		}
-		return nil, nil
+
 	}
 
+	favs, err := userDbService.GetAllUserFavs(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return toFavsResponse(favs), nil
 }

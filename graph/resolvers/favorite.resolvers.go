@@ -13,7 +13,7 @@ import (
 )
 
 // AddUserFav is the resolver for the addUserFav field.
-func (r *mutationResolver) ToggleUserFav(ctx context.Context, request model.ToggleUserFav) (*model.Favorite, error) {
+func (r *mutationResolver) ToggleUserFav(ctx context.Context, request model.ToggleUserFav) ([]*model.Favorite, error) {
 	fav, err := handlers.UserService{}.ToggleUserFav(request, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err

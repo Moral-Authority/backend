@@ -13,5 +13,6 @@ type UserDbService interface {
 	AddUserFav(model.ToggleUserFav) (*models.Favorite, error)
 	RemoveUserFav(model.ToggleUserFav) error
 	GetUserFav(uint, uint) (*models.Favorite, error)
+	GetAllUserFavs(uint) ([]*models.Favorite, error)
 	GetUserByEmail(email string) (*models.User, error)
 }
