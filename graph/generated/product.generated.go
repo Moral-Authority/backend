@@ -717,9 +717,9 @@ func (ec *executionContext) _Product_ImageLinks(ctx context.Context, field graph
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.([]string)
 	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_ImageLinks(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -760,7 +760,7 @@ func (ec *executionContext) _Product_PurchaseInfo(ctx context.Context, field gra
 	}
 	res := resTmp.([]*model.PurchaseInfo)
 	fc.Result = res
-	return ec.marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx, field.Selections, res)
+	return ec.marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Product_PurchaseInfo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1467,6 +1467,16 @@ func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋMoralᚑAuthority�
 	return ec._Product(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNPurchaseInfo2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx context.Context, sel ast.SelectionSet, v *model.PurchaseInfo) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PurchaseInfo(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNPurchaseInfoInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx context.Context, v interface{}) (*model.PurchaseInfoInput, error) {
 	res, err := ec.unmarshalInputPurchaseInfoInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
@@ -1532,7 +1542,7 @@ func (ec *executionContext) marshalOProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthori
 	return ret
 }
 
-func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx context.Context, sel ast.SelectionSet, v []*model.PurchaseInfo) graphql.Marshaler {
+func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.PurchaseInfo) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -1559,7 +1569,7 @@ func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAu
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOPurchaseInfo2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx, sel, v[i])
+			ret[i] = ec.marshalNPurchaseInfo2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -1570,14 +1580,13 @@ func (ec *executionContext) marshalOPurchaseInfo2ᚕᚖgithubᚗcomᚋMoralᚑAu
 	}
 	wg.Wait()
 
-	return ret
-}
-
-func (ec *executionContext) marshalOPurchaseInfo2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfo(ctx context.Context, sel ast.SelectionSet, v *model.PurchaseInfo) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
 	}
-	return ec._PurchaseInfo(ctx, sel, v)
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOPurchaseInfoInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx context.Context, v interface{}) (*model.PurchaseInfoInput, error) {

@@ -22,7 +22,11 @@ func (s ProductDbServiceImpl) GetProductByID(productId string) (*models.Product,
 
 func (s ProductDbServiceImpl) GetAllProducts() ([]*models.Product, error) {
 	var products []*models.Product
-	result := GetDbConn().Find(&products)
+	result := GetDbConn().
+		Preload("Company").
+		Preload("Images").
+		Preload("PurchaseInfo").
+		Find(&products)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error

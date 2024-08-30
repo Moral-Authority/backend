@@ -53,10 +53,10 @@ func PerformMigrations() {
 		&models.Favorite{},
 		&models.Image{},
 		&models.Product{},
+		&models.PurchaseInfo{},
 		&models.User{},
 		&models.CompanyCertification{},
 		&models.ProductCertification{},
-		&models.CompanyProduct{},
 		&models.ProductCategories{},
 	)
 	if err != nil {

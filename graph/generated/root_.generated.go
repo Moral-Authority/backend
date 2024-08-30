@@ -1754,7 +1754,7 @@ type Product {
     Title: String!
     Description: String!
     productCertifications: [ProductCertification!] # Relationship with ProductCertification
-    company: Company! # Reference to the Company
+    company: Company! 
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
@@ -1765,8 +1765,8 @@ type Product {
     SubCategory: String
     Type: String
     Style: String
-    ImageLinks: [String]
-    PurchaseInfo: [PurchaseInfo]
+    ImageLinks: [String!]
+    PurchaseInfo: [PurchaseInfo!]
     Verified: Boolean
     VerifiedBy: [String]
 }

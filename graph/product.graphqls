@@ -33,8 +33,10 @@ type Product {
     _id: String!
     Title: String!
     Description: String!
+    ImageLinks: [String!]
+    company: Company! 
+    PurchaseInfo: [PurchaseInfo!]
     productCertifications: [ProductCertification!] # Relationship with ProductCertification
-    company: Company! # Reference to the Company
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
@@ -45,8 +47,6 @@ type Product {
     SubCategory: String
     Type: String
     Style: String
-    ImageLinks: [String]
-    PurchaseInfo: [PurchaseInfo]
     Verified: Boolean
     VerifiedBy: [String]
 }

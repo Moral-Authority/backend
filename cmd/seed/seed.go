@@ -48,7 +48,7 @@ func main() {
 	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
 	log.Println("Seeding Products.")
-	seedProductsFromCSV(db, "affiliate_products_blueland_products.csv")
+	seedProductsFromCSV(db, "affiliate_products_blueland_products.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
 
@@ -280,7 +280,18 @@ func findCertificationID(db *gorm.DB, certificationName string) uint {
 	return certification.ID
 }
 
-func seedProductsFromCSV(db *gorm.DB, fileName string) {
+func findCompanyID(db *gorm.DB, companyName string) uint {
+	// Find the Certification ID based on the certification name
+	var company models.Company
+	if err := db.Where("name = ?", companyName).First(&company).Error; err != nil {
+		log.Printf("failed to find company: %v", err)
+		return 0
+	}
+
+	return company.ID
+}
+
+func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 	// Get the current working directory
 	dir, err := os.Getwd()
 	if err != nil {
@@ -305,6 +316,8 @@ func seedProductsFromCSV(db *gorm.DB, fileName string) {
 		log.Fatal(err)
 	}
 
+	companyID := findCompanyID(db, companyName)
+
 	// Read each row of the CSV file and insert it into the database
 	for {
 		row, err := reader.Read()
@@ -313,12 +326,39 @@ func seedProductsFromCSV(db *gorm.DB, fileName string) {
 		}
 
 		product := models.Product{
-			Title: row[3],
-			Url:   row[5],
+			// Department , TODO
+			// SubDepartment,
+			// Category,
+			Title:     row[3],
+			Url:       row[5],
+			CompanyID: companyID,
 		}
 
 		// Insert the product into the database
 		result := db.Create(&product)
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		}
+
+		image := models.Image{
+			ProductID: product.ID,
+			Url:       row[6],
+		}
+
+		purchaseInfo := models.PurchaseInfo{
+			ProductID: product.ID,
+			Price:     row[4],
+			Url:       row[5],
+		}
+
+		// Insert the product image the database
+		_ = db.Create(&image)
+		if result.Error != nil {
+			fmt.Println(result.Error)
+		}
+
+		// Insert the product purchase info the database
+		_ = db.Create(&purchaseInfo)
 		if result.Error != nil {
 			fmt.Println(result.Error)
 		}

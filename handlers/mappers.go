@@ -38,6 +38,14 @@ func toImageResponse(image models.Image) *model.Image {
 	}
 }
 
+func toImagesResponse(images []models.Image) []string {
+	var response []string
+	for _, i := range images {
+		response = append(response, i.Url)
+	}
+	return response
+}
+
 func toCategoriesResponse(categories []*models.Category) []*model.Category {
 	var response []*model.Category
 	for _, e := range categories {
@@ -84,7 +92,6 @@ func toProductsResponse(products []*models.Product) []*model.Product {
 
 func toProductResponse(product *models.Product) *model.Product {
 	// Default values
-
 	description := product.Description
 	if description == "" {
 		description = DefaultDescription
@@ -96,14 +103,28 @@ func toProductResponse(product *models.Product) *model.Product {
 	}
 
 	return &model.Product{
-		ID: strconv.Itoa(int(product.ID)),
-		PurchaseInfo: []*model.PurchaseInfo{
-			{
-				Link: &link,
-			},
-		},
-		Description: description,
-		Title:       product.Title,
+		ID:           strconv.Itoa(int(product.ID)),
+		PurchaseInfo: toPurchaseInfoResponse(product.PurchaseInfo),
+		Description:  description,
+		Title:        product.Title,
+		Company:      toCompanyResponse(&product.Company),
+		ImageLinks:   toImagesResponse(product.Images),
+	}
+}
+
+func toPurchaseInfoResponse(purchaseInfo []models.PurchaseInfo) []*model.PurchaseInfo {
+	var response []*model.PurchaseInfo
+	for _, e := range purchaseInfo {
+		purchase := toPurchaseInfo(e)
+		response = append(response, purchase)
+	}
+	return response
+}
+
+func toPurchaseInfo(purchaseInfo models.PurchaseInfo) *model.PurchaseInfo {
+	return &model.PurchaseInfo{
+		Link:  &purchaseInfo.Url,
+		Price: &purchaseInfo.Price,
 	}
 }
 
@@ -246,13 +267,13 @@ func ConvertStringsToColorStruct(Title, Value string) *model.Color {
 		Title: &Title,
 		Value: &Value,
 	}
-	
+
 }
 
 func FormatStringListToColorStructList(colors map[string]string) []*model.Color {
 	result := []*model.Color{}
 
-	for title, value := range colors{
+	for title, value := range colors {
 		color := ConvertStringsToColorStruct(title, value)
 		result = append(result, color)
 	}
@@ -260,6 +281,6 @@ func FormatStringListToColorStructList(colors map[string]string) []*model.Color 
 	return result
 }
 
-func ConvertString(s string) *string{
+func ConvertString(s string) *string {
 	return &s
 }

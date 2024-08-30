@@ -262,7 +262,7 @@ type Product struct {
 	SubCategory             *string                 `json:"SubCategory,omitempty"`
 	Type                    *string                 `json:"Type,omitempty"`
 	Style                   *string                 `json:"Style,omitempty"`
-	ImageLinks              []*string               `json:"ImageLinks,omitempty"`
+	ImageLinks              []string                `json:"ImageLinks,omitempty"`
 	PurchaseInfo            []*PurchaseInfo         `json:"PurchaseInfo,omitempty"`
 	Verified                *bool                   `json:"Verified,omitempty"`
 	VerifiedBy              []*string               `json:"VerifiedBy,omitempty"`
