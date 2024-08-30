@@ -122,6 +122,11 @@ type CertificationFiltersInput struct {
 	Sources            *string `json:"Sources,omitempty"`
 }
 
+type Color struct {
+	Title *string `json:"Title,omitempty"`
+	Value *string `json:"Value,omitempty"`
+}
+
 type Company struct {
 	ID                    string           `json:"_id"`
 	Name                  string           `json:"name"`
@@ -192,6 +197,14 @@ type FilterCompanyInput struct {
 	CompanyFilters *CompanyFiltersInput `json:"CompanyFilters,omitempty"`
 	SortBy         *SortByInput         `json:"SortBy,omitempty"`
 	Pagination     *PaginationInput     `json:"Pagination,omitempty"`
+}
+
+type Filters struct {
+	Colors                []*Color  `json:"Colors,omitempty"`
+	Sizes                 []*string `json:"Sizes,omitempty"`
+	Companies             []*string `json:"Companies,omitempty"`
+	CompanyCertifications []*string `json:"CompanyCertifications,omitempty"`
+	ProductCertifications []*string `json:"ProductCertifications,omitempty"`
 }
 
 type Image struct {

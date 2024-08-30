@@ -70,6 +70,11 @@ type ComplexityRoot struct {
 		Website            func(childComplexity int) int
 	}
 
+	Color struct {
+		Title func(childComplexity int) int
+		Value func(childComplexity int) int
+	}
+
 	Company struct {
 		City                  func(childComplexity int) int
 		CompanyCertifications func(childComplexity int) int
@@ -105,6 +110,14 @@ type ComplexityRoot struct {
 		ID      func(childComplexity int) int
 		Product func(childComplexity int) int
 		User    func(childComplexity int) int
+	}
+
+	Filters struct {
+		Colors                func(childComplexity int) int
+		Companies             func(childComplexity int) int
+		CompanyCertifications func(childComplexity int) int
+		ProductCertifications func(childComplexity int) int
+		Sizes                 func(childComplexity int) int
 	}
 
 	Image struct {
@@ -195,6 +208,7 @@ type ComplexityRoot struct {
 		GetCompaniesByFilter      func(childComplexity int, input *model.FilterCompanyInput) int
 		GetCompany                func(childComplexity int, id string) int
 		GetProductByID            func(childComplexity int, id string) int
+		GetSubDepartmentFilters   func(childComplexity int, input string) int
 		User                      func(childComplexity int, id string) int
 		Users                     func(childComplexity int) int
 	}
@@ -387,6 +401,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Certification.Website(childComplexity), true
 
+	case "Color.Title":
+		if e.complexity.Color.Title == nil {
+			break
+		}
+
+		return e.complexity.Color.Title(childComplexity), true
+
+	case "Color.Value":
+		if e.complexity.Color.Value == nil {
+			break
+		}
+
+		return e.complexity.Color.Value(childComplexity), true
+
 	case "Company.city":
 		if e.complexity.Company.City == nil {
 			break
@@ -561,6 +589,41 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Favorite.User(childComplexity), true
+
+	case "Filters.Colors":
+		if e.complexity.Filters.Colors == nil {
+			break
+		}
+
+		return e.complexity.Filters.Colors(childComplexity), true
+
+	case "Filters.Companies":
+		if e.complexity.Filters.Companies == nil {
+			break
+		}
+
+		return e.complexity.Filters.Companies(childComplexity), true
+
+	case "Filters.CompanyCertifications":
+		if e.complexity.Filters.CompanyCertifications == nil {
+			break
+		}
+
+		return e.complexity.Filters.CompanyCertifications(childComplexity), true
+
+	case "Filters.ProductCertifications":
+		if e.complexity.Filters.ProductCertifications == nil {
+			break
+		}
+
+		return e.complexity.Filters.ProductCertifications(childComplexity), true
+
+	case "Filters.Sizes":
+		if e.complexity.Filters.Sizes == nil {
+			break
+		}
+
+		return e.complexity.Filters.Sizes(childComplexity), true
 
 	case "Image.id":
 		if e.complexity.Image.ID == nil {
@@ -1128,6 +1191,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string)), true
+
+	case "Query.getSubDepartmentFilters":
+		if e.complexity.Query.GetSubDepartmentFilters == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getSubDepartmentFilters_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetSubDepartmentFilters(childComplexity, args["input"].(string)), true
 
 	case "Query.user":
 		if e.complexity.Query.User == nil {
@@ -1757,6 +1832,22 @@ type Mutation {
 
 
 scalar Any`, BuiltIn: false},
+	{Name: "../shopFilters.graphqls", Input: `extend type Query {
+    getSubDepartmentFilters(input: String!): Filters!
+}
+
+type Filters {
+    Colors: [Color]
+    Sizes: [String]
+    Companies: [String]
+    CompanyCertifications: [String]
+    ProductCertifications: [String]
+}
+
+type Color  {
+	Title: String
+	Value: String
+}`, BuiltIn: false},
 	{Name: "../user.graphqls", Input: `extend type Query {
     user(_id: String!): User!
     users: [User]!

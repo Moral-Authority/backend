@@ -1,0 +1,16 @@
+extend type Query {
+    getSubDepartmentFilters(input: String!): Filters!
+}
+
+type Filters {
+    Colors: [Color]
+    Sizes: [String]
+    Companies: [String]
+    CompanyCertifications: [String]
+    ProductCertifications: [String]
+}
+
+type Color  {
+	Title: String
+	Value: String
+}

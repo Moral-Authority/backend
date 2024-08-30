@@ -24,14 +24,12 @@ func toFavsResponse(favs []*models.Favorite) []*model.Favorite {
 	return response
 }
 
-
 func toFavResponse(fav *models.Favorite) *model.Favorite {
 	return &model.Favorite{
 		ID:      strconv.Itoa(int(fav.ID)),
-		Product: toProductResponse(&fav.Product), 
+		Product: toProductResponse(&fav.Product),
 	}
 }
-
 
 func toImageResponse(image models.Image) *model.Image {
 	return &model.Image{
@@ -85,15 +83,26 @@ func toProductsResponse(products []*models.Product) []*model.Product {
 }
 
 func toProductResponse(product *models.Product) *model.Product {
+	// Default values
+
+	description := product.Description
+	if description == "" {
+		description = DefaultDescription
+	}
+
+	link := product.Url
+	if link == "" {
+		link = DefaultLink
+	}
 
 	return &model.Product{
 		ID: strconv.Itoa(int(product.ID)),
 		PurchaseInfo: []*model.PurchaseInfo{
 			{
-				Link: &product.Url,
+				Link: &link,
 			},
 		},
-		Description: product.Description,
+		Description: description,
 		Title:       product.Title,
 	}
 }
@@ -229,5 +238,28 @@ func UintPtrToStringPtr(u *uint) *string {
 		return nil
 	}
 	s := strconv.FormatUint(uint64(*u), 10)
+	return &s
+}
+
+func ConvertStringsToColorStruct(Title, Value string) *model.Color {
+	return &model.Color{
+		Title: &Title,
+		Value: &Value,
+	}
+	
+}
+
+func FormatStringListToColorStructList(colors map[string]string) []*model.Color {
+	result := []*model.Color{}
+
+	for title, value := range colors{
+		color := ConvertStringsToColorStruct(title, value)
+		result = append(result, color)
+	}
+
+	return result
+}
+
+func ConvertString(s string) *string{
 	return &s
 }
