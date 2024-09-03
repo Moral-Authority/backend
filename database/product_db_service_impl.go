@@ -64,15 +64,24 @@ func (s ProductDbServiceImpl) GetAllHomeGardenProducts() ([]*models.HomeGardenPr
 	var products []*models.HomeGardenProduct
 	result := GetDbConn().
 		Preload("Company").
-		Preload("Images").
 		Preload("PurchaseInfo").
 		Find(&products)
+
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
 	}
+
+	logrus.Infof("Executed SQL: %s", result.Statement.SQL.String()) // Log the raw SQL query
+	logrus.Infof("Length of prods: %d", len(products)) // Log the number of products found
+
+	if len(products) == 0 {
+		logrus.Warn("No products found")
+	}
+
 	return products, nil
 }
+
 
 func (s ProductDbServiceImpl) GetAllBathBeautyProducts() ([]*models.HealthBathBeautyProduct, error) {
 	var products []*models.HealthBathBeautyProduct

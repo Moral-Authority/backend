@@ -198,13 +198,13 @@ type ComplexityRoot struct {
 		BaseQuery                  func(childComplexity int) int
 		GetAllCertifications       func(childComplexity int) int
 		GetAllCompanies            func(childComplexity int) int
-		GetAllProductsByDepartment func(childComplexity int, department int) int
+		GetAllProductsByDepartment func(childComplexity int, department string) int
 		GetAllUserFavs             func(childComplexity int, id string) int
 		GetCertificationByID       func(childComplexity int, id string) int
 		GetCertificationsByFilter  func(childComplexity int, input model.FilterCertificationsInput) int
 		GetCompaniesByFilter       func(childComplexity int, input *model.FilterCompanyInput) int
 		GetCompany                 func(childComplexity int, id string) int
-		GetProductByID             func(childComplexity int, id string, department int) int
+		GetProductByID             func(childComplexity int, id string, department string) int
 		GetSubDepartmentFilters    func(childComplexity int, input string) int
 		User                       func(childComplexity int, id string) int
 		Users                      func(childComplexity int) int
@@ -1089,7 +1089,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.GetAllProductsByDepartment(childComplexity, args["department"].(int)), true
+		return e.complexity.Query.GetAllProductsByDepartment(childComplexity, args["department"].(string)), true
 
 	case "Query.getAllUserFavs":
 		if e.complexity.Query.GetAllUserFavs == nil {
@@ -1161,7 +1161,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string), args["department"].(int)), true
+		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string), args["department"].(string)), true
 
 	case "Query.getSubDepartmentFilters":
 		if e.complexity.Query.GetSubDepartmentFilters == nil {
@@ -1687,8 +1687,8 @@ type Category {
 
 
 extend type Query {
-    getProductByID(id: String!, department: Int!): Product!
-    getAllProductsByDepartment(department: Int!): [Product!]
+    getProductByID(id: String!, department:  String!): Product!
+    getAllProductsByDepartment(department: String!): [Product!]
 }
 
 input AddProductRequest {

@@ -42,8 +42,8 @@ type QueryResolver interface {
 	GetAllCompanies(ctx context.Context) ([]*model.Company, error)
 	GetCompaniesByFilter(ctx context.Context, input *model.FilterCompanyInput) ([]*model.Company, error)
 	GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error)
-	GetProductByID(ctx context.Context, id string, department int) (*model.Product, error)
-	GetAllProductsByDepartment(ctx context.Context, department int) ([]*model.Product, error)
+	GetProductByID(ctx context.Context, id string, department string) (*model.Product, error)
+	GetAllProductsByDepartment(ctx context.Context, department string) ([]*model.Product, error)
 	GetSubDepartmentFilters(ctx context.Context, input string) (*model.Filters, error)
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
@@ -266,10 +266,10 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 func (ec *executionContext) field_Query_getAllProductsByDepartment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 string
 	if tmp, ok := rawArgs["department"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -365,10 +365,10 @@ func (ec *executionContext) field_Query_getProductByID_args(ctx context.Context,
 		}
 	}
 	args["id"] = arg0
-	var arg1 int
+	var arg1 string
 	if tmp, ok := rawArgs["department"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
-		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1987,7 +1987,7 @@ func (ec *executionContext) _Query_getProductByID(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetProductByID(rctx, fc.Args["id"].(string), fc.Args["department"].(int))
+		return ec.resolvers.Query().GetProductByID(rctx, fc.Args["id"].(string), fc.Args["department"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2082,7 +2082,7 @@ func (ec *executionContext) _Query_getAllProductsByDepartment(ctx context.Contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetAllProductsByDepartment(rctx, fc.Args["department"].(int))
+		return ec.resolvers.Query().GetAllProductsByDepartment(rctx, fc.Args["department"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

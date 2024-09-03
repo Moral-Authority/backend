@@ -9,12 +9,22 @@ import (
 )
 
 func toProductResponse(product interface{}, department ProductDepartment) *model.Product {
-	baseProduct, ok := product.(*models.ProductBase)
-	if !ok {
+	var baseProduct *models.ProductBase
+
+	// Use type assertion for each product type
+	switch p := product.(type) {
+	case *models.HomeGardenProduct:
+		baseProduct = &p.ProductBase
+	case *models.HealthBathBeautyProduct:
+		baseProduct = &p.ProductBase
+	case *models.ClothingAccessoriesProduct:
+		baseProduct = &p.ProductBase
+	case *models.ToysKidsBabiesProduct:
+		baseProduct = &p.ProductBase
+	default:
 		logrus.Errorf("Invalid product type: expected *models.ProductBase, got %T", product)
 		return nil
 	}
-
 
 	return &model.Product{
 		ID:           strconv.Itoa(int(baseProduct.ID)),
@@ -27,6 +37,7 @@ func toProductResponse(product interface{}, department ProductDepartment) *model
 		Department: department.ToString(),
 	}
 }
+
 
 func toGenericProductsResponse[T any](products []*T, department ProductDepartment) []*model.Product {
 	var response []*model.Product

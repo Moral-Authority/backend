@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -56,7 +57,7 @@ func (s ProductService) UpdateProductHandler(request model.UpdateProductRequest,
 
 	productDept, isDepartment := IsStringValidProductDepartment(*request.Department)
 	if !isDepartment {
-		return nil, fmt.Errorf("invalid department type: %s", request.Department)
+		return nil, fmt.Errorf("invalid department type: %s", *request.Department)
 	}
 
 	return toProductResponse(product, productDept), nil
@@ -64,12 +65,11 @@ func (s ProductService) UpdateProductHandler(request model.UpdateProductRequest,
 
 func (s ProductService) GetProductByIDHandler(productId string, department int, productDbService database.ProductDbService) (*model.Product, error) {
 
-	_, isDepartment := IsValidProductDepartment(department)
+	productDept, isDepartment := IsValidProductDepartment(department)
 	if !isDepartment {
-		return nil, fmt.Errorf("invalid department type: %s", department)
+		return nil, fmt.Errorf("invalid department type: %s", strconv.Itoa(department))
 	}
 
-	productDept := ProductDepartment(department)
 	var product interface{}
 	var err error
 
@@ -97,7 +97,7 @@ func (s ProductService) GetAllProductsHandler(productDbService database.ProductD
 
 	productDept, isDepartment := IsValidProductDepartment(department)
 	if !isDepartment {
-		return nil, fmt.Errorf("invalid department type: %s", department)
+		return nil, fmt.Errorf("invalid department type: %s", strconv.Itoa(department))
 	}
 
 	switch productDept {
@@ -106,6 +106,8 @@ func (s ProductService) GetAllProductsHandler(productDbService database.ProductD
 		if err != nil {
 			return nil, err
 		}
+
+		fmt.Print("PRODS RETURNED: %s ", len(products))
 		return toHomeGardenProductsResponse(products, productDept), nil
 	case BathBeautyProductDepartment:
 		products, err := productDbService.GetAllBathBeautyProducts()
@@ -134,7 +136,7 @@ func (s ProductService) GetProductsByFilterHandler(productDbService database.Pro
 
 	productDept, isDepartment := IsValidProductDepartment(department)
 	if !isDepartment {
-		return nil, fmt.Errorf("invalid department type: %s", department)
+		return nil, fmt.Errorf("invalid department type: %s", strconv.Itoa(department))
 	}
 
 	switch productDept {

@@ -322,7 +322,10 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 	}
 
 	companyID := findCompanyID(db, companyName)
-	prodDeptType, _ := handlers.IsStringValidProductDepartment("HomeGardenProduct")
+	prodDeptType, isDept := handlers.IsStringValidProductDepartment("Home & Garden")
+	if !isDept {	
+		fmt.Println("Invalid product department")
+	}
 	prodDept := prodDeptType.ToInt()
 
 	for {

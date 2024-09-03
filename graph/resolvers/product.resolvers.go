@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
@@ -22,10 +23,15 @@ func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.Update
 }
 
 // GetProductByID is the resolver for the getProductByID field.
-func (r *queryResolver) GetProductByID(ctx context.Context, id string, department int) (*model.Product, error) {
+func (r *queryResolver) GetProductByID(ctx context.Context, id string, department string) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 
-	product, err := handlers.ProductService{}.GetProductByIDHandler(id, department, dbService)
+	productDept, isDepartment := handlers.IsStringValidProductDepartment(department)
+	if !isDepartment {
+		return nil, fmt.Errorf("invalid department type: %s", department)
+	}
+
+	product, err := handlers.ProductService{}.GetProductByIDHandler(id, productDept.ToInt(), dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -34,9 +40,15 @@ func (r *queryResolver) GetProductByID(ctx context.Context, id string, departmen
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.
-func (r *queryResolver) GetAllProductsByDepartment(ctx context.Context, department int) ([]*model.Product, error) {
+func (r *queryResolver) GetAllProductsByDepartment(ctx context.Context, department string) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, department)
+
+	productDept, isDepartment := handlers.IsStringValidProductDepartment(department)
+	if !isDepartment {
+		return nil, fmt.Errorf("invalid department type: %s", department)
+	}
+
+	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, productDept.ToInt())
 	if err != nil {
 		return nil, err
 	}

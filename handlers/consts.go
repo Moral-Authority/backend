@@ -22,13 +22,13 @@ const (
 func (p ProductDepartment) ToString() string {
 	switch p {
 	case HomeGardenProductDepartment:
-		return "HomeGardenProduct"
+		return "Home & Garden"
 	case BathBeautyProductDepartment:
-		return "BathBeautyProduct"
+		return "Clothing & Accessories"
 	case ClothingAccessoriesProductDepartment:
-		return "ClothingAccessoriesProduct"
+		return "Health, Bath & Beauty"
 	case ToysKidsBabiesProductDepartment:
-		return "ToysKidsBabiesProduct"
+		return "Toys, Kids & Babies"
 	default:
 		return "Unknown"
 	}
@@ -53,15 +53,16 @@ func IsValidProductDepartment(department int) (ProductDepartment, bool) {
 // IsStringValidProductDepartment checks if the department string is valid and returns the corresponding ProductDepartment type if true
 func IsStringValidProductDepartment(department string) (ProductDepartment, bool) {
     switch department {
-    case "HomeGardenProduct":
+    case "Home & Garden":
         return HomeGardenProductDepartment, true
-    case "BathBeautyProduct":
+    case "Clothing & Accessories":
         return BathBeautyProductDepartment, true
-    case "ClothingAccessoriesProduct":
+    case "Health, Bath & Beauty":
         return ClothingAccessoriesProductDepartment, true
-    case "ToysKidsBabiesProduct":
+    case "Toys, Kids & Babies":
         return ToysKidsBabiesProductDepartment, true
     default:
         return 0, false
     }
 }
+
