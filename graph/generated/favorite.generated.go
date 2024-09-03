@@ -313,7 +313,7 @@ func (ec *executionContext) unmarshalInputToggleUserFav(ctx context.Context, obj
 			it.ProductID = data
 		case "ProductDepartment":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProductDepartment"))
-			data, err := ec.unmarshalNInt2int(ctx, v)
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

@@ -8,7 +8,7 @@ import (
 
 type ProductDbServiceImpl struct{}
 
-func (s ProductDbServiceImpl) GetHomeGardenProductByID(productId string) (*models.HomeGardenProduct, error) {
+func (s ProductDbServiceImpl) GetHomeGardenProductByID(productId uint) (*models.HomeGardenProduct, error) {
 	var product models.HomeGardenProduct
 	result := GetDbConn().
 		Preload("Company").
@@ -21,7 +21,7 @@ func (s ProductDbServiceImpl) GetHomeGardenProductByID(productId string) (*model
 	return &product, nil
 }
 
-func (s ProductDbServiceImpl) GetBathBeautyProductByID(productId string) (*models.HealthBathBeautyProduct, error) {
+func (s ProductDbServiceImpl) GetHealthBathBeautyProductByID(productId uint) (*models.HealthBathBeautyProduct, error) {
 	var product models.HealthBathBeautyProduct
 	result := GetDbConn().
 		Preload("Company").
@@ -34,7 +34,7 @@ func (s ProductDbServiceImpl) GetBathBeautyProductByID(productId string) (*model
 	return &product, nil
 }
 
-func (s ProductDbServiceImpl) GetClothingAccessoriesProductByID(productId string) (*models.ClothingAccessoriesProduct, error) {
+func (s ProductDbServiceImpl) GetClothingAccessoriesProductByID(productId uint) (*models.ClothingAccessoriesProduct, error) {
 	var product models.ClothingAccessoriesProduct
 	result := GetDbConn().
 		Preload("Company").
@@ -47,7 +47,7 @@ func (s ProductDbServiceImpl) GetClothingAccessoriesProductByID(productId string
 	return &product, nil
 }
 
-func (s ProductDbServiceImpl) GetToysKidsBabiesProductByID(productId string) (*models.ToysKidsBabiesProduct, error) {
+func (s ProductDbServiceImpl) GetToysKidsBabiesProductByID(productId uint) (*models.ToysKidsBabiesProduct, error) {
 	var product models.ToysKidsBabiesProduct
 	result := GetDbConn().
 		Preload("Company").
@@ -71,9 +71,6 @@ func (s ProductDbServiceImpl) GetAllHomeGardenProducts() ([]*models.HomeGardenPr
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
 	}
-
-	logrus.Infof("Executed SQL: %s", result.Statement.SQL.String()) // Log the raw SQL query
-	logrus.Infof("Length of prods: %d", len(products)) // Log the number of products found
 
 	if len(products) == 0 {
 		logrus.Warn("No products found")

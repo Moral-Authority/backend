@@ -1,7 +1,6 @@
 package database
 
 import (
-	"log"
 	"sync"
 
 	"github.com/Moral-Authority/backend/cmd"
@@ -47,22 +46,22 @@ func PerformMigrations() {
 	db := GetDbConn()
 	// Migrate the schema
 
-	_  = db.Migrator().DropTable(
-		&models.Category{},
-		&models.Certification{},
-		&models.Company{},
-		&models.Favorite{},
-		&models.Image{},
-		&models.PurchaseInfo{},
-		&models.User{},
-		&models.CompanyCertification{},
-		&models.ProductCertification{},
-		&models.ProductCategories{},
-		&models.HomeGardenProduct{},
-		&models.ClothingAccessoriesProduct{},
-		&models.HealthBathBeautyProduct{},
-		&models.ToysKidsBabiesProduct{},
-	)
+	// _  = db.Migrator().DropTable(
+	// 	&models.Category{},
+	// 	&models.Certification{},
+	// 	&models.Company{},
+	// 	&models.Favorite{},
+	// 	&models.Image{},
+	// 	&models.PurchaseInfo{},
+	// 	&models.User{},
+	// 	&models.CompanyCertification{},
+	// 	&models.ProductCertification{},
+	// 	&models.ProductCategories{},
+	// 	&models.HomeGardenProduct{},
+	// 	&models.ClothingAccessoriesProduct{},
+	// 	&models.HealthBathBeautyProduct{},
+	// 	&models.ToysKidsBabiesProduct{},
+	// )
 
 	err := db.AutoMigrate(
 		&models.Category{},
@@ -86,11 +85,11 @@ func PerformMigrations() {
 	}
 }
 
-func DropDatabase() {
-	db := GetDbConn()
-	err := db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").Error
-	if err != nil {
-		log.Fatal("Failed to drop the database:", err)
-	}
-	log.Println("Database schema dropped and recreated.")
-}
+// func DropDatabase() {
+// 	db := GetDbConn()
+// 	err := db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").Error
+// 	if err != nil {
+// 		log.Fatal("Failed to drop the database:", err)
+// 	}
+// 	log.Println("Database schema dropped and recreated.")
+// }

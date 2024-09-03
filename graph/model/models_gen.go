@@ -304,7 +304,7 @@ type SortByInput struct {
 type ToggleUserFav struct {
 	UserID            string `json:"userId"`
 	ProductID         string `json:"productId"`
-	ProductDepartment int    `json:"ProductDepartment"`
+	ProductDepartment string `json:"ProductDepartment"`
 }
 
 type UpdateCertification struct {

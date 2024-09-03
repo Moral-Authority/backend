@@ -17,7 +17,7 @@ func toUserResponse(user models.User) *model.User {
 }
 
 
-func toFavResponse(fav *models.Favorite, product *model.Product, department ProductDepartment) *model.Favorite {
+func toFavResponse(fav *models.Favorite, product interface{}, department ProductDepartment) *model.Favorite {
 	return &model.Favorite{
 		ID:      strconv.Itoa(int(fav.ID)),
 		Product: toProductResponse(product, department),

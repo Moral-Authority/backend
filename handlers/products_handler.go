@@ -70,18 +70,22 @@ func (s ProductService) GetProductByIDHandler(productId string, department int, 
 		return nil, fmt.Errorf("invalid department type: %s", strconv.Itoa(department))
 	}
 
+	prodID, err := database.StringToUint(productId)
+	if err != nil {
+		return nil, err
+	}
+
 	var product interface{}
-	var err error
 
 	switch productDept {
 	case HomeGardenProductDepartment:
-		product, err = productDbService.GetHomeGardenProductByID(productId)
-	case BathBeautyProductDepartment:
-		product, err = productDbService.GetBathBeautyProductByID(productId)
+		product, err = productDbService.GetHomeGardenProductByID(prodID)
+	case HealthBathBeautyProductDepartment:
+		product, err = productDbService.GetHealthBathBeautyProductByID(prodID)
 	case ClothingAccessoriesProductDepartment:
-		product, err = productDbService.GetClothingAccessoriesProductByID(productId)
+		product, err = productDbService.GetClothingAccessoriesProductByID(prodID)
 	case ToysKidsBabiesProductDepartment:
-		product, err = productDbService.GetToysKidsBabiesProductByID(productId)
+		product, err = productDbService.GetToysKidsBabiesProductByID(prodID)
 	default:
 		return nil, fmt.Errorf("unknown department type: %d", department)
 	}
@@ -106,10 +110,8 @@ func (s ProductService) GetAllProductsHandler(productDbService database.ProductD
 		if err != nil {
 			return nil, err
 		}
-
-		fmt.Print("PRODS RETURNED: %s ", len(products))
 		return toHomeGardenProductsResponse(products, productDept), nil
-	case BathBeautyProductDepartment:
+	case HealthBathBeautyProductDepartment:
 		products, err := productDbService.GetAllBathBeautyProducts()
 		if err != nil {
 			return nil, err
@@ -147,7 +149,7 @@ func (s ProductService) GetProductsByFilterHandler(productDbService database.Pro
 		}
 		return toHomeGardenProductsResponse(products, productDept), nil
 
-	case BathBeautyProductDepartment:
+	case HealthBathBeautyProductDepartment:
 		products, err := productDbService.GetBathBeautyProductsByFilter(filters)
 		if err != nil {
 			return nil, err

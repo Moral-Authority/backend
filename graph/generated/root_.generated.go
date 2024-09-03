@@ -1566,7 +1566,7 @@ extend type Query {
 input ToggleUserFav {
     userId: String!
     productId: String!
-    ProductDepartment: Int!
+    ProductDepartment: String!
 }
 
 

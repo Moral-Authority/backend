@@ -1,5 +1,7 @@
 package handlers
 
+import "strings"
+
 const DefaultDescription = "No description available -- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
 const DefaultPrice = "0.00"
 const DefaultLink = "https://www.google.com"
@@ -13,7 +15,7 @@ type ProductDepartment int
 
 const (
 	HomeGardenProductDepartment ProductDepartment = iota
-	BathBeautyProductDepartment
+	HealthBathBeautyProductDepartment
 	ClothingAccessoriesProductDepartment
 	ToysKidsBabiesProductDepartment
 )
@@ -23,7 +25,7 @@ func (p ProductDepartment) ToString() string {
 	switch p {
 	case HomeGardenProductDepartment:
 		return "Home & Garden"
-	case BathBeautyProductDepartment:
+	case HealthBathBeautyProductDepartment:
 		return "Clothing & Accessories"
 	case ClothingAccessoriesProductDepartment:
 		return "Health, Bath & Beauty"
@@ -43,26 +45,46 @@ func (p ProductDepartment) ToInt() int {
 // IsValidProductDepartment checks if the department int is valid and returns the corresponding ProductDepartment type if true
 func IsValidProductDepartment(department int) (ProductDepartment, bool) {
     switch ProductDepartment(department) {
-    case HomeGardenProductDepartment, BathBeautyProductDepartment, ClothingAccessoriesProductDepartment, ToysKidsBabiesProductDepartment:
+    case HomeGardenProductDepartment, HealthBathBeautyProductDepartment, ClothingAccessoriesProductDepartment, ToysKidsBabiesProductDepartment:
         return ProductDepartment(department), true
     default:
         return 0, false
     }
 }
 
-// IsStringValidProductDepartment checks if the department string is valid and returns the corresponding ProductDepartment type if true
 func IsStringValidProductDepartment(department string) (ProductDepartment, bool) {
-    switch department {
-    case "Home & Garden":
+    // Normalize the string
+    normalizedDepartment := strings.ReplaceAll(department, "&", "and")
+    normalizedDepartment = strings.TrimSpace(normalizedDepartment)
+
+    switch normalizedDepartment {
+    case "Home and Garden":
         return HomeGardenProductDepartment, true
-    case "Clothing & Accessories":
-        return BathBeautyProductDepartment, true
-    case "Health, Bath & Beauty":
+    case "Clothing and Accessories":
         return ClothingAccessoriesProductDepartment, true
-    case "Toys, Kids & Babies":
+    case "Health, Bath and Beauty":
+        return HealthBathBeautyProductDepartment, true
+    case "Toys, Kids and Babies":
         return ToysKidsBabiesProductDepartment, true
     default:
         return 0, false
     }
 }
+
+
+// // IsStringValidProductDepartment checks if the department string is valid and returns the corresponding ProductDepartment type if true
+// func IsStringValidProductDepartment(department string) (ProductDepartment, bool) {
+//     switch department {
+//     case "Home & Garden":
+//         return HomeGardenProductDepartment, true
+//     case "Clothing & Accessories":
+//         return BathBeautyProductDepartment, true
+//     case "Health, Bath & Beauty":
+//         return ClothingAccessoriesProductDepartment, true
+//     case "Toys, Kids & Babies":
+//         return ToysKidsBabiesProductDepartment, true
+//     default:
+//         return 0, false
+//     }
+// }
 
