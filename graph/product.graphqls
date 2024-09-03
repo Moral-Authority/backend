@@ -1,17 +1,17 @@
 extend type Mutation {
-    addProduct(input: AddProductRequest!): Product!
     updateProduct(input: UpdateProductRequest!): Product!
 }
 
+
 extend type Query {
-    getProductByID(id: String!): Product!
-    getAllProducts: [Product!]
+    getProductByID(id: String!, department: Int!): Product!
+    getAllProductsByDepartment(department: Int!): [Product!]
 }
 
 input AddProductRequest {
     Title: String!
     Description: String!
-    Categorization: CategorizationInput!
+    Department: String!
     Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
@@ -22,7 +22,7 @@ input UpdateProductRequest {
     ID: String!
     Title: String
     Description: String
-    Categorization: CategorizationInput
+    Department: String
     Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput
     ImageLinks: [String]
@@ -34,15 +34,15 @@ type Product {
     Title: String!
     Description: String!
     ImageLinks: [String!]
-    company: Company! 
+    Company: Company! 
     PurchaseInfo: [PurchaseInfo!]
-    productCertifications: [ProductCertification!] # Relationship with ProductCertification
+    ProductCertifications: [Certification!] # Relationship with ProductCertification
+    Department: String! # New field to track the department
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
     Section: String
     Subsection: String
-    Department: [String]
     Category: String
     SubCategory: String
     Type: String
@@ -51,27 +51,17 @@ type Product {
     VerifiedBy: [String]
 }
 
+type PurchaseInfo {
+    Price: String
+    Link: String
+    Company: String
+    Rating: String
+}
+
 input PurchaseInfoInput {
     Price: String!
     Link: String!
     Rating: String
     Company: String
     IfOtherCompany: String
-}
-
-input CategorizationInput {
-    Section: String
-    SubSection: String
-    Department: String
-    Category: String
-    SubCategory: String
-    Type: String
-    Style: String
-}
-
-type PurchaseInfo {
-    Price: String
-    Link: String
-    Company: String
-    Rating: String
 }

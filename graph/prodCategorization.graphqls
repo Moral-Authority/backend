@@ -1,13 +1,5 @@
 
 
-extend type Mutation {
-    addCategory(input: AddCategory!): Category!
-}
-
-extend type Query {
-    getAllCategories:[Category]!
-}
-
 # ======= INPUTS ======
 
 input AddCategory {

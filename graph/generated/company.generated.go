@@ -576,10 +576,16 @@ func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Conte
 				return ec.fieldContext_Product_Title(ctx, field)
 			case "Description":
 				return ec.fieldContext_Product_Description(ctx, field)
-			case "productCertifications":
-				return ec.fieldContext_Product_productCertifications(ctx, field)
-			case "company":
-				return ec.fieldContext_Product_company(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "Company":
+				return ec.fieldContext_Product_Company(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "ProductCertifications":
+				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -590,8 +596,6 @@ func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Conte
 				return ec.fieldContext_Product_Section(ctx, field)
 			case "Subsection":
 				return ec.fieldContext_Product_Subsection(ctx, field)
-			case "Department":
-				return ec.fieldContext_Product_Department(ctx, field)
 			case "Category":
 				return ec.fieldContext_Product_Category(ctx, field)
 			case "SubCategory":
@@ -600,10 +604,6 @@ func (ec *executionContext) fieldContext_Company_companyProducts(_ context.Conte
 				return ec.fieldContext_Product_Type(ctx, field)
 			case "Style":
 				return ec.fieldContext_Product_Style(ctx, field)
-			case "ImageLinks":
-				return ec.fieldContext_Product_ImageLinks(ctx, field)
-			case "PurchaseInfo":
-				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "Verified":
 				return ec.fieldContext_Product_Verified(ctx, field)
 			case "VerifiedBy":

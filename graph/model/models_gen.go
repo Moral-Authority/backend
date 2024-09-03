@@ -53,7 +53,7 @@ type AddImage struct {
 type AddProductRequest struct {
 	Title          string                       `json:"Title"`
 	Description    string                       `json:"Description"`
-	Categorization *CategorizationInput         `json:"Categorization"`
+	Department     string                       `json:"Department"`
 	Certifications []*ProductCertificationInput `json:"Certifications,omitempty"`
 	PurchaseInfo   *PurchaseInfoInput           `json:"PurchaseInfo"`
 	ImageLinks     []*string                    `json:"ImageLinks,omitempty"`
@@ -63,16 +63,6 @@ type AddProductRequest struct {
 type AddUserFav struct {
 	UserID    string `json:"userId"`
 	ProductID string `json:"productId"`
-}
-
-type CategorizationInput struct {
-	Section     *string `json:"Section,omitempty"`
-	SubSection  *string `json:"SubSection,omitempty"`
-	Department  *string `json:"Department,omitempty"`
-	Category    *string `json:"Category,omitempty"`
-	SubCategory *string `json:"SubCategory,omitempty"`
-	Type        *string `json:"Type,omitempty"`
-	Style       *string `json:"Style,omitempty"`
 }
 
 type Category struct {
@@ -247,25 +237,25 @@ type PaginationInput struct {
 }
 
 type Product struct {
-	ID                      string                  `json:"_id"`
-	Title                   string                  `json:"Title"`
-	Description             string                  `json:"Description"`
-	ProductCertifications   []*ProductCertification `json:"productCertifications,omitempty"`
-	Company                 *Company                `json:"company"`
-	MaterialsAndIngredients []*string               `json:"MaterialsAndIngredients,omitempty"`
-	GiveBackPrograms        []*string               `json:"GiveBackPrograms,omitempty"`
-	OwnersAndFounders       []*string               `json:"OwnersAndFounders,omitempty"`
-	Section                 *string                 `json:"Section,omitempty"`
-	Subsection              *string                 `json:"Subsection,omitempty"`
-	Department              []*string               `json:"Department,omitempty"`
-	Category                *string                 `json:"Category,omitempty"`
-	SubCategory             *string                 `json:"SubCategory,omitempty"`
-	Type                    *string                 `json:"Type,omitempty"`
-	Style                   *string                 `json:"Style,omitempty"`
-	ImageLinks              []string                `json:"ImageLinks,omitempty"`
-	PurchaseInfo            []*PurchaseInfo         `json:"PurchaseInfo,omitempty"`
-	Verified                *bool                   `json:"Verified,omitempty"`
-	VerifiedBy              []*string               `json:"VerifiedBy,omitempty"`
+	ID                      string           `json:"_id"`
+	Title                   string           `json:"Title"`
+	Description             string           `json:"Description"`
+	ImageLinks              []string         `json:"ImageLinks,omitempty"`
+	Company                 *Company         `json:"Company"`
+	PurchaseInfo            []*PurchaseInfo  `json:"PurchaseInfo,omitempty"`
+	ProductCertifications   []*Certification `json:"ProductCertifications,omitempty"`
+	Department              string           `json:"Department"`
+	MaterialsAndIngredients []*string        `json:"MaterialsAndIngredients,omitempty"`
+	GiveBackPrograms        []*string        `json:"GiveBackPrograms,omitempty"`
+	OwnersAndFounders       []*string        `json:"OwnersAndFounders,omitempty"`
+	Section                 *string          `json:"Section,omitempty"`
+	Subsection              *string          `json:"Subsection,omitempty"`
+	Category                *string          `json:"Category,omitempty"`
+	SubCategory             *string          `json:"SubCategory,omitempty"`
+	Type                    *string          `json:"Type,omitempty"`
+	Style                   *string          `json:"Style,omitempty"`
+	Verified                *bool            `json:"Verified,omitempty"`
+	VerifiedBy              []*string        `json:"VerifiedBy,omitempty"`
 }
 
 type ProductCertification struct {
@@ -312,8 +302,9 @@ type SortByInput struct {
 }
 
 type ToggleUserFav struct {
-	UserID    string `json:"userId"`
-	ProductID string `json:"productId"`
+	UserID            string `json:"userId"`
+	ProductID         string `json:"productId"`
+	ProductDepartment int    `json:"ProductDepartment"`
 }
 
 type UpdateCertification struct {
@@ -359,7 +350,7 @@ type UpdateProductRequest struct {
 	ID             string                       `json:"ID"`
 	Title          *string                      `json:"Title,omitempty"`
 	Description    *string                      `json:"Description,omitempty"`
-	Categorization *CategorizationInput         `json:"Categorization,omitempty"`
+	Department     *string                      `json:"Department,omitempty"`
 	Certifications []*ProductCertificationInput `json:"Certifications,omitempty"`
 	PurchaseInfo   *PurchaseInfoInput           `json:"PurchaseInfo,omitempty"`
 	ImageLinks     []*string                    `json:"ImageLinks,omitempty"`

@@ -46,19 +46,41 @@ func GetDbConn() *gorm.DB {
 func PerformMigrations() {
 	db := GetDbConn()
 	// Migrate the schema
+
+	_  = db.Migrator().DropTable(
+		&models.Category{},
+		&models.Certification{},
+		&models.Company{},
+		&models.Favorite{},
+		&models.Image{},
+		&models.PurchaseInfo{},
+		&models.User{},
+		&models.CompanyCertification{},
+		&models.ProductCertification{},
+		&models.ProductCategories{},
+		&models.HomeGardenProduct{},
+		&models.ClothingAccessoriesProduct{},
+		&models.HealthBathBeautyProduct{},
+		&models.ToysKidsBabiesProduct{},
+	)
+
 	err := db.AutoMigrate(
 		&models.Category{},
 		&models.Certification{},
 		&models.Company{},
 		&models.Favorite{},
 		&models.Image{},
-		&models.Product{},
 		&models.PurchaseInfo{},
 		&models.User{},
 		&models.CompanyCertification{},
 		&models.ProductCertification{},
 		&models.ProductCategories{},
+		&models.HomeGardenProduct{},
+		&models.ClothingAccessoriesProduct{},
+		&models.HealthBathBeautyProduct{},
+		&models.ToysKidsBabiesProduct{},
 	)
+
 	if err != nil {
 		panic("unable to perform migrations...")
 	}

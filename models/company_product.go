@@ -13,5 +13,4 @@ type CompanyProduct struct {
     DiscontinuedAt null.Time   `json:"discontinued_at"`
     OtherDetails   null.String `json:"other_details"`
     Company        Company     `gorm:"foreignKey:CompanyID"`
-    Product        Product     `gorm:"foreignKey:ProductID"`
 }

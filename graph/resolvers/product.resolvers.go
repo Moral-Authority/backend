@@ -12,16 +12,6 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 )
 
-// AddProduct is the resolver for the addProduct field.
-func (r *mutationResolver) AddProduct(ctx context.Context, input model.AddProductRequest) (*model.Product, error) {
-	company, err := handlers.ProductService{}.AddNewProductHandler(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
-	if err != nil {
-		return nil, err
-	}
-
-	return company, nil
-}
-
 // UpdateProduct is the resolver for the updateProduct field.
 func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.UpdateProductRequest) (*model.Product, error) {
 	company, err := handlers.ProductService{}.UpdateProductHandler(input, database.ProductDbServiceImpl{}, database.ImageDbServiceImpl{}, database.CertificationDbServiceImpl{})
@@ -32,9 +22,10 @@ func (r *mutationResolver) UpdateProduct(ctx context.Context, input model.Update
 }
 
 // GetProductByID is the resolver for the getProductByID field.
-func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.Product, error) {
+func (r *queryResolver) GetProductByID(ctx context.Context, id string, department int) (*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	product, err := handlers.ProductService{}.GetProductByIDHandler(id, dbService)
+
+	product, err := handlers.ProductService{}.GetProductByIDHandler(id, department, dbService)
 	if err != nil {
 		return nil, err
 	}
@@ -43,9 +34,9 @@ func (r *queryResolver) GetProductByID(ctx context.Context, id string) (*model.P
 }
 
 // GetAllProducts is the resolver for the getAllProducts field.
-func (r *queryResolver) GetAllProducts(ctx context.Context) ([]*model.Product, error) {
+func (r *queryResolver) GetAllProductsByDepartment(ctx context.Context, department int) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
-	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService)
+	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, department)
 	if err != nil {
 		return nil, err
 	}

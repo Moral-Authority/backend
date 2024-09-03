@@ -132,11 +132,9 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCategory             func(childComplexity int, input model.AddCategory) int
 		AddCertification        func(childComplexity int, input model.AddCertification) int
 		AddCompany              func(childComplexity int, input model.AddCompany) int
 		AddImage                func(childComplexity int, input model.AddImage) int
-		AddProduct              func(childComplexity int, input model.AddProductRequest) int
 		AddProductCertification func(childComplexity int, input model.ProductCertificationInput) int
 		AddUser                 func(childComplexity int, input model.NewUser) int
 		BaseMutation            func(childComplexity int) int
@@ -197,20 +195,19 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		BaseQuery                 func(childComplexity int) int
-		GetAllCategories          func(childComplexity int) int
-		GetAllCertifications      func(childComplexity int) int
-		GetAllCompanies           func(childComplexity int) int
-		GetAllProducts            func(childComplexity int) int
-		GetAllUserFavs            func(childComplexity int, id string) int
-		GetCertificationByID      func(childComplexity int, id string) int
-		GetCertificationsByFilter func(childComplexity int, input model.FilterCertificationsInput) int
-		GetCompaniesByFilter      func(childComplexity int, input *model.FilterCompanyInput) int
-		GetCompany                func(childComplexity int, id string) int
-		GetProductByID            func(childComplexity int, id string) int
-		GetSubDepartmentFilters   func(childComplexity int, input string) int
-		User                      func(childComplexity int, id string) int
-		Users                     func(childComplexity int) int
+		BaseQuery                  func(childComplexity int) int
+		GetAllCertifications       func(childComplexity int) int
+		GetAllCompanies            func(childComplexity int) int
+		GetAllProductsByDepartment func(childComplexity int, department int) int
+		GetAllUserFavs             func(childComplexity int, id string) int
+		GetCertificationByID       func(childComplexity int, id string) int
+		GetCertificationsByFilter  func(childComplexity int, input model.FilterCertificationsInput) int
+		GetCompaniesByFilter       func(childComplexity int, input *model.FilterCompanyInput) int
+		GetCompany                 func(childComplexity int, id string) int
+		GetProductByID             func(childComplexity int, id string, department int) int
+		GetSubDepartmentFilters    func(childComplexity int, input string) int
+		User                       func(childComplexity int, id string) int
+		Users                      func(childComplexity int) int
 	}
 
 	User struct {
@@ -660,18 +657,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LoginResponse.User(childComplexity), true
 
-	case "Mutation.addCategory":
-		if e.complexity.Mutation.AddCategory == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addCategory_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddCategory(childComplexity, args["input"].(model.AddCategory)), true
-
 	case "Mutation.addCertification":
 		if e.complexity.Mutation.AddCertification == nil {
 			break
@@ -707,18 +692,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.AddImage(childComplexity, args["input"].(model.AddImage)), true
-
-	case "Mutation.addProduct":
-		if e.complexity.Mutation.AddProduct == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addProduct_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddProduct(childComplexity, args["input"].(model.AddProductRequest)), true
 
 	case "Mutation.addProductCertification":
 		if e.complexity.Mutation.AddProductCertification == nil {
@@ -896,7 +869,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.Category(childComplexity), true
 
-	case "Product.company":
+	case "Product.Company":
 		if e.complexity.Product.Company == nil {
 			break
 		}
@@ -952,7 +925,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.OwnersAndFounders(childComplexity), true
 
-	case "Product.productCertifications":
+	case "Product.ProductCertifications":
 		if e.complexity.Product.ProductCertifications == nil {
 			break
 		}
@@ -1092,13 +1065,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.BaseQuery(childComplexity), true
 
-	case "Query.getAllCategories":
-		if e.complexity.Query.GetAllCategories == nil {
-			break
-		}
-
-		return e.complexity.Query.GetAllCategories(childComplexity), true
-
 	case "Query.getAllCertifications":
 		if e.complexity.Query.GetAllCertifications == nil {
 			break
@@ -1113,12 +1079,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllCompanies(childComplexity), true
 
-	case "Query.getAllProducts":
-		if e.complexity.Query.GetAllProducts == nil {
+	case "Query.getAllProductsByDepartment":
+		if e.complexity.Query.GetAllProductsByDepartment == nil {
 			break
 		}
 
-		return e.complexity.Query.GetAllProducts(childComplexity), true
+		args, err := ec.field_Query_getAllProductsByDepartment_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetAllProductsByDepartment(childComplexity, args["department"].(int)), true
 
 	case "Query.getAllUserFavs":
 		if e.complexity.Query.GetAllUserFavs == nil {
@@ -1190,7 +1161,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string), args["department"].(int)), true
 
 	case "Query.getSubDepartmentFilters":
 		if e.complexity.Query.GetSubDepartmentFilters == nil {
@@ -1265,7 +1236,6 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputAddImage,
 		ec.unmarshalInputAddProductRequest,
 		ec.unmarshalInputAddUserFav,
-		ec.unmarshalInputCategorizationInput,
 		ec.unmarshalInputCertificationFiltersInput,
 		ec.unmarshalInputCompanyCertificationInput,
 		ec.unmarshalInputCompanyFiltersInput,
@@ -1596,6 +1566,7 @@ extend type Query {
 input ToggleUserFav {
     userId: String!
     productId: String!
+    ProductDepartment: Int!
 }
 
 
@@ -1646,14 +1617,6 @@ input UpdateImage {
     url: String!
 }`, BuiltIn: false},
 	{Name: "../prodCategorization.graphqls", Input: `
-
-extend type Mutation {
-    addCategory(input: AddCategory!): Category!
-}
-
-extend type Query {
-    getAllCategories:[Category]!
-}
 
 # ======= INPUTS ======
 
@@ -1719,19 +1682,19 @@ type Category {
 
 `, BuiltIn: false},
 	{Name: "../product.graphqls", Input: `extend type Mutation {
-    addProduct(input: AddProductRequest!): Product!
     updateProduct(input: UpdateProductRequest!): Product!
 }
 
+
 extend type Query {
-    getProductByID(id: String!): Product!
-    getAllProducts: [Product!]
+    getProductByID(id: String!, department: Int!): Product!
+    getAllProductsByDepartment(department: Int!): [Product!]
 }
 
 input AddProductRequest {
     Title: String!
     Description: String!
-    Categorization: CategorizationInput!
+    Department: String!
     Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
@@ -1742,7 +1705,7 @@ input UpdateProductRequest {
     ID: String!
     Title: String
     Description: String
-    Categorization: CategorizationInput
+    Department: String
     Certifications: [ProductCertificationInput!] # Input for relational table
     PurchaseInfo: PurchaseInfoInput
     ImageLinks: [String]
@@ -1753,22 +1716,29 @@ type Product {
     _id: String!
     Title: String!
     Description: String!
-    productCertifications: [ProductCertification!] # Relationship with ProductCertification
-    company: Company! 
+    ImageLinks: [String!]
+    Company: Company! 
+    PurchaseInfo: [PurchaseInfo!]
+    ProductCertifications: [Certification!] # Relationship with ProductCertification
+    Department: String! # New field to track the department
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]
     Section: String
     Subsection: String
-    Department: [String]
     Category: String
     SubCategory: String
     Type: String
     Style: String
-    ImageLinks: [String!]
-    PurchaseInfo: [PurchaseInfo!]
     Verified: Boolean
     VerifiedBy: [String]
+}
+
+type PurchaseInfo {
+    Price: String
+    Link: String
+    Company: String
+    Rating: String
 }
 
 input PurchaseInfoInput {
@@ -1777,23 +1747,6 @@ input PurchaseInfoInput {
     Rating: String
     Company: String
     IfOtherCompany: String
-}
-
-input CategorizationInput {
-    Section: String
-    SubSection: String
-    Department: String
-    Category: String
-    SubCategory: String
-    Type: String
-    Style: String
-}
-
-type PurchaseInfo {
-    Price: String
-    Link: String
-    Company: String
-    Rating: String
 }
 `, BuiltIn: false},
 	{Name: "../productCertification.graphqls", Input: `# Relational table to manage product certifications

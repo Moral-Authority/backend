@@ -24,7 +24,7 @@ func (r *mutationResolver) ToggleUserFav(ctx context.Context, input model.Toggle
 
 // GetAllUserFavs is the resolver for the getAllUserFavs field.
 func (r *queryResolver) GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error) {
-	favs, err := handlers.UserService{}.GetAllUserFavsHandler(id, database.UserDbServiceImpl{})
+	favs, err := handlers.UserService{}.GetAllUserFavsHandler(id, database.UserDbServiceImpl{}, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"sync"
 	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -74,10 +73,16 @@ func (ec *executionContext) fieldContext_ProductCertification_product(_ context.
 				return ec.fieldContext_Product_Title(ctx, field)
 			case "Description":
 				return ec.fieldContext_Product_Description(ctx, field)
-			case "productCertifications":
-				return ec.fieldContext_Product_productCertifications(ctx, field)
-			case "company":
-				return ec.fieldContext_Product_company(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "Company":
+				return ec.fieldContext_Product_Company(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "ProductCertifications":
+				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -88,8 +93,6 @@ func (ec *executionContext) fieldContext_ProductCertification_product(_ context.
 				return ec.fieldContext_Product_Section(ctx, field)
 			case "Subsection":
 				return ec.fieldContext_Product_Subsection(ctx, field)
-			case "Department":
-				return ec.fieldContext_Product_Department(ctx, field)
 			case "Category":
 				return ec.fieldContext_Product_Category(ctx, field)
 			case "SubCategory":
@@ -98,10 +101,6 @@ func (ec *executionContext) fieldContext_ProductCertification_product(_ context.
 				return ec.fieldContext_Product_Type(ctx, field)
 			case "Style":
 				return ec.fieldContext_Product_Style(ctx, field)
-			case "ImageLinks":
-				return ec.fieldContext_Product_ImageLinks(ctx, field)
-			case "PurchaseInfo":
-				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "Verified":
 				return ec.fieldContext_Product_Verified(ctx, field)
 			case "VerifiedBy":
@@ -454,53 +453,6 @@ func (ec *executionContext) unmarshalNProductCertificationInput2githubᚗcomᚋM
 func (ec *executionContext) unmarshalNProductCertificationInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInput(ctx context.Context, v interface{}) (*model.ProductCertificationInput, error) {
 	res, err := ec.unmarshalInputProductCertificationInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOProductCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.ProductCertification) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNProductCertification2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertification(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalOProductCertificationInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInputᚄ(ctx context.Context, v interface{}) ([]*model.ProductCertificationInput, error) {

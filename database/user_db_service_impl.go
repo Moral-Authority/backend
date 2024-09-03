@@ -93,7 +93,7 @@ func (s UserDbServiceImpl) AddUserFav(request model.ToggleUserFav) (*models.Favo
 
 	var fav models.Favorite
 	fav.UserRefer = userID
-	fav.ProductId = productID
+	fav.ProductID = productID
 	
 	result := GetDbConn().Create(&fav)
 	if result.Error != nil {

@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
@@ -17,12 +18,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
+
 func main() {
 	// Read the database URL from the environment variable
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("DATABASE_URL is not set")
-	}
+	// dsn := os.Getenv("DATABASE_URL")
+	// if dsn == "" {
+	// 	log.Fatal("DATABASE_URL is not set")
+	// }
+
+	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -317,50 +322,44 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 	}
 
 	companyID := findCompanyID(db, companyName)
+	prodDeptType, _ := handlers.IsStringValidProductDepartment("HomeGardenProduct")
+	prodDept := prodDeptType.ToInt()
 
-	// Read each row of the CSV file and insert it into the database
 	for {
 		row, err := reader.Read()
 		if err != nil {
 			break
 		}
 
-		product := models.Product{
-			// Department , TODO
-			// SubDepartment,
-			// Category,
-			Title:     row[3],
-			Url:       row[5],
-			CompanyID: companyID,
+		// Create the HomeGardenProduct
+		product := models.HomeGardenProduct{
+			ProductBase: models.ProductBase{
+				SubDepartment: row[2],
+				Title:         row[3],
+				Url:           row[5],
+				CompanyID:     companyID,
+				ProductImage:  row[6],
+			},
 		}
 
 		// Insert the product into the database
 		result := db.Create(&product)
 		if result.Error != nil {
 			fmt.Println(result.Error)
-		}
+		} else {
+			// Create the PurchaseInfo with ProductDepartment set to HomeGardenProductDepartment
+			purchaseInfo := models.PurchaseInfo{
+				ProductID:         product.ID,
+				ProductDepartment: prodDept, // HomeGardenProductDepartment
+				Price:             row[4],
+				Url:               row[5],
+			}
 
-		image := models.Image{
-			ProductID: product.ID,
-			Url:       row[6],
-		}
-
-		purchaseInfo := models.PurchaseInfo{
-			ProductID: product.ID,
-			Price:     row[4],
-			Url:       row[5],
-		}
-
-		// Insert the product image the database
-		_ = db.Create(&image)
-		if result.Error != nil {
-			fmt.Println(result.Error)
-		}
-
-		// Insert the product purchase info the database
-		_ = db.Create(&purchaseInfo)
-		if result.Error != nil {
-			fmt.Println(result.Error)
+			// Insert the purchase info into the database
+			result = db.Create(&purchaseInfo)
+			if result.Error != nil {
+				fmt.Println(result.Error)
+			}
 		}
 	}
 

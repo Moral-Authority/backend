@@ -16,18 +16,11 @@ func toUserResponse(user models.User) *model.User {
 	}
 }
 
-func toFavsResponse(favs []*models.Favorite) []*model.Favorite {
-	var response []*model.Favorite
-	for _, fav := range favs {
-		response = append(response, toFavResponse(fav))
-	}
-	return response
-}
 
-func toFavResponse(fav *models.Favorite) *model.Favorite {
+func toFavResponse(fav *models.Favorite, product *model.Product, department ProductDepartment) *model.Favorite {
 	return &model.Favorite{
 		ID:      strconv.Itoa(int(fav.ID)),
-		Product: toProductResponse(&fav.Product),
+		Product: toProductResponse(product, department),
 	}
 }
 
@@ -61,10 +54,9 @@ func toCategoryResponse(category *models.Category) *model.Category {
 	}
 
 	categoryResponse := &model.Category{
-		ID:       strconv.Itoa(int(category.ID)),
-		Type:     &category.Type,
-		Name:     category.Name,
-		ParentID: UintPtrToStringPtr(category.ParentID),
+		ID:   strconv.Itoa(int(category.ID)),
+		Type: &category.Type,
+		Name: category.Name,
 	}
 
 	log.Printf("Category response: %+v\n", categoryResponse) // Log the category response
@@ -80,37 +72,6 @@ func toCategoryResponse(category *models.Category) *model.Category {
 //
 //	return model.Filter{}
 //}
-
-func toProductsResponse(products []*models.Product) []*model.Product {
-	var response []*model.Product
-	for _, e := range products {
-		product := toProductResponse(e)
-		response = append(response, product)
-	}
-	return response
-}
-
-func toProductResponse(product *models.Product) *model.Product {
-	// Default values
-	description := product.Description
-	if description == "" {
-		description = DefaultDescription
-	}
-
-	link := product.Url
-	if link == "" {
-		link = DefaultLink
-	}
-
-	return &model.Product{
-		ID:           strconv.Itoa(int(product.ID)),
-		PurchaseInfo: toPurchaseInfoResponse(product.PurchaseInfo),
-		Description:  description,
-		Title:        product.Title,
-		Company:      toCompanyResponse(&product.Company),
-		ImageLinks:   toImagesResponse(product.Images),
-	}
-}
 
 func toPurchaseInfoResponse(purchaseInfo []models.PurchaseInfo) []*model.PurchaseInfo {
 	var response []*model.PurchaseInfo
@@ -185,6 +146,15 @@ func toCompaniesResponse(companies []*models.Company) []*model.Company {
 	for _, c := range companies {
 		company := toCompanyResponse(c)
 		response = append(response, company)
+	}
+	return response
+}
+
+func toCertificationsResponse(certs []models.Certification) []*model.Certification {
+	var response []*model.Certification
+	for _, c := range certs {
+		cert := toCertificationResponse(c)
+		response = append(response, cert)
 	}
 	return response
 }

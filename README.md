@@ -47,5 +47,11 @@ Note : you can check to my documentation CRUD but you better use [Insomnia](http
 
 `heroku run go run cmd/seed/seed.go --app moral-authority-backend `
 
+OR 
+
+```bash
+heroku run bash --app moral-authority-backend
+go run cmd/seed/seed.go
+```
 
 ### Dump DB

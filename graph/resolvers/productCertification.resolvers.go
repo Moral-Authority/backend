@@ -6,18 +6,12 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
-	"github.com/Moral-Authority/backend/handlers"
 )
 
 // AddProductCertification is the resolver for the addProductCertification field.
 func (r *mutationResolver) AddProductCertification(ctx context.Context, input model.ProductCertificationInput) (*model.ProductCertification, error) {
-	result, err := handlers.ProductService{}.AddProductCertificationHandler(database.ProductDbServiceImpl{}, input)
-	if err != nil {
-		return nil, err
-	}
-
-	return result, nil
+	panic(fmt.Errorf("not implemented: AddProductCertification - addProductCertification"))
 }

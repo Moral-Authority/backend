@@ -4,10 +4,12 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"sync"
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
+	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -116,13 +118,18 @@ func (s UserService) ToggleUserFavHandler(request model.ToggleUserFav, userDbSer
 	}
 
 	// validate product
-	product, err := productDbService.GetProductByID(request.ProductID)
+	product, err := ProductService{}.GetProductByIDHandler(request.ProductID, request.ProductDepartment, productDbService)
 	if err != nil {
 		return nil, errors.New(fmt.Sprintf("unable to get product from db %s", err))
 	}
 
 	// check if favorite exists
-	userFav, err := userDbService.GetUserFav(user.ID, product.ID)
+	productIdUint, err := database.StringToUint(product.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	userFav, err := userDbService.GetUserFav(user.ID, productIdUint)
 	if err != nil {
 		return nil, err
 	}
@@ -143,26 +150,53 @@ func (s UserService) ToggleUserFavHandler(request model.ToggleUserFav, userDbSer
 
 	}
 
-	favs, err := userDbService.GetAllUserFavs(user.ID)
-	if err != nil {
-		return nil, err
-	}
-
-	return toFavsResponse(favs), nil
+	return s.GetAllUserFavsHandler(request.UserID, userDbService, productDbService)
 }
 
-
-func (s UserService) GetAllUserFavsHandler(userID string, userDbService database.UserDbService) ([]*model.Favorite, error) {
-
+func (s UserService) GetAllUserFavsHandler(userID string, userDbService database.UserDbService, productDbService database.ProductDbService) ([]*model.Favorite, error) {
 	userId, err := database.StringToUint(userID)
 	if err != nil {
 		return nil, err
 	}
 
+	// Fetch all user favorites from the favorites table
 	favs, err := userDbService.GetAllUserFavs(userId)
 	if err != nil {
 		return nil, err
 	}
 
-    return toFavsResponse(favs), nil
+	// Channel to collect the results
+	resultChan := make(chan *model.Favorite, len(favs))
+	var wg sync.WaitGroup
+
+	// Use Goroutines to fetch the details for each favorite concurrently
+	for _, fav := range favs {
+		wg.Add(1)
+		go func(fav *models.Favorite) {
+			defer wg.Done()
+			product, err := ProductService{}.GetProductByIDHandler(*UintPtrToStringPtr(&fav.ProductID), fav.ProductDepartment, productDbService)
+			if err != nil {
+				logrus.Errorf("Error fetching product details for favorite ID %d: %v", fav.ID, err)
+				return
+			}
+
+			// Create the Favorite response model
+			resultChan <- toFavResponse(fav, product, ProductDepartment(fav.ProductDepartment))
+
+		}(fav)
+	}
+
+	// Close the channel once all Goroutines are done
+	go func() {
+		wg.Wait()
+		close(resultChan)
+	}()
+
+	// Collect results from the channel
+	var results []*model.Favorite
+	for result := range resultChan {
+		results = append(results, result)
+	}
+
+	return results, nil
 }
