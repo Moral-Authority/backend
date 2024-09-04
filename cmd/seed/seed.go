@@ -22,12 +22,12 @@ import (
 
 func main() {
 	// Read the database URL from the environment variable
-	// dsn := os.Getenv("DATABASE_URL")
-	// if dsn == "" {
-	// 	log.Fatal("DATABASE_URL is not set")
-	// }
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("DATABASE_URL is not set")
+	}
 
-	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
