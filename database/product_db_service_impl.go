@@ -4,6 +4,7 @@ import (
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/null/v8"
 )
 
 type ProductDbServiceImpl struct{}
@@ -60,13 +61,20 @@ func (s ProductDbServiceImpl) GetToysKidsBabiesProductByID(productId uint) (*mod
 	return &product, nil
 }
 
-func (s ProductDbServiceImpl) GetAllHomeGardenProducts() ([]*models.HomeGardenProduct, error) {
-	var products []*models.HomeGardenProduct
-	result := GetDbConn().
-		Preload("Company").
-		Preload("PurchaseInfo").
-		Find(&products)
 
+// GetAllHomeGardenProducts retrieves all HomeGarden products with an optional subDepartment filter
+func (s ProductDbServiceImpl) GetAllHomeGardenProducts(subDepartment null.Int) ([]*models.HomeGardenProduct, error) {
+	var products []*models.HomeGardenProduct
+	query := GetDbConn().
+		Preload("Company").
+		Preload("PurchaseInfo")
+
+	// Apply the subDepartment filter if it's provided and valid
+	if subDepartment.Valid {
+		query = query.Where("sub_department = ?", subDepartment.Int)
+	}
+
+	result := query.Find(&products)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
@@ -79,45 +87,69 @@ func (s ProductDbServiceImpl) GetAllHomeGardenProducts() ([]*models.HomeGardenPr
 	return products, nil
 }
 
-
-func (s ProductDbServiceImpl) GetAllBathBeautyProducts() ([]*models.HealthBathBeautyProduct, error) {
+// GetAllBathBeautyProducts retrieves all HealthBathBeauty products with an optional subDepartment filter
+func (s ProductDbServiceImpl) GetAllBathBeautyProducts(subDepartment null.Int) ([]*models.HealthBathBeautyProduct, error) {
 	var products []*models.HealthBathBeautyProduct
-	result := GetDbConn().
+	query := GetDbConn().
 		Preload("Company").
-		Preload("PurchaseInfo").
-		Find(&products)
+		Preload("PurchaseInfo")
+
+	// Apply the subDepartment filter if it's provided and valid
+	if subDepartment.Valid {
+		query = query.Where("sub_department = ?", subDepartment.Int)
+	}
+
+	result := query.Find(&products)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
 	}
+
 	return products, nil
 }
 
-func (s ProductDbServiceImpl) GetAllClothingAccessoriesProducts() ([]*models.ClothingAccessoriesProduct, error) {
+// GetAllClothingAccessoriesProducts retrieves all ClothingAccessories products with an optional subDepartment filter
+func (s ProductDbServiceImpl) GetAllClothingAccessoriesProducts(subDepartment null.Int) ([]*models.ClothingAccessoriesProduct, error) {
 	var products []*models.ClothingAccessoriesProduct
-	result := GetDbConn().
+	query := GetDbConn().
 		Preload("Company").
-		Preload("PurchaseInfo").
-		Find(&products)
+		Preload("PurchaseInfo")
+
+	// Apply the subDepartment filter if it's provided and valid
+	if subDepartment.Valid {
+		query = query.Where("sub_department = ?", subDepartment.Int)
+	}
+
+	result := query.Find(&products)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
 	}
+
 	return products, nil
 }
 
-func (s ProductDbServiceImpl) GetAllToysKidsBabiesProducts() ([]*models.ToysKidsBabiesProduct, error) {
+// GetAllToysKidsBabiesProducts retrieves all ToysKidsBabies products with an optional subDepartment filter
+func (s ProductDbServiceImpl) GetAllToysKidsBabiesProducts(subDepartment null.Int) ([]*models.ToysKidsBabiesProduct, error) {
 	var products []*models.ToysKidsBabiesProduct
-	result := GetDbConn().
+	query := GetDbConn().
 		Preload("Company").
-		Preload("PurchaseInfo").
-		Find(&products)
+		Preload("PurchaseInfo")
+
+	// Apply the subDepartment filter if it's provided and valid
+	if subDepartment.Valid {
+		query = query.Where("sub_department = ?", subDepartment.Int)
+	}
+
+	result := query.Find(&products)
 	if result.Error != nil {
 		logrus.Errorf("Unable to get all products, %s", result.Error)
 		return nil, result.Error
 	}
+
 	return products, nil
 }
+
 
 func (s ProductDbServiceImpl) GetHomeGardenProductsByFilter(filters map[string]interface{}) ([]*models.HomeGardenProduct, error) {
 	var products []*models.HomeGardenProduct

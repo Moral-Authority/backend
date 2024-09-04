@@ -6,6 +6,7 @@ import (
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/volatiletech/null/v8"
 )
 
 type ProductService struct{}
@@ -97,40 +98,59 @@ func (s ProductService) GetProductByIDHandler(productId string, department int, 
 	return toProductResponse(product, productDept), nil
 }
 
-func (s ProductService) GetAllProductsHandler(productDbService database.ProductDbService, department int) ([]*model.Product, error) {
+func (s ProductService) GetAllProductsHandler(productDbService database.ProductDbService, productDept ProductDepartment, subDepartment string) ([]*model.Product, error) {
 
-	productDept, isDepartment := IsValidProductDepartment(department)
-	if !isDepartment {
-		return nil, fmt.Errorf("invalid department type: %s", strconv.Itoa(department))
-	}
 
 	switch productDept {
 	case HomeGardenProductDepartment:
-		products, err := productDbService.GetAllHomeGardenProducts()
+		subDept, isSubDept := IsStringValidHomeGardenSubDep(subDepartment)
+		if !isSubDept {
+			return nil, fmt.Errorf("invalid sub-department type: %s", subDepartment)
+		}
+
+		products, err := productDbService.GetAllHomeGardenProducts(null.IntFrom(subDept.ToInt()))
 		if err != nil {
 			return nil, err
 		}
 		return toHomeGardenProductsResponse(products, productDept), nil
+
 	case HealthBathBeautyProductDepartment:
-		products, err := productDbService.GetAllBathBeautyProducts()
+		subDept, isSubDept := IsStringValidHealthBathBeautySubDep(subDepartment)
+		if !isSubDept {
+			return nil, fmt.Errorf("invalid sub-department type: %s", subDepartment)
+		}
+		
+		products, err := productDbService.GetAllBathBeautyProducts(null.IntFrom(subDept.ToInt()))
 		if err != nil {
 			return nil, err
 		}
 		return toBathBeautyProductsResponse(products, productDept), nil
+
 	case ClothingAccessoriesProductDepartment:
-		products, err := productDbService.GetAllClothingAccessoriesProducts()
+		subDept, isSubDept := IsStringValidClothingAccessoriesSubDep(subDepartment)
+		if !isSubDept {
+			return nil, fmt.Errorf("invalid sub-department type: %s", subDepartment)
+		}
+		
+		products, err := productDbService.GetAllClothingAccessoriesProducts(null.IntFrom(subDept.ToInt()))
 		if err != nil {
 			return nil, err
 		}
 		return toClothingAccessoriesProductsResponse(products, productDept), nil
+
 	case ToysKidsBabiesProductDepartment:
-		products, err := productDbService.GetAllToysKidsBabiesProducts()
+		subDept, isSubDept := IsStringValidToysKidsBabiesSubDep(subDepartment)
+		if !isSubDept {
+			return nil, fmt.Errorf("invalid sub-department type: %s", subDepartment)
+		}
+		
+		products, err := productDbService.GetAllToysKidsBabiesProducts(null.IntFrom(subDept.ToInt()))
 		if err != nil {
 			return nil, err
 		}
 		return toToysKidsBabiesProductsResponse(products, productDept), nil
 	default:
-		return nil, fmt.Errorf("unknown department type: %d", department)
+		return nil, fmt.Errorf("unknown department type: %d", productDept)
 	}
 }
 

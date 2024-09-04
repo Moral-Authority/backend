@@ -322,11 +322,7 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 	}
 
 	companyID := findCompanyID(db, companyName)
-	prodDeptType, isDept := handlers.IsStringValidProductDepartment("Home & Garden")
-	if !isDept {	
-		fmt.Println("Invalid product department")
-	}
-	prodDept := prodDeptType.ToInt()
+
 
 	for {
 		row, err := reader.Read()
@@ -334,10 +330,22 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 			break
 		}
 
+		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
+		if !isDept {	
+			fmt.Println("Invalid product department")
+		}
+		prodDept := prodDeptType.ToInt()
+
+		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
+		if !isSubdept {
+			fmt.Println("invalid subdepartment %s", row[1])
+			
+		}
+
 		// Create the HomeGardenProduct
 		product := models.HomeGardenProduct{
 			ProductBase: models.ProductBase{
-				SubDepartment: row[2],
+				SubDepartment: subDept,
 				Title:         row[3],
 				Url:           row[5],
 				CompanyID:     companyID,

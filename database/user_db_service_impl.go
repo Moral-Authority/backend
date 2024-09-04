@@ -13,12 +13,12 @@ import (
 type UserDbServiceImpl struct{}
 
 func (s UserDbServiceImpl) GetUserByEmail(email string) (*models.User, error) {
-    var user models.User
-    result := GetDbConn().Where("email = ?", email).First(&user)
-    if result.Error != nil {
-        return nil, result.Error
-    }
-    return &user, nil
+	var user models.User
+	result := GetDbConn().Where("email = ?", email).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &user, nil
 }
 
 func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error) {
@@ -30,7 +30,6 @@ func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error)
 	user, err := s.GetUser(strconv.Itoa(int(newUser.ID)))
 	return user, err
 }
-
 
 func (s UserDbServiceImpl) GetUser(userId string) (*models.User, error) {
 	var user models.User
@@ -66,8 +65,8 @@ func (s UserDbServiceImpl) UpdateUser(userId string, request model.UpdateUser) (
 		return nil, err
 	}
 	result := GetDbConn().Model(&user).Updates(models.User{
-            Email: *request.Email,
-			PasswordHash: *request.Password,
+		Email:        *request.Email,
+		PasswordHash: *request.Password,
 	})
 	if result.Error != nil {
 		logrus.Errorf("Unable to update user, %s", result.Error)
@@ -94,8 +93,8 @@ func (s UserDbServiceImpl) AddUserFav(request model.ToggleUserFav, productDepart
 
 	// Create the Favorite model instance
 	fav := models.Favorite{
-		UserRefer:        userID,
-		ProductID:        productID,
+		UserRefer:         userID,
+		ProductID:         productID,
 		ProductDepartment: productDepartment,
 	}
 
@@ -108,9 +107,8 @@ func (s UserDbServiceImpl) AddUserFav(request model.ToggleUserFav, productDepart
 	return &fav, nil
 }
 
-
 func (s UserDbServiceImpl) RemoveUserFav(request model.ToggleUserFav, productDepartment int) error {
-	
+
 	var favorite models.Favorite
 	result := GetDbConn().Where("user_refer = ? AND product_id = ? AND product_department = ?", request.UserID, request.ProductID, productDepartment).First(&favorite)
 	if result.Error != nil {
@@ -126,8 +124,6 @@ func (s UserDbServiceImpl) RemoveUserFav(request model.ToggleUserFav, productDep
 	return nil
 }
 
-
-
 func (s UserDbServiceImpl) GetUserFav(userID uint, productID uint, productDepartment int) (*models.Favorite, error) {
 
 	var favorite models.Favorite
@@ -139,21 +135,20 @@ func (s UserDbServiceImpl) GetUserFav(userID uint, productID uint, productDepart
 		return nil, err
 	}
 
-
-	return &favorite, nil 
+	return &favorite, nil
 }
 
 func (s UserDbServiceImpl) GetAllUserFavs(userID uint) ([]*models.Favorite, error) {
-    var favs []*models.Favorite
+	var favs []*models.Favorite
 
-    err := GetDbConn().Where("user_refer = ?", userID).Find(&favs).Error
-    if err != nil {
-        if err == gorm.ErrRecordNotFound {
-            return nil, nil
-        }
-        logrus.Errorf("Error finding favorites: %v", err)
-        return nil, err
-    }
+	err := GetDbConn().Where("user_refer = ?", userID).Find(&favs).Error
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, nil
+		}
+		logrus.Errorf("Error finding favorites: %v", err)
+		return nil, err
+	}
 
-    return favs, nil
+	return favs, nil
 }

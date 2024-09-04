@@ -39,8 +39,8 @@ func (r *queryResolver) GetProductByID(ctx context.Context, id string, departmen
 	return product, nil
 }
 
-// GetAllProducts is the resolver for the getAllProducts field.
-func (r *queryResolver) GetAllProductsByDepartment(ctx context.Context, department string) ([]*model.Product, error) {
+// GetAllProductsBySubDepartment is the resolver for the getAllProductsBySubDepartment field.
+func (r *queryResolver) GetAllProductsBySubDepartment(ctx context.Context, department string, subDepartment string) ([]*model.Product, error) {
 	dbService := database.ProductDbServiceImpl{}
 
 	productDept, isDepartment := handlers.IsStringValidProductDepartment(department)
@@ -48,7 +48,7 @@ func (r *queryResolver) GetAllProductsByDepartment(ctx context.Context, departme
 		return nil, fmt.Errorf("invalid department type: %s", department)
 	}
 
-	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, productDept.ToInt())
+	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, productDept, subDepartment)
 	if err != nil {
 		return nil, err
 	}

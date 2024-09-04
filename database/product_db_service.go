@@ -3,6 +3,7 @@ package database
 import (
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
+	"github.com/volatiletech/null/v8"
 )
 
 type ProductDbService interface {
@@ -16,10 +17,11 @@ type ProductDbService interface {
 	GetHealthBathBeautyProductByID(productId uint) (*models.HealthBathBeautyProduct, error)
 	GetClothingAccessoriesProductByID(productId uint) (*models.ClothingAccessoriesProduct, error)
 	GetToysKidsBabiesProductByID(productId uint) (*models.ToysKidsBabiesProduct, error)
-	GetAllHomeGardenProducts() ([]*models.HomeGardenProduct, error)
-	GetAllBathBeautyProducts() ([]*models.HealthBathBeautyProduct, error)
-	GetAllClothingAccessoriesProducts() ([]*models.ClothingAccessoriesProduct, error)
-	GetAllToysKidsBabiesProducts() ([]*models.ToysKidsBabiesProduct, error)
+	// Updated functions with optional string filter
+	GetAllHomeGardenProducts(filter null.Int) ([]*models.HomeGardenProduct, error)
+	GetAllBathBeautyProducts(filter null.Int) ([]*models.HealthBathBeautyProduct, error)
+	GetAllClothingAccessoriesProducts(filter null.Int) ([]*models.ClothingAccessoriesProduct, error)
+	GetAllToysKidsBabiesProducts(filter null.Int) ([]*models.ToysKidsBabiesProduct, error)
 }
 
 // 	AddProductCertification(productCert models.ProductCertification) (*models.ProductCertification, error)

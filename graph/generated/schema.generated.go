@@ -43,7 +43,7 @@ type QueryResolver interface {
 	GetCompaniesByFilter(ctx context.Context, input *model.FilterCompanyInput) ([]*model.Company, error)
 	GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error)
 	GetProductByID(ctx context.Context, id string, department string) (*model.Product, error)
-	GetAllProductsByDepartment(ctx context.Context, department string) ([]*model.Product, error)
+	GetAllProductsBySubDepartment(ctx context.Context, department string, subDepartment string) ([]*model.Product, error)
 	GetSubDepartmentFilters(ctx context.Context, input string) (*model.Filters, error)
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
@@ -263,7 +263,7 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_getAllProductsByDepartment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_getAllProductsBySubDepartment_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -275,6 +275,15 @@ func (ec *executionContext) field_Query_getAllProductsByDepartment_args(ctx cont
 		}
 	}
 	args["department"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["subDepartment"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subDepartment"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["subDepartment"] = arg1
 	return args, nil
 }
 
@@ -2068,8 +2077,8 @@ func (ec *executionContext) fieldContext_Query_getProductByID(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_getAllProductsByDepartment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_getAllProductsByDepartment(ctx, field)
+func (ec *executionContext) _Query_getAllProductsBySubDepartment(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getAllProductsBySubDepartment(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -2082,7 +2091,7 @@ func (ec *executionContext) _Query_getAllProductsByDepartment(ctx context.Contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetAllProductsByDepartment(rctx, fc.Args["department"].(string))
+		return ec.resolvers.Query().GetAllProductsBySubDepartment(rctx, fc.Args["department"].(string), fc.Args["subDepartment"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2096,7 +2105,7 @@ func (ec *executionContext) _Query_getAllProductsByDepartment(ctx context.Contex
 	return ec.marshalOProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_getAllProductsByDepartment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getAllProductsBySubDepartment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -2153,7 +2162,7 @@ func (ec *executionContext) fieldContext_Query_getAllProductsByDepartment(ctx co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_getAllProductsByDepartment_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_getAllProductsBySubDepartment_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -2820,7 +2829,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "getAllProductsByDepartment":
+		case "getAllProductsBySubDepartment":
 			field := field
 
 			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
@@ -2829,7 +2838,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_getAllProductsByDepartment(ctx, field)
+				res = ec._Query_getAllProductsBySubDepartment(ctx, field)
 				return res
 			}
 

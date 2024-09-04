@@ -195,19 +195,19 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		BaseQuery                  func(childComplexity int) int
-		GetAllCertifications       func(childComplexity int) int
-		GetAllCompanies            func(childComplexity int) int
-		GetAllProductsByDepartment func(childComplexity int, department string) int
-		GetAllUserFavs             func(childComplexity int, id string) int
-		GetCertificationByID       func(childComplexity int, id string) int
-		GetCertificationsByFilter  func(childComplexity int, input model.FilterCertificationsInput) int
-		GetCompaniesByFilter       func(childComplexity int, input *model.FilterCompanyInput) int
-		GetCompany                 func(childComplexity int, id string) int
-		GetProductByID             func(childComplexity int, id string, department string) int
-		GetSubDepartmentFilters    func(childComplexity int, input string) int
-		User                       func(childComplexity int, id string) int
-		Users                      func(childComplexity int) int
+		BaseQuery                     func(childComplexity int) int
+		GetAllCertifications          func(childComplexity int) int
+		GetAllCompanies               func(childComplexity int) int
+		GetAllProductsBySubDepartment func(childComplexity int, department string, subDepartment string) int
+		GetAllUserFavs                func(childComplexity int, id string) int
+		GetCertificationByID          func(childComplexity int, id string) int
+		GetCertificationsByFilter     func(childComplexity int, input model.FilterCertificationsInput) int
+		GetCompaniesByFilter          func(childComplexity int, input *model.FilterCompanyInput) int
+		GetCompany                    func(childComplexity int, id string) int
+		GetProductByID                func(childComplexity int, id string, department string) int
+		GetSubDepartmentFilters       func(childComplexity int, input string) int
+		User                          func(childComplexity int, id string) int
+		Users                         func(childComplexity int) int
 	}
 
 	User struct {
@@ -1079,17 +1079,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetAllCompanies(childComplexity), true
 
-	case "Query.getAllProductsByDepartment":
-		if e.complexity.Query.GetAllProductsByDepartment == nil {
+	case "Query.getAllProductsBySubDepartment":
+		if e.complexity.Query.GetAllProductsBySubDepartment == nil {
 			break
 		}
 
-		args, err := ec.field_Query_getAllProductsByDepartment_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_getAllProductsBySubDepartment_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Query.GetAllProductsByDepartment(childComplexity, args["department"].(string)), true
+		return e.complexity.Query.GetAllProductsBySubDepartment(childComplexity, args["department"].(string), args["subDepartment"].(string)), true
 
 	case "Query.getAllUserFavs":
 		if e.complexity.Query.GetAllUserFavs == nil {
@@ -1688,7 +1688,7 @@ type Category {
 
 extend type Query {
     getProductByID(id: String!, department:  String!): Product!
-    getAllProductsByDepartment(department: String!): [Product!]
+    getAllProductsBySubDepartment(department: String!, subDepartment: String!): [Product!]
 }
 
 input AddProductRequest {

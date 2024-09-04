@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type ProductBase struct {
 	gorm.Model
-	SubDepartment         string
+	SubDepartment         int
 	Category              string
 	Title                 string
 	Description           string
