@@ -10,7 +10,7 @@ const DefaultState = "Unknown State"
 const DefaultCountry = "Unknown Country"
 const DefaultZipcode = "00000"
 
-
+//  WIP
 func IsStringValidProductSubDepartmentFORSEED(department ProductDepartment, subDepartment string)(int, bool) {
     switch department {
     case HomeGardenProductDepartment:

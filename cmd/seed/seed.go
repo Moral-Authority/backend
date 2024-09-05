@@ -22,12 +22,12 @@ import (
 
 func main() {
 	// Read the database URL from the environment variable
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("DATABASE_URL is not set")
-	}
+	// dsn := os.Getenv("DATABASE_URL")
+	// if dsn == "" {
+	// 	log.Fatal("DATABASE_URL is not set")
+	// }
 
-	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -358,11 +358,17 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 		if result.Error != nil {
 			fmt.Println(result.Error)
 		} else {
+			// Convert the string value to float64
+			price, err := strconv.ParseFloat(row[4], 64)
+			if err != nil {
+				log.Fatal(err)
+			}
+			
 			// Create the PurchaseInfo with ProductDepartment set to HomeGardenProductDepartment
 			purchaseInfo := models.PurchaseInfo{
 				ProductID:         product.ID,
 				ProductDepartment: prodDept, // HomeGardenProductDepartment
-				Price:             row[4],
+				Price:             price,
 				Url:               row[5],
 			}
 

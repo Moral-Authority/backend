@@ -37,6 +37,6 @@ type PurchaseInfo struct {
 	ProductID         uint `gorm:"index"` // ID from the product table
 	ProductDepartment int  `gorm:"index"` // Indicates which product table this ID belongs to
 	Website           string
-	Price             string
+    Price             float64
 	Url               string
 }

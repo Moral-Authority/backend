@@ -7,13 +7,14 @@ package resolvers
 import (
 	"context"
 
+	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
 )
 
 // GetSubDepartmentFilters is the resolver for the getSubDepartmentFilters field.
-func (r *queryResolver) GetSubDepartmentFilters(ctx context.Context, input string) (*model.Filters, error) {
-	result, err := handlers.ProductService{}.GetSubDepartmentFiltersHandler(ctx, input)
+func (r *queryResolver) GetSubDepartmentFilters(ctx context.Context, department string, subDepartment string) (*model.Filters, error) {
+	result, err := handlers.ProductService{}.GetSubDepartmentFiltersHandler(ctx, department, subDepartment, database.ProductDbServiceImpl{})
 	if err != nil {
 		return nil, err
 	}

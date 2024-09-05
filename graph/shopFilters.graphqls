@@ -1,16 +1,23 @@
 extend type Query {
-    getSubDepartmentFilters(input: String!): Filters!
+  getSubDepartmentFilters(department: String!, subDepartment: String!): Filters!
 }
 
 type Filters {
-    Colors: [Color]
-    Sizes: [String]
-    Companies: [String]
-    CompanyCertifications: [String]
-    ProductCertifications: [String]
+  Price: PriceRange
+  Rating: Int
+  Companies: [String]
+  CompanyCertifications: [String]
+  ProductCertifications: [String]
 }
 
-type Color  {
-	Title: String
-	Value: String
+type PriceRange {
+  min: Float
+  max: Float
+}
+
+enum Department {
+  HomeGarden
+  ClothingAccessories
+  HealthBathBeauty
+  ToysKidsBabies
 }

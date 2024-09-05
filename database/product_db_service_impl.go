@@ -214,13 +214,292 @@ func (s ProductDbServiceImpl) UpdateProduct(product model.UpdateProductRequest) 
 }
 
 func (s ProductDbServiceImpl) AddProduct(product interface{}) (*interface{}, error) {
-	var err error
 
-	err = GetDbConn().Create(product).Error
+	err := GetDbConn().Create(product).Error
 	if err != nil {
 		logrus.Errorf("Unable to save product, %s", err)
 		return nil, err
 	}
 
 	return &product, nil
+}
+
+
+func (s ProductDbServiceImpl) GetCompaniesFromHomeGarden(subDepartment int) ([]*string, error) {
+	var companies []*string
+	result := GetDbConn().Debug().
+		Model(&models.HomeGardenProduct{}).
+		Joins("INNER JOIN companies ON companies.id = home_garden_products.company_id").
+		Where("home_garden_products.sub_department = ?", subDepartment).
+		Distinct("companies.name").
+		Pluck("companies.name", &companies)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	logrus.Infof("Companies: %v", companies)
+	return companies, nil
+}
+
+func (s ProductDbServiceImpl) GetCompaniesFromClothingAccessories(subDepartment int) ([]*string, error) {
+	var companies []*string
+	result := GetDbConn().
+		Model(&models.ClothingAccessoriesProduct{}).
+		Joins("INNER JOIN companies ON companies.id = clothing_accessories_products.company_id").
+		Where("clothing_accessories_products.sub_department = ?", subDepartment).
+		Distinct("companies.name").
+		Pluck("companies.name", &companies)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return companies, nil
+}
+
+func (s ProductDbServiceImpl) GetCompaniesFromHealthBathBeauty(subDepartment int) ([]*string, error) {
+	var companies []*string
+	result := GetDbConn().
+		Model(&models.HealthBathBeautyProduct{}).
+		Joins("INNER JOIN companies ON companies.id = health_bath_beauty_products.company_id").
+		Where("health_bath_beauty_products.sub_department = ?", subDepartment).
+		Distinct("companies.name").
+		Pluck("companies.name", &companies)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return companies, nil
+}
+
+func (s ProductDbServiceImpl) GetCompaniesFromToysKidsBabies(subDepartment int) ([]*string, error) {
+	var companies []*string
+	result := GetDbConn().
+		Model(&models.ToysKidsBabiesProduct{}).
+		Joins("INNER JOIN companies ON companies.id = toys_kids_babies_products.company_id").
+		Where("toys_kids_babies_products.sub_department = ?", subDepartment).
+		Distinct("companies.name").
+		Pluck("companies.name", &companies)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return companies, nil
+}
+
+
+// HomeGarden - Company Certifications
+func (s ProductDbServiceImpl) GetCompanyCertificationsFromHomeGarden(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.HomeGardenProduct{}).
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = home_garden_products.company_id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("home_garden_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// HealthBathBeauty - Company Certifications
+func (s ProductDbServiceImpl) GetCompanyCertificationsFromHealthBathBeauty(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.HealthBathBeautyProduct{}).
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = health_bath_beauty_products.company_id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("health_bath_beauty_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ClothingAccessories - Company Certifications
+func (s ProductDbServiceImpl) GetCompanyCertificationsFromClothingAccessories(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.ClothingAccessoriesProduct{}).
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = clothing_accessories_products.company_id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("clothing_accessories_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ToysKidsBabies - Company Certifications
+func (s ProductDbServiceImpl) GetCompanyCertificationsFromToysKidsBabies(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.ToysKidsBabiesProduct{}).
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = toys_kids_babies_products.company_id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("toys_kids_babies_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+
+// HomeGarden - Product Certifications
+func (s ProductDbServiceImpl) GetProductCertificationsFromHomeGarden(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.HomeGardenProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = home_garden_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("home_garden_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// HealthBathBeauty - Product Certifications
+func (s ProductDbServiceImpl) GetProductCertificationsFromHealthBathBeauty(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.HealthBathBeautyProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = health_bath_beauty_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("health_bath_beauty_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ClothingAccessories - Product Certifications
+func (s ProductDbServiceImpl) GetProductCertificationsFromClothingAccessories(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.ClothingAccessoriesProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = clothing_accessories_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("clothing_accessories_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ToysKidsBabies - Product Certifications
+func (s ProductDbServiceImpl) GetProductCertificationsFromToysKidsBabies(subDepartment int) ([]*string, error) {
+	var certifications []*string
+	result := GetDbConn().
+		Model(&models.ToysKidsBabiesProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = toys_kids_babies_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("toys_kids_babies_products.sub_department = ?", subDepartment).
+		Distinct("certifications.name").
+		Pluck("certifications.name", &certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// HomeGarden - Price Range
+func (s ProductDbServiceImpl) GetPriceRangeFromHomeGarden(subDepartment int) (*model.PriceRange, error) {
+	var priceRange model.PriceRange
+	result := GetDbConn().
+		Model(&models.PurchaseInfo{}).
+		Joins("INNER JOIN home_garden_products ON home_garden_products.id = purchase_infos.product_id").
+		Where("home_garden_products.sub_department = ?", subDepartment).
+		Select("MIN(CAST(purchase_infos.price AS FLOAT)) AS min, MAX(CAST(purchase_infos.price AS FLOAT)) AS max").
+		Scan(&priceRange)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &priceRange, nil
+}
+
+func (s ProductDbServiceImpl) GetPriceRangeFromHealthBathBeauty(subDepartment int) (*model.PriceRange, error) {
+	var priceRange model.PriceRange
+	result := GetDbConn().
+		Model(&models.PurchaseInfo{}).
+		Joins("INNER JOIN health_bath_beauty_products ON health_bath_beauty_products.id = purchase_infos.product_id").
+		Where("health_bath_beauty_products.sub_department = ?", subDepartment).
+		Select("MIN(CAST(purchase_infos.price AS FLOAT)) AS min, MAX(CAST(purchase_infos.price AS FLOAT)) AS max").
+		Scan(&priceRange)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &priceRange, nil
+}
+
+
+
+func (s ProductDbServiceImpl) GetPriceRangeFromClothingAccessories(subDepartment int) (*model.PriceRange, error) {
+	var priceRange model.PriceRange
+	result := GetDbConn().
+		Model(&models.PurchaseInfo{}).
+		Joins("INNER JOIN clothing_accessories_products ON clothing_accessories_products.id = purchase_infos.product_id").
+		Where("clothing_accessories_products.sub_department = ?", subDepartment).
+		Select("MIN(CAST(purchase_infos.price AS FLOAT)) AS min, MAX(CAST(purchase_infos.price AS FLOAT)) AS max").
+		Scan(&priceRange)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &priceRange, nil
+}
+
+
+func (s ProductDbServiceImpl) GetPriceRangeFromToysKidsBabies(subDepartment int) (*model.PriceRange, error) {
+	var priceRange model.PriceRange
+	result := GetDbConn().
+		Model(&models.PurchaseInfo{}).
+		Joins("INNER JOIN toys_kids_babies_products ON toys_kids_babies_products.id = purchase_infos.product_id").
+		Where("toys_kids_babies_products.sub_department = ?", subDepartment).
+		Select("MIN(CAST(purchase_infos.price AS FLOAT)) AS min, MAX(CAST(purchase_infos.price AS FLOAT)) AS max").
+		Scan(&priceRange)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return &priceRange, nil
 }

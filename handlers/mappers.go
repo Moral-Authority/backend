@@ -83,9 +83,10 @@ func toPurchaseInfoResponse(purchaseInfo []models.PurchaseInfo) []*model.Purchas
 }
 
 func toPurchaseInfo(purchaseInfo models.PurchaseInfo) *model.PurchaseInfo {
+	price := strconv.FormatFloat(purchaseInfo.Price, 'f', -1, 64)
 	return &model.PurchaseInfo{
 		Link:  &purchaseInfo.Url,
-		Price: &purchaseInfo.Price,
+		Price: &price,
 	}
 }
 
@@ -232,24 +233,6 @@ func UintPtrToStringPtr(u *uint) *string {
 	return &s
 }
 
-func ConvertStringsToColorStruct(Title, Value string) *model.Color {
-	return &model.Color{
-		Title: &Title,
-		Value: &Value,
-	}
-
-}
-
-func FormatStringListToColorStructList(colors map[string]string) []*model.Color {
-	result := []*model.Color{}
-
-	for title, value := range colors {
-		color := ConvertStringsToColorStruct(title, value)
-		result = append(result, color)
-	}
-
-	return result
-}
 
 func ConvertString(s string) *string {
 	return &s

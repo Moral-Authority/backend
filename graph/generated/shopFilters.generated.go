@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	"sync"
 	"sync/atomic"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -29,8 +28,8 @@ import (
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Color_Title(ctx context.Context, field graphql.CollectedField, obj *model.Color) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Color_Title(ctx, field)
+func (ec *executionContext) _Filters_Price(ctx context.Context, field graphql.CollectedField, obj *model.Filters) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Filters_Price(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -43,7 +42,7 @@ func (ec *executionContext) _Color_Title(ctx context.Context, field graphql.Coll
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Title, nil
+		return obj.Price, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -52,94 +51,12 @@ func (ec *executionContext) _Color_Title(ctx context.Context, field graphql.Coll
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*model.PriceRange)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOPriceRange2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPriceRange(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Color_Title(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Color",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Color_Value(ctx context.Context, field graphql.CollectedField, obj *model.Color) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Color_Value(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Value, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Color_Value(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Color",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Filters_Colors(ctx context.Context, field graphql.CollectedField, obj *model.Filters) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Filters_Colors(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Colors, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.([]*model.Color)
-	fc.Result = res
-	return ec.marshalOColor2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐColor(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Filters_Colors(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Filters_Price(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Filters",
 		Field:      field,
@@ -147,19 +64,19 @@ func (ec *executionContext) fieldContext_Filters_Colors(_ context.Context, field
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "Title":
-				return ec.fieldContext_Color_Title(ctx, field)
-			case "Value":
-				return ec.fieldContext_Color_Value(ctx, field)
+			case "min":
+				return ec.fieldContext_PriceRange_min(ctx, field)
+			case "max":
+				return ec.fieldContext_PriceRange_max(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type Color", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PriceRange", field.Name)
 		},
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Filters_Sizes(ctx context.Context, field graphql.CollectedField, obj *model.Filters) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Filters_Sizes(ctx, field)
+func (ec *executionContext) _Filters_Rating(ctx context.Context, field graphql.CollectedField, obj *model.Filters) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Filters_Rating(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -172,7 +89,7 @@ func (ec *executionContext) _Filters_Sizes(ctx context.Context, field graphql.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Sizes, nil
+		return obj.Rating, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -181,19 +98,19 @@ func (ec *executionContext) _Filters_Sizes(ctx context.Context, field graphql.Co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.(*int)
 	fc.Result = res
-	return ec.marshalOString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Filters_Sizes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Filters_Rating(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Filters",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Int does not have child fields")
 		},
 	}
 	return fc, nil
@@ -322,6 +239,88 @@ func (ec *executionContext) fieldContext_Filters_ProductCertifications(_ context
 	return fc, nil
 }
 
+func (ec *executionContext) _PriceRange_min(ctx context.Context, field graphql.CollectedField, obj *model.PriceRange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PriceRange_min(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Min, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PriceRange_min(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PriceRange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PriceRange_max(ctx context.Context, field graphql.CollectedField, obj *model.PriceRange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PriceRange_max(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Max, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*float64)
+	fc.Result = res
+	return ec.marshalOFloat2ᚖfloat64(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PriceRange_max(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PriceRange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Float does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 // endregion **************************** field.gotpl *****************************
 
 // region    **************************** input.gotpl *****************************
@@ -334,21 +333,27 @@ func (ec *executionContext) fieldContext_Filters_ProductCertifications(_ context
 
 // region    **************************** object.gotpl ****************************
 
-var colorImplementors = []string{"Color"}
+var filtersImplementors = []string{"Filters"}
 
-func (ec *executionContext) _Color(ctx context.Context, sel ast.SelectionSet, obj *model.Color) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, colorImplementors)
+func (ec *executionContext) _Filters(ctx context.Context, sel ast.SelectionSet, obj *model.Filters) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, filtersImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Color")
-		case "Title":
-			out.Values[i] = ec._Color_Title(ctx, field, obj)
-		case "Value":
-			out.Values[i] = ec._Color_Value(ctx, field, obj)
+			out.Values[i] = graphql.MarshalString("Filters")
+		case "Price":
+			out.Values[i] = ec._Filters_Price(ctx, field, obj)
+		case "Rating":
+			out.Values[i] = ec._Filters_Rating(ctx, field, obj)
+		case "Companies":
+			out.Values[i] = ec._Filters_Companies(ctx, field, obj)
+		case "CompanyCertifications":
+			out.Values[i] = ec._Filters_CompanyCertifications(ctx, field, obj)
+		case "ProductCertifications":
+			out.Values[i] = ec._Filters_ProductCertifications(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -372,27 +377,21 @@ func (ec *executionContext) _Color(ctx context.Context, sel ast.SelectionSet, ob
 	return out
 }
 
-var filtersImplementors = []string{"Filters"}
+var priceRangeImplementors = []string{"PriceRange"}
 
-func (ec *executionContext) _Filters(ctx context.Context, sel ast.SelectionSet, obj *model.Filters) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, filtersImplementors)
+func (ec *executionContext) _PriceRange(ctx context.Context, sel ast.SelectionSet, obj *model.PriceRange) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, priceRangeImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Filters")
-		case "Colors":
-			out.Values[i] = ec._Filters_Colors(ctx, field, obj)
-		case "Sizes":
-			out.Values[i] = ec._Filters_Sizes(ctx, field, obj)
-		case "Companies":
-			out.Values[i] = ec._Filters_Companies(ctx, field, obj)
-		case "CompanyCertifications":
-			out.Values[i] = ec._Filters_CompanyCertifications(ctx, field, obj)
-		case "ProductCertifications":
-			out.Values[i] = ec._Filters_ProductCertifications(ctx, field, obj)
+			out.Values[i] = graphql.MarshalString("PriceRange")
+		case "min":
+			out.Values[i] = ec._PriceRange_min(ctx, field, obj)
+		case "max":
+			out.Values[i] = ec._PriceRange_max(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -434,52 +433,11 @@ func (ec *executionContext) marshalNFilters2ᚖgithubᚗcomᚋMoralᚑAuthority�
 	return ec._Filters(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOColor2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐColor(ctx context.Context, sel ast.SelectionSet, v []*model.Color) graphql.Marshaler {
+func (ec *executionContext) marshalOPriceRange2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPriceRange(ctx context.Context, sel ast.SelectionSet, v *model.PriceRange) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOColor2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐColor(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
-func (ec *executionContext) marshalOColor2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐColor(ctx context.Context, sel ast.SelectionSet, v *model.Color) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Color(ctx, sel, v)
+	return ec._PriceRange(ctx, sel, v)
 }
 
 // endregion ***************************** type.gotpl *****************************

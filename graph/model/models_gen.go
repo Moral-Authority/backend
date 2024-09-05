@@ -112,11 +112,6 @@ type CertificationFiltersInput struct {
 	Sources            *string `json:"Sources,omitempty"`
 }
 
-type Color struct {
-	Title *string `json:"Title,omitempty"`
-	Value *string `json:"Value,omitempty"`
-}
-
 type Company struct {
 	ID                    string           `json:"_id"`
 	Name                  string           `json:"name"`
@@ -190,11 +185,11 @@ type FilterCompanyInput struct {
 }
 
 type Filters struct {
-	Colors                []*Color  `json:"Colors,omitempty"`
-	Sizes                 []*string `json:"Sizes,omitempty"`
-	Companies             []*string `json:"Companies,omitempty"`
-	CompanyCertifications []*string `json:"CompanyCertifications,omitempty"`
-	ProductCertifications []*string `json:"ProductCertifications,omitempty"`
+	Price                 *PriceRange `json:"Price,omitempty"`
+	Rating                *int        `json:"Rating,omitempty"`
+	Companies             []*string   `json:"Companies,omitempty"`
+	CompanyCertifications []*string   `json:"CompanyCertifications,omitempty"`
+	ProductCertifications []*string   `json:"ProductCertifications,omitempty"`
 }
 
 type Image struct {
@@ -234,6 +229,11 @@ type PaginatedCertifications struct {
 type PaginationInput struct {
 	Items *int `json:"Items,omitempty"`
 	Page  *int `json:"Page,omitempty"`
+}
+
+type PriceRange struct {
+	Min *float64 `json:"min,omitempty"`
+	Max *float64 `json:"max,omitempty"`
 }
 
 type Product struct {
@@ -419,5 +419,50 @@ func (e *CategoryEnum) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CategoryEnum) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type Department string
+
+const (
+	DepartmentHomeGarden          Department = "HomeGarden"
+	DepartmentClothingAccessories Department = "ClothingAccessories"
+	DepartmentHealthBathBeauty    Department = "HealthBathBeauty"
+	DepartmentToysKidsBabies      Department = "ToysKidsBabies"
+)
+
+var AllDepartment = []Department{
+	DepartmentHomeGarden,
+	DepartmentClothingAccessories,
+	DepartmentHealthBathBeauty,
+	DepartmentToysKidsBabies,
+}
+
+func (e Department) IsValid() bool {
+	switch e {
+	case DepartmentHomeGarden, DepartmentClothingAccessories, DepartmentHealthBathBeauty, DepartmentToysKidsBabies:
+		return true
+	}
+	return false
+}
+
+func (e Department) String() string {
+	return string(e)
+}
+
+func (e *Department) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = Department(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid Department", str)
+	}
+	return nil
+}
+
+func (e Department) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }

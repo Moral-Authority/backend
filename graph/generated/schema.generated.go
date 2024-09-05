@@ -44,7 +44,7 @@ type QueryResolver interface {
 	GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error)
 	GetProductByID(ctx context.Context, id string, department string) (*model.Product, error)
 	GetAllProductsBySubDepartment(ctx context.Context, department string, subDepartment string) ([]*model.Product, error)
-	GetSubDepartmentFilters(ctx context.Context, input string) (*model.Filters, error)
+	GetSubDepartmentFilters(ctx context.Context, department string, subDepartment string) (*model.Filters, error)
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
 }
@@ -390,14 +390,23 @@ func (ec *executionContext) field_Query_getSubDepartmentFilters_args(ctx context
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+	if tmp, ok := rawArgs["department"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
 		arg0, err = ec.unmarshalNString2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["department"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["subDepartment"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subDepartment"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["subDepartment"] = arg1
 	return args, nil
 }
 
@@ -2183,7 +2192,7 @@ func (ec *executionContext) _Query_getSubDepartmentFilters(ctx context.Context, 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().GetSubDepartmentFilters(rctx, fc.Args["input"].(string))
+		return ec.resolvers.Query().GetSubDepartmentFilters(rctx, fc.Args["department"].(string), fc.Args["subDepartment"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2208,10 +2217,10 @@ func (ec *executionContext) fieldContext_Query_getSubDepartmentFilters(ctx conte
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "Colors":
-				return ec.fieldContext_Filters_Colors(ctx, field)
-			case "Sizes":
-				return ec.fieldContext_Filters_Sizes(ctx, field)
+			case "Price":
+				return ec.fieldContext_Filters_Price(ctx, field)
+			case "Rating":
+				return ec.fieldContext_Filters_Rating(ctx, field)
 			case "Companies":
 				return ec.fieldContext_Filters_Companies(ctx, field)
 			case "CompanyCertifications":
