@@ -78,7 +78,7 @@ func ApplyProductFilters(query *gorm.DB, filters map[string]interface{}, subDept
         query = query.
             InnerJoins("INNER JOIN companies ON companies.id = home_garden_products.company_id").
             InnerJoins("INNER JOIN company_certifications ON company_certifications.company_id = companies.id").
-            InnerJoins("INNER JOIN certifications ON company_certifications.certification_id = certifications.id")
+            InnerJoins("INNER JOIN certifications AS company_certs ON company_certifications.certification_id = company_certs.id")
     }
 
     // Always join the `product_certifications` table if filtering by product certifications
@@ -86,7 +86,7 @@ func ApplyProductFilters(query *gorm.DB, filters map[string]interface{}, subDept
         logrus.Infof("Applying product certifications join")
         query = query.
             InnerJoins(fmt.Sprintf("INNER JOIN product_certifications ON product_certifications.product_id = %s.id", productTable)).
-            InnerJoins("INNER JOIN certifications ON product_certifications.certification_id = certifications.id")
+            InnerJoins("INNER JOIN certifications AS product_certs ON product_certifications.certification_id = product_certs.id")
     }
 
     // Now, apply the filters
@@ -114,8 +114,8 @@ func ApplyProductFilters(query *gorm.DB, filters map[string]interface{}, subDept
 
             case "companyCertifications":
                 if certs, ok := value.([]string); ok && len(certs) > 0 {
-                    logrus.Infof("Applying company certifications filter: %v", certs[0])
-                    query = query.Where("certifications.name IN (?)", certs)
+                    logrus.Infof("Applying company certifications filter: %v", certs)
+                    query = query.Where("company_certs.name IN (?)", certs)
 
                     if err := query.Error; err != nil {
                         logrus.Error("Error applying company certifications filter: ", err)
@@ -128,7 +128,7 @@ func ApplyProductFilters(query *gorm.DB, filters map[string]interface{}, subDept
             case "productCertifications":
                 if certs, ok := value.([]string); ok && len(certs) > 0 {
                     logrus.Infof("Applying product certifications filter: %v", certs)
-                    query = query.Where("certifications.name IN (?)", certs)
+                    query = query.Where("product_certs.name IN (?)", certs)
                 }
 
             case "companies":

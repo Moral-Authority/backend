@@ -53,7 +53,7 @@ func main() {
 	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
 	log.Println("Seeding Products.")
-	seedProductsFromCSV(db, "affiliate_products_blueland_products.csv", "Blueland")
+	seedProductsFromCSV(db, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
 
