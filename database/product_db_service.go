@@ -10,10 +10,10 @@ type ProductDbService interface {
 	AddProduct(product interface{}) (*interface{}, error)
 	UpdateProduct(product model.UpdateProductRequest) (*interface{}, error)
 
-	GetHomeGardenProductsByFilter(filters map[string]interface{}) ([]*models.HomeGardenProduct, error)
-	GetBathBeautyProductsByFilter(filters map[string]interface{}) ([]*models.HealthBathBeautyProduct, error)
-	GetClothingAccessoriesProductsByFilter(filters map[string]interface{}) ([]*models.ClothingAccessoriesProduct, error)
-	GetToysKidsBabiesProductsByFilter(filters map[string]interface{}) ([]*models.ToysKidsBabiesProduct, error)
+	GetHomeGardenProductsByFilter(filters map[string]interface{}, subDepartment int) ([]*models.HomeGardenProduct, error)
+	GetBathBeautyProductsByFilter(filters map[string]interface{}, subDepartment int) ([]*models.HealthBathBeautyProduct, error)
+	GetClothingAccessoriesProductsByFilter(filters map[string]interface{}, subDepartment int) ([]*models.ClothingAccessoriesProduct, error)
+	GetToysKidsBabiesProductsByFilter(filters map[string]interface{}, subDepartment int) ([]*models.ToysKidsBabiesProduct, error)
 
 	GetHomeGardenProductByID(productId uint) (*models.HomeGardenProduct, error)
 	GetHealthBathBeautyProductByID(productId uint) (*models.HealthBathBeautyProduct, error)
@@ -29,7 +29,7 @@ type ProductDbService interface {
 	// Filters - Companies
 	GetCompaniesFromHomeGarden(subDepartment int) ([]*string, error)
 	GetCompaniesFromClothingAccessories(subDepartment int) ([]*string, error)
-	GetCompaniesFromHealthBathBeauty( subDepartment int) ([]*string, error)
+	GetCompaniesFromHealthBathBeauty(subDepartment int) ([]*string, error)
 	GetCompaniesFromToysKidsBabies(subDepartment int) ([]*string, error)
 
 	// Filters - Certifications - Companies
@@ -49,7 +49,6 @@ type ProductDbService interface {
 	GetPriceRangeFromHealthBathBeauty(subDepartment int) (*model.PriceRange, error)
 	GetPriceRangeFromClothingAccessories(subDepartment int) (*model.PriceRange, error)
 	GetPriceRangeFromToysKidsBabies(subDepartment int) (*model.PriceRange, error)
-
 }
 
 // 	AddProductCertification(productCert models.ProductCertification) (*models.ProductCertification, error)

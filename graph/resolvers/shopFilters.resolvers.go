@@ -21,3 +21,13 @@ func (r *queryResolver) GetSubDepartmentFilters(ctx context.Context, department 
 
 	return result, nil
 }
+
+// GetProductsByFilter is the resolver for the getProductsByFilter field.
+func (r *queryResolver) GetProductsByFilter(ctx context.Context, filter *model.ProductFilterInput, department string, subDepartment string) ([]*model.Product, error) {
+	result, err := handlers.ProductService{}.GetProductsByFilterHandler(ctx, filter, department, subDepartment, database.ProductDbServiceImpl{})
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}

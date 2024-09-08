@@ -45,6 +45,7 @@ type QueryResolver interface {
 	GetProductByID(ctx context.Context, id string, department string) (*model.Product, error)
 	GetAllProductsBySubDepartment(ctx context.Context, department string, subDepartment string) ([]*model.Product, error)
 	GetSubDepartmentFilters(ctx context.Context, department string, subDepartment string) (*model.Filters, error)
+	GetProductsByFilter(ctx context.Context, filter *model.ProductFilterInput, department string, subDepartment string) ([]*model.Product, error)
 	User(ctx context.Context, id string) (*model.User, error)
 	Users(ctx context.Context) ([]*model.User, error)
 }
@@ -383,6 +384,39 @@ func (ec *executionContext) field_Query_getProductByID_args(ctx context.Context,
 		}
 	}
 	args["department"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_getProductsByFilter_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *model.ProductFilterInput
+	if tmp, ok := rawArgs["filter"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("filter"))
+		arg0, err = ec.unmarshalOProductFilterInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductFilterInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["filter"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["department"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("department"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["department"] = arg1
+	var arg2 string
+	if tmp, ok := rawArgs["subDepartment"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subDepartment"))
+		arg2, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["subDepartment"] = arg2
 	return args, nil
 }
 
@@ -2245,6 +2279,98 @@ func (ec *executionContext) fieldContext_Query_getSubDepartmentFilters(ctx conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_getProductsByFilter(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getProductsByFilter(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().GetProductsByFilter(rctx, fc.Args["filter"].(*model.ProductFilterInput), fc.Args["department"].(string), fc.Args["subDepartment"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Product)
+	fc.Result = res
+	return ec.marshalOProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProduct(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_getProductsByFilter(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Product__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Product_Title(ctx, field)
+			case "Description":
+				return ec.fieldContext_Product_Description(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "Company":
+				return ec.fieldContext_Product_Company(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "ProductCertifications":
+				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
+			case "MaterialsAndIngredients":
+				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
+			case "GiveBackPrograms":
+				return ec.fieldContext_Product_GiveBackPrograms(ctx, field)
+			case "OwnersAndFounders":
+				return ec.fieldContext_Product_OwnersAndFounders(ctx, field)
+			case "Section":
+				return ec.fieldContext_Product_Section(ctx, field)
+			case "Subsection":
+				return ec.fieldContext_Product_Subsection(ctx, field)
+			case "Category":
+				return ec.fieldContext_Product_Category(ctx, field)
+			case "SubCategory":
+				return ec.fieldContext_Product_SubCategory(ctx, field)
+			case "Type":
+				return ec.fieldContext_Product_Type(ctx, field)
+			case "Style":
+				return ec.fieldContext_Product_Style(ctx, field)
+			case "Verified":
+				return ec.fieldContext_Product_Verified(ctx, field)
+			case "VerifiedBy":
+				return ec.fieldContext_Product_VerifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_getProductsByFilter_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_user(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_user(ctx, field)
 	if err != nil {
@@ -2870,6 +2996,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "getProductsByFilter":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_getProductsByFilter(ctx, field)
 				return res
 			}
 

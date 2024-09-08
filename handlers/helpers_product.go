@@ -1,5 +1,53 @@
 package handlers
 
+import "github.com/Moral-Authority/backend/graph/model"
+
+func buildFiltersMap(filter *model.ProductFilterInput) map[string]interface{} {
+	filters := make(map[string]interface{})
+
+	// Add price range to the filter map if present
+	if filter.PriceRange != nil {
+		filters["priceMin"] = filter.PriceRange.Min
+		filters["priceMax"] = filter.PriceRange.Max
+	}
+
+	// Dereference company certifications pointers
+	if len(filter.CompanyCertifications) > 0 {
+		certifications := make([]string, len(filter.CompanyCertifications))
+		for i, cert := range filter.CompanyCertifications {
+			if cert != nil {
+				certifications[i] = *cert
+			}
+		}
+		filters["companyCertifications"] = certifications
+	}
+
+	// Dereference product certifications pointers
+	if len(filter.ProductCertifications) > 0 {
+		certifications := make([]string, len(filter.ProductCertifications))
+		for i, cert := range filter.ProductCertifications {
+			if cert != nil {
+				certifications[i] = *cert
+			}
+		}
+		filters["productCertifications"] = certifications
+	}
+
+	// Dereference companies pointers
+	if len(filter.Companies) > 0 {
+		companies := make([]string, len(filter.Companies))
+		for i, company := range filter.Companies {
+			if company != nil {
+				companies[i] = *company
+			}
+		}
+		filters["companies"] = companies
+	}
+
+	return filters
+}
+
+
 // func AddProductByDepartment(
 // 	department ProductDepartment,
 // 	product interface{},

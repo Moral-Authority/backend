@@ -236,6 +236,11 @@ type PriceRange struct {
 	Max *float64 `json:"max,omitempty"`
 }
 
+type PriceRangeInput struct {
+	Min *float64 `json:"min,omitempty"`
+	Max *float64 `json:"max,omitempty"`
+}
+
 type Product struct {
 	ID                      string           `json:"_id"`
 	Title                   string           `json:"Title"`
@@ -271,6 +276,13 @@ type ProductCertificationInput struct {
 	CertifiedAt     *string `json:"certifiedAt,omitempty"`
 	ExpirationDate  *string `json:"expirationDate,omitempty"`
 	OtherDetails    *string `json:"otherDetails,omitempty"`
+}
+
+type ProductFilterInput struct {
+	PriceRange            *PriceRangeInput `json:"priceRange,omitempty"`
+	CompanyCertifications []*string        `json:"companyCertifications,omitempty"`
+	ProductCertifications []*string        `json:"productCertifications,omitempty"`
+	Companies             []*string        `json:"companies,omitempty"`
 }
 
 type PurchaseInfo struct {

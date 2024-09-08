@@ -6,8 +6,8 @@ import (
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/sirupsen/logrus"
 )
-
 
 func (s ProductService) GetSubDepartmentFiltersHandler(ctx context.Context, department string, subDepartment string, productDbService database.ProductDbService) (*model.Filters, error) {
 	var companies []*string
@@ -37,8 +37,8 @@ func (s ProductService) GetSubDepartmentFiltersHandler(ctx context.Context, depa
 	}
 	defaultPrice := float64(0.0)
 	defaultPriceRange := &model.PriceRange{
-		Min: &defaultPrice, 
-		Max: &defaultPrice, 
+		Min: &defaultPrice,
+		Max: &defaultPrice,
 	}
 
 	// Validate department and subDepartment
@@ -154,4 +154,55 @@ func (s ProductService) GetSubDepartmentFiltersHandler(ctx context.Context, depa
 	}
 
 	return result, nil
+}
+
+func (s ProductService) GetProductsByFilterHandler(ctx context.Context, filter *model.ProductFilterInput, department string, subDepartment string, productDbService database.ProductDbService) ([]*model.Product, error) {
+	// Validate department and subDepartment
+	prodDeptType, isDept := IsStringValidProductDepartment(department)
+	if !isDept {
+		return nil, fmt.Errorf("invalid product department %s", department)
+	}
+
+	subDept, isSubdept := IsStringValidProductSubDepartmentFORSEED(prodDeptType, subDepartment)
+	if !isSubdept {
+		fmt.Printf("Invalid subdepartment %s\n", subDepartment)
+	}
+
+	// Convert the filter to a map or structure suitable for database querying
+	filters := buildFiltersMap(filter)
+	logrus.Infof("Applying company certifications filter: %v", filters)
+
+	// Route to the correct department handler
+	switch prodDeptType {
+	case HomeGardenProductDepartment:
+		products, err := productDbService.GetHomeGardenProductsByFilter(filters, subDept)
+		if err != nil {
+			return nil, err
+		}
+		return toHomeGardenProductsResponse(products, prodDeptType), nil
+
+	case HealthBathBeautyProductDepartment:
+		products, err := productDbService.GetBathBeautyProductsByFilter(filters, subDept)
+		if err != nil {
+			return nil, err
+		}
+		return toBathBeautyProductsResponse(products, prodDeptType), nil
+
+	case ClothingAccessoriesProductDepartment:
+		products, err := productDbService.GetClothingAccessoriesProductsByFilter(filters, subDept)
+		if err != nil {
+			return nil, err
+		}
+		return toClothingAccessoriesProductsResponse(products, prodDeptType), nil
+
+	case ToysKidsBabiesProductDepartment:
+		products, err := productDbService.GetToysKidsBabiesProductsByFilter(filters, subDept)
+		if err != nil {
+			return nil, err
+		}
+		return toToysKidsBabiesProductsResponse(products, prodDeptType), nil
+
+	default:
+		return nil, fmt.Errorf("unknown department type: %s", department)
+	}
 }

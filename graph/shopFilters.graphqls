@@ -1,5 +1,6 @@
 extend type Query {
   getSubDepartmentFilters(department: String!, subDepartment: String!): Filters!
+  getProductsByFilter(filter: ProductFilterInput, department: String!, subDepartment: String!): [Product]
 }
 
 type Filters {
@@ -20,4 +21,17 @@ enum Department {
   ClothingAccessories
   HealthBathBeauty
   ToysKidsBabies
+}
+
+
+input ProductFilterInput {
+  priceRange: PriceRangeInput
+  companyCertifications: [String]
+  productCertifications: [String]
+  companies: [String]
+}
+
+input PriceRangeInput {
+  min: Float
+  max: Float
 }

@@ -325,6 +325,88 @@ func (ec *executionContext) fieldContext_PriceRange_max(_ context.Context, field
 
 // region    **************************** input.gotpl *****************************
 
+func (ec *executionContext) unmarshalInputPriceRangeInput(ctx context.Context, obj interface{}) (model.PriceRangeInput, error) {
+	var it model.PriceRangeInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"min", "max"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "min":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("min"))
+			data, err := ec.unmarshalOFloat2ᚖfloat64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Min = data
+		case "max":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("max"))
+			data, err := ec.unmarshalOFloat2ᚖfloat64(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Max = data
+		}
+	}
+
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputProductFilterInput(ctx context.Context, obj interface{}) (model.ProductFilterInput, error) {
+	var it model.ProductFilterInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"priceRange", "companyCertifications", "productCertifications", "companies"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "priceRange":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("priceRange"))
+			data, err := ec.unmarshalOPriceRangeInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPriceRangeInput(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PriceRange = data
+		case "companyCertifications":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("companyCertifications"))
+			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CompanyCertifications = data
+		case "productCertifications":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("productCertifications"))
+			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ProductCertifications = data
+		case "companies":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("companies"))
+			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Companies = data
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -438,6 +520,22 @@ func (ec *executionContext) marshalOPriceRange2ᚖgithubᚗcomᚋMoralᚑAuthori
 		return graphql.Null
 	}
 	return ec._PriceRange(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOPriceRangeInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPriceRangeInput(ctx context.Context, v interface{}) (*model.PriceRangeInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputPriceRangeInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOProductFilterInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductFilterInput(ctx context.Context, v interface{}) (*model.ProductFilterInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputProductFilterInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 // endregion ***************************** type.gotpl *****************************

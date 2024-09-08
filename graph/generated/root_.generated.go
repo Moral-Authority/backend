@@ -205,6 +205,7 @@ type ComplexityRoot struct {
 		GetCompaniesByFilter          func(childComplexity int, input *model.FilterCompanyInput) int
 		GetCompany                    func(childComplexity int, id string) int
 		GetProductByID                func(childComplexity int, id string, department string) int
+		GetProductsByFilter           func(childComplexity int, filter *model.ProductFilterInput, department string, subDepartment string) int
 		GetSubDepartmentFilters       func(childComplexity int, department string, subDepartment string) int
 		User                          func(childComplexity int, id string) int
 		Users                         func(childComplexity int) int
@@ -1163,6 +1164,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetProductByID(childComplexity, args["id"].(string), args["department"].(string)), true
 
+	case "Query.getProductsByFilter":
+		if e.complexity.Query.GetProductsByFilter == nil {
+			break
+		}
+
+		args, err := ec.field_Query_getProductsByFilter_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.GetProductsByFilter(childComplexity, args["filter"].(*model.ProductFilterInput), args["department"].(string), args["subDepartment"].(string)), true
+
 	case "Query.getSubDepartmentFilters":
 		if e.complexity.Query.GetSubDepartmentFilters == nil {
 			break
@@ -1245,7 +1258,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputLoginUser,
 		ec.unmarshalInputNewUser,
 		ec.unmarshalInputPaginationInput,
+		ec.unmarshalInputPriceRangeInput,
 		ec.unmarshalInputProductCertificationInput,
+		ec.unmarshalInputProductFilterInput,
 		ec.unmarshalInputPurchaseInfoInput,
 		ec.unmarshalInputRemoveUserFav,
 		ec.unmarshalInputSortByInput,
@@ -1787,6 +1802,7 @@ type Mutation {
 scalar Any`, BuiltIn: false},
 	{Name: "../shopFilters.graphqls", Input: `extend type Query {
   getSubDepartmentFilters(department: String!, subDepartment: String!): Filters!
+  getProductsByFilter(filter: ProductFilterInput, department: String!, subDepartment: String!): [Product]
 }
 
 type Filters {
@@ -1807,6 +1823,19 @@ enum Department {
   ClothingAccessories
   HealthBathBeauty
   ToysKidsBabies
+}
+
+
+input ProductFilterInput {
+  priceRange: PriceRangeInput
+  companyCertifications: [String]
+  productCertifications: [String]
+  companies: [String]
+}
+
+input PriceRangeInput {
+  min: Float
+  max: Float
 }`, BuiltIn: false},
 	{Name: "../user.graphqls", Input: `extend type Query {
     user(_id: String!): User!

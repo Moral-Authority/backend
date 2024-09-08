@@ -338,7 +338,7 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 
 		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
 		if !isSubdept {
-			fmt.Println("invalid subdepartment %s", row[1])
+			fmt.Println("invalid subdepartment", row[1])
 			
 		}
 

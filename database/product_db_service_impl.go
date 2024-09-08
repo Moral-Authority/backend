@@ -61,7 +61,6 @@ func (s ProductDbServiceImpl) GetToysKidsBabiesProductByID(productId uint) (*mod
 	return &product, nil
 }
 
-
 // GetAllHomeGardenProducts retrieves all HomeGarden products with an optional subDepartment filter
 func (s ProductDbServiceImpl) GetAllHomeGardenProducts(subDepartment null.Int) ([]*models.HomeGardenProduct, error) {
 	var products []*models.HomeGardenProduct
@@ -150,41 +149,60 @@ func (s ProductDbServiceImpl) GetAllToysKidsBabiesProducts(subDepartment null.In
 	return products, nil
 }
 
-
-func (s ProductDbServiceImpl) GetHomeGardenProductsByFilter(filters map[string]interface{}) ([]*models.HomeGardenProduct, error) {
+func (s ProductDbServiceImpl) GetHomeGardenProductsByFilter(filters map[string]interface{}, subDept int) ([]*models.HomeGardenProduct, error) {
 	var products []*models.HomeGardenProduct
-	db := GetDbConn()
 
-	query := ApplyFilters(db, filters)
+	// Start building the query, with Preloads for related tables
+	query := GetDbConn().Debug().
+		Preload("Company").     // Preload the Company relationship
+		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
+	// Apply dynamic product filters
+	query = ApplyProductFilters(query, filters, subDept, "home_garden_products")
+
+	logrus.Infof("Query: %v", query)
+	// Execute the query
 	if err := query.Find(&products).Error; err != nil {
 		logrus.Errorf("Unable to get HomeGarden products by filter, %s", err)
 		return nil, err
 	}
 
+	logrus.Infof("Products: %v", len(products))
+
 	return products, nil
 }
 
-func (s ProductDbServiceImpl) GetBathBeautyProductsByFilter(filters map[string]interface{}) ([]*models.HealthBathBeautyProduct, error) {
+func (s ProductDbServiceImpl) GetBathBeautyProductsByFilter(filters map[string]interface{}, subDept int) ([]*models.HealthBathBeautyProduct, error) {
 	var products []*models.HealthBathBeautyProduct
-	db := GetDbConn()
 
-	query := ApplyFilters(db, filters)
+	// Start building the query, with Preloads for related tables
+	query := GetDbConn().Debug().
+		Preload("Company").     // Preload the Company relationship
+		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
+
+	// Apply dynamic product filters
+	query = ApplyProductFilters(query, filters,subDept, "health_bath_beauty_products")
 
 	if err := query.Find(&products).Error; err != nil {
-		logrus.Errorf("Unable to get BathBeauty products by filter, %s", err)
+		logrus.Errorf("Unable to get HealthBathBeauty products by filter, %s", err)
 		return nil, err
 	}
 
 	return products, nil
 }
 
-func (s ProductDbServiceImpl) GetClothingAccessoriesProductsByFilter(filters map[string]interface{}) ([]*models.ClothingAccessoriesProduct, error) {
+func (s ProductDbServiceImpl) GetClothingAccessoriesProductsByFilter(filters map[string]interface{}, subDept int) ([]*models.ClothingAccessoriesProduct, error) {
 	var products []*models.ClothingAccessoriesProduct
-	db := GetDbConn()
 
-	query := ApplyFilters(db, filters)
+	// Start building the query, with Preloads for related tables
+	query := GetDbConn().Debug().
+		Preload("Company").     // Preload the Company relationship
+		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
+	// Apply dynamic product filters
+	query = ApplyProductFilters(query, filters, subDept,"clothing_accessories_products")
+
+	// Execute the query
 	if err := query.Find(&products).Error; err != nil {
 		logrus.Errorf("Unable to get ClothingAccessories products by filter, %s", err)
 		return nil, err
@@ -193,12 +211,18 @@ func (s ProductDbServiceImpl) GetClothingAccessoriesProductsByFilter(filters map
 	return products, nil
 }
 
-func (s ProductDbServiceImpl) GetToysKidsBabiesProductsByFilter(filters map[string]interface{}) ([]*models.ToysKidsBabiesProduct, error) {
+func (s ProductDbServiceImpl) GetToysKidsBabiesProductsByFilter(filters map[string]interface{}, subDept int) ([]*models.ToysKidsBabiesProduct, error) {
 	var products []*models.ToysKidsBabiesProduct
-	db := GetDbConn()
 
-	query := ApplyFilters(db, filters)
+	// Start building the query, with Preloads for related tables
+	query := GetDbConn().Debug().
+		Preload("Company").     // Preload the Company relationship
+		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
+	// Apply dynamic product filters
+	query = ApplyProductFilters(query, filters, subDept,"toys_kids_babies_products")
+
+	// Execute the query
 	if err := query.Find(&products).Error; err != nil {
 		logrus.Errorf("Unable to get ToysKidsBabies products by filter, %s", err)
 		return nil, err
@@ -206,7 +230,6 @@ func (s ProductDbServiceImpl) GetToysKidsBabiesProductsByFilter(filters map[stri
 
 	return products, nil
 }
-
 
 func (s ProductDbServiceImpl) UpdateProduct(product model.UpdateProductRequest) (*interface{}, error) {
 
@@ -223,7 +246,6 @@ func (s ProductDbServiceImpl) AddProduct(product interface{}) (*interface{}, err
 
 	return &product, nil
 }
-
 
 func (s ProductDbServiceImpl) GetCompaniesFromHomeGarden(subDepartment int) ([]*string, error) {
 	var companies []*string
@@ -289,7 +311,6 @@ func (s ProductDbServiceImpl) GetCompaniesFromToysKidsBabies(subDepartment int) 
 
 	return companies, nil
 }
-
 
 // HomeGarden - Company Certifications
 func (s ProductDbServiceImpl) GetCompanyCertificationsFromHomeGarden(subDepartment int) ([]*string, error) {
@@ -362,7 +383,6 @@ func (s ProductDbServiceImpl) GetCompanyCertificationsFromToysKidsBabies(subDepa
 
 	return certifications, nil
 }
-
 
 // HomeGarden - Product Certifications
 func (s ProductDbServiceImpl) GetProductCertificationsFromHomeGarden(subDepartment int) ([]*string, error) {
@@ -469,8 +489,6 @@ func (s ProductDbServiceImpl) GetPriceRangeFromHealthBathBeauty(subDepartment in
 	return &priceRange, nil
 }
 
-
-
 func (s ProductDbServiceImpl) GetPriceRangeFromClothingAccessories(subDepartment int) (*model.PriceRange, error) {
 	var priceRange model.PriceRange
 	result := GetDbConn().
@@ -486,7 +504,6 @@ func (s ProductDbServiceImpl) GetPriceRangeFromClothingAccessories(subDepartment
 
 	return &priceRange, nil
 }
-
 
 func (s ProductDbServiceImpl) GetPriceRangeFromToysKidsBabies(subDepartment int) (*model.PriceRange, error) {
 	var priceRange model.PriceRange
