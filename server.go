@@ -42,10 +42,10 @@ func InitAlgoliaClient() *search.Client {
 }
 
 func main() {
-	err := godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
-	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
-	}
+	// err := godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file: %v", err)
+	// }
 
 
 	// Set the log output to stdout
