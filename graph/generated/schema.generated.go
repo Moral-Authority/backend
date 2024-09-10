@@ -44,6 +44,7 @@ type QueryResolver interface {
 	GetAllUserFavs(ctx context.Context, id string) ([]*model.Favorite, error)
 	GetProductByID(ctx context.Context, id string, department string) (*model.Product, error)
 	GetAllProductsBySubDepartment(ctx context.Context, department string, subDepartment string) ([]*model.Product, error)
+	Search(ctx context.Context, input string) ([]*model.Product, error)
 	GetSubDepartmentFilters(ctx context.Context, department string, subDepartment string) (*model.Filters, error)
 	GetProductsByFilter(ctx context.Context, filter *model.ProductFilterInput, department string, subDepartment string) ([]*model.Product, error)
 	User(ctx context.Context, id string) (*model.User, error)
@@ -441,6 +442,21 @@ func (ec *executionContext) field_Query_getSubDepartmentFilters_args(ctx context
 		}
 	}
 	args["subDepartment"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_search_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -2212,6 +2228,98 @@ func (ec *executionContext) fieldContext_Query_getAllProductsBySubDepartment(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_search(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_search(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Search(rctx, fc.Args["input"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Product)
+	fc.Result = res
+	return ec.marshalOProduct2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_search(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Product__id(ctx, field)
+			case "Title":
+				return ec.fieldContext_Product_Title(ctx, field)
+			case "Description":
+				return ec.fieldContext_Product_Description(ctx, field)
+			case "ImageLinks":
+				return ec.fieldContext_Product_ImageLinks(ctx, field)
+			case "Company":
+				return ec.fieldContext_Product_Company(ctx, field)
+			case "PurchaseInfo":
+				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
+			case "ProductCertifications":
+				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "Department":
+				return ec.fieldContext_Product_Department(ctx, field)
+			case "MaterialsAndIngredients":
+				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
+			case "GiveBackPrograms":
+				return ec.fieldContext_Product_GiveBackPrograms(ctx, field)
+			case "OwnersAndFounders":
+				return ec.fieldContext_Product_OwnersAndFounders(ctx, field)
+			case "Section":
+				return ec.fieldContext_Product_Section(ctx, field)
+			case "Subsection":
+				return ec.fieldContext_Product_Subsection(ctx, field)
+			case "Category":
+				return ec.fieldContext_Product_Category(ctx, field)
+			case "SubCategory":
+				return ec.fieldContext_Product_SubCategory(ctx, field)
+			case "Type":
+				return ec.fieldContext_Product_Type(ctx, field)
+			case "Style":
+				return ec.fieldContext_Product_Style(ctx, field)
+			case "Verified":
+				return ec.fieldContext_Product_Verified(ctx, field)
+			case "VerifiedBy":
+				return ec.fieldContext_Product_VerifiedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Product", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_search_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_getSubDepartmentFilters(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_getSubDepartmentFilters(ctx, field)
 	if err != nil {
@@ -2974,6 +3082,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_getAllProductsBySubDepartment(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "search":
+			field := field
+
+			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_search(ctx, field)
 				return res
 			}
 

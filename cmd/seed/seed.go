@@ -12,6 +12,7 @@ import (
 
 	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
+	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"gorm.io/driver/postgres"
@@ -26,6 +27,11 @@ func main() {
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
+	// Load environment variables from .env file
+	// err := godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file: %v", err)
+	// }
 
 	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
@@ -34,6 +40,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Initialize Algolia client
+	apid := os.Getenv("ALGOLIASEARCH_APPLICATION_ID")
+	apikey := os.Getenv("ALGOLIASEARCH_API_KEY")
+	logrus.Printf("Initializing Algolia client...%s AND %s", apid, apikey)
+
+	algoliaClient := search.NewClient(os.Getenv("ALGOLIASEARCH_APPLICATION_ID"), os.Getenv("ALGOLIASEARCH_API_KEY"))
+	index := algoliaClient.InitIndex("products_index")
 
 	// Wipe all tables in the database
 	wipeDatabase(db)
@@ -53,7 +67,7 @@ func main() {
 	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
 	log.Println("Seeding Products.")
-	seedProductsFromCSV(db, "affiliate_products_blueland_products1.csv", "Blueland")
+	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
 
@@ -296,7 +310,7 @@ func findCompanyID(db *gorm.DB, companyName string) uint {
 	return company.ID
 }
 
-func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
+func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, companyName string) {
 	// Get the current working directory
 	dir, err := os.Getwd()
 	if err != nil {
@@ -323,7 +337,6 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 
 	companyID := findCompanyID(db, companyName)
 
-
 	for {
 		row, err := reader.Read()
 		if err != nil {
@@ -331,7 +344,7 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 		}
 
 		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
-		if !isDept {	
+		if !isDept {
 			fmt.Println("Invalid product department")
 		}
 		prodDept := prodDeptType.ToInt()
@@ -339,7 +352,7 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
 		if !isSubdept {
 			fmt.Println("invalid subdepartment", row[1])
-			
+
 		}
 
 		// Create the HomeGardenProduct
@@ -363,7 +376,7 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			
+
 			// Create the PurchaseInfo with ProductDepartment set to HomeGardenProductDepartment
 			purchaseInfo := models.PurchaseInfo{
 				ProductID:         product.ID,
@@ -376,6 +389,25 @@ func seedProductsFromCSV(db *gorm.DB, fileName string, companyName string) {
 			result = db.Create(&purchaseInfo)
 			if result.Error != nil {
 				fmt.Println(result.Error)
+			}
+
+			// Index the product in Algolia
+			algoliaData := map[string]interface{}{
+				"objectID":       product.ID,
+				"title":          product.Title,
+				"sub_department": subDept,
+				"url":            product.Url,
+				"company_name":   companyName,
+				"product_image":  product.ProductImage,
+				"price":          price,
+				"department":     row[0],
+			}
+
+			_, err = index.SaveObject(algoliaData)
+			if err != nil {
+				log.Printf("Failed to index product in Algolia: %v", err)
+			} else {
+				fmt.Printf("Indexed product in Algolia: %s\n", price)
 			}
 		}
 	}

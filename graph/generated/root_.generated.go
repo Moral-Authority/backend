@@ -207,6 +207,7 @@ type ComplexityRoot struct {
 		GetProductByID                func(childComplexity int, id string, department string) int
 		GetProductsByFilter           func(childComplexity int, filter *model.ProductFilterInput, department string, subDepartment string) int
 		GetSubDepartmentFilters       func(childComplexity int, department string, subDepartment string) int
+		Search                        func(childComplexity int, input string) int
 		User                          func(childComplexity int, id string) int
 		Users                         func(childComplexity int) int
 	}
@@ -1188,6 +1189,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetSubDepartmentFilters(childComplexity, args["department"].(string), args["subDepartment"].(string)), true
 
+	case "Query.search":
+		if e.complexity.Query.Search == nil {
+			break
+		}
+
+		args, err := ec.field_Query_search_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Search(childComplexity, args["input"].(string)), true
+
 	case "Query.user":
 		if e.complexity.Query.User == nil {
 			break
@@ -1800,6 +1813,9 @@ type Mutation {
 
 
 scalar Any`, BuiltIn: false},
+	{Name: "../search.graphqls", Input: `extend type Query {
+  search(input: String!): [Product!]
+}`, BuiltIn: false},
 	{Name: "../shopFilters.graphqls", Input: `extend type Query {
   getSubDepartmentFilters(department: String!, subDepartment: String!): Filters!
   getProductsByFilter(filter: ProductFilterInput, department: String!, subDepartment: String!): [Product]
