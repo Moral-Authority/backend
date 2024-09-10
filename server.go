@@ -17,7 +17,6 @@ import (
 	"github.com/alexflint/go-arg"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/gorilla/websocket"
-	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
 )
@@ -29,7 +28,7 @@ func init() {
 }
 
 func InitAlgoliaClient() *search.Client {
-	
+
 	appID := os.Getenv("ALGOLIASEARCH_APPLICATION_ID")
 	apiKey := os.Getenv("ALGOLIASEARCH_API_KEY")
 
@@ -46,7 +45,6 @@ func main() {
 	// if err != nil {
 	// 	log.Fatalf("Error loading .env file: %v", err)
 	// }
-
 
 	// Set the log output to stdout
 	log.SetOutput(os.Stdout)
