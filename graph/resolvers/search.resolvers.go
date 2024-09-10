@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/Moral-Authority/backend/graph/model"
-	"github.com/sirupsen/logrus"
 )
 
 // Search is the resolver for the search field.
