@@ -13,6 +13,7 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"gorm.io/driver/postgres"
@@ -27,11 +28,9 @@ func main() {
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
+
 	// Load environment variables from .env file
-	// err := godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
-	// if err != nil {
-	// 	log.Fatalf("Error loading .env file: %v", err)
-	// }
+	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
 	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 

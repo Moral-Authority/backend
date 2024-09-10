@@ -31,7 +31,7 @@ func (r *queryResolver) Search(ctx context.Context, input string) ([]*model.Prod
 		companyName, _ := hit["company_name"].(string)
 		price, _ := hit["price"].(float64)
 		priceString := fmt.Sprintf("%.2f", price)
-		imageLink := hit["image_link"].(string)
+		imageLink := hit["product_image"].(string)
 
 		product := &model.Product{
 			ID:    objectID,

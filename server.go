@@ -17,6 +17,7 @@ import (
 	"github.com/alexflint/go-arg"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
 )
@@ -41,10 +42,7 @@ func InitAlgoliaClient() *search.Client {
 }
 
 func main() {
-	// err := godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
-	// if err != nil {
-	// 	log.Fatalf("Error loading .env file: %v", err)
-	// }
+	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
 	// Set the log output to stdout
 	log.SetOutput(os.Stdout)
