@@ -84,12 +84,3 @@ func PerformMigrations() {
 		panic("unable to perform migrations...")
 	}
 }
-
-// func DropDatabase() {
-// 	db := GetDbConn()
-// 	err := db.Exec("DROP SCHEMA public CASCADE; CREATE SCHEMA public;").Error
-// 	if err != nil {
-// 		log.Fatal("Failed to drop the database:", err)
-// 	}
-// 	log.Println("Database schema dropped and recreated.")
-// }

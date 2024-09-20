@@ -13,6 +13,8 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
+	"github.com/joho/godotenv"
+
 	// "github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
@@ -24,16 +26,17 @@ import (
 
 func main() {
 
-
 	// Load environment variables from .env file
-	// _ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
 	// Read the database URL from the environment variable
-	// dsn := os.Getenv("DATABASE_URL")
-	// if dsn == "" {
-	// 	log.Fatal("DATABASE_URL is not set")
-	// }
-	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("DATABASE_URL is not set")
+	}
+
+	logrus.Printf("Connecting to database...%s", dsn)
+	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -50,7 +53,7 @@ func main() {
 	index := algoliaClient.InitIndex("products_index")
 
 	// Wipe all tables in the database
-	wipeDatabase(db)
+	// wipeDatabase(db)
 
 	// Ensure the certifications table exists by migrating the schema
 	err = db.AutoMigrate(&models.Certification{})
@@ -60,16 +63,9 @@ func main() {
 
 	log.Println("Seeding the database...")
 	seedCertifications(db)
-	log.Println("Seeding BCorps...")
-	// Seed BCorp companies
 	seedCompaniesFromCSV(db, "all-bcorps.csv", "BCorp Certified")
-	log.Println("Seeding Made Safe...")
-	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
-	// Seed PETA Cruelty Free companies
 	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
-	log.Println("Seeding Peta Cruelty Free...")
-	log.Println("Seeding Products.")
 	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
@@ -350,82 +346,120 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 	}
 
 	companyID := findCompanyID(db, companyName)
-	
+	logrus.Info("Company ID:", companyID)
+
 	for {
 		row, err := reader.Read()
 		if err != nil {
 			break
 		}
-
+	
 		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
 		if !isDept {
 			fmt.Println("Invalid product department")
 		}
 		prodDept := prodDeptType.ToInt()
-		logrus.Info("prodDept", prodDept)
+	
 		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
 		if !isSubdept {
 			fmt.Println("invalid subdepartment", row[1])
-
 		}
-		logrus.Info("subDept", subDept)
-
-		// Create the HomeGardenProduct
-		product := models.HomeGardenProduct{
-			ProductBase: models.ProductBase{
-				SubDepartment: subDept,
-				Title:         row[3],
-				Url:           row[5],
-				CompanyID:     companyID,
-				ProductImage:  row[6],
-			},
+	
+		prodBase := models.ProductBase{
+			SubDepartment: subDept,
+			Title:         row[3],
+			Url:           row[5],
+			CompanyID:     companyID,
+			ProductImage:  row[6],
 		}
+	
+		var product interface{}
 
+		switch prodDeptType {
+		case handlers.HomeGardenProductDepartment:
+			product = &models.HomeGardenProduct{
+				ProductBase: prodBase,
+			}
+		case handlers.HealthBathBeautyProductDepartment:
+			product = &models.HealthBathBeautyProduct{
+				ProductBase: prodBase,
+			}
+		case handlers.ClothingAccessoriesProductDepartment:
+			product = &models.ClothingAccessoriesProduct{
+				ProductBase: prodBase,
+			}
+		case handlers.ToysKidsBabiesProductDepartment:
+			product = &models.ToysKidsBabiesProduct{
+				ProductBase: prodBase,
+			}
+		default:
+			fmt.Println("Unknown department", prodDept)
+			continue
+		}
+		
 		// Insert the product into the database
-		result := db.Create(&product)
+		result := db.Create(product)
 		if result.Error != nil {
-			fmt.Println(result.Error)
+			fmt.Println("Error inserting product:", result.Error)
+			continue
+		}
+
+		logrus.Info("Product inserted:", product)
+		
+		// Extract the inserted product's ID based on the type
+		var productID uint
+		switch p := product.(type) {
+		case models.HomeGardenProduct:
+			productID = p.ID
+		case models.HealthBathBeautyProduct:
+			productID = p.ID
+		case models.ClothingAccessoriesProduct:
+			productID = p.ID
+		case models.ToysKidsBabiesProduct:
+			productID = p.ID
+		}
+		logrus.Info("Product inserted:", productID)
+		// Proceed to create PurchaseInfo
+		price, err := strconv.ParseFloat(row[4], 64)
+		if err != nil {
+			log.Fatal("Invalid price format:", err)
+		}
+	
+		purchaseInfo := models.PurchaseInfo{
+			ProductID:         productID,
+			ProductDepartment: prodDept,
+			Price:             price,
+			Url:               row[5],
+		}
+	
+		result = db.Create(&purchaseInfo)
+		if result.Error != nil {
+			fmt.Println("Error inserting purchase info:", result.Error)
+		}
+	
+		// Log the successful insertion
+		logrus.Info("Product inserted:", product)
+	
+		// Index the product in Algolia
+		algoliaData := map[string]interface{}{
+			"objectID":       productID,
+			"title":          prodBase.Title,
+			"sub_department": subDept,
+			"url":            prodBase.Url,
+			"company_name":   companyName,
+			"product_image":  prodBase.ProductImage,
+			"price":          price,
+			"department":     row[0],
+		}
+	
+		_, err = index.SaveObject(algoliaData)
+		if err != nil {
+			log.Printf("Failed to index product in Algolia: %v", err)
 		} else {
-			// Convert the string value to float64
-			price, err := strconv.ParseFloat(row[4], 64)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			// Create the PurchaseInfo with ProductDepartment set to HomeGardenProductDepartment
-			purchaseInfo := models.PurchaseInfo{
-				ProductID:         product.ID,
-				ProductDepartment: prodDept, // HomeGardenProductDepartment
-				Price:             price,
-				Url:               row[5],
-			}
-
-			// Insert the purchase info into the database
-			result = db.Create(&purchaseInfo)
-			if result.Error != nil {
-				fmt.Println(result.Error)
-			}
-
-			// Index the product in Algolia
-			algoliaData := map[string]interface{}{
-				"objectID":       product.ID,
-				"title":          product.Title,
-				"sub_department": subDept,
-				"url":            product.Url,
-				"company_name":   companyName,
-				"product_image":  product.ProductImage,
-				"price":          price,
-				"department":     row[0],
-			}
-
-			_, err = index.SaveObject(algoliaData)
-			if err != nil {
-				log.Printf("Failed to index product in Algolia: %v", err)
-			} else {
-				fmt.Printf("Indexed product in Algolia: %s\n", price)
-			}
+			fmt.Printf("Indexed product in Algolia: %f\n", price)
 		}
 	}
+	
 
 	fmt.Println("Products seeded into database.")
 }
