@@ -14,8 +14,6 @@ import (
 	"github.com/Moral-Authority/backend/models"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/joho/godotenv"
-
-	// "github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"gorm.io/driver/postgres"
@@ -320,6 +318,8 @@ func findCompanyID(db *gorm.DB, companyName string) uint {
 	return company.ID
 }
 
+
+
 func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, companyName string) {
 	// Get the current working directory
 	dir, err := os.Getwd()
@@ -346,120 +346,160 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 	}
 
 	companyID := findCompanyID(db, companyName)
-	logrus.Info("Company ID:", companyID)
 
 	for {
 		row, err := reader.Read()
 		if err != nil {
 			break
 		}
-	
+
 		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
 		if !isDept {
 			fmt.Println("Invalid product department")
+			logrus.Info("Invalid product department %s", row[0])
+			continue
 		}
-		prodDept := prodDeptType.ToInt()
-	
-		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
-		if !isSubdept {
-			fmt.Println("invalid subdepartment", row[1])
+
+		subDept, isDept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
+		if !isDept {
+			fmt.Println("Invalid product department")
+			continue
 		}
-	
-		prodBase := models.ProductBase{
-			SubDepartment: subDept,
-			Title:         row[3],
-			Url:           row[5],
-			CompanyID:     companyID,
-			ProductImage:  row[6],
-		}
-	
-		var product interface{}
+
+		prodDeptInt := prodDeptType.ToInt()
+		var productID uint
 
 		switch prodDeptType {
 		case handlers.HomeGardenProductDepartment:
-			product = &models.HomeGardenProduct{
-				ProductBase: prodBase,
-			}
+			productID, err = seedHomeGardenProduct(db, companyID, subDept, row[3], row[5], row[6])
 		case handlers.HealthBathBeautyProductDepartment:
-			product = &models.HealthBathBeautyProduct{
-				ProductBase: prodBase,
-			}
+			productID, err = seedHealthBathBeautyProduct(db, companyID, subDept, row[3], row[5], row[6])
 		case handlers.ClothingAccessoriesProductDepartment:
-			product = &models.ClothingAccessoriesProduct{
-				ProductBase: prodBase,
-			}
+			productID, err = seedClothingAccessoriesProduct(db, companyID, subDept, row[3], row[5], row[6])
 		case handlers.ToysKidsBabiesProductDepartment:
-			product = &models.ToysKidsBabiesProduct{
-				ProductBase: prodBase,
-			}
+			productID, err = seedToysKidsBabiesProduct(db, companyID, subDept, row[3], row[5], row[6])
 		default:
-			fmt.Println("Unknown department", prodDept)
-			continue
-		}
-		
-		// Insert the product into the database
-		result := db.Create(product)
-		if result.Error != nil {
-			fmt.Println("Error inserting product:", result.Error)
+			fmt.Println("Unknown department", row[0])
 			continue
 		}
 
-		logrus.Info("Product inserted:", product)
-		
-		// Extract the inserted product's ID based on the type
-		var productID uint
-		switch p := product.(type) {
-		case models.HomeGardenProduct:
-			productID = p.ID
-		case models.HealthBathBeautyProduct:
-			productID = p.ID
-		case models.ClothingAccessoriesProduct:
-			productID = p.ID
-		case models.ToysKidsBabiesProduct:
-			productID = p.ID
+		if err != nil {
+			fmt.Println(err)
 		}
-		logrus.Info("Product inserted:", productID)
-		// Proceed to create PurchaseInfo
+
 		price, err := strconv.ParseFloat(row[4], 64)
 		if err != nil {
-			log.Fatal("Invalid price format:", err)
+			fmt.Errorf("Invalid price format: %v", err)
 		}
-	
+
 		purchaseInfo := models.PurchaseInfo{
 			ProductID:         productID,
-			ProductDepartment: prodDept,
+			ProductDepartment: prodDeptInt,
 			Price:             price,
 			Url:               row[5],
 		}
-	
-		result = db.Create(&purchaseInfo)
+
+		result := db.Create(&purchaseInfo)
 		if result.Error != nil {
-			fmt.Println("Error inserting purchase info:", result.Error)
+			fmt.Errorf("Error inserting PurchaseInfo for ToysKidsBabies product: %v", result.Error)
 		}
-	
-		// Log the successful insertion
-		logrus.Info("Product inserted:", product)
-	
+
 		// Index the product in Algolia
 		algoliaData := map[string]interface{}{
 			"objectID":       productID,
-			"title":          prodBase.Title,
-			"sub_department": subDept,
-			"url":            prodBase.Url,
+			"title":          row[3],
+			"sub_department": row[1],
+			"url":            row[5],
 			"company_name":   companyName,
-			"product_image":  prodBase.ProductImage,
-			"price":          price,
+			"product_image":  row[6],
+			"price":          row[4],
 			"department":     row[0],
 		}
-	
+
 		_, err = index.SaveObject(algoliaData)
 		if err != nil {
 			log.Printf("Failed to index product in Algolia: %v", err)
 		} else {
-			fmt.Printf("Indexed product in Algolia: %f\n", price)
+			fmt.Printf("Indexed product in Algolia: %s\n", row[4])
 		}
 	}
-	
 
 	fmt.Println("Products seeded into database.")
+}
+
+func seedHomeGardenProduct(db *gorm.DB, companyID uint, subDept int, title, url, productImg string) (uint, error) {
+	product := &models.HomeGardenProduct{
+		ProductBase: models.ProductBase{
+			SubDepartment: subDept,
+			Title:         title,
+			Url:           url,
+			CompanyID:     companyID,
+			ProductImage:  productImg,
+		},
+	}
+
+	result := db.Create(&product)
+	if result.Error != nil {
+		return 0, fmt.Errorf("Error inserting ToysKidsBabies product: %v", result.Error)
+	}
+
+	return product.ID, nil
+}
+
+func seedHealthBathBeautyProduct(db *gorm.DB, companyID uint, subDept int, title, url, productImg string) (uint, error) {
+	product := &models.HealthBathBeautyProduct{
+		ProductBase: models.ProductBase{
+			SubDepartment: subDept,
+			Title:         title,
+			Url:           url,
+			CompanyID:     companyID,
+			ProductImage:  productImg,
+		},
+	}
+
+	result := db.Create(&product)
+	if result.Error != nil {
+		return 0, fmt.Errorf("Error inserting ToysKidsBabies product: %v", result.Error)
+	}
+
+	return product.ID, nil
+}
+
+func seedClothingAccessoriesProduct(db *gorm.DB, companyID uint, subDept int, title, url, productImg string) (uint, error) {
+	product := &models.ClothingAccessoriesProduct{
+		ProductBase: models.ProductBase{
+			SubDepartment: subDept,
+			Title:         title,
+			Url:           url,
+			CompanyID:     companyID,
+			ProductImage:  productImg,
+		},
+	}
+
+	result := db.Create(&product)
+	if result.Error != nil {
+		return 0, fmt.Errorf("Error inserting ToysKidsBabies product: %v", result.Error)
+	}
+
+	return product.ID, nil
+}
+
+func seedToysKidsBabiesProduct(db *gorm.DB, companyID uint, subDept int, title, url, productImg string) (uint, error) {
+
+	product := &models.ToysKidsBabiesProduct{
+		ProductBase: models.ProductBase{
+			SubDepartment: subDept,
+			Title:         title,
+			Url:           url,
+			CompanyID:     companyID,
+			ProductImage:  productImg,
+		},
+	}
+
+	result := db.Create(&product)
+	if result.Error != nil {
+		return 0, fmt.Errorf("Error inserting ToysKidsBabies product: %v", result.Error)
+	}
+
+	return product.ID, nil
 }

@@ -84,8 +84,7 @@ func IsValidProductDepartment(department int) (ProductDepartment, bool) {
 }
 
 func IsStringValidProductDepartment(department string) (ProductDepartment, bool) {
-
-	normalizedDepartment := strings.TrimSpace(department)
+	normalizedDepartment := strings.ToLower(strings.TrimSpace(department))
 
 	switch normalizedDepartment {
 	case "home-and-garden":
