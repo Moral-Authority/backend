@@ -23,15 +23,16 @@ import (
 // DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
 
 func main() {
+
+
+	// Load environment variables from .env file
+	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+
 	// Read the database URL from the environment variable
 	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
 		log.Fatal("DATABASE_URL is not set")
 	}
-
-	// Load environment variables from .env file
-	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
-
 	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
@@ -65,6 +66,9 @@ func main() {
 	log.Println("Seeding Made Safe...")
 	// Seed Made Safe companies
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
+	// Seed PETA Cruelty Free companies
+	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
+	log.Println("Seeding Peta Cruelty Free...")
 	log.Println("Seeding Products.")
 	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
@@ -241,7 +245,18 @@ func formatCompanyFromRow(filePath string, row []string) models.Company {
 			IsVerified:  null.Bool{Valid: false},
 			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
 		}
-
+	case "cmd/seed/companies/PETA_cruelty_free_companies.csv":
+		return models.Company{
+			Name:        row[0],
+			Country:     null.NewString("", false),
+			State:       null.NewString("", false),
+			City:        null.NewString("", false),
+			Url:         null.StringFrom(row[1]),
+			Description: null.NewString("", false),
+			UserId:      null.Int64From(0),
+			IsVerified:  null.Bool{Valid: false},
+			ImageId:     null.Int64From(0), // Or some default value if not available in CSV
+		}
 	default:
 		return models.Company{
 			Name:        row[0],

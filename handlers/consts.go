@@ -57,13 +57,13 @@ const (
 func (p ProductDepartment) ToString() string {
 	switch p {
 	case HomeGardenProductDepartment:
-		return "Home & Garden"
+		return "home-and-garden"
 	case HealthBathBeautyProductDepartment:
-		return "Clothing & Accessories"
+		return  "clothing-and-accessories"
 	case ClothingAccessoriesProductDepartment:
-		return "Health, Bath & Beauty"
+		return "health-bath-and-beauty"
 	case ToysKidsBabiesProductDepartment:
-		return "Toys, Kids & Babies"
+		return "toys-and-kids-and-babies"
 	default:
 		return "Unknown"
 	}
@@ -85,17 +85,16 @@ func IsValidProductDepartment(department int) (ProductDepartment, bool) {
 
 func IsStringValidProductDepartment(department string) (ProductDepartment, bool) {
 
-	normalizedDepartment := strings.ReplaceAll(department, "&", "and")
-	normalizedDepartment = strings.TrimSpace(normalizedDepartment)
+	normalizedDepartment := strings.TrimSpace(department)
 
 	switch normalizedDepartment {
-	case "Home and Garden":
+	case "home-and-garden":
 		return HomeGardenProductDepartment, true
-	case "Clothing and Accessories":
+	case "clothing-and-accessories":
 		return ClothingAccessoriesProductDepartment, true
-	case "Health, Bath and Beauty":
+	case "health-bath-and-beauty":
 		return HealthBathBeautyProductDepartment, true
-	case "Toys, Kids and Babies":
+	case "toys-and-kids-and-babies":
 		return ToysKidsBabiesProductDepartment, true
 	default:
 		return 0, false
@@ -120,19 +119,19 @@ const (
 func (p HomeGardenSubDep) ToString() string {
 	switch p {
 	case HomeGardenCleaningSupplies:
-		return "Cleaning Supplies"
+		return "cleaning-supplies"
 	case HomeGardenKitchenDining:
-		return "Kitchen & Dining"
+		return "kitchen-and-dining"
 	case HomeGardenFurnitureArt:
-		return "Furniture & Art"
+		return "furniture-and-art"
 	case HomeGardenGarden:
-		return "Garden"
+		return "garden"
 	case HomeGardenBeddingLinens:
-		return "Bedding & Linens"
+		return "bedding-and-linens"
 	case HomeGardenLightingLamps:
-		return "Lighting & Lamps"
+		return "lighting-and-lamps"
 	case HomeGardenBathLaundry:
-		return "Bath & Laundry"
+		return "bath-and-laundry"
 	default:
 		return "Unknown"
 	}
@@ -146,23 +145,22 @@ func (p HomeGardenSubDep) ToInt() int {
 
 func IsStringValidHomeGardenSubDep(subdep string) (HomeGardenSubDep, bool) {
 
-	normalizedSubDep := strings.ReplaceAll(subdep, "&", "and")
-	normalizedSubDep = strings.TrimSpace(normalizedSubDep)
+	normalizedSubDep := strings.TrimSpace(subdep)
 
 	switch normalizedSubDep {
-	case "Cleaning Supplies":
+	case "cleaning-supplies":
 		return HomeGardenCleaningSupplies, true
-	case "Kitchen and Dining":
+	case "kitchen-and-dining":
 		return HomeGardenKitchenDining, true
-	case "Furniture and Art":
+	case "furniture-and-art":
 		return HomeGardenFurnitureArt, true
-	case "Garden":
+	case "garden":
 		return HomeGardenGarden, true
-    case "Bedding and Linens":
+    case "bedding-and-linens":
         return HomeGardenBeddingLinens, true
-    case "Lighting and Lamps":
+    case "lighting-and-lamps":
         return HomeGardenLightingLamps, true
-    case "Bath and Laundry":
+    case "bath-and-laundry":
         return HomeGardenBathLaundry, true
 	default:
 		return 0, false
@@ -182,11 +180,11 @@ const (
 func (p ClothingAccessoriesSubDep) ToString() string {
 	switch p {
 	case ClothingAccessoriesClothing:
-		return "Clothing"
+		return "clothing"
 	case ClothingAccessoriesAccessories:
-		return "Accessories"
+		return "accessories"
 	case ClothingAccessoriesBagsPurses:
-		return "Bags & Purses"
+		return "bags-and-purses"
 	default:
 		return "Unknown"
 	}
@@ -199,15 +197,14 @@ func (p ClothingAccessoriesSubDep) ToInt() int {
 
 func IsStringValidClothingAccessoriesSubDep(subdep string) (ClothingAccessoriesSubDep, bool) {
 
-    normalizedSubDep := strings.ReplaceAll(subdep, "&", "and")
-    normalizedSubDep = strings.TrimSpace(normalizedSubDep)
+    normalizedSubDep := strings.TrimSpace(subdep)
 
     switch normalizedSubDep {
-    case "Clothing":
+    case "clothing":
         return ClothingAccessoriesClothing, true
-    case "Accessories":
+    case "accessories":
         return ClothingAccessoriesAccessories, true
-    case "Bags and Purses":
+    case "bags-and-purses":
         return ClothingAccessoriesBagsPurses, true
     default:
         return 0, false
@@ -231,11 +228,11 @@ const (
 func (p HealthBathBeautySubDep) ToString() string {
 	switch p {
 	case HealthBathBeautyBeauty:
-		return "Beauty"
+		return "beauty"
 	case HealthBathBeautyBathBody:
-		return "Bath & Body"
+		return "bath-and-body"
 	case HealthBathBeautyHealth:
-		return "Health"
+		return "health"
 	default:
 		return "Unknown"
 	}
@@ -249,15 +246,14 @@ func (p HealthBathBeautySubDep) ToInt() int {
 
 func IsStringValidHealthBathBeautySubDep(subdep string) (HealthBathBeautySubDep, bool) {
 
-    normalizedSubDep := strings.ReplaceAll(subdep, "&", "and")
-    normalizedSubDep = strings.TrimSpace(normalizedSubDep)
+    normalizedSubDep := strings.TrimSpace(subdep)
 
     switch normalizedSubDep {
-    case "Beauty":
+    case "beauty":
         return HealthBathBeautyBeauty, true
-    case "Bath and Body":
+    case "bath-and-body":
         return HealthBathBeautyBathBody, true
-    case "Health":
+    case "health":
         return HealthBathBeautyHealth, true
     default:
         return 0, false
@@ -281,11 +277,11 @@ func (p ToysKidsBabiesSubDep) ToString() string {
 
 	switch p {
 	case ToysKidsBabiesClothing:
-		return "Clothing"
+		return "clothing"
 	case ToysKidsBabiesShoes:
-		return "Shoes"
+		return "shoes"
 	case ToysKidsBabiesToys:
-		return "Toys"
+		return "toys"
 	default:
 		return "Unknown"
 	}
@@ -299,15 +295,14 @@ func (p ToysKidsBabiesSubDep) ToInt() int {
 
 func IsStringValidToysKidsBabiesSubDep(subdep string) (ToysKidsBabiesSubDep, bool) {
 
-    normalizedSubDep := strings.ReplaceAll(subdep, "&", "and")
-    normalizedSubDep = strings.TrimSpace(normalizedSubDep)
+	normalizedSubDep := strings.TrimSpace(subdep)
 
     switch normalizedSubDep {
-    case "Clothing":
+    case "clothing":
         return ToysKidsBabiesClothing, true
-    case "Shoes":
+    case "shoes":
         return ToysKidsBabiesShoes, true
-    case "Toys":
+    case "toys":
         return ToysKidsBabiesToys, true
     default:
         return 0, false
