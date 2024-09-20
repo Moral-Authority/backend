@@ -6,6 +6,7 @@ import (
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 )
 
@@ -100,7 +101,7 @@ func (s ProductService) GetProductByIDHandler(productId string, department int, 
 
 func (s ProductService) GetAllProductsHandler(productDbService database.ProductDbService, productDept ProductDepartment, subDepartment string) ([]*model.Product, error) {
 
-
+	logrus.Info("Getting all products %s %s", productDept.ToString(), subDepartment)
 	switch productDept {
 	case HomeGardenProductDepartment:
 		subDept, isSubDept := IsStringValidHomeGardenSubDep(subDepartment)

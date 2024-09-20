@@ -13,7 +13,7 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"gorm.io/driver/postgres"
@@ -26,14 +26,14 @@ func main() {
 
 
 	// Load environment variables from .env file
-	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+	// _ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
 	// Read the database URL from the environment variable
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("DATABASE_URL is not set")
-	}
-	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
+	// dsn := os.Getenv("DATABASE_URL")
+	// if dsn == "" {
+	// 	log.Fatal("DATABASE_URL is not set")
+	// }
+	dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -350,7 +350,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 	}
 
 	companyID := findCompanyID(db, companyName)
-
+	
 	for {
 		row, err := reader.Read()
 		if err != nil {
@@ -362,12 +362,13 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 			fmt.Println("Invalid product department")
 		}
 		prodDept := prodDeptType.ToInt()
-
+		logrus.Info("prodDept", prodDept)
 		subDept, isSubdept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
 		if !isSubdept {
 			fmt.Println("invalid subdepartment", row[1])
 
 		}
+		logrus.Info("subDept", subDept)
 
 		// Create the HomeGardenProduct
 		product := models.HomeGardenProduct{

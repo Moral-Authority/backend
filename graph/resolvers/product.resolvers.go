@@ -11,6 +11,7 @@ import (
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
+	"github.com/sirupsen/logrus"
 )
 
 // UpdateProduct is the resolver for the updateProduct field.
@@ -47,6 +48,8 @@ func (r *queryResolver) GetAllProductsBySubDepartment(ctx context.Context, depar
 	if !isDepartment {
 		return nil, fmt.Errorf("invalid department type: %s", department)
 	}
+
+	logrus.Info("Getting all products %s %s", productDept, subDepartment)
 
 	companies, err := handlers.ProductService{}.GetAllProductsHandler(dbService, productDept, subDepartment)
 	if err != nil {
