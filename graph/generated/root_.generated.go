@@ -172,6 +172,7 @@ type ComplexityRoot struct {
 		Section                 func(childComplexity int) int
 		Style                   func(childComplexity int) int
 		SubCategory             func(childComplexity int) int
+		SubDepartment           func(childComplexity int) int
 		Subsection              func(childComplexity int) int
 		Title                   func(childComplexity int) int
 		Type                    func(childComplexity int) int
@@ -962,6 +963,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Product.SubCategory(childComplexity), true
 
+	case "Product.subDepartment":
+		if e.complexity.Product.SubDepartment == nil {
+			break
+		}
+
+		return e.complexity.Product.SubDepartment(childComplexity), true
+
 	case "Product.Subsection":
 		if e.complexity.Product.Subsection == nil {
 			break
@@ -1748,7 +1756,8 @@ type Product {
     Company: Company! 
     PurchaseInfo: [PurchaseInfo!]
     ProductCertifications: [Certification!] # Relationship with ProductCertification
-    Department: String! # New field to track the department
+    Department: String!
+    subDepartment: String!
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]

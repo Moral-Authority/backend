@@ -37,7 +37,8 @@ type Product {
     Company: Company! 
     PurchaseInfo: [PurchaseInfo!]
     ProductCertifications: [Certification!] # Relationship with ProductCertification
-    Department: String! # New field to track the department
+    Department: String!
+    subDepartment: String!
     MaterialsAndIngredients: [String]
     GiveBackPrograms: [String]
     OwnersAndFounders: [String]

@@ -12,15 +12,20 @@ func toProductResponse(product interface{}, department ProductDepartment) *model
 	var baseProduct *models.ProductBase
 
 	// Use type assertion for each product type
+	var subDept string
 	switch p := product.(type) {
 	case *models.HomeGardenProduct:
 		baseProduct = &p.ProductBase
+		subDept = HomeGardenSubDep(baseProduct.SubDepartment).ToString()
 	case *models.HealthBathBeautyProduct:
 		baseProduct = &p.ProductBase
+		subDept = HealthBathBeautySubDep(baseProduct.SubDepartment).ToString()
 	case *models.ClothingAccessoriesProduct:
 		baseProduct = &p.ProductBase
+		subDept = ClothingAccessoriesSubDep(baseProduct.SubDepartment).ToString()
 	case *models.ToysKidsBabiesProduct:
 		baseProduct = &p.ProductBase
+		subDept = ToysKidsBabiesSubDep(baseProduct.SubDepartment).ToString()
 	default:
 		logrus.Errorf("Invalid product type: expected *models.ProductBase, got %T", product)
 		return nil
@@ -33,11 +38,11 @@ func toProductResponse(product interface{}, department ProductDepartment) *model
 		ImageLinks:   []string{baseProduct.ProductImage},
 		Company:      toCompanyResponse(&baseProduct.Company),
 		PurchaseInfo: toPurchaseInfoResponse(baseProduct.PurchaseInfo),
+		SubDepartment: subDept,
 		// ProductCertifications: toCertificationsResponse(baseProduct.ProductCertifications),
 		Department: department.ToString(),
 	}
 }
-
 
 func toGenericProductsResponse[T any](products []*T, department ProductDepartment) []*model.Product {
 	var response []*model.Product

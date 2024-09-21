@@ -1,53 +1,602 @@
-Department,SubDepartment,Category,Product Name,Price,Product URL,Product Image,Secondary Image,Notes
-home-and-garden,kitchen-and-dining,Dish,The Tablet Trio,47,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Dishwasher & Laundry Duo,36,https://www.blueland.com/products/dishwasher-laundry-duo?option=0,https://cdn.sanity.io/images/d864s8gp/production/02533fde6c9ccacb45314feed6b017e0777c0cdc-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,Laundry Scent: Spring Bloom
-Home-and-garden,kitchen-and-dining,Dish,Dishwasher & Toilet Duo,48,https://www.blueland.com/products/dishwasher-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/1d18654e23cde3077853c10b2b7044761318f29f-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-Home-and-garden,kitchen-and-dining,Dish,Dishwasher Starter Set,20,https://www.blueland.com/products/dishwasher-starter-set,https://cdn.sanity.io/images/d864s8gp/production/f73028225df35b05bf6cca1e3f36556478c0e2f1-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-Home-and-garden,kitchen-and-dining,Dish,The Dish Duo,43,https://www.blueland.com/products/the-dish-duo,https://cdn.sanity.io/images/d864s8gp/production/86d9f7a57d6ea262a362a801aaa35a5766386205-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Dish Soap Starter Set,15,https://www.blueland.com/products/dish-soap-starter-set,https://cdn.sanity.io/images/d864s8gp/production/3ef9a9f9c0291ac5aa109b3129343748ab84b926-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Dishwasher Refill Packs,19,https://www.blueland.com/products/dishwasher-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/77a3090167ae8328d25884d8087ebb70c6707b10-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Dish Soap Refill Packs,11,https://www.blueland.com/products/dish-soap-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/41d3d859bc670c2e88db38f038e318e322fd6f90-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Cleaning Companions,14,https://www.blueland.com/products/cleaning-companions,https://cdn.sanity.io/images/d864s8gp/production/799e6784c371a203f271567edc750df5f02254e5-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Cloud Cloth,13,https://www.blueland.com/products/cloud-cloth,https://cdn.sanity.io/images/d864s8gp/production/5bca49edde0a2564ce608b6edb1b2decb925f160-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Scrub Sponge,13,https://www.blueland.com/products/scrub-sponge,https://cdn.sanity.io/images/d864s8gp/production/51075b0b493dd7c892e6c140b001fa8fcf25c559-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,kitchen-and-dining,Dish,Pop-Up Sponge,11,https://www.blueland.com/products/pop-up-sponge,https://cdn.sanity.io/images/d864s8gp/production/9736ddcfeac2ab9f7cf2ac5f113831206fe8ad61-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,bath-and-laundry,Hand Soap,National Parks Hand Soap Refill Packs,12.50,https://www.blueland.com/products/national-parks-hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/fd43f1e24ddf03e09dc2e6aacb3861d63b78f814-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fe85dc8239f9260a17d165fb26d6cc7b3261eb82-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,7 scents available
-home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Refill Packs,12,https://www.blueland.com/products/hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/2e46733af800be2cc09cc939f9830e73b4214878-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/b54dc08c2f50da7376675e1e5977809916a7f40a-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,5 colors available
-home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Duo,15,https://www.blueland.com/products/hand-soap-duos?option=0,https://cdn.sanity.io/images/d864s8gp/production/a37836782b3e065add5e2ddcd104425c4e39f4b0-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/19dfe8a7090e04a7e9b54a94f600459943898bcb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,5 colors available
-home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Starter Set,8,https://www.blueland.com/products/hand-soap-sets?option=0,https://cdn.sanity.io/images/d864s8gp/production/0444ad696a218331f9377791b48e2dc7f8cb0b9c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/64b736705e1722ccb38011275f00df60a077f006-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,2 colors available
-home-and-garden,bath-and-laundry,Hand Soap,Foaming Hand Soap Pump,2,https://www.blueland.com/products/foaming-hand-soap-pump?option=0,https://cdn.sanity.io/images/d864s8gp/production/e8403bfac4ecad089acd57e678f87b847cbbe7c4-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,3 colors available
-home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Forever Bottle,12,https://www.blueland.com/products/forever-hand-soap-bottle?option=0,https://cdn.sanity.io/images/d864s8gp/production/3f85dd014cab21c44268ca87538f488b96d59b39-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,5 scents available
-home-and-garden,bath-and-laundry,Hand Soap,National Parks Hand Soap Refill Packs,12.50,https://www.blueland.com/products/national-parks-hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/fd43f1e24ddf03e09dc2e6aacb3861d63b78f814-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fe85dc8239f9260a17d165fb26d6cc7b3261eb82-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,The Tablet Trio,47,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/cb42c4959984d8b57d1af2b9523eaa941f3a6179-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Laundry Essentials Kit,41,https://www.blueland.com/products/laundry-essentials-kit?option=0,https://cdn.sanity.io/images/d864s8gp/production/7420201fa0f5878d5b4f3f6fa3e19977022b0fcc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/7420201fa0f5878d5b4f3f6fa3e19977022b0fcc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Dishwasher & Laundry Duo,36,https://www.blueland.com/products/dishwasher-laundry-duo?option=0,https://cdn.sanity.io/images/d864s8gp/production/02533fde6c9ccacb45314feed6b017e0777c0cdc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9fefa3760bad5559d63254d20042705d3504ee31-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Laundry & Toilet Duo,35,https://www.blueland.com/products/laundry-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/21eaf30d77ba56f2efffc07625e67c2b55b7b8f8-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/847fff37b437c589680f7172ac66be994245d177-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Laundry Starter Set,0.00,https://www.blueland.com/products/laundry-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/26502e45b582b2621a4f759ccfe59297be017389-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/26502e45b582b2621a4f759ccfe59297be017389-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Oxi Laundry Booster Starter Set,0.00,https://www.blueland.com/products/laundry-booster-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/5115dad7f49bd18c840aa6d7c8972a4991324364-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/5115dad7f49bd18c840aa6d7c8972a4991324364-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Laundry Refill Packs,0.00,https://www.blueland.com/products/laundry-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/0ea4b44dd8216fb594b326ab9be6a29ce1b7692f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/0ea4b44dd8216fb594b326ab9be6a29ce1b7692f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Oxi Laundry Booster Refill,0.00,https://www.blueland.com/products/laundry-booster-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/52e290a747fe8638b95893cd0153e93183ca87a9-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/52e290a747fe8638b95893cd0153e93183ca87a9-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-home-and-garden,bath-and-laundry,Laundry,Dryer Ball Starter Set,0.00,https://www.blueland.com/products/dryer-ball-set,https://cdn.sanity.io/images/d864s8gp/production/6a52b8fcecbeafd3b4e52e18c1d1e2dff467f793-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9a727d2208c67140921af7c1124520b02ce536ac-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Clean Skin Duo,37,https://www.blueland.com/products/clean-skin-duo,https://cdn.sanity.io/images/d864s8gp/production/490b765d3548199892753f9a160d3a1208b2216c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/004b5487bdd054aa4d206ddcad40f28a4e109368-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Starter Set,12,https://www.blueland.com/products/body-wash-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/af2b1f0b6bbe6833a7ff0ceeac0dc965e2307c4e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fff40d031cdb6d5c0227064f39e98dedbb2d1468-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Starter Set,13,https://www.blueland.com/products/facial-cleanser-starter-set,https://cdn.sanity.io/images/d864s8gp/production/dc2633112b32516ff2626d90974746c5c941216e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/b2fa3c5bbc4a2e2f5c45a9d5dfed2adcbe0396c6-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Refills,8,https://www.blueland.com/products/body-wash-refills?option=0,https://cdn.sanity.io/images/d864s8gp/production/25a606a81aae64323b3c27400c5971668f4a6cfb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/25a606a81aae64323b3c27400c5971668f4a6cfb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Refills,9,https://www.blueland.com/products/facial-cleanser-refills,https://cdn.sanity.io/images/d864s8gp/production/83574239d292a877c63ff49ad9cc79a46112ef03-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9a42462717df62713dc0f1654fec093f613e9f04-1540x1520.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,
-health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Forever Bottle,9,https://www.blueland.com/products/body-wash-forever-bottle,https://cdn.sanity.io/images/d864s8gp/production/f732908785d1a73015c4073e2819ac60ab160780-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,
-health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Forever Bottle,9,https://www.blueland.com/products/facial-cleanser-forever-bottle,https://cdn.sanity.io/images/d864s8gp/production/0c4922016a3580d791e5e2827a0531414f10a819-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,
-home-and-garden,cleaning-supplies,Spray Cleaners,The Clean Essentials,58,https://www.blueland.com/products/the-clean-essentials,https://cdn.sanity.io/images/d864s8gp/production/57e358b3dc3bad7b489699562288141f7419705a-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Multi-Surface Starter Set,13,https://www.blueland.com/products/multi-surface-starter-set,https://cdn.sanity.io/images/d864s8gp/production/78c2a7c673f88abb26ed2e37905d86290dc98a69-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Bathroom Starter Set,13,https://www.blueland.com/products/bathroom-starter-set,https://cdn.sanity.io/images/d864s8gp/production/7147b30bcde6e2b114e3f302909d2a97e0d2021e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Glass + Mirror Starter Set,13,https://www.blueland.com/products/glass-mirror-starter-set,https://cdn.sanity.io/images/d864s8gp/production/98fafe70583a6ea14da813c504f6ab3cc3f72b0c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Multi-Surface Refill Packs,5,https://www.blueland.com/products/multi-surface-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/2bdf654407a48ffc473cff45f3b31d1d5082deb3-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Bathroom Refill Packs,5,https://www.blueland.com/products/bathroom-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/7d6e64b01ebbb1c31765246324498a90e30773b5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Glass + Mirror Refill Packs,5,https://www.blueland.com/products/glass-mirror-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/65d8d4a586d04703c6d3d5c96771badc7dafb422-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Cleaning Companions,14,https://www.blueland.com/products/cleaning-companions,https://cdn.sanity.io/images/d864s8gp/production/799e6784c371a203f271567edc750df5f02254e5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Cloud Cloth,13,https://www.blueland.com/products/cloud-cloth,https://cdn.sanity.io/images/d864s8gp/production/5bca49edde0a2564ce608b6edb1b2decb925f160-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Spray Cleaners,Spray Cleaner Nozzle,2,https://www.blueland.com/products/cleaning-spray-nozzle?option=0,https://cdn.sanity.io/images/d864s8gp/production/48e760cadfbadb574ac59914bea59d32b0f299b4-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,The Tablet Trio,73,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Laundry & Toilet Duo,48,https://www.blueland.com/products/laundry-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/21eaf30d77ba56f2efffc07625e67c2b55b7b8f8-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Dishwasher & Toilet Duo,48,https://www.blueland.com/products/dishwasher-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/1d18654e23cde3077853c10b2b7044761318f29f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Toilet Bowl Cleaner Starter Set,19,https://www.blueland.com/products/toilet-cleaner-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/144dfa9bd95f9339c6944e054ed6e8943612eff6-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Bathroom Starter Set,13,https://www.blueland.com/products/bathroom-starter-set,https://cdn.sanity.io/images/d864s8gp/production/7147b30bcde6e2b114e3f302909d2a97e0d2021e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Toilet Bowl Cleaner Refill Packs,17,https://www.blueland.com/products/toilet-cleaner-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/d77bba65e7d8a0c33a87c32e9a751d36d636aadd-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
-home-and-garden,cleaning-supplies,Toilet,Bathroom Refill Packs,5,https://www.blueland.com/products/bathroom-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/7d6e64b01ebbb1c31765246324498a90e30773b5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,
+Department,SubDepartment,Category,Product Name,Price,Product URL,Product Image,Secondary Image,Cert1,Cert2,Cert3,Description,features,Ingredients,Notes
+home-and-garden,kitchen-and-dining,Dish,The Tablet Trio,47,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Small tablet, big clean. Save space and money while also doing good for the planet with this trio of our plastic-free, sustainable best-sellers. Our Toilet Bowl Cleaner, Dishwasher Detergent Tablets and Laundry Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Three powerful ways to clean, none of the plastic waste.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Dishwasher & Laundry Duo,36,https://www.blueland.com/products/dishwasher-laundry-duo?option=0,https://cdn.sanity.io/images/d864s8gp/production/02533fde6c9ccacb45314feed6b017e0777c0cdc-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Laundry Detergent Tablets and Dishwasher Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet.,"Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",Laundry Scent: Spring Bloom
+Home-and-garden,kitchen-and-dining,Dish,Dishwasher & Toilet Duo,48,https://www.blueland.com/products/dishwasher-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/1d18654e23cde3077853c10b2b7044761318f29f-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Dishwasher Detergent and Toilet Bowl Cleaner Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Two powerful ways to clean, none of the plastic waste.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+Home-and-garden,kitchen-and-dining,Dish,Dishwasher Starter Set,20,https://www.blueland.com/products/dishwasher-starter-set,https://cdn.sanity.io/images/d864s8gp/production/f73028225df35b05bf6cca1e3f36556478c0e2f1-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Not your average dishwasher detergent – our tablets have all of the power without any of the plastic. Unlike conventional detergent pods that come wrapped in plastic, our dry-form tablets cut grease, grime, and lift food stains for a sparkling clean without dissolving plastic film onto your dishes.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+Home-and-garden,kitchen-and-dining,Dish,The Dish Duo,43,https://www.blueland.com/products/the-dish-duo,https://cdn.sanity.io/images/d864s8gp/production/86d9f7a57d6ea262a362a801aaa35a5766386205-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"This dynamic duo has all the power without the plastic. Washing dishes by hand? Apply powder onto a sponge or dirty dishes and add water to create a thick foam that scrubs away grease, grime, and stains. If you opt for the dishwasher, simply drop in a tablet into your dispenser and you're good to go.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Dish Soap Starter Set,15,https://www.blueland.com/products/dish-soap-starter-set,https://cdn.sanity.io/images/d864s8gp/production/3ef9a9f9c0291ac5aa109b3129343748ab84b926-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Step up to the plate(s) with a powerful powder made to wash without the waste. Simply pour powder onto a sponge or dish, add water, and squeeze to create a thick foam that lifts food stains and washes away unwanted leftovers with ease.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Dishwasher Refill Packs,19,https://www.blueland.com/products/dishwasher-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/77a3090167ae8328d25884d8087ebb70c6707b10-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our powerful dishwasher tablets. Hard-working without the harsh chemicals, our plastic-free tablets are proven to lift food stains, cut grease and grime, and leave plates sparkling clean. Say goodbye to conventional plastic-wrapped dishwasher detergent pods for good!","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Dish Soap Refill Packs,11,https://www.blueland.com/products/dish-soap-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/41d3d859bc670c2e88db38f038e318e322fd6f90-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our powerful dish soap powder. Hard-working without the harsh chemicals, our plastic-free dish soap is proven to lift food stains, cut grease and grime, and leave plates sparkling clean.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Cleaning Companions,14,https://www.blueland.com/products/cleaning-companions,https://cdn.sanity.io/images/d864s8gp/production/799e6784c371a203f271567edc750df5f02254e5-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"The ultimate trio of compostable companions for your kitchen. Powerful on dirty dishes and surfaces, gentle on the planet when it’s time for a new one. This kit comes with:
+
+    Cloud Cloth - an ultra-absorbent, strong, reusable cloth that can replace up to 1,500 paper towels (Please note that color may vary)
+    Pop-Up Sponge - a cellulose sponge that is plant-based, not plastic
+    Scrub Sponge - a dual-action loofah scrubber and absorbent cellulose sponge for your toughest messes","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Cloud Cloth,13,https://www.blueland.com/products/cloud-cloth,https://cdn.sanity.io/images/d864s8gp/production/5bca49edde0a2564ce608b6edb1b2decb925f160-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Goodbye single-use paper towels. Our ultra-absorbent Cloud Cloth is the perfect combo of a sponge and dishcloth. Made from all-natural cotton and plant cellulose, our ultra-absorbent Cloud Cloth is the solution to any surface mess – so you can wipe without the waste.
+
+    Ultra-Absorbent: One cloth can absorb 10x its weight in water and replace as many as 1,500 paper towels
+    Easy to Sanitize: Throw it in the dishwasher or boil to easily sanitize","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Scrub Sponge,13,https://www.blueland.com/products/scrub-sponge,https://cdn.sanity.io/images/d864s8gp/production/51075b0b493dd7c892e6c140b001fa8fcf25c559-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Unlike conventional kitchen sponges that contain plastic, our powerful and compostable dual-action sponge works just as hard, but with plant-based power. Tackle your toughest messes with a plastic-free alternative that can get the job done – a loofah side for scrubbing stuck-on food and a 100% FSC-certified cellulose side for washing away grime.
+
+    100% Plastic-Free: Free of all plastics
+    Durable: Hand-sewn with cotton thread for strength, instead of plastic glues or adhesives
+    Easy to Sanitize: Throw it in the dishwasher or boil to easily sanitize","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,kitchen-and-dining,Dish,Pop-Up Sponge,11,https://www.blueland.com/products/pop-up-sponge,https://cdn.sanity.io/images/d864s8gp/production/9736ddcfeac2ab9f7cf2ac5f113831206fe8ad61-1790x1790.jpg?w=300&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Upgrade from your conventional plastic sponge to our compostable, plant-based super absorber. Our Pop-Up Sponge arrives flat and compact for easy storage (it's 1/5th the size of a regular sponge!). Just add water and... yep, you guessed it – it pops up. So you can clean without the plastic waste or worry.
+
+    100% Plastic-Free: Free of all plastics
+    Ultra-Absorbent: FSC-certified plant cellulose doesn't leave a trace of food behind
+    Easy to Sanitize: Throw it in the dishwasher or boil to easily sanitize","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Hand Soap,National Parks Hand Soap Refill Packs,12.5,https://www.blueland.com/products/national-parks-hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/fd43f1e24ddf03e09dc2e6aacb3861d63b78f814-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fe85dc8239f9260a17d165fb26d6cc7b3261eb82-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our bestselling hand soap scents. Take your pick from five classic scents or opt for our limited edition packs and say goodbye to single-use plastic.
+
+Just fill with water, drop in a tablet and voila! hydrating, foamy goodness at your fingertips.
+
+    Classic Scents: Iris Agave, Perrine Lemon, Lavender Eucalyptus, Evergreen, Pacific Mist, and Fragrance-Free
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Plastic & Money: Never pay for water or a new plastic bottle with space-saving foaming hand soap refills that start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",7 scents available
+home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Refill Packs,12,https://www.blueland.com/products/hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/2e46733af800be2cc09cc939f9830e73b4214878-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/b54dc08c2f50da7376675e1e5977809916a7f40a-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our bestselling hand soap scents. Take your pick from five classic scents or opt for our limited edition packs and say goodbye to single-use plastic.
+
+Just fill with water, drop in a tablet and voila! hydrating, foamy goodness at your fingertips.
+
+    Classic Scents: Iris Agave, Perrine Lemon, Lavender Eucalyptus, Evergreen, Pacific Mist, and Fragrance-Free
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Plastic & Money: Never pay for water or a new plastic bottle with space-saving foaming hand soap refills that start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",5 colors available
+home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Duo,15,https://www.blueland.com/products/hand-soap-duos?option=0,https://cdn.sanity.io/images/d864s8gp/production/a37836782b3e065add5e2ddcd104425c4e39f4b0-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/19dfe8a7090e04a7e9b54a94f600459943898bcb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Your sink's new BFF (literally, forever). We've eliminated the single-use plastic waste of traditional hand soaps by creating one bottle made to last forever. Just fill with water, drop in a tablet and voila! Hydrating, foamy goodness at your fingertips.
+
+Each tablet makes one full bottle of Foaming Hand Soap for you to enjoy.
+
+    Scents: Iris Agave, Perrine Lemon, Lavender Eucalyptus, Pacific Mist, & Evergreen
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",5 colors available
+home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Starter Set,8,https://www.blueland.com/products/hand-soap-sets?option=0,https://cdn.sanity.io/images/d864s8gp/production/0444ad696a218331f9377791b48e2dc7f8cb0b9c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/64b736705e1722ccb38011275f00df60a077f006-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Your sink's new BFF (literally, forever). We've eliminated the single-use plastic waste of traditional hand soaps by creating one bottle made to last forever. Just fill with water, drop in a tablet and voila! Hydrating, foamy goodness at your fingertips.
+
+Each tablet makes one full bottle of Foaming Hand Soap for you to enjoy.
+
+    Scent Options: Iris Agave, Perrine Lemon, Lavender Eucalyptus, Pacific Mist, and Evergreen
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and foaming hand soap refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",2 colors available
+home-and-garden,bath-and-laundry,Hand Soap,Foaming Hand Soap Pump,2,https://www.blueland.com/products/foaming-hand-soap-pump?option=0,https://cdn.sanity.io/images/d864s8gp/production/e8403bfac4ecad089acd57e678f87b847cbbe7c4-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Whether you’re in the mood to switch up your colors or your pump has run its course, look no further. Keep your Forever Bottle and twist on a brand new pump for the perfect foamy lather. Recycle your old pump locally or send it back to us and we can do it for you!","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",3 colors available
+home-and-garden,bath-and-laundry,Hand Soap,Hand Soap Forever Bottle,12,https://www.blueland.com/products/forever-hand-soap-bottle?option=0,https://cdn.sanity.io/images/d864s8gp/production/3f85dd014cab21c44268ca87538f488b96d59b39-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"It wouldn't be our famous Foaming Hand Soap without its beautiful glass Forever Bottle! This glass bottle allows for precise water measurement, giving you the visibility to fill up to the half-round with each refill. Just fill, drop, and clean for one full bottle of foamy hand soap goodness.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",5 scents available
+home-and-garden,bath-and-laundry,Hand Soap,National Parks Hand Soap Refill Packs,12.5,https://www.blueland.com/products/national-parks-hand-soap-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/fd43f1e24ddf03e09dc2e6aacb3861d63b78f814-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fe85dc8239f9260a17d165fb26d6cc7b3261eb82-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our bestselling hand soap scents. Take your pick from five classic scents or opt for our limited edition packs and say goodbye to single-use plastic.
+
+Just fill with water, drop in a tablet and voila! hydrating, foamy goodness at your fingertips.
+
+    Classic Scents: Iris Agave, Perrine Lemon, Lavender Eucalyptus, Evergreen, Pacific Mist, and Fragrance-Free
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Plastic & Money: Never pay for water or a new plastic bottle with space-saving foaming hand soap refills that start at $2.25
+
+Ingredients
+
+Name
+CAS
+Source","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,The Tablet Trio,47,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/cb42c4959984d8b57d1af2b9523eaa941f3a6179-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Small tablet, big clean. Save space and money while also doing good for the planet with this trio of our plastic-free, sustainable best-sellers. Our Toilet Bowl Cleaner, Dishwasher Detergent Tablets and Laundry Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Three powerful ways to clean, none of the plastic waste.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with a compact Forever Tin and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    21% Kit Savings: Get three of our best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Laundry Essentials Kit,41,https://www.blueland.com/products/laundry-essentials-kit?option=0,https://cdn.sanity.io/images/d864s8gp/production/7420201fa0f5878d5b4f3f6fa3e19977022b0fcc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/7420201fa0f5878d5b4f3f6fa3e19977022b0fcc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Tackle laundry day and ditch the plastic-wrapped detergent pods with our full lineup of plastic-free laundry essentials. Get a powerful clean with our plastic-free Laundry Detergent Tablets, a boost of stain-removing power with our Oxi Laundry Booster, and reduce wrinkles, static, and dry time with our Dryer Balls.
+
+    Scents: Spring Bloom (smells like wildflowers and sun-ripened citrus) and Fragrance-Free
+    Clean Ingredients: Free from dyes, bleach, and harsh chemicals
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with tablets that take up half the size of plastic alternatives
+    16% Bundle Savings: Get everything in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Dishwasher & Laundry Duo,36,https://www.blueland.com/products/dishwasher-laundry-duo?option=0,https://cdn.sanity.io/images/d864s8gp/production/02533fde6c9ccacb45314feed6b017e0777c0cdc-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9fefa3760bad5559d63254d20042705d3504ee31-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"
+Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Laundry Detergent Tablets and Dishwasher Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with compact Forever Tins and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    10% Bundle Savings: Get both best-sellers in one kit and save on costs and emissions ","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Laundry & Toilet Duo,35,https://www.blueland.com/products/laundry-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/21eaf30d77ba56f2efffc07625e67c2b55b7b8f8-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/847fff37b437c589680f7172ac66be994245d177-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Toilet Bowl Cleaner and Laundry Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Two powerful ways to clean, none of the plastic waste.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with a compact Forever Tin and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    10% Kit Savings: Get two of our best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Laundry Starter Set,20,https://www.blueland.com/products/laundry-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/26502e45b582b2621a4f759ccfe59297be017389-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/26502e45b582b2621a4f759ccfe59297be017389-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Tough on stains, gentle on the planet. Our dry form tablet is tried, tested, and proven to lift the toughest stains—from grass and coffee to food and makeup. Ditch conventional plastic laundry pods with harsh ingredients and enjoy a powerful, plastic-free laundry detergent that you can feel good about.
+
+Just drop one tablet directly into the washing machine drum and let it work its magic. For large loads, double the power with two tablets instead of one.
+
+    Scents: Spring Bloom (smells like wildflowers and sun-ripened citrus) and Fragrance-Free
+    Clean Ingredients: Free from dyes, bleach, and harsh chemicals
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: One Forever Tin can fit one pack of 60 plastic-free laundry detergent tablets and is 3x smaller than the equal load-sized container","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Oxi Laundry Booster Starter Set,15,https://www.blueland.com/products/laundry-booster-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/5115dad7f49bd18c840aa6d7c8972a4991324364-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/5115dad7f49bd18c840aa6d7c8972a4991324364-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Stains have met their match. Our tried, tested, and proven Oxi Laundry Booster helps lift stains, revive whites/colors, and remove odors all in a single scoop of powder. Powerful, without the plastic.
+
+Simply pour one scoop directly into your laundry machine drum when your laundry needs an extra boost of brightening or stain-removing power. For extra tough stains, mix with water and let laundry soak before washing.
+
+    Scents: Spring Bloom (smells like wildflowers and sun-ripened citrus), Clear Skies (smells like fresh air and crisp linens), and Fragrance-Free
+    Clean Ingredients: Free from dyes, bleach, and harsh chemicals
+    Effective: Independently tested to perform alongside major brands","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Laundry Refill Packs,19,https://www.blueland.com/products/laundry-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/0ea4b44dd8216fb594b326ab9be6a29ce1b7692f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/0ea4b44dd8216fb594b326ab9be6a29ce1b7692f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our powerful plastic-free laundry detergent tablets. Ditch the traditional plastic-wrapped pods and enjoy a clean you can feel good about with a dry-form tablet made to wash without the waste.
+
+Just drop one tablet directly into the washing machine drum and let it work its magic. For large loads, double the power with two tablets instead of one.
+
+    Scents: Spring Bloom (smells like wildflowers and sun-ripened citrus) and Fragrance-Free
+    Free from dyes, bleach, and harsh chemicals
+    Packaged in compostable paper
+    Save 10% when you buy in bulk","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Oxi Laundry Booster Refill,10.8,https://www.blueland.com/products/laundry-booster-refill-packs?option=0,https://cdn.sanity.io/images/d864s8gp/production/52e290a747fe8638b95893cd0153e93183ca87a9-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/52e290a747fe8638b95893cd0153e93183ca87a9-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Oxi Laundry Booster. Hard-working without the harsh chemicals, our powder lifts stains, revives whites/colors, and fights odors.
+
+    Scents: Spring Bloom (smells like wildflowers and sun-ripened citrus), Clear Skies (smells like fresh air and crisp linens), and Fragrance-Free
+    Free from dyes, bleach and harmful ingredients
+    Each pouch is equivalent to 25 loads
+    Packaged in compostable paper
+    Save 10% when you buy in bulk ","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,bath-and-laundry,Laundry,Dryer Ball Starter Set,18,https://www.blueland.com/products/dryer-ball-set,https://cdn.sanity.io/images/d864s8gp/production/6a52b8fcecbeafd3b4e52e18c1d1e2dff467f793-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9a727d2208c67140921af7c1124520b02ce536ac-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Cut down on dry time, cost, and waste with our wool Dryer Balls that can replace up to 1,000 single-use plastic dryer sheets! Soft clothes couldn't be easier – simply throw the Dryer Balls into your dryer for clothes just like we like them, wrinkle and plastic-free.
+
+    Reuse: Includes 3 dryer balls
+    Sustainably Sourced: Made from New Zealand wool
+    Effective: Independently tested to reduce dry time and wrinkles","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Clean Skin Duo,37,https://www.blueland.com/products/clean-skin-duo,https://cdn.sanity.io/images/d864s8gp/production/490b765d3548199892753f9a160d3a1208b2216c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/004b5487bdd054aa4d206ddcad40f28a4e109368-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Turn your self care into planet care with a clean routine that’s made for you and the planet. Clean up from tip to toe with ingredients and packaging you can feel good about. Buy your bottles once and refill them forever with refill powder packs.
+
+This kit makes 3 full bottles of Body Wash (1 Waterlily Dew, 1 Coconut Milk, 1 Sandalwood Sage) and 1 full bottle of Facial Cleanser (Fragrance-Free).
+
+    Hypoallergenic: Non-irritating cleansers
+    Clean Ingredients: Made with people and planet-friendly ingredients like Oat, Vitamin E and Kaolin Clay
+    Effective: Derm-tested for an ultra-gentle and non-foaming clean
+    Save 21%: Get both best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Starter Set,12,https://www.blueland.com/products/body-wash-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/af2b1f0b6bbe6833a7ff0ceeac0dc965e2307c4e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/fff40d031cdb6d5c0227064f39e98dedbb2d1468-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"A first-of-its-kind powder to gel body wash eliminating the need for single-use plastic. Our powder + your water = 1 full bottle of body wash.
+
+Designed to be reused and refilled again (and again), this creamy blend of vitamins and minerals gently cleanses while hydrating ingredients work hard for happy, healthy skin.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Gentle: Derm-tested for a hypoallergenic and non-irritating clean
+    Zero-Waste: Refills come packaged in paper-based compostable packaging","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Starter Set,13,https://www.blueland.com/products/facial-cleanser-starter-set,https://cdn.sanity.io/images/d864s8gp/production/dc2633112b32516ff2626d90974746c5c941216e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/b2fa3c5bbc4a2e2f5c45a9d5dfed2adcbe0396c6-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"A first-of-its-kind gentle cleanser that transforms from powder into a full bottle of non-foaming gel with a skin-balanced pH. Our powder + your water = 1 full bottle of facial cleanser.
+
+The gentle blend of hydrating ingredients creates a gel that is hypoallergenic, non-irritating and fragrance-free.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients such as Oat, Kaolin Clay and Vitamin E
+    Gentle: Derm-tested for a hypoallergenic clean
+    Non-Irritating: Fragrance-free with a skin-balanced pH","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Refills,7.2,https://www.blueland.com/products/body-wash-refills?option=0,https://cdn.sanity.io/images/d864s8gp/production/25a606a81aae64323b3c27400c5971668f4a6cfb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/25a606a81aae64323b3c27400c5971668f4a6cfb-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, and refill with our Body Wash refill pack. One powder refill pack makes one full bottle of creamy, hydrating body wash. Lather up – your skin (and planet) will thank you.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Derm-tested for an ultra-gentle and hypoallergenic clean","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Refills,9,https://www.blueland.com/products/facial-cleanser-refills,https://cdn.sanity.io/images/d864s8gp/production/83574239d292a877c63ff49ad9cc79a46112ef03-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,https://cdn.sanity.io/images/d864s8gp/production/9a42462717df62713dc0f1654fec093f613e9f04-1540x1520.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, and refill with our Facial Cleanser refill packs. One powder refill pack makes one full bottle of non-foaming gel with a skin-balanced pH. Your face (and planet) will thank you.
+
+    Non-Irritating: Fragrance-free, hypoallergenic, skin-balanced pH
+    Clean Ingredients: Made with people and planet-friendly ingredients like Oat, Vitamin E and Coconut Acid
+    Effective: Derm-tested for an ultra-gentle and non-foaming cleanse","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Body Wash Forever Bottle,9,https://www.blueland.com/products/body-wash-forever-bottle,https://cdn.sanity.io/images/d864s8gp/production/f732908785d1a73015c4073e2819ac60ab160780-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Designed to be reused and refilled again (and again), the Body Wash Forever Bottle is a durable, shatterproof alternative to your plastic or glass bottle. The transparent bottle allows for precise water measurement, giving you the visibility to fill up to the half-round with each refill. Just fill, pour, and shake for one full bottle of creamy, hydrating body wash.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+health-bath-and-beauty,bath-and-body,Personal Care,Facial Cleanser Forever Bottle,9,https://www.blueland.com/products/facial-cleanser-forever-bottle,https://cdn.sanity.io/images/d864s8gp/production/0c4922016a3580d791e5e2827a0531414f10a819-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,–,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Designed to be reused and refilled again (and again), the Facial Cleanser Forever Bottle is a durable, shatterproof alternative to your plastic or glass bottle. The transparent bottle allows for precise water measurement, giving you the visibility to fill up to the half-round with each refill. Just fill, pour, and shake for one full bottle of non-foaming gel.","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,The Clean Essentials,36,https://www.blueland.com/products/the-clean-essentials,https://cdn.sanity.io/images/d864s8gp/production/57e358b3dc3bad7b489699562288141f7419705a-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Upgrade your clean routine with just the essentials – our four best-selling products all in one.
+
+Our Hand Soap, Multi-Surface Cleaner, Bathroom Cleaner, and Glass + Mirror Cleaner have all of the plant-based power without any of the single-use plastic. Made to keep our home and planet in tip top shape.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    21% Bundle Savings: Get everything in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Multi-Surface Starter Set,16,https://www.blueland.com/products/multi-surface-starter-set,https://cdn.sanity.io/images/d864s8gp/production/78c2a7c673f88abb26ed2e37905d86290dc98a69-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Designed to be reused and refilled again (and again), this is the last cleaning bottle you’ll ever need. Our Multi-Surface Cleaner is tried, tested, and proven by independent labs to fight grease and grime with ingredients so clean you'll never need to worry about who's eating off the counter again. Just fill with water, drop in a tablet, and voila! You've got one refillable cleaner to rule them all.
+
+Each tablet makes one full bottle of Multi-Surface Cleaner.
+
+    Scent: Fresh Lemon
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Bathroom Starter Set,13,https://www.blueland.com/products/bathroom-starter-set,https://cdn.sanity.io/images/d864s8gp/production/7147b30bcde6e2b114e3f302909d2a97e0d2021e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Transform the dirtiest room in the house into the cleanest with our Bathroom Cleaner that’s all power, no plastic. From your tub to your tile, plant-based ingredients work hard to wash away soap scum and grime without any of the harsh chemicals. Just fill with water, drop in a tablet and voila! You're one spray away from a cleaner bathroom and planet.
+
+Each tablet makes one full bottle of Bathroom Cleaner.
+
+    Scent: A refreshing and crisp Eucalyptus Mint uplifts and cleans all in one wipe
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Glass + Mirror Starter Set,16,https://www.blueland.com/products/glass-mirror-starter-set,https://cdn.sanity.io/images/d864s8gp/production/98fafe70583a6ea14da813c504f6ab3cc3f72b0c-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"So long, streaks. Our Glass + Mirror Cleaner leaves your windows and surfaces crystal clear without any of the harsh chemicals or ingredients. Just fill with water, drop in a tablet and voila! Your reflection has never looked better.
+
+Each tablet makes one full bottle of Glass + Mirror Cleaner.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Multi-Surface Refill Packs,5,https://www.blueland.com/products/multi-surface-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/2bdf654407a48ffc473cff45f3b31d1d5082deb3-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Multi-Surface refill tablets. Hard-working without the harsh chemicals, our plastic-free tablets have you covered from stovetops to countertops, and wood to stone.
+
+Each tablet delivers 24oz of our powerful Multi-Surface Cleaner spray in a crisp and energizing Fresh Lemon scent. To use, simply fill your Forever Bottle with water, drop in a tablet and get cleaning.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Bathroom Refill Packs,5,https://www.blueland.com/products/bathroom-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/7d6e64b01ebbb1c31765246324498a90e30773b5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Bathroom refill tablets. Take the dirtiest place in the house and make it the cleanest without any of the harsh ingredients.
+
+Each tablet delivers 24oz of our powerful Bathroom Cleaner spray in a crisp and refreshing Eucalyptus Mint scent. To use, simply fill your Forever Bottle with water, drop in a tablet and get cleaning.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25
+
+Bathroom Cleaner Ingredients
+Name
+CAS
+Source","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Glass + Mirror Refill Packs,5,https://www.blueland.com/products/glass-mirror-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/65d8d4a586d04703c6d3d5c96771badc7dafb422-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Glass + Mirror refill tablets. Say so long, streaks with the help of our plant-powered cleaner.
+
+Each tablet delivers 24oz of our powerful, unscented Glass + Mirror Cleaner spray. To use, simply fill your Forever Bottle with water, drop in a tablet and get cleaning.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Cleaning Companions,14,https://www.blueland.com/products/cleaning-companions,https://cdn.sanity.io/images/d864s8gp/production/799e6784c371a203f271567edc750df5f02254e5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"The ultimate trio of compostable companions for your kitchen. Powerful on dirty dishes and surfaces, gentle on the planet when it’s time for a new one. This kit comes with:
+
+    Cloud Cloth - an ultra-absorbent, strong, reusable cloth that can replace up to 1,500 paper towels (Please note that color may vary)
+    Pop-Up Sponge - a cellulose sponge that is plant-based, not plastic
+    Scrub Sponge - a dual-action loofah scrubber and absorbent cellulose sponge for your toughest messes","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Cloud Cloth,13,https://www.blueland.com/products/cloud-cloth,https://cdn.sanity.io/images/d864s8gp/production/5bca49edde0a2564ce608b6edb1b2decb925f160-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Goodbye single-use paper towels. Our ultra-absorbent Cloud Cloth is the perfect combo of a sponge and dishcloth. Made from all-natural cotton and plant cellulose, our ultra-absorbent Cloud Cloth is the solution to any surface mess – so you can wipe without the waste.
+
+    Ultra-Absorbent: One cloth can absorb 10x its weight in water and replace as many as 1,500 paper towels
+    Easy to Sanitize: Throw it in the dishwasher or boil to easily sanitize","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Spray Cleaners,Spray Cleaner Nozzle,2,https://www.blueland.com/products/cleaning-spray-nozzle?option=0,https://cdn.sanity.io/images/d864s8gp/production/48e760cadfbadb574ac59914bea59d32b0f299b4-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"If your spray nozzle has run its course, look no further. Keep your Forever Bottle and simply twist on a replacement top for all new spray power and an effortless clean. Recycle your old nozzle locally or send it back to us and we can do it for you!","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,The Tablet Trio,73,https://www.blueland.com/products/the-tablet-trio,https://cdn.sanity.io/images/d864s8gp/production/168ca8246714ebfaab149820c5df68a2cd8c1724-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Small tablet, big clean. Save space and money while also doing good for the planet with this trio of our plastic-free, sustainable best-sellers. Our Toilet Bowl Cleaner, Dishwasher Detergent Tablets and Laundry Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Three powerful ways to clean, none of the plastic waste.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with a compact Forever Tin and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    21% Kit Savings: Get three of our best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Laundry & Toilet Duo,48,https://www.blueland.com/products/laundry-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/21eaf30d77ba56f2efffc07625e67c2b55b7b8f8-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Toilet Bowl Cleaner and Laundry Detergent Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Two powerful ways to clean, none of the plastic waste.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with a compact Forever Tin and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    10% Kit Savings: Get two of our best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Dishwasher & Toilet Duo,48,https://www.blueland.com/products/dishwasher-toilet-duo,https://cdn.sanity.io/images/d864s8gp/production/1d18654e23cde3077853c10b2b7044761318f29f-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Save space and money while also doing good for the planet with this duo of two of our sustainable best-sellers. Our Dishwasher Detergent and Toilet Bowl Cleaner Tablets have all of the cleaning power without any of the plastic. 100% plastic-free and made with ingredients safe for you and the planet. Two powerful ways to clean, none of the plastic waste.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Space Saving: Ditch the bulk with a compact Forever Tin and refill tablets that take up a fraction of the space of the equivalent plastic bottle
+    10% Kit Savings: Get two of our best-sellers in one kit and save on costs and emissions","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Toilet Bowl Cleaner Starter Set,19,https://www.blueland.com/products/toilet-cleaner-starter-set?option=0,https://cdn.sanity.io/images/d864s8gp/production/144dfa9bd95f9339c6944e054ed6e8943612eff6-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"The first plastic-free and zero waste Toilet Bowl Cleaner tablet that's tough on stains but gentle on the planet— no more harsh chemicals, harmful ingredients or plastic packaging. Our septic-safe tablets work hard with plant-based power to remove a range of toilet stains including limescale, mineral deposits, hard water, and rust stains.
+
+Just drop, brush, and flush! So easy you'll never dread cleaning your toilet again.
+
+    Scent: A bright and fresh Lemon Cedar zest eliminates odors
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients that are biodegradable and septic-safe
+    Effective: Independently tested to perform alongside major brands on hard water, rust stains, and limescale
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $1.29","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Bathroom Starter Set,13,https://www.blueland.com/products/bathroom-starter-set,https://cdn.sanity.io/images/d864s8gp/production/7147b30bcde6e2b114e3f302909d2a97e0d2021e-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Transform the dirtiest room in the house into the cleanest with our Bathroom Cleaner that’s all power, no plastic. From your tub to your tile, plant-based ingredients work hard to wash away soap scum and grime without any of the harsh chemicals. Just fill with water, drop in a tablet and voila! You're one spray away from a cleaner bathroom and planet.
+
+Each tablet makes one full bottle of Bathroom Cleaner.
+
+Scent: A refreshing and crisp Eucalyptus Mint uplifts and cleans all in one wipe
+Clean Ingredients: Made with plant-based and planet-friendly ingredients
+Effective: Independently tested to perform alongside major brands
+Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Toilet Bowl Cleaner Refill Packs,17,https://www.blueland.com/products/toilet-cleaner-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/d77bba65e7d8a0c33a87c32e9a751d36d636aadd-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Toilet Cleaner refill pack. The first plastic-free and zero waste toilet bowl cleaner tablet that's tough on stains but gentle on the planet. Just drop, brush, and flush! So easy you'll never dread cleaning your toilet again.
+
+Includes:
+
+    Scent: A bright and fresh Lemon Cedar zest eliminates odors
+    Effective: Powers through hard water stains, rust stains, and limescale, and independently tested to perform alongside major brands
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients that are biodegradable and septic-safe
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $1.29","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",
+home-and-garden,cleaning-supplies,Toilet,Bathroom Refill Packs,5,https://www.blueland.com/products/bathroom-refill-packs,https://cdn.sanity.io/images/d864s8gp/production/7d6e64b01ebbb1c31765246324498a90e30773b5-1790x1790.jpg?w=700&q=100&fit=clip&auto=format&dpr=2,,EPA Safer Choice,Cradle to Cradle Certified™,Leaping Bunny (cruelty-free),"Reduce, reuse, refill with our Bathroom refill tablets. Take the dirtiest place in the house and make it the cleanest without any of the harsh ingredients.
+
+Each tablet delivers 24oz of our powerful Bathroom Cleaner spray in a crisp and refreshing Eucalyptus Mint scent. To use, simply fill your Forever Bottle with water, drop in a tablet and get cleaning.
+
+    Clean Ingredients: Made with plant-based and planet-friendly ingredients
+    Effective: Independently tested to perform alongside major brands
+    Save Space & Money: Tablets take up 10x less space than a traditional bottle and refills start at $2.25
+
+Bathroom Cleaner Ingredients
+Name
+CAS
+Source","Planet Friendly Packaging
+Compostable Refill Packaging
+Recyclable Shipping Box
+Paper-Based Tape
+Water-Based Inks
+No Single-Use Plastic","Made without parabens, phosphates, ammonia, VOCs, chlorine, bleach, or phthalates
+Vegan, gluten-free, soy and nut-free",

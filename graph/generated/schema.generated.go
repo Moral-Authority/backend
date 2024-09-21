@@ -1113,6 +1113,8 @@ func (ec *executionContext) fieldContext_Mutation_updateProduct(ctx context.Cont
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -2096,6 +2098,8 @@ func (ec *executionContext) fieldContext_Query_getProductByID(ctx context.Contex
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -2188,6 +2192,8 @@ func (ec *executionContext) fieldContext_Query_getAllProductsBySubDepartment(ctx
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -2280,6 +2286,8 @@ func (ec *executionContext) fieldContext_Query_search(ctx context.Context, field
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":
@@ -2439,6 +2447,8 @@ func (ec *executionContext) fieldContext_Query_getProductsByFilter(ctx context.C
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":

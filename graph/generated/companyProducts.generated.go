@@ -153,6 +153,8 @@ func (ec *executionContext) fieldContext_CompanyProduct_product(_ context.Contex
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
+			case "subDepartment":
+				return ec.fieldContext_Product_subDepartment(ctx, field)
 			case "MaterialsAndIngredients":
 				return ec.fieldContext_Product_MaterialsAndIngredients(ctx, field)
 			case "GiveBackPrograms":

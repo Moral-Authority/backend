@@ -250,6 +250,7 @@ type Product struct {
 	PurchaseInfo            []*PurchaseInfo  `json:"PurchaseInfo,omitempty"`
 	ProductCertifications   []*Certification `json:"ProductCertifications,omitempty"`
 	Department              string           `json:"Department"`
+	SubDepartment           string           `json:"subDepartment"`
 	MaterialsAndIngredients []*string        `json:"MaterialsAndIngredients,omitempty"`
 	GiveBackPrograms        []*string        `json:"GiveBackPrograms,omitempty"`
 	OwnersAndFounders       []*string        `json:"OwnersAndFounders,omitempty"`
