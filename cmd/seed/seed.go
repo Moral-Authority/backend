@@ -45,9 +45,8 @@ func main() {
 	// Initialize Algolia client
 	apid := os.Getenv("ALGOLIASEARCH_APPLICATION_ID")
 	apikey := os.Getenv("ALGOLIASEARCH_API_KEY")
-	logrus.Printf("Initializing Algolia client...%s AND %s", apid, apikey)
 
-	algoliaClient := search.NewClient(os.Getenv("ALGOLIASEARCH_APPLICATION_ID"), os.Getenv("ALGOLIASEARCH_API_KEY"))
+	algoliaClient := search.NewClient(apid, apikey)
 	index := algoliaClient.InitIndex("products_index")
 
 	// Wipe all tables in the database
@@ -68,24 +67,24 @@ func main() {
 	log.Println("Database seeding complete.")
 }
 
-func wipeDatabase(db *gorm.DB) {
-	// Get the list of all tables in the database
-	var tables []string
-	err := db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Scan(&tables).Error
-	if err != nil {
-		log.Fatal("Failed to get table names:", err)
-	}
+// func wipeDatabase(db *gorm.DB) {
+// 	// Get the list of all tables in the database
+// 	var tables []string
+// 	err := db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Scan(&tables).Error
+// 	if err != nil {
+// 		log.Fatal("Failed to get table names:", err)
+// 	}
 
-	// Truncate each table
-	for _, table := range tables {
-		err := db.Exec("TRUNCATE TABLE " + table + " RESTART IDENTITY CASCADE").Error
-		if err != nil {
-			log.Fatal("Failed to truncate table", table, ":", err)
-		}
-	}
+// 	// Truncate each table
+// 	for _, table := range tables {
+// 		err := db.Exec("TRUNCATE TABLE " + table + " RESTART IDENTITY CASCADE").Error
+// 		if err != nil {
+// 			log.Fatal("Failed to truncate table", table, ":", err)
+// 		}
+// 	}
 
-	log.Println("All tables wiped.")
-}
+// 	log.Println("All tables wiped.")
+// }
 
 func seedCertifications(db *gorm.DB) {
 
@@ -355,16 +354,19 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 
 		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
 		if !isDept {
-			fmt.Println("Invalid product department")
-			logrus.Info("Invalid product department %s", row[0])
-			continue
+			fmt.Printf("Invalid product department %s", row[0])
+		    break
 		}
+
+		log.Println("Product Department:", prodDeptType.ToInt())
 
 		subDept, isDept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
 		if !isDept {
 			fmt.Println("Invalid product department")
-			continue
+			break
 		}
+
+		logrus.Println("Sub Department:", subDept)
 
 		prodDeptInt := prodDeptType.ToInt()
 		var productID uint
@@ -389,7 +391,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 
 		price, err := strconv.ParseFloat(row[4], 64)
 		if err != nil {
-			fmt.Errorf("Invalid price format: %v", err)
+			fmt.Printf("invalid price format: %v", err)
 		}
 
 		purchaseInfo := models.PurchaseInfo{
@@ -401,7 +403,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 
 		result := db.Create(&purchaseInfo)
 		if result.Error != nil {
-			fmt.Errorf("Error inserting PurchaseInfo for ToysKidsBabies product: %v", result.Error)
+			fmt.Printf("error inserting PurchaseInfo for ToysKidsBabies product: %v", result.Error)
 		}
 
 		// Index the product in Algolia
@@ -418,7 +420,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 
 		_, err = index.SaveObject(algoliaData)
 		if err != nil {
-			log.Printf("Failed to index product in Algolia: %v", err)
+			fmt.Printf("Failed to index product in Algolia: %v", err)
 		} else {
 			fmt.Printf("Indexed product in Algolia: %s\n", row[4])
 		}
@@ -440,7 +442,7 @@ func seedHomeGardenProduct(db *gorm.DB, companyID uint, subDept int, title, url,
 
 	result := db.Create(&product)
 	if result.Error != nil {
-		return 0, fmt.Errorf("Error inserting ToysKidsBabies product: %v", result.Error)
+		return 0, fmt.Errorf("error inserting ToysKidsBabies product: %v", result.Error)
 	}
 
 	return product.ID, nil

@@ -167,7 +167,7 @@ func (s ProductService) GetProductsByFilterHandler(ctx context.Context, filter *
 	if !isSubdept {
 		fmt.Printf("Invalid subdepartment %s\n", subDepartment)
 	}
-
+	logrus.Infof("$$$$$$$$subdept: %v  CAME IN AS %s", subDept, subDepartment)
 	// Convert the filter to a map or structure suitable for database querying
 	filters := buildFiltersMap(filter)
 	logrus.Infof("Applying company certifications filter: %v", filters)
@@ -175,7 +175,7 @@ func (s ProductService) GetProductsByFilterHandler(ctx context.Context, filter *
 	// Route to the correct department handler
 	switch prodDeptType {
 	case HomeGardenProductDepartment:
-		products, err := productDbService.GetHomeGardenProductsByFilter(filters, subDept)
+		products, err := productDbService.GetHomeGardenProductsByFilter(filters,  subDept)
 		if err != nil {
 			return nil, err
 		}

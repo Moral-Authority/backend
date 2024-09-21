@@ -151,11 +151,11 @@ func (s ProductDbServiceImpl) GetAllToysKidsBabiesProducts(subDepartment null.In
 
 func (s ProductDbServiceImpl) GetHomeGardenProductsByFilter(filters map[string]interface{}, subDept int) ([]*models.HomeGardenProduct, error) {
 	var products []*models.HomeGardenProduct
-
+	logrus.Infof("subdept: %v", subDept)
 	// Start building the query, with Preloads for related tables
-	query := GetDbConn().Debug().
-		Preload("Company").     // Preload the Company relationship
-		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
+	query := GetDbConn().Debug()
+		// Preload("Company").     // Preload the Company relationship
+		// Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
 	// Apply dynamic product filters
 	query = ApplyProductFilters(query, filters, subDept, "home_garden_products")

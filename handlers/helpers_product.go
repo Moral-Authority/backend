@@ -3,8 +3,13 @@ package handlers
 import "github.com/Moral-Authority/backend/graph/model"
 
 func buildFiltersMap(filter *model.ProductFilterInput) map[string]interface{} {
+	
 	filters := make(map[string]interface{})
 
+	if filter == nil {
+		return filters
+	}
+	
 	// Add price range to the filter map if present
 	if filter.PriceRange != nil {
 		filters["priceMin"] = filter.PriceRange.Min
