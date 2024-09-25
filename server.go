@@ -67,8 +67,6 @@ func main() {
 
 	// Connect to the database
 	database.Connect(cfg.URL)
-	// Drop and recreate the database schema
-	// database.DropDatabase()
 
 	// Perform migrations after dropping the database
 	database.PerformMigrations()
