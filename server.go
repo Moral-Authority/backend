@@ -81,8 +81,7 @@ func main() {
 
 	// Initialize Algolia client
 	algoliaClient := InitAlgoliaClient()
-	
-	cmd.SeedDatabase(cfg.URL, algoliaClient)
+
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{
@@ -102,8 +101,15 @@ func main() {
 	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", c.Handler(srv))
-
+	
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Printf("Using port: %s", port)
-	logrus.Fatal(http.ListenAndServe(":"+port, nil))
+
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
+
+	cmd.SeedDatabase(cfg.URL, algoliaClient)
+
 }
