@@ -98,6 +98,8 @@ func main() {
 	})
 	srv.Use(extension.Introspection{})
 
+	cmd.SeedDatabase(cfg.URL, algoliaClient)
+
 	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", c.Handler(srv))
@@ -109,7 +111,5 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error starting server: %v", err)
 	}
-
-	cmd.SeedDatabase(cfg.URL, algoliaClient)
 
 }

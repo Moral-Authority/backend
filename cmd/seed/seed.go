@@ -22,7 +22,7 @@ import (
 
 // DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
 
-func SeedDatabase() {
+func main() {
 
 	// Load environment variables from .env file
 	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
@@ -56,10 +56,10 @@ func SeedDatabase() {
 	}
 
 	log.Println("Seeding the database...")
-	// seedCertifications(db)
-	// seedCompaniesFromCSV(db, "all-bcorps.csv", "BCorp Certified")
-	// seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
-	// seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
+	seedCertifications(db)
+	seedCompaniesFromCSV(db, "all-bcorps.csv", "BCorp Certified")
+	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
+	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
 	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
@@ -462,7 +462,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 		_, err = index.SaveObject(algoliaData)
 		if err != nil {
 			fmt.Printf("Failed to index product in Algolia: %v", err)
-		} 
+		}
 	}
 
 	fmt.Println("Products seeded into database.")
