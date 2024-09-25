@@ -42,7 +42,7 @@ func SeedDatabase(dsn string, algoliaClient *search.Client) {
 		log.Fatal(err)
 	}
 
-	index := algoliaClient.InitIndex("products_index")
+	// index := algoliaClient.InitIndex("products_index")
 
 	// Ensure the certifications table exists by migrating the schema
 	err = db.AutoMigrate(&models.Certification{})
@@ -55,7 +55,7 @@ func SeedDatabase(dsn string, algoliaClient *search.Client) {
 	seedCompaniesFromCSV(db, "all-bcorps.csv", "BCorp Certified")
 	seedCompaniesFromCSV(db, "made_safe_companies.csv", "Made Safe")
 	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
-	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
+	// seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
 }
 
