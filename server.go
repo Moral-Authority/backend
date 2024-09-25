@@ -63,7 +63,7 @@ func main() {
 	// Port configuration
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = defaultPort // Use a default port if $PORT is not set
+		log.Fatalf("PORT environment variable not set")
 	}
 
 	// Initialize CORS with custom settings
