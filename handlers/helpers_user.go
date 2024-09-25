@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 func sendResetEmail(to, resetLink string) error {
@@ -57,7 +57,7 @@ func sendVerificationEmail(to, verificationToken string) error {
 	smtpPort := "587"
 
 	// Create verification link with token
-	verificationLink := "https://moralauthority.co/verify-email?token=" + verificationToken
+	verificationLink := "https://moralauthority.cocom/verify-email?token=" + verificationToken
 
 	msg := []byte("To: " + to + "\r\n" +
 		"Subject: Email Verification\r\n" +
