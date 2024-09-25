@@ -9,6 +9,7 @@ import (
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -25,12 +26,26 @@ func (s UserService) AddNewUserHandler(request model.NewUser, dbService database
 		return nil, errors.New("failed to hash password")
 	}
 
-	// 2: Create the user
+	// 2: Generate email verification token
+	verificationToken, err := generateVerificationToken(request.Email)
+	if err != nil {
+		return nil, errors.New("failed to generate verification token")
+	}
+
+	// 3: Create the user with Verified set to false
 	user := models.User{
-		Email:        request.Email,
-		Phone:        request.Phone,
-		PasswordHash: string(hashedPassword),
-		Favorites:    []models.Favorite{},
+		Email:             request.Email,
+		Phone:             request.Phone,
+		PasswordHash:      string(hashedPassword),
+		Favorites:         []models.Favorite{},
+		Verified:          false,             // Initially unverified
+		VerificationToken: verificationToken, // Store the verification token
+	}
+
+	// 5: Send verification email
+	err = sendVerificationEmail(user.Email, verificationToken)
+	if err != nil {
+		return nil, errors.New("failed to send verification email")
 	}
 
 	// 3: Save the user in the database
@@ -49,10 +64,15 @@ func (s UserService) LoginHandler(request model.LoginUser, dbService database.Us
 		return "", nil, errors.New("user not found")
 	}
 
+
 	// 2. Compare the provided password with the stored password hash
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(request.Password))
 	if err != nil {
 		return "", nil, errors.New("incorrect password")
+	}
+
+	if !user.Verified {
+		return "", nil, errors.New("email not verified")
 	}
 
 	// 3. Generate a JWT token
@@ -122,7 +142,6 @@ func (s UserService) ToggleUserFavHandler(request model.ToggleUserFav, userDbSer
 		return nil, fmt.Errorf("invalid department type: %s", request.ProductDepartment)
 	}
 
-
 	// Validate product
 	product, err := ProductService{}.GetProductByIDHandler(request.ProductID, pd.ToInt(), productDbService)
 	if err != nil {
@@ -143,14 +162,14 @@ func (s UserService) ToggleUserFavHandler(request model.ToggleUserFav, userDbSer
 
 	if userFav == nil {
 		// Add favorite
-		logrus.Infof("adding fav: %d", pd.ToInt()) 
+		logrus.Infof("adding fav: %d", pd.ToInt())
 		_, err := userDbService.AddUserFav(request, pd.ToInt())
 		if err != nil {
 			return nil, err
 		}
 	} else {
 		// Remove favorite
-		logrus.Infof("removing fav: %d", pd.ToInt()) 
+		logrus.Infof("removing fav: %d", pd.ToInt())
 		err := userDbService.RemoveUserFav(request, pd.ToInt())
 		if err != nil {
 			return nil, err
@@ -185,21 +204,20 @@ func (s UserService) GetAllUserFavsHandler(userID string, userDbService database
 
 			var product interface{}
 			var err error
-			
+
 			// Determine the correct table/service based on ProductDepartment
 			switch fav.ProductDepartment {
-			case HomeGardenProductDepartment.ToInt(): 
+			case HomeGardenProductDepartment.ToInt():
 				product, err = productDbService.GetHomeGardenProductByID(fav.ProductID)
 
-			case ClothingAccessoriesProductDepartment.ToInt(): 
+			case ClothingAccessoriesProductDepartment.ToInt():
 				product, err = productDbService.GetClothingAccessoriesProductByID(fav.ProductID)
 
-			case HealthBathBeautyProductDepartment.ToInt(): 
+			case HealthBathBeautyProductDepartment.ToInt():
 				product, err = productDbService.GetHealthBathBeautyProductByID(fav.ProductID)
 
 			case ToysKidsBabiesProductDepartment.ToInt():
 				product, err = productDbService.GetToysKidsBabiesProductByID(fav.ProductID)
-
 
 			default:
 				logrus.Errorf("Unknown ProductDepartment %d for favorite ID %d", fav.ProductDepartment, fav.ID)
@@ -230,4 +248,54 @@ func (s UserService) GetAllUserFavsHandler(userID string, userDbService database
 	}
 
 	return results, nil
+}
+
+// RequestPasswordResetHandler handles the password reset request
+func (s UserService) RequestPasswordResetHandler(email string, dbService database.UserDbService) error {
+	// Check if the user exists
+	user, err := dbService.GetUserByEmail(email)
+	if err != nil || user == nil {
+		return errors.New("user not found")
+	}
+
+	// Generate a reset token
+	token, err := generateResetToken(user.Email)
+	if err != nil {
+		return errors.New("failed to generate reset token")
+	}
+
+	// Send the reset link to the user's email
+	resetLink := "https://moralauthority.co/reset-password?token=" + token
+	err = sendResetEmail(user.Email, resetLink)
+	if err != nil {
+		return errors.New("failed to send reset email")
+	}
+
+	return nil
+}
+
+// VerifyEmailHandler verifies the token and updates the user's status
+func (s UserService) VerifyEmailHandler(token string, dbService database.UserDbService) (bool, error) {
+
+	claims := &jwt.StandardClaims{}
+	parsedToken, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+		return jwtSecret, nil
+	})
+	if err != nil || !parsedToken.Valid {
+		return false, errors.New("invalid or expired token")
+	}
+
+
+	user, err := dbService.GetUserByEmail(claims.Subject)
+	if err != nil || user == nil {
+		return false, fmt.Errorf("user not found: %v", err)
+	}
+
+	user.Verified = true
+	err = dbService.UpdateUserVerification(user) // Assuming you have a method to update verification status
+	if err != nil {
+		return false, errors.New("failed to update user verification status")
+	}
+
+	return true, nil
 }

@@ -135,12 +135,15 @@ type ComplexityRoot struct {
 		BaseMutation            func(childComplexity int) int
 		Login                   func(childComplexity int, input model.LoginUser) int
 		Logout                  func(childComplexity int, id string) int
+		RequestPasswordReset    func(childComplexity int, email string) int
+		ResetPassword           func(childComplexity int, token string, newPassword string) int
 		ToggleUserFav           func(childComplexity int, input model.ToggleUserFav) int
 		UpdateCertification     func(childComplexity int, input model.UpdateCertification) int
 		UpdateCompany           func(childComplexity int, input model.UpdateCompany) int
 		UpdateImage             func(childComplexity int, input model.UpdateImage) int
 		UpdateProduct           func(childComplexity int, input model.UpdateProductRequest) int
 		UpdateUser              func(childComplexity int, input model.UpdateUser) int
+		VerifyEmail             func(childComplexity int, token string) int
 	}
 
 	PaginatedCertifications struct {
@@ -214,10 +217,12 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		Email    func(childComplexity int) int
-		ID       func(childComplexity int) int
-		Password func(childComplexity int) int
-		Phone    func(childComplexity int) int
+		Email             func(childComplexity int) int
+		ID                func(childComplexity int) int
+		Password          func(childComplexity int) int
+		Phone             func(childComplexity int) int
+		VerificationToken func(childComplexity int) int
+		Verified          func(childComplexity int) int
 	}
 }
 
@@ -737,6 +742,30 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.Logout(childComplexity, args["_id"].(string)), true
 
+	case "Mutation.requestPasswordReset":
+		if e.complexity.Mutation.RequestPasswordReset == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_requestPasswordReset_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.RequestPasswordReset(childComplexity, args["email"].(string)), true
+
+	case "Mutation.resetPassword":
+		if e.complexity.Mutation.ResetPassword == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_resetPassword_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.ResetPassword(childComplexity, args["token"].(string), args["newPassword"].(string)), true
+
 	case "Mutation.toggleUserFav":
 		if e.complexity.Mutation.ToggleUserFav == nil {
 			break
@@ -808,6 +837,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdateUser(childComplexity, args["input"].(model.UpdateUser)), true
+
+	case "Mutation.VerifyEmail":
+		if e.complexity.Mutation.VerifyEmail == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_VerifyEmail_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.VerifyEmail(childComplexity, args["token"].(string)), true
 
 	case "PaginatedCertifications.Certifications":
 		if e.complexity.PaginatedCertifications.Certifications == nil {
@@ -1255,6 +1296,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.User.Phone(childComplexity), true
+
+	case "User.verificationToken":
+		if e.complexity.User.VerificationToken == nil {
+			break
+		}
+
+		return e.complexity.User.VerificationToken(childComplexity), true
+
+	case "User.verified":
+		if e.complexity.User.Verified == nil {
+			break
+		}
+
+		return e.complexity.User.Verified(childComplexity), true
 
 	}
 	return 0, false
@@ -1731,10 +1786,13 @@ input AddProductRequest {
     Title: String!
     Description: String!
     Department: String!
-    Certifications: [ProductCertificationInput!] # Input for relational table
+    subDepartment: String!
+    ProductCertifications: [String!]
+    CompanyCertifications: [String!]
+    MaterialsAndIngredients: [String]
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
-    CompanyID: String! # Reference to the Company ID
+    Company: String! 
 }
 
 input UpdateProductRequest {
@@ -1872,6 +1930,10 @@ extend type Mutation {
     updateUser(input: UpdateUser!): User!
     login(input: LoginUser!): LoginResponse!
     logout(_id: String!): User
+    requestPasswordReset(email: String!): String! 
+    resetPassword(token: String!, newPassword: String!): String!
+    VerifyEmail(token: String!):  Boolean!
+
 }
 
 type User {
@@ -1879,6 +1941,8 @@ type User {
     email: String!
     phone: String
     password: String
+    verified: Boolean
+    verificationToken: String
 }
 
 input NewUser {

@@ -51,13 +51,16 @@ type AddImage struct {
 }
 
 type AddProductRequest struct {
-	Title          string                       `json:"Title"`
-	Description    string                       `json:"Description"`
-	Department     string                       `json:"Department"`
-	Certifications []*ProductCertificationInput `json:"Certifications,omitempty"`
-	PurchaseInfo   *PurchaseInfoInput           `json:"PurchaseInfo"`
-	ImageLinks     []*string                    `json:"ImageLinks,omitempty"`
-	CompanyID      string                       `json:"CompanyID"`
+	Title                   string             `json:"Title"`
+	Description             string             `json:"Description"`
+	Department              string             `json:"Department"`
+	SubDepartment           string             `json:"subDepartment"`
+	ProductCertifications   []string           `json:"ProductCertifications,omitempty"`
+	CompanyCertifications   []string           `json:"CompanyCertifications,omitempty"`
+	MaterialsAndIngredients []*string          `json:"MaterialsAndIngredients,omitempty"`
+	PurchaseInfo            *PurchaseInfoInput `json:"PurchaseInfo"`
+	ImageLinks              []*string          `json:"ImageLinks,omitempty"`
+	Company                 string             `json:"Company"`
 }
 
 type AddUserFav struct {
@@ -378,10 +381,12 @@ type UpdateUser struct {
 }
 
 type User struct {
-	ID       string  `json:"_id"`
-	Email    string  `json:"email"`
-	Phone    *string `json:"phone,omitempty"`
-	Password *string `json:"password,omitempty"`
+	ID                string  `json:"_id"`
+	Email             string  `json:"email"`
+	Phone             *string `json:"phone,omitempty"`
+	Password          *string `json:"password,omitempty"`
+	Verified          *bool   `json:"verified,omitempty"`
+	VerificationToken *string `json:"verificationToken,omitempty"`
 }
 
 type CategoryEnum string

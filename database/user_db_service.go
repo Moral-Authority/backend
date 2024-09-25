@@ -15,4 +15,6 @@ type UserDbService interface {
 	GetUserFav(uint, uint, int) (*models.Favorite, error)
 	GetAllUserFavs(uint) ([]*models.Favorite, error)
 	GetUserByEmail(email string) (*models.User, error)
+	ResetPassword(email string, password string) error
+	UpdateUserVerification(user *models.User) error
 }

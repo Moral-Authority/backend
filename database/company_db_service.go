@@ -11,4 +11,5 @@ type CompanyDbService interface {
 	GetCompaniesByFilter(filters map[string]interface{}) ([]models.Company, error)
 	UpdateCompany(company models.Company) (*models.Company, error)
 	AddCompanyCertification(request models.CompanyCertification) (*models.CompanyCertification, error)
+	FindCompanyIDByName(companyName string) (uint, error)
 }

@@ -11,26 +11,58 @@ import (
 
 type ProductService struct{}
 
-// func (s ProductService) AddNewProductHandler(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {
+// func (s ProductService) AddNewProductHandler(request model.AddProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService, companyService database.CompanyDbServiceImpl) (*model.Product, error) {
 
 // 	var product interface{}
 // 	productBase := models.ProductBase{
-// 		Url:         request.PurchaseInfo.Link,
-// 		Description: request.Description,
-// 		Title:       request.Title,
+// 		Url:           request.PurchaseInfo.Link,
+// 		Description:   request.Description,
+// 		Title:         request.Title,
+// 		ProductImage:  *request.ImageLinks[0],
 // 	}
 
-// 	pd, isDepartment := IsStringValidProductDepartment(request.Department)
-// 	if !isDepartment {
+// 	prodDept, isValid := IsStringValidProductDepartment(request.Department)
+// 	if !isValid {
 // 		return nil, fmt.Errorf("invalid department type: %s", request.Department)
 // 	}
 
-// 	switch pd {
+// 	subDept, isValid := IsStringValidProductSubDepartmentFORSEED(prodDept, request.SubDepartment)
+// 	if !isValid {
+// 		return nil, fmt.Errorf("invalid department type: %s", request.Department)
+// 	}
+
+// 	companyID, err := companyService.FindCompanyIDByName(request.Company)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	productCertIDs := []uint{}
+// 	for _, cert := range request.ProductCertifications {
+// 		id, err := certificationService.GetCertificationIdByName(cert)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		productCertIDs = append(productCertIDs, id)
+// 	}
+
+// 	companyCertsIDs := []uint{}
+// 	for _, cert := range request.CompanyCertifications {
+// 		id, err := certificationService.GetCertificationIdByName(cert)
+// 		if err != nil {
+// 			return nil, err
+// 		}
+// 		companyCertsIDs = append(companyCertsIDs, id)
+// 	}
+
+// 	productBase.SubDepartment = subDept
+// 	productBase.CompanyID = companyID
+
+// 	switch prodDept {
 // 	case HomeGardenProductDepartment:
 // 		product = &models.HomeGardenProduct{
 // 			ProductBase: productBase,
 // 		}
-// 	case BathBeautyProductDepartment:
+// 	case HealthBathBeautyProductDepartment:
 // 		product = &models.HealthBathBeautyProduct{
 // 			ProductBase: productBase,
 // 		}
@@ -46,8 +78,68 @@ type ProductService struct{}
 // 		return nil, fmt.Errorf("unknown department type: %d", request.Department)
 // 	}
 
+// 	for _, certID := range productCertIDs {
+// 		prodCert := models.ProductCertification{
+// 			CertificationID: certID,
+// 			ProductID: 	 product.(models.Product).GetID(),
+// 		}
+// 		result := db.Create(&prodCert)
+// 		if result.Error != nil {
+// 			fmt.Printf("error inserting ProductCertification for product: %v", result.Error)
+// 		}
+// 	}
+
+// 	for _, certID := range companyCertsIDs {
+// 		compCert := models.CompanyCertification{
+// 			CertificationID: certID,
+// 			CompanyID: 	 companyID,
+// 		}
+// 		result := db.Create(&compCert)
+
+// 		if result.Error != nil {
+// 			fmt.Printf("error inserting CompanyCertification for product: %v", result.Error)
+// 		}
+// 	}
+
+// 	price, err := strconv.ParseFloat(row[4], 64)
+// 	if err != nil {
+// 		fmt.Printf("invalid price format: %v", err)
+// 	}
+
+// 	purchaseInfo := models.PurchaseInfo{
+// 		ProductID:         productID,
+// 		ProductDepartment: prodDeptInt,
+// 		Price:             price,
+// 		Url:               row[5],
+// 	}
+
+// 	result := db.Create(&purchaseInfo)
+// 	if result.Error != nil {
+// 		fmt.Printf("error inserting PurchaseInfo for ToysKidsBabies product: %v", result.Error)
+// 	}
+
+// 	// Index the product in Algolia
+// 	algoliaData := map[string]interface{}{
+// 		"objectID":       productID,
+// 		"title":          row[3],
+// 		"sub_department": row[1],
+// 		"url":            row[5],
+// 		"company_name":   companyName,
+// 		"product_image":  row[6],
+// 		"description":    row[11],
+// 		"price":          row[4],
+// 		"department":     row[0],
+// 	}
+
+// 	_, err = index.SaveObject(algoliaData)
+// 	if err != nil {
+// 		fmt.Printf("Failed to index product in Algolia: %v", err)
+// 	} else {
+// 		fmt.Printf("Indexed product in Algolia: %s\n", row[4])
+// 	}
+
 // 	// Call the helper function to add the product by department
-// 	return AddProductByDepartment(pd, product, request, productDbService, imageDbService, certificationService)
+// 	return toProductResponse(product, productDept), nil
 // }
 
 func (s ProductService) UpdateProductHandler(request model.UpdateProductRequest, productDbService database.ProductDbService, imageDbService database.ImageDbService, certificationService database.CertificationDbService) (*model.Product, error) {

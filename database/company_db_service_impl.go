@@ -91,3 +91,14 @@ func (s CompanyDbServiceImpl) AddCompanyCertification(companyCertification model
     }
     return &addedCompanyCertification, nil
 }
+
+func (s CompanyDbServiceImpl) FindCompanyIDByName(companyName string) (uint, error) {
+
+    var company models.Company
+	if err := GetDbConn().Where("name = ?", companyName).First(&company).Error; err != nil {
+        logrus.Errorf("Unable to get company, %s", err)
+		return 0, err
+	}
+
+	return company.ID, nil 
+}

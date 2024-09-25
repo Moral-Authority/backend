@@ -1116,7 +1116,7 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"Title", "Description", "Department", "Certifications", "PurchaseInfo", "ImageLinks", "CompanyID"}
+	fieldsInOrder := [...]string{"Title", "Description", "Department", "subDepartment", "ProductCertifications", "CompanyCertifications", "MaterialsAndIngredients", "PurchaseInfo", "ImageLinks", "Company"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -1144,13 +1144,34 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 				return it, err
 			}
 			it.Department = data
-		case "Certifications":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Certifications"))
-			data, err := ec.unmarshalOProductCertificationInput2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐProductCertificationInputᚄ(ctx, v)
+		case "subDepartment":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("subDepartment"))
+			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.Certifications = data
+			it.SubDepartment = data
+		case "ProductCertifications":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ProductCertifications"))
+			data, err := ec.unmarshalOString2ᚕstringᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ProductCertifications = data
+		case "CompanyCertifications":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CompanyCertifications"))
+			data, err := ec.unmarshalOString2ᚕstringᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CompanyCertifications = data
+		case "MaterialsAndIngredients":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("MaterialsAndIngredients"))
+			data, err := ec.unmarshalOString2ᚕᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.MaterialsAndIngredients = data
 		case "PurchaseInfo":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("PurchaseInfo"))
 			data, err := ec.unmarshalNPurchaseInfoInput2ᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐPurchaseInfoInput(ctx, v)
@@ -1165,13 +1186,13 @@ func (ec *executionContext) unmarshalInputAddProductRequest(ctx context.Context,
 				return it, err
 			}
 			it.ImageLinks = data
-		case "CompanyID":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("CompanyID"))
+		case "Company":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("Company"))
 			data, err := ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
-			it.CompanyID = data
+			it.Company = data
 		}
 	}
 

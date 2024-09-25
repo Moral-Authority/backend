@@ -12,10 +12,13 @@ input AddProductRequest {
     Title: String!
     Description: String!
     Department: String!
-    Certifications: [ProductCertificationInput!] # Input for relational table
+    subDepartment: String!
+    ProductCertifications: [String!]
+    CompanyCertifications: [String!]
+    MaterialsAndIngredients: [String]
     PurchaseInfo: PurchaseInfoInput!
     ImageLinks: [String]
-    CompanyID: String! # Reference to the Company ID
+    Company: String! 
 }
 
 input UpdateProductRequest {

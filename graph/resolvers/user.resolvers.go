@@ -11,6 +11,7 @@ import (
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/handlers"
+	"github.com/sirupsen/logrus"
 )
 
 // AddUser is the resolver for the addUser field.
@@ -54,6 +55,39 @@ func (r *mutationResolver) Logout(ctx context.Context, id string) (*model.User, 
 	}
 
 	return nil, nil
+}
+
+// RequestPasswordReset is the resolver for the requestPasswordReset field.
+func (r *mutationResolver) RequestPasswordReset(ctx context.Context, email string) (string, error) {
+	err := handlers.UserService{}.RequestPasswordResetHandler(email, database.UserDbServiceImpl{})
+	if err != nil {
+		return "", err
+	}
+
+	return "Password reset email sent", nil
+}
+
+// ResetPassword is the resolver for the resetPassword field.
+func (r *mutationResolver) ResetPassword(ctx context.Context, token string, newPassword string) (string, error) {
+	// Call the VerifyEmailHandler to process the token
+	// err := handlers.UserService{}.UpdateUserHandler(token, newPassword, database.UserDbServiceImpl{})
+	// if err != nil {
+	// 	return "", err
+	// }
+
+	return "", nil
+}
+
+// VerifyEmail is the resolver for the VerifyEmail field.
+func (r *mutationResolver) VerifyEmail(ctx context.Context, token string) (bool, error) {
+	// Call the VerifyEmailHandler to process the token
+	logrus.Infof("Token: %s", token)
+	success, err := handlers.UserService{}.VerifyEmailHandler(token, database.UserDbServiceImpl{})
+	if err != nil {
+		return false, err
+	}
+
+	return success, nil
 }
 
 // User is the resolver for the user field.

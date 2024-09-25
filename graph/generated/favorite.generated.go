@@ -120,6 +120,10 @@ func (ec *executionContext) fieldContext_Favorite_user(_ context.Context, field 
 				return ec.fieldContext_User_phone(ctx, field)
 			case "password":
 				return ec.fieldContext_User_password(ctx, field)
+			case "verified":
+				return ec.fieldContext_User_verified(ctx, field)
+			case "verificationToken":
+				return ec.fieldContext_User_verificationToken(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type User", field.Name)
 		},

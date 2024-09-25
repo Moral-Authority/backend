@@ -21,6 +21,18 @@ func (s UserDbServiceImpl) GetUserByEmail(email string) (*models.User, error) {
 	return &user, nil
 }
 
+func (s UserDbServiceImpl) UpdateUserVerification(user *models.User) error {
+	result := GetDbConn().Model(user).Updates(map[string]interface{}{
+		"verified":           user.Verified,
+		"verification_token": "",
+	})
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
+
 func (s UserDbServiceImpl) AddNewUser(newUser models.User) (*models.User, error) {
 	result := GetDbConn().Create(&newUser)
 	if result.Error != nil {
@@ -151,4 +163,21 @@ func (s UserDbServiceImpl) GetAllUserFavs(userID uint) ([]*models.Favorite, erro
 	}
 
 	return favs, nil
+}
+
+
+func (s UserDbServiceImpl) ResetPassword(email string, password string) error {
+	user, err := s.GetUserByEmail(email)
+	if err != nil {
+		logrus.Errorf("unable to get user")
+		return err
+	}
+	result := GetDbConn().Model(&user).Updates(models.User{
+		PasswordHash: password,
+	})
+	if result.Error != nil {
+		logrus.Errorf("Unable to update user, %s", result.Error)
+		return result.Error
+	}
+	return nil
 }

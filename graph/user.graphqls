@@ -8,6 +8,10 @@ extend type Mutation {
     updateUser(input: UpdateUser!): User!
     login(input: LoginUser!): LoginResponse!
     logout(_id: String!): User
+    requestPasswordReset(email: String!): String! 
+    resetPassword(token: String!, newPassword: String!): String!
+    VerifyEmail(token: String!):  Boolean!
+
 }
 
 type User {
@@ -15,6 +19,8 @@ type User {
     email: String!
     phone: String
     password: String
+    verified: Boolean
+    verificationToken: String
 }
 
 input NewUser {

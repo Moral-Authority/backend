@@ -6,6 +6,7 @@ import (
 	"github.com/Moral-Authority/backend/graph/model"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/sirupsen/logrus"
+	"github.com/volatiletech/null/v8"
 )
 
 type CertificationDbServiceImpl struct{}
@@ -75,6 +76,17 @@ func (s CertificationDbServiceImpl) GetCertificationById(certId string) (*models
 	}
 	return &certs, nil
 }
+
+func (s CertificationDbServiceImpl) GetCertificationIdByName(certName string) (null.Uint, error) {
+	var cert models.Certification
+	result := GetDbConn().Find(&cert)
+	if result.Error != nil {
+		logrus.Errorf("Unable to get all certification, %s", result.Error)
+		return null.Uint{}, result.Error
+	}
+	return null.UintFrom(cert.ID), nil
+}
+
 
 func (s CertificationDbServiceImpl) UpdateCertification(cert models.Certification) (*models.Certification, error) {
     var existingCert models.Certification

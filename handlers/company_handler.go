@@ -12,6 +12,12 @@ import (
 
 type CompanyService struct{}
 
+
+func (s CompanyService) FindCompanyIDByName(dbService database.CompanyDbService, companyName string) (uint, error) {
+
+	return dbService.FindCompanyIDByName(companyName)
+}
+
 func (s CompanyService) GetCompaniesByFilterHandler(dbService database.CompanyDbService, filters map[string]interface{}) ([]*model.Company, error) {
 	companies, err := dbService.GetCompaniesByFilter(filters)
 	if err != nil {
