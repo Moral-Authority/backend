@@ -26,11 +26,12 @@ func SeedDatabase(dsn string, algoliaClient *search.Client) {
 	// Load environment variables from .env file
 	// _ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
-	// Read the database URL from the environment variable
-	// dsn := os.Getenv("DATABASE_URL")
-	// if dsn == "" {
-	// 	log.Fatal("DATABASE_URL is not set")
-	// }
+	if dsn == "" {
+		dsn := os.Getenv("DATABASE_URL")
+		if dsn == "" {
+			log.Fatal("DATABASE_URL is not set")
+		}
+	}
 
 	logrus.Printf("Connecting to database...%s", dsn)
 	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
