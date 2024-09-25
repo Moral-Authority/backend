@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"bytes"
@@ -24,12 +24,15 @@ type AddProductRequest struct {
 		Link  string  `json:"link"`
 	} `json:"purchase_info"`
 	ImageLinks     []string `json:"image_links"`
-	Certifications []struct {
+	ProductCertifications []struct {
 		Name string `json:"name"`
-	} `json:"certifications"`
+	} `json:"product_certifications"`
+	CompanyCertifications []struct {
+		Name string `json:"name"`
+	} `json:"company_certifications"`
 }
 
-func mains() {
+func SeedProductsFromCSV() {
 	// Load environment variables from .env file
 	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
@@ -93,7 +96,7 @@ func createProductRequestFromCSV(row []string) (*AddProductRequest, error) {
 			Link:  row[5], // Assuming purchase link is at index 5
 		},
 		ImageLinks: []string{row[6]}, // Assuming image is at index 6
-		Certifications: []struct {
+		CompanyCertifications: []struct {
 			Name string `json:"name"`
 		}{
 			{Name: row[8]},  // Certification 1
