@@ -27,7 +27,7 @@ RUN go run github.com/99designs/gqlgen generate
 RUN go build -o main .
 
 # Build the Seeder Binary
-RUN go build -o seed_db cmd/seed/seed.go
+RUN go build -o seed_db cmd/seed.go
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
