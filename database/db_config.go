@@ -42,7 +42,7 @@ func GetDbConn() *gorm.DB {
 
 func PerformMigrations() {
 	db := GetDbConn()
-	// Migrate the schema
+
 
 	_  = db.Migrator().DropTable(
 		&models.Category{},

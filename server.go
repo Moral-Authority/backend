@@ -43,10 +43,18 @@ func InitAlgoliaClient() *search.Client {
 
 func main() {
 
-	err := godotenv.Load()
-    if err != nil {
-        log.Fatalf("Error loading .env file")
-    }
+	// Load environment variables only in dev mode
+	environment := os.Getenv("ENVIRONMENT")
+	if environment == "" {
+		environment = "dev" // Default to dev if ENVIRONMENT is not set
+	}
+
+	if environment == "dev" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatalf("Error loading .env file")
+		}
+	}
 	
 	cfg := cmd.DefaultConfig()
 	log.Print("CFG", cfg)
