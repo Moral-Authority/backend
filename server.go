@@ -98,7 +98,7 @@ func main() {
 	})
 	srv.Use(extension.Introspection{})
 
-	cmd.SeedDatabase(cfg.URL, algoliaClient)
+	// cmd.SeedDatabase(cfg.URL, algoliaClient)
 
 	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
