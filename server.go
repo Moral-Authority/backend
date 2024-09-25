@@ -43,28 +43,26 @@ func InitAlgoliaClient() *search.Client {
 
 func main() {
 
-	// Load environment variables only in dev mode
-	environment := os.Getenv("ENVIRONMENT")
-	if environment == "" {
-		environment = "dev" // Default to dev if ENVIRONMENT is not set
-	}
+	var port string
 
-	if environment == "dev" {
+	env := os.Getenv("ENVIRONMENT")
+	if env == "dev" || env == "" {
+		port = defaultPort
 		err := godotenv.Load()
 		if err != nil {
-			log.Fatalf("Error loading .env file")
+			log.Println("Error loading .env file")
+		}
+	} else {
+		// Port configuration
+		port := os.Getenv("PORT")
+		if port == "" {
+			log.Fatalf("PORT environment variable not set")
 		}
 	}
 
 	cfg := cmd.DefaultConfig()
 	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
-
-	// Port configuration
-	port := os.Getenv("PORT")
-	if port == "" {
-		log.Fatalf("PORT environment variable not set")
-	}
 
 	// Initialize CORS with custom settings
 	c := cors.New(cors.Options{
@@ -82,7 +80,6 @@ func main() {
 	// Initialize Algolia client
 	algoliaClient := InitAlgoliaClient()
 
-
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{
 		AlgoliaClient: algoliaClient,
@@ -98,12 +95,14 @@ func main() {
 	})
 	srv.Use(extension.Introspection{})
 
-	// cmd.SeedDatabase(cfg.URL, algoliaClient)
+	if env == "dev" {
+		cmd.SeedDatabase(cfg.URL, algoliaClient)
+	}
 
 	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", c.Handler(srv))
-	
+
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Printf("Using port: %s", port)
 
