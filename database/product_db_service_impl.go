@@ -9,6 +9,22 @@ import (
 
 type ProductDbServiceImpl struct{}
 
+func (s ProductDbServiceImpl) GetRecentlyAddedProducts() ([]*models.HomeGardenProduct, error) {
+	var products []*models.HomeGardenProduct
+	result := GetDbConn().
+		Preload("Company").
+		Preload("PurchaseInfo").
+		Order("created_at desc").
+		Limit(10).
+		Find(&products)
+	if result.Error != nil {
+		logrus.Errorf("Unable to get recently added products, %s", result.Error)
+		return nil, result.Error
+	}
+	
+	return products, nil
+}
+
 func (s ProductDbServiceImpl) GetHomeGardenProductByID(productId uint) (*models.HomeGardenProduct, error) {
 	var product models.HomeGardenProduct
 	result := GetDbConn().

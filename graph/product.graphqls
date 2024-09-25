@@ -6,6 +6,7 @@ extend type Mutation {
 extend type Query {
     getProductByID(id: String!, department:  String!): Product!
     getAllProductsBySubDepartment(department: String!, subDepartment: String!): [Product!]
+    GetRecentlyAddedProducts: [Product!]
 }
 
 input AddProductRequest {

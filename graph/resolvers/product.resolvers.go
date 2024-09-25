@@ -54,3 +54,8 @@ func (r *queryResolver) GetAllProductsBySubDepartment(ctx context.Context, depar
 	}
 	return companies, nil
 }
+
+// GetRecentlyAddedProducts is the resolver for the GetRecentlyAddedProducts field.
+func (r *queryResolver) GetRecentlyAddedProducts(ctx context.Context) ([]*model.Product, error) {
+	return handlers.ProductService{}.GetRecentlyAddedProductsHandler(database.ProductDbServiceImpl{})
+}

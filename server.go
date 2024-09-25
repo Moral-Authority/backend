@@ -42,13 +42,13 @@ func InitAlgoliaClient() *search.Client {
 }
 
 func main() {
-	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
-	// Set the log output to stdout
-	log.SetOutput(os.Stdout)
-
-	// Initialize config struct and populate it from env vars and flags.
-	cfg := cmd.DefaultConfiguration()
+	err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file")
+    }
+	
+	cfg := cmd.DefaultConfig()
 	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
 
@@ -66,8 +66,7 @@ func main() {
 	})
 
 	// Connect to the database
-	database.Connect(cfg.DatabaseConfig)
-
+	database.Connect(cfg.URL)
 	// Drop and recreate the database schema
 	// database.DropDatabase()
 

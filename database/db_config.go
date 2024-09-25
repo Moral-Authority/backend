@@ -3,7 +3,6 @@ package database
 import (
 	"sync"
 
-	"github.com/Moral-Authority/backend/cmd"
 	"github.com/Moral-Authority/backend/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -18,14 +17,13 @@ type DbConn struct {
 
 var instance *DbConn
 
-func Connect(dbConfig cmd.DatabaseConfig) *DbConn {
+func Connect(dsn string) *DbConn {
 
 	lock.Lock()
 	defer lock.Unlock()
 	if instance == nil {
 
-		dsn := dbConfig.DatabaseUrl
-
+		// Open a database connection
 		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		if err != nil {
 			panic("failed to connect database")

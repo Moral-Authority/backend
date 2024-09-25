@@ -21,6 +21,7 @@ type ProductDbService interface {
 	GetToysKidsBabiesProductByID(productId uint) (*models.ToysKidsBabiesProduct, error)
 
 	// Updated functions with optional string filter
+	GetRecentlyAddedProducts() ([]*models.HomeGardenProduct, error)
 	GetAllHomeGardenProducts(filter null.Int) ([]*models.HomeGardenProduct, error)
 	GetAllBathBeautyProducts(filter null.Int) ([]*models.HealthBathBeautyProduct, error)
 	GetAllClothingAccessoriesProducts(filter null.Int) ([]*models.ClothingAccessoriesProduct, error)

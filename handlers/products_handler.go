@@ -244,3 +244,13 @@ func (s ProductService) GetAllProductsHandler(productDbService database.ProductD
 		return nil, fmt.Errorf("unknown department type: %d", productDept)
 	}
 }
+
+
+func (s ProductService) GetRecentlyAddedProductsHandler(productDbService database.ProductDbService) ([]*model.Product, error) {
+	products, err := productDbService.GetRecentlyAddedProducts()
+	if err != nil {
+		return nil, err
+	}
+
+	return toHomeGardenProductsResponse(products, HomeGardenProductDepartment), nil
+}

@@ -210,6 +210,7 @@ type ComplexityRoot struct {
 		GetCompany                    func(childComplexity int, id string) int
 		GetProductByID                func(childComplexity int, id string, department string) int
 		GetProductsByFilter           func(childComplexity int, filter *model.ProductFilterInput, department string, subDepartment string) int
+		GetRecentlyAddedProducts      func(childComplexity int) int
 		GetSubDepartmentFilters       func(childComplexity int, department string, subDepartment string) int
 		Search                        func(childComplexity int, input string) int
 		User                          func(childComplexity int, id string) int
@@ -1226,6 +1227,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.GetProductsByFilter(childComplexity, args["filter"].(*model.ProductFilterInput), args["department"].(string), args["subDepartment"].(string)), true
 
+	case "Query.GetRecentlyAddedProducts":
+		if e.complexity.Query.GetRecentlyAddedProducts == nil {
+			break
+		}
+
+		return e.complexity.Query.GetRecentlyAddedProducts(childComplexity), true
+
 	case "Query.getSubDepartmentFilters":
 		if e.complexity.Query.GetSubDepartmentFilters == nil {
 			break
@@ -1780,6 +1788,7 @@ type Category {
 extend type Query {
     getProductByID(id: String!, department:  String!): Product!
     getAllProductsBySubDepartment(department: String!, subDepartment: String!): [Product!]
+    GetRecentlyAddedProducts: [Product!]
 }
 
 input AddProductRequest {
