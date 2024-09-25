@@ -55,7 +55,7 @@ func main() {
 			log.Fatalf("Error loading .env file")
 		}
 	}
-	
+
 	cfg := cmd.DefaultConfig()
 	log.Print("CFG", cfg)
 	arg.MustParse(cfg)
@@ -81,6 +81,8 @@ func main() {
 
 	// Initialize Algolia client
 	algoliaClient := InitAlgoliaClient()
+
+	
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{

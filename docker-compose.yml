@@ -28,7 +28,7 @@ services:
       - ENVIRONMENT=${ENVIRONMENT}
       - SERVER_PORT=${SERVER_PORT}
       - SERVER_NAME=${SERVER_NAME}
-      - DATABASE_URL=${HEROKU_DATABASE_CONNECTION_URL}
+      - DATABASE_URL=${HEROKU_DATABASE_URL}
     ports:
       - "8080:8080"
     restart: unless-stopped
