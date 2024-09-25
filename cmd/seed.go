@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"log"
@@ -13,7 +13,6 @@ import (
 	"github.com/Moral-Authority/backend/handlers"
 	"github.com/Moral-Authority/backend/models"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
-	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
 	"gorm.io/driver/postgres"
@@ -22,16 +21,16 @@ import (
 
 // DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable
 
-func main() {
+func SeedDatabase(dsn string, algoliaClient *search.Client) {
 
 	// Load environment variables from .env file
-	_ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
+	// _ = godotenv.Load("/Users/lilchichie/src/moralAuthority/backend/.env")
 
 	// Read the database URL from the environment variable
-	dsn := os.Getenv("DATABASE_URL")
-	if dsn == "" {
-		log.Fatal("DATABASE_URL is not set")
-	}
+	// dsn := os.Getenv("DATABASE_URL")
+	// if dsn == "" {
+	// 	log.Fatal("DATABASE_URL is not set")
+	// }
 
 	logrus.Printf("Connecting to database...%s", dsn)
 	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
@@ -42,15 +41,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Initialize Algolia client
-	apid := os.Getenv("ALGOLIASEARCH_APPLICATION_ID")
-	apikey := os.Getenv("ALGOLIASEARCH_API_KEY")
-
-	algoliaClient := search.NewClient(apid, apikey)
 	index := algoliaClient.InitIndex("products_index")
-
-	// Wipe all tables in the database
-	wipeDatabase(db)
 
 	// Ensure the certifications table exists by migrating the schema
 	err = db.AutoMigrate(&models.Certification{})
@@ -65,25 +56,6 @@ func main() {
 	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
 	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
-}
-
-func wipeDatabase(db *gorm.DB) {
-	// Get the list of all tables in the database
-	var tables []string
-	err := db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Scan(&tables).Error
-	if err != nil {
-		log.Fatal("Failed to get table names:", err)
-	}
-
-	// Truncate each table
-	for _, table := range tables {
-		err := db.Exec("TRUNCATE TABLE " + table + " RESTART IDENTITY CASCADE").Error
-		if err != nil {
-			log.Fatal("Failed to truncate table", table, ":", err)
-		}
-	}
-
-	log.Println("All tables wiped.")
 }
 
 func seedCertifications(db *gorm.DB) {
@@ -317,8 +289,6 @@ func findCompanyID(db *gorm.DB, companyName string) uint {
 	return company.ID
 }
 
-
-
 func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, companyName string) {
 	// Get the current working directory
 	dir, err := os.Getwd()
@@ -355,7 +325,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 		prodDeptType, isDept := handlers.IsStringValidProductDepartment(row[0])
 		if !isDept {
 			fmt.Printf("Invalid product department %s", row[0])
-		    break
+			break
 		}
 
 		subDept, isDept := handlers.IsStringValidProductSubDepartmentFORSEED(prodDeptType, row[1])
@@ -375,26 +345,24 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 			thirdCertID := findCertificationID(db, row[10])
 
 			firstprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   firstCertID,
+				ProductID:       productID,
+				CertificationID: firstCertID,
 			}
 
 			secondprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   secondCertID,
+				ProductID:       productID,
+				CertificationID: secondCertID,
 			}
 
 			thirdprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   thirdCertID,
+				ProductID:       productID,
+				CertificationID: thirdCertID,
 			}
-
 
 			result := db.Create(&firstprodCert)
 			if result.Error != nil {
 				fmt.Printf("error inserting ProductCertification for HealthBathBeauty product: %v", result.Error)
 			}
-
 
 			result = db.Create(&secondprodCert)
 			if result.Error != nil {
@@ -405,7 +373,6 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 			if result.Error != nil {
 				fmt.Printf("error inserting ProductCertification for HealthBathBeauty product: %v", result.Error)
 			}
-
 
 		case handlers.HealthBathBeautyProductDepartment:
 			productID, err = seedHealthBathBeautyProduct(db, companyID, subDept, row[3], row[5], row[6])
@@ -414,26 +381,24 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 			thirdCertID := findCertificationID(db, row[10])
 
 			firstprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   firstCertID,
+				ProductID:       productID,
+				CertificationID: firstCertID,
 			}
 
 			secondprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   secondCertID,
+				ProductID:       productID,
+				CertificationID: secondCertID,
 			}
 
 			thirdprodCert := models.ProductCertification{
-				ProductID:         productID,
-				CertificationID:   thirdCertID,
+				ProductID:       productID,
+				CertificationID: thirdCertID,
 			}
-
 
 			result := db.Create(&firstprodCert)
 			if result.Error != nil {
 				fmt.Printf("error inserting ProductCertification for HealthBathBeauty product: %v", result.Error)
 			}
-
 
 			result = db.Create(&secondprodCert)
 			if result.Error != nil {
@@ -444,7 +409,6 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 			if result.Error != nil {
 				fmt.Printf("error inserting ProductCertification for HealthBathBeauty product: %v", result.Error)
 			}
-
 
 		case handlers.ClothingAccessoriesProductDepartment:
 			productID, err = seedClothingAccessoriesProduct(db, companyID, subDept, row[3], row[5], row[6])
@@ -492,9 +456,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 		_, err = index.SaveObject(algoliaData)
 		if err != nil {
 			fmt.Printf("Failed to index product in Algolia: %v", err)
-		} else {
-			fmt.Printf("Indexed product in Algolia: %s\n", row[4])
-		}
+		} 
 	}
 
 	fmt.Println("Products seeded into database.")
@@ -508,7 +470,7 @@ func seedHomeGardenProduct(db *gorm.DB, companyID uint, subDept int, title, url,
 			Url:           url,
 			CompanyID:     companyID,
 			ProductImage:  productImg,
-			Description:  description,
+			Description:   description,
 		},
 	}
 

@@ -81,8 +81,8 @@ func main() {
 
 	// Initialize Algolia client
 	algoliaClient := InitAlgoliaClient()
-
 	
+	cmd.SeedDatabase(cfg.URL, algoliaClient)
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"log"
 	"sync"
 
 	"github.com/Moral-Authority/backend/models"
@@ -43,8 +44,7 @@ func GetDbConn() *gorm.DB {
 func PerformMigrations() {
 	db := GetDbConn()
 
-
-	_  = db.Migrator().DropTable(
+	_ = db.Migrator().DropTable(
 		&models.Category{},
 		&models.Certification{},
 		&models.Company{},
@@ -81,4 +81,23 @@ func PerformMigrations() {
 	if err != nil {
 		panic("unable to perform migrations...")
 	}
+}
+
+func WipeDatabase(db *gorm.DB) {
+	// Get the list of all tables in the database
+	var tables []string
+	err := db.Raw("SELECT tablename FROM pg_tables WHERE schemaname = 'public'").Scan(&tables).Error
+	if err != nil {
+		log.Fatal("Failed to get table names:", err)
+	}
+
+	// Truncate each table
+	for _, table := range tables {
+		err := db.Exec("TRUNCATE TABLE " + table + " RESTART IDENTITY CASCADE").Error
+		if err != nil {
+			log.Fatal("Failed to truncate table", table, ":", err)
+		}
+	}
+
+	log.Println("All tables wiped.")
 }
