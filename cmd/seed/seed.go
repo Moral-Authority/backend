@@ -34,7 +34,6 @@ func main() {
 	}
 
 	logrus.Printf("Connecting to database...%s", dsn)
-	// dsn := "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
