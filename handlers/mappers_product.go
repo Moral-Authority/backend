@@ -8,7 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func toProductResponse(product interface{}, department ProductDepartment) *model.Product {
+func toProductResponse(product interface{}, department ProductDepartment, productCerts []*models.Certification, companyCerts []*models.Certification) *model.Product {
 	var baseProduct *models.ProductBase
 
 	// Use type assertion for each product type
@@ -39,7 +39,8 @@ func toProductResponse(product interface{}, department ProductDepartment) *model
 		Company:      toCompanyResponse(&baseProduct.Company),
 		PurchaseInfo: toPurchaseInfoResponse(baseProduct.PurchaseInfo),
 		SubDepartment: subDept,
-		// ProductCertifications: toCertificationsResponse(baseProduct.ProductCertifications),
+		ProductCertifications: toCertificationsResponse(productCerts),
+		CompanyCertifications: toCertificationsResponse(companyCerts),
 		Department: department.ToString(),
 	}
 }
@@ -48,7 +49,7 @@ func toGenericProductsResponse[T any](products []*T, department ProductDepartmen
 	var response []*model.Product
 
 	for _, e := range products {
-		product := toProductResponse(e, department)
+		product := toProductResponse(e, department, nil, nil)
 		response = append(response, product)
 	}
 	return response

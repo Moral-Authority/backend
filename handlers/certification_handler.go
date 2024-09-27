@@ -48,7 +48,7 @@ func (s CertificationService) AddNewCertificationHandler(request model.AddCertif
 		return nil, fmt.Errorf(fmt.Sprintf("unable to add cert to db, ERROR: %s", err))
 	}
 
-	return toCertificationResponse(*addedCert), nil
+	return toCertificationResponse(addedCert), nil
 }
 
 func (s CertificationService) GetAllCertificationsHandler(dbService database.CertificationDbService) ([]*model.Certification, error) {
@@ -59,7 +59,7 @@ func (s CertificationService) GetAllCertificationsHandler(dbService database.Cer
 
 	var response []*model.Certification
 	for _, e := range certs {
-		cert := toCertificationResponse(e)
+		cert := toCertificationResponse(&e)
 		response = append(response, cert)
 	}
 	return response, nil
@@ -71,7 +71,7 @@ func (s CertificationService) GetCertificationByIdHandler(certId string, dbServi
 		return nil, fmt.Errorf("unable to get cert from db, ERROR: %s", err)
 	}
 
-	return toCertificationResponse(*cert), nil
+	return toCertificationResponse(cert), nil
 }
 
 func (s CertificationService) UpdateCertificationHandler(request model.UpdateCertification, dbService database.CertificationDbService) (*model.Certification, error) {
@@ -140,5 +140,5 @@ func (s CertificationService) UpdateCertificationHandler(request model.UpdateCer
 		return nil, err
 	}
 
-	return toCertificationResponse(*updatedCert), nil
+	return toCertificationResponse(updatedCert), nil
 }

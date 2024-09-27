@@ -7,10 +7,10 @@ import (
 
 type CompanyCertification struct {
 	gorm.Model
-	CompanyID       uint          `gorm:"foreignKey:CompanyRefer"`
+	CompanyID       uint          `gorm:"index"` // Index for performance optimization
 	Company         Company       `gorm:"foreignKey:CompanyID"`
-	CertificationID uint          `gorm:"foreignKey:CertificationRefer"`
-	Certification   Certification `gorm:"foreignKey:CertificationID"` // This field should be added
+	CertificationID uint          `gorm:"index"`
+	Certification   Certification `gorm:"foreignKey:CertificationID"`
 	CertifiedAt     null.Time     `json:"certified_at"`
 	ExpirationDate  null.Time     `json:"expiration_date"`
 	OtherDetails    null.String   `json:"other_details"`

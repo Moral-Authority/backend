@@ -1,15 +1,18 @@
 package handlers
 
-import "github.com/Moral-Authority/backend/graph/model"
+import (
+	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/models"
+)
 
 func buildFiltersMap(filter *model.ProductFilterInput) map[string]interface{} {
-	
+
 	filters := make(map[string]interface{})
 
 	if filter == nil {
 		return filters
 	}
-	
+
 	// Add price range to the filter map if present
 	if filter.PriceRange != nil {
 		filters["priceMin"] = filter.PriceRange.Min
@@ -52,6 +55,53 @@ func buildFiltersMap(filter *model.ProductFilterInput) map[string]interface{} {
 	return filters
 }
 
+func FetchProductAndCompanyCertsConcurrently(
+	productID uint,
+	getCompanyCertsFunc func(uint) ([]*models.Certification, error),
+	getProductCertsFunc func(uint) ([]*models.Certification, error),
+) ([]*models.Certification, []*models.Certification, error) {
+
+	companyCertsChan := make(chan []*models.Certification)
+	productCertsChan := make(chan []*models.Certification)
+	errChan := make(chan error)
+
+	go func() {
+		companyCerts, err := getCompanyCertsFunc(productID)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		companyCertsChan <- companyCerts
+	}()
+
+	go func() {
+		productCerts, err := getProductCertsFunc(productID)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		productCertsChan <- productCerts
+	}()
+
+	// Wait for results and errors
+
+	var companyCerts []*models.Certification
+	var productCerts []*models.Certification
+
+	for i := 0; i < 2; i++ {
+		select {
+		case err := <-errChan:
+			return nil, nil, err
+		case cc := <-companyCertsChan:
+			companyCerts = cc
+		case pc := <-productCertsChan:
+			productCerts = pc
+		}
+	}
+
+	// Combine data into a new response
+	return productCerts, companyCerts, nil
+}
 
 // func AddProductByDepartment(
 // 	department ProductDepartment,

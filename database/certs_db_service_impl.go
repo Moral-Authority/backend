@@ -12,8 +12,8 @@ import (
 type CertificationDbServiceImpl struct{}
 
 
-func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}, input model.FilterCertificationsInput) ([]models.Certification, int64, error) {
-	var certs []models.Certification
+func (s CertificationDbServiceImpl) GetCertificationsByFilter(filters map[string]interface{}, input model.FilterCertificationsInput) ([]*models.Certification, int64, error) {
+	var certs []*models.Certification
 	db := GetDbConn()
 
 	// Apply filters to the query

@@ -402,6 +402,85 @@ func (ec *executionContext) fieldContext_Product_ProductCertifications(_ context
 	return fc, nil
 }
 
+func (ec *executionContext) _Product_CompanyCertifications(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Product_CompanyCertifications(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CompanyCertifications, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.Certification)
+	fc.Result = res
+	return ec.marshalOCertification2ᚕᚖgithubᚗcomᚋMoralᚑAuthorityᚋbackendᚋgraphᚋmodelᚐCertificationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Product_CompanyCertifications(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Product",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "_id":
+				return ec.fieldContext_Certification__id(ctx, field)
+			case "Name":
+				return ec.fieldContext_Certification_Name(ctx, field)
+			case "Logo":
+				return ec.fieldContext_Certification_Logo(ctx, field)
+			case "Website":
+				return ec.fieldContext_Certification_Website(ctx, field)
+			case "Description":
+				return ec.fieldContext_Certification_Description(ctx, field)
+			case "CertifiesCompany":
+				return ec.fieldContext_Certification_CertifiesCompany(ctx, field)
+			case "CertifiesProduct":
+				return ec.fieldContext_Certification_CertifiesProduct(ctx, field)
+			case "CertifiesProcess":
+				return ec.fieldContext_Certification_CertifiesProcess(ctx, field)
+			case "CertifierContactID":
+				return ec.fieldContext_Certification_CertifierContactID(ctx, field)
+			case "Industry":
+				return ec.fieldContext_Certification_Industry(ctx, field)
+			case "Certifier":
+				return ec.fieldContext_Certification_Certifier(ctx, field)
+			case "Audited":
+				return ec.fieldContext_Certification_Audited(ctx, field)
+			case "Auditor":
+				return ec.fieldContext_Certification_Auditor(ctx, field)
+			case "Region":
+				return ec.fieldContext_Certification_Region(ctx, field)
+			case "Qualifiers":
+				return ec.fieldContext_Certification_Qualifiers(ctx, field)
+			case "Sources":
+				return ec.fieldContext_Certification_Sources(ctx, field)
+			case "CreatedAt":
+				return ec.fieldContext_Certification_CreatedAt(ctx, field)
+			case "UpdatedAt":
+				return ec.fieldContext_Certification_UpdatedAt(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Certification", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Product_Department(ctx context.Context, field graphql.CollectedField, obj *model.Product) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Product_Department(ctx, field)
 	if err != nil {
@@ -1375,6 +1454,8 @@ func (ec *executionContext) _Product(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Product_PurchaseInfo(ctx, field, obj)
 		case "ProductCertifications":
 			out.Values[i] = ec._Product_ProductCertifications(ctx, field, obj)
+		case "CompanyCertifications":
+			out.Values[i] = ec._Product_CompanyCertifications(ctx, field, obj)
 		case "Department":
 			out.Values[i] = ec._Product_Department(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

@@ -7,9 +7,10 @@ import (
 
 type ProductCertification struct {
 	gorm.Model
-	ProductID       uint        `gorm:"foreignKey:ProductRefer"`
-	CertificationID uint        `gorm:"foreignKey:CertificationRefer"`
-	CertifiedAt     null.Time   `json:"certified_at"`
-	ExpirationDate  null.Time   `json:"expiration_date"`
-	OtherDetails    null.String `json:"other_details"`
+	ProductID       uint          `gorm:"index"` // Foreign key referencing the product
+	CertificationID uint          `gorm:"index"`
+	Certification   Certification `gorm:"foreignKey:CertificationID"`
+	CertifiedAt     null.Time     `json:"certified_at"`
+	ExpirationDate  null.Time     `json:"expiration_date"`
+	OtherDetails    null.String   `json:"other_details"`
 }

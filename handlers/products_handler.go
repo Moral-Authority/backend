@@ -6,7 +6,10 @@ import (
 
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/model"
+	"github.com/Moral-Authority/backend/models"
+	"github.com/sirupsen/logrus"
 	"github.com/volatiletech/null/v8"
+	// helper "github.com/Moral-Authority/backend/handlers"
 )
 
 type ProductService struct{}
@@ -153,7 +156,7 @@ func (s ProductService) UpdateProductHandler(request model.UpdateProductRequest,
 		return nil, fmt.Errorf("invalid department type: %s", *request.Department)
 	}
 
-	return toProductResponse(product, productDept), nil
+	return toProductResponse(product, productDept, nil, nil), nil
 }
 
 func (s ProductService) GetProductByIDHandler(productId string, department int, productDbService database.ProductDbService) (*model.Product, error) {
@@ -169,16 +172,54 @@ func (s ProductService) GetProductByIDHandler(productId string, department int, 
 	}
 
 	var product interface{}
+	var productCerts []*models.Certification
+	var companyCerts []*models.Certification
 
 	switch productDept {
 	case HomeGardenProductDepartment:
+		logrus.Info("Getting product")
 		product, err = productDbService.GetHomeGardenProductByID(prodID)
+		if err != nil {
+			return nil, err
+		}
+		logrus.Info("Getting product certs")
+		productCerts, companyCerts, err = FetchProductAndCompanyCertsConcurrently(
+			prodID,
+			productDbService.GetProductCompanyCertificationsFromHomeGarden,
+			productDbService.GetProductCertificationsFromHomeAndGardenByProduct,
+		)
 	case HealthBathBeautyProductDepartment:
 		product, err = productDbService.GetHealthBathBeautyProductByID(prodID)
+		if err != nil {
+			return nil, err
+		}
+
+		productCerts, companyCerts, err = FetchProductAndCompanyCertsConcurrently(
+			prodID,
+			productDbService.GetProductCompanyCertificationsFromHealthBathBeauty,
+			productDbService.GetProductCertificationsFromHealthBathBeautyByProduct,
+		)
 	case ClothingAccessoriesProductDepartment:
 		product, err = productDbService.GetClothingAccessoriesProductByID(prodID)
+		if err != nil {
+			return nil, err
+		}
+		productCerts, companyCerts, err = FetchProductAndCompanyCertsConcurrently(
+			prodID,
+			productDbService.GetProductCompanyCertificationsFromClothingAccessories,
+			productDbService.GetProductCertificationsFromClothingAccessoriesByProduct,
+		)
 	case ToysKidsBabiesProductDepartment:
 		product, err = productDbService.GetToysKidsBabiesProductByID(prodID)
+		if err != nil {
+			return nil, err
+		}
+
+		productCerts, companyCerts, err = FetchProductAndCompanyCertsConcurrently(
+			prodID,
+			productDbService.GetProductCompanyCertificationsFromToysKidsBabies,
+			productDbService.GetProductCertificationsFromToysKidsBabiesByProduct,
+		)
 	default:
 		return nil, fmt.Errorf("unknown department type: %d", department)
 	}
@@ -187,7 +228,7 @@ func (s ProductService) GetProductByIDHandler(productId string, department int, 
 		return nil, err
 	}
 
-	return toProductResponse(product, productDept), nil
+	return toProductResponse(product, productDept, productCerts, companyCerts), nil
 }
 
 func (s ProductService) GetAllProductsHandler(productDbService database.ProductDbService, productDept ProductDepartment, subDepartment string) ([]*model.Product, error) {
@@ -244,7 +285,6 @@ func (s ProductService) GetAllProductsHandler(productDbService database.ProductD
 		return nil, fmt.Errorf("unknown department type: %d", productDept)
 	}
 }
-
 
 func (s ProductService) GetRecentlyAddedProductsHandler(productDbService database.ProductDbService) ([]*model.Product, error) {
 	products, err := productDbService.GetRecentlyAddedProducts()

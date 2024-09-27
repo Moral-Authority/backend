@@ -50,6 +50,18 @@ type ProductDbService interface {
 	GetPriceRangeFromHealthBathBeauty(subDepartment int) (*model.PriceRange, error)
 	GetPriceRangeFromClothingAccessories(subDepartment int) (*model.PriceRange, error)
 	GetPriceRangeFromToysKidsBabies(subDepartment int) (*model.PriceRange, error)
+
+	GetProductCompanyCertificationsFromHomeGarden(productID uint) ([]*models.Certification, error)
+	GetProductCompanyCertificationsFromHealthBathBeauty(productID uint) ([]*models.Certification, error)
+	GetProductCompanyCertificationsFromClothingAccessories(productID uint) ([]*models.Certification, error)
+	GetProductCompanyCertificationsFromToysKidsBabies(productID uint) ([]*models.Certification, error)
+
+
+	GetProductCertificationsFromHomeAndGardenByProduct(productID uint) ([]*models.Certification, error) 
+	GetProductCertificationsFromHealthBathBeautyByProduct(productID uint) ([]*models.Certification, error) 
+	GetProductCertificationsFromClothingAccessoriesByProduct(productID uint) ([]*models.Certification, error) 
+	GetProductCertificationsFromToysKidsBabiesByProduct(productID uint) ([]*models.Certification, error) 
+
 }
 
 // 	AddProductCertification(productCert models.ProductCertification) (*models.ProductCertification, error)

@@ -1169,6 +1169,8 @@ func (ec *executionContext) fieldContext_Mutation_updateProduct(ctx context.Cont
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":
@@ -2331,6 +2333,8 @@ func (ec *executionContext) fieldContext_Query_getProductByID(ctx context.Contex
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":
@@ -2425,6 +2429,8 @@ func (ec *executionContext) fieldContext_Query_getAllProductsBySubDepartment(ctx
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":
@@ -2519,6 +2525,8 @@ func (ec *executionContext) fieldContext_Query_GetRecentlyAddedProducts(_ contex
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":
@@ -2602,6 +2610,8 @@ func (ec *executionContext) fieldContext_Query_search(ctx context.Context, field
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":
@@ -2763,6 +2773,8 @@ func (ec *executionContext) fieldContext_Query_getProductsByFilter(ctx context.C
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":

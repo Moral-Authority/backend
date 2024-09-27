@@ -40,7 +40,8 @@ type Product {
     ImageLinks: [String!]
     Company: Company! 
     PurchaseInfo: [PurchaseInfo!]
-    ProductCertifications: [Certification!] # Relationship with ProductCertification
+    ProductCertifications: [Certification!] 
+    CompanyCertifications: [Certification!] 
     Department: String!
     subDepartment: String!
     MaterialsAndIngredients: [String]

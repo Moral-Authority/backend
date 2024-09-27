@@ -21,7 +21,7 @@ func (s ProductDbServiceImpl) GetRecentlyAddedProducts() ([]*models.HomeGardenPr
 		logrus.Errorf("Unable to get recently added products, %s", result.Error)
 		return nil, result.Error
 	}
-	
+
 	return products, nil
 }
 
@@ -197,7 +197,7 @@ func (s ProductDbServiceImpl) GetBathBeautyProductsByFilter(filters map[string]i
 		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
 	// Apply dynamic product filters
-	query = ApplyProductFilters(query, filters,subDept, "health_bath_beauty_products")
+	query = ApplyProductFilters(query, filters, subDept, "health_bath_beauty_products")
 
 	if err := query.Find(&products).Error; err != nil {
 		logrus.Errorf("Unable to get HealthBathBeauty products by filter, %s", err)
@@ -216,7 +216,7 @@ func (s ProductDbServiceImpl) GetClothingAccessoriesProductsByFilter(filters map
 		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
 	// Apply dynamic product filters
-	query = ApplyProductFilters(query, filters, subDept,"clothing_accessories_products")
+	query = ApplyProductFilters(query, filters, subDept, "clothing_accessories_products")
 
 	// Execute the query
 	if err := query.Find(&products).Error; err != nil {
@@ -236,7 +236,7 @@ func (s ProductDbServiceImpl) GetToysKidsBabiesProductsByFilter(filters map[stri
 		Preload("PurchaseInfo") // Preload the PurchaseInfo relationship
 
 	// Apply dynamic product filters
-	query = ApplyProductFilters(query, filters, subDept,"toys_kids_babies_products")
+	query = ApplyProductFilters(query, filters, subDept, "toys_kids_babies_products")
 
 	// Execute the query
 	if err := query.Find(&products).Error; err != nil {
@@ -535,4 +535,156 @@ func (s ProductDbServiceImpl) GetPriceRangeFromToysKidsBabies(subDepartment int)
 	}
 
 	return &priceRange, nil
+}
+
+// GetProductCertifications retrieves certifications for any product based on ProductID.
+func (s ProductDbServiceImpl) GetProductCertificationsFromHomeAndGardenByProduct(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+
+	result := GetDbConn().
+		Model(&models.HomeGardenProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = home_garden_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("home_garden_products.id = ?", productID).
+		Distinct("certifications.*").
+		Find(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// GetProductCertifications retrieves certifications for any product based on ProductID.
+func (s ProductDbServiceImpl) GetProductCertificationsFromHealthBathBeautyByProduct(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+
+	result := GetDbConn().
+		Model(&models.HealthBathBeautyProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = health_bath_beauty_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("health_bath_beauty_products.id ?", productID).
+		Distinct("certifications.*").
+		Find(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// GetProductCertifications retrieves certifications for any product based on ProductID.
+func (s ProductDbServiceImpl) GetProductCertificationsFromClothingAccessoriesByProduct(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+
+	result := GetDbConn().
+		Model(&models.ClothingAccessoriesProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = clothing_accessories_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("clothing_accessories_products.id = ?", productID).
+		Distinct("certifications.*").
+		Find(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// GetProductCertifications retrieves certifications for any product based on ProductID.
+func (s ProductDbServiceImpl) GetProductCertificationsFromToysKidsBabiesByProduct(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+
+	result := GetDbConn().
+		Model(&models.ToysKidsBabiesProduct{}).
+		Joins("INNER JOIN product_certifications ON product_certifications.product_id = toys_kids_babies_products.id").
+		Joins("INNER JOIN certifications ON certifications.id = product_certifications.certification_id").
+		Where("toys_kids_babies_products.id = ?", productID).
+		Distinct("certifications.*").
+		Find(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// HomeGarden - GetProductCompanyCertifications
+func (s ProductDbServiceImpl) GetProductCompanyCertificationsFromHomeGarden(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+	result := GetDbConn().
+		Model(&models.HomeGardenProduct{}).
+		Joins("INNER JOIN companies ON companies.id = home_garden_products.company_id").
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = companies.id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("home_garden_products.id = ?", productID).
+		Distinct("certifications.*").
+		Scan(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// HealthBathBeauty - GetProductCompanyCertifications
+func (s ProductDbServiceImpl) GetProductCompanyCertificationsFromHealthBathBeauty(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+	result := GetDbConn().
+		Model(&models.HealthBathBeautyProduct{}).
+		Joins("INNER JOIN companies ON companies.id = health_bath_beauty_products.company_id").
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = companies.id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("health_bath_beauty_products.id = ?", productID).
+		Distinct("certifications.*").
+		Scan(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ClothingAccessories - GetProductCompanyCertifications
+func (s ProductDbServiceImpl) GetProductCompanyCertificationsFromClothingAccessories(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+	result := GetDbConn().
+		Model(&models.ClothingAccessoriesProduct{}).
+		Joins("INNER JOIN companies ON companies.id = clothing_accessories_products.company_id").
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = companies.id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("clothing_accessories_products.id = ?", productID).
+		Distinct("certifications.*").
+		Scan(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
+}
+
+// ToysKidsBabies - GetProductCompanyCertifications
+func (s ProductDbServiceImpl) GetProductCompanyCertificationsFromToysKidsBabies(productID uint) ([]*models.Certification, error) {
+	var certifications []*models.Certification
+	result := GetDbConn().
+		Model(&models.ToysKidsBabiesProduct{}).
+		Joins("INNER JOIN companies ON companies.id = toys_kids_babies_products.company_id").
+		Joins("INNER JOIN company_certifications ON company_certifications.company_id = companies.id").
+		Joins("INNER JOIN certifications ON certifications.id = company_certifications.certification_id").
+		Where("toys_kids_babies_products.id = ?", productID).
+		Distinct("certifications.*").
+		Scan(&certifications)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return certifications, nil
 }

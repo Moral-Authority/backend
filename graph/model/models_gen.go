@@ -252,6 +252,7 @@ type Product struct {
 	Company                 *Company         `json:"Company"`
 	PurchaseInfo            []*PurchaseInfo  `json:"PurchaseInfo,omitempty"`
 	ProductCertifications   []*Certification `json:"ProductCertifications,omitempty"`
+	CompanyCertifications   []*Certification `json:"CompanyCertifications,omitempty"`
 	Department              string           `json:"Department"`
 	SubDepartment           string           `json:"subDepartment"`
 	MaterialsAndIngredients []*string        `json:"MaterialsAndIngredients,omitempty"`

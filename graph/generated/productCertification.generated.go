@@ -81,6 +81,8 @@ func (ec *executionContext) fieldContext_ProductCertification_product(_ context.
 				return ec.fieldContext_Product_PurchaseInfo(ctx, field)
 			case "ProductCertifications":
 				return ec.fieldContext_Product_ProductCertifications(ctx, field)
+			case "CompanyCertifications":
+				return ec.fieldContext_Product_CompanyCertifications(ctx, field)
 			case "Department":
 				return ec.fieldContext_Product_Department(ctx, field)
 			case "subDepartment":

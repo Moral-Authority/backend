@@ -20,7 +20,7 @@ func toUserResponse(user models.User) *model.User {
 func toFavResponse(fav *models.Favorite, product interface{}, department ProductDepartment) *model.Favorite {
 	return &model.Favorite{
 		ID:      strconv.Itoa(int(fav.ID)),
-		Product: toProductResponse(product, department),
+		Product: toProductResponse(product, department, nil, nil),
 	}
 }
 
@@ -151,7 +151,7 @@ func toCompaniesResponse(companies []*models.Company) []*model.Company {
 	return response
 }
 
-func toCertificationsResponse(certs []models.Certification) []*model.Certification {
+func toCertificationsResponse(certs []*models.Certification) []*model.Certification {
 	var response []*model.Certification
 	for _, c := range certs {
 		cert := toCertificationResponse(c)
@@ -160,7 +160,7 @@ func toCertificationsResponse(certs []models.Certification) []*model.Certificati
 	return response
 }
 
-func toCertificationResponse(cert models.Certification) *model.Certification {
+func toCertificationResponse(cert *models.Certification) *model.Certification {
 	var industry, certifier, logo, certifierContactID, auditor, region, qualifiers, sources, website *string
 	var certifiesCompany, certifiesProduct, certifiesProcess, audited *bool
 
