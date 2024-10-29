@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,12 +16,14 @@ import (
 	"github.com/Moral-Authority/backend/database"
 	"github.com/Moral-Authority/backend/graph/generated"
 	r "github.com/Moral-Authority/backend/graph/resolvers"
+	"github.com/Moral-Authority/backend/models"
 	"github.com/alexflint/go-arg"
 	"github.com/algolia/algoliasearch-client-go/v3/algolia/search"
 	"github.com/gorilla/websocket"
 	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 const defaultPort = "8080"
@@ -40,6 +44,29 @@ func InitAlgoliaClient() *search.Client {
 	client := search.NewClient(appID, apiKey)
 	return client
 }
+
+// func loadSeedDataFromFile(db *gorm.DB) error {
+// 	file, err := os.Open("seed_data.json")
+// 	if err != nil {
+// 		return fmt.Errorf("failed to open seed file: %v", err)
+// 	}
+// 	defer file.Close()
+
+// 	var certifications []models.Certification
+// 	decoder := json.NewDecoder(file)
+// 	if err := decoder.Decode(&certifications); err != nil {
+// 		return fmt.Errorf("failed to decode seed data: %v", err)
+// 	}
+
+// 	for _, cert := range certifications {
+// 		if err := db.Create(&cert).Error; err != nil {
+// 			log.Printf("Failed to insert certification: %v", err)
+// 		}
+// 	}
+
+// 	log.Println("Database populated from seed file.")
+// 	return nil
+// }
 
 func main() {
 
@@ -81,9 +108,19 @@ func main() {
 	// Perform migrations after dropping the database
 	database.PerformMigrations()
 
-	// Initialize Algolia client
+	// Initialize Algolia client once
 	algoliaClient := InitAlgoliaClient()
 
+	// // Attempt to load from seed file if it exists; otherwise, run the seed script
+	// if _, err := os.Stat("seed_data.json"); err == nil {
+	// 	log.Println("Loading database from seed file...")
+	// 	if err := loadSeedDataFromFile(database); err != nil {
+	// 		log.Fatalf("Error loading seed data from file: %v", err)
+	// 	}
+	// } else {
+	// 	log.Println("Seed file not found; seeding database and creating seed file.")
+	// 	cmd.SeedDatabase(cfg.URL, algoliaClient)
+	// }
 
 	// Setup GraphQL server
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &r.Resolver{
@@ -106,7 +143,7 @@ func main() {
 	// HTTP handlers
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", c.Handler(srv))
-	
+
 	logrus.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	logrus.Printf("Using port: %s", port)
 

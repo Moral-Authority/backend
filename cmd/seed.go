@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -18,7 +19,6 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
-
 
 func SeedDatabase(dsn string, algoliaClient *search.Client) {
 
@@ -53,6 +53,9 @@ func SeedDatabase(dsn string, algoliaClient *search.Client) {
 	seedCompaniesFromCSV(db, "PETA_cruelty_free_companies.csv", "Peta Cruelty Free")
 	seedProductsFromCSV(db, index, "affiliate_products_blueland_products1.csv", "Blueland")
 	log.Println("Database seeding complete.")
+
+	exportSeedDataToFile(db)
+	log.Println("Database seeding complete and data exported to seed file.")
 }
 
 func seedCertifications(db *gorm.DB) {
@@ -453,7 +456,7 @@ func seedProductsFromCSV(db *gorm.DB, index *search.Index, fileName string, comp
 		_, err = index.SaveObject(algoliaData)
 		if err != nil {
 			fmt.Printf("Failed to index product in Algolia: %v", err)
-		} 
+		}
 	}
 
 	fmt.Println("Products seeded into database.")
@@ -535,4 +538,21 @@ func seedToysKidsBabiesProduct(db *gorm.DB, companyID uint, subDept int, title, 
 	}
 
 	return product.ID, nil
+}
+
+func exportSeedDataToFile(db *gorm.DB) {
+	// Example of exporting as JSON
+	var certifications []models.Certification
+	db.Find(&certifications)
+
+	file, err := os.Create("seed_data.json")
+	if err != nil {
+		log.Fatalf("Failed to create seed file: %v", err)
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	if err := encoder.Encode(certifications); err != nil {
+		log.Fatalf("Failed to write seed data to file: %v", err)
+	}
 }
