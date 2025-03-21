@@ -7,7 +7,7 @@ require (
 	github.com/alexflint/go-arg v1.5.1
 	github.com/algolia/algoliasearch-client-go/v3 v3.31.2
 	github.com/cloudinary/cloudinary-go/v2 v2.8.0
-	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	github.com/gorilla/websocket v1.5.3
 	github.com/joho/godotenv v1.5.1
 	github.com/rs/cors v1.11.0
